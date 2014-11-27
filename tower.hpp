@@ -6,10 +6,16 @@
 #include "gui.hpp"
 #endif //termd_gui
 
+#ifndef termd_coord
+#define termd_coord
+#include "coord.hpp"
+#endif //termd_coord
+
 class Tower {
 	private:
-		Coord pos;
+		
 	protected:
+		Coord pos;
 		bool blocking; //Ground path blocking, children can change this
 		char gfx;	//The high-tech 3D model! Children can change this
 	public:
