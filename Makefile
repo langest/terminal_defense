@@ -1,6 +1,5 @@
 ncurses_test: ncursestest.cpp
-	 g++  -g  -Wall  -lncurses ncursestest.cpp -o ncursestest.out
-
+	g++  -g  -Wall ncursestest.cpp -lncurses -o ncursestest.out
 
 clean:
 	rm *.o *.out
