@@ -1,5 +1,5 @@
-all: main.cpp
-	 g++  -g  -Wall  -lncurses main.cpp -o main.out
+ncurses_test: ncursestest.cpp
+	 g++  -g  -Wall  -lncurses ncursestest.cpp -o ncursestest.out
 
 
 clean:
