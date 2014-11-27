@@ -1,3 +1,15 @@
+#ifndef termd_gui
+#define termd_gui
+
+#ifndef termd_ncurses
+#define termd_ncurses
+#include <ncurses.h>
+#endif
+
+#ifndef termd_coord
+#define termd_coord
+#include "coord.hpp"
+#endif
 
 class GUI {
 	private:
