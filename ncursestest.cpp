@@ -16,11 +16,6 @@ int main() {
 	getch();			/* Wait for user input */
 
 	mvaddch(10,10,'D');
-	int x, y;
-	WINDOW * w;
-	getyx(w,x,y);
-
-	std::cout << x << y;
 
 	lolol();
 
@@ -59,8 +54,8 @@ int lolol()
 	refresh();
 	my_win = create_newwin(height, width, starty, startx);
 
-	while((ch = getch()) != KEY_F(1))
-	{	switch(ch)
+	while((ch = getch()) != KEY_F(1)) {
+	switch(ch)
 		{	case KEY_LEFT:
 				destroy_win(my_win);
 				my_win = create_newwin(height, width, starty,--startx);
