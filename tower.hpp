@@ -9,13 +9,16 @@
 class Tower {
 	private:
 		Coord pos;
-		bool blocking; //Ground path blocking
 	protected:
-		char gfx;	//The high-tech 3D model!
+		bool blocking; //Ground path blocking, children can change this
+		char gfx;	//The high-tech 3D model! Children can change this
 	public:
-		void draw(GUI) const;
-		virtual bool update() = 0;
+		//Implemented:
+		void draw(GUI &) const;
 		const bool get_blocking() const;
+
+		//Virtual:
+		virtual bool update() = 0;
 };
 
 #endif //termd_tower
