@@ -21,3 +21,6 @@
 *.exe
 *.out
 *.app
+
+# for vim swp files
+*.swp
