@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <iostream>
 
 int lolol();
 
@@ -15,6 +16,11 @@ int main() {
 	getch();			/* Wait for user input */
 
 	mvaddch(10,10,'D');
+	int x, y;
+	WINDOW * w;
+	getyx(w,x,y);
+
+	std::cout << x << y;
 
 	lolol();
 
