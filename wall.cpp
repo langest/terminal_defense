@@ -1,4 +1,4 @@
-#include "tower.hpp"
+#include "wall.hpp"
 
 Wall::Wall(Coord p) {
 	pos = p;
