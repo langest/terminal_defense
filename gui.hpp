@@ -13,14 +13,25 @@
 
 class GUI {
 	private:
+		WINDOW * main_win;
 
 	public:
+		GUI();
+		~GUI();
+
+		void init_gui();
 		bool move_cursor_up();
 		bool move_cursor_down();
 		bool move_cursor_left();
 		bool move_cursor_right();
 
-		bool draw(int, int, char);
-		bool clear();
+		bool draw(Coord, char);
+		void clear();
+		void refresh();
 
 };
+
+WINDOW *create_new_win(int, int, int, int);
+void destroy_win(WINDOW *);
+
+#endif //termd_gui
