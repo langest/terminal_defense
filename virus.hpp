@@ -3,9 +3,12 @@
 
 class Virus {
 	private:
-		int hp;
-		const int stamina; //Determines the speed of the virus
+		int max_hp
+		int cur_hp;
+		int stamina; //Determines the speed of the virus
+		char gfx;
 		Path path;
+
 		bool pathfind(); //Find a path through them maze wich it can follow
 		bool step(); //Make the monster walk along its path
 	public:
