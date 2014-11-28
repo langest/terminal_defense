@@ -25,14 +25,20 @@ void Tower::draw(GUI & g) {
 	g.draw_gfx(pos, gfx, size_rows, size_cols);
 }
 
-inline const bool Tower::get_blocking() const {
+const int Tower::get_sell_value() const {
+	return sell_value;
+}
+
+const bool Tower::get_blocking() const {
 	return blocking;
 }
 
-inline const int Tower::get_size_rows() const {
+const int Tower::get_size_rows() const {
 	return size_rows;
 }
 
-inline const int Tower::get_size_cols() const {
+const int Tower::get_size_cols() const {
 	return size_cols;
 }
+
+

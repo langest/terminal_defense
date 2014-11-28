@@ -24,6 +24,7 @@ class Tower {
 		int size_cols;		//size of the tower x-wise, used by blocking and gfx
 
 		int sell_value;
+		float sell_decrease;
 
 		//Functions:
 	public:
@@ -35,12 +36,14 @@ class Tower {
 
 		//Implemented:
 		void draw(GUI &);
-		inline const bool get_blocking() const;
-		inline const int get_size_rows() const;
-		inline const int get_size_cols() const;
+		const int get_sell_value() const;
+		const bool get_blocking() const;
+		const int get_size_rows() const;
+		const int get_size_cols() const;
 
 		//Virtual:
 		virtual bool update() = 0;
+		virtual bool end_of_wave_update() = 0;
 };
 
 #endif //termd_tower
