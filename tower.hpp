@@ -19,6 +19,12 @@ class Tower {
 		bool blocking; //Ground path blocking, children can change this
 		char gfx;	//The high-tech 3D model! Children can change this
 	public:
+		Tower();
+		Tower(const Tower &);
+		~Tower();
+
+		Tower& operator=(const Tower &);
+
 		//Implemented:
 		void draw(GUI &) const;
 		const bool get_blocking() const;
