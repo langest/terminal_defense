@@ -1,8 +1,3 @@
-#include "gui.hpp"
+#include "game.hpp"
 
-class Game {
-	private:
-		GUI gui;
-	public:
-		void build_phase();
-};
+int main();
