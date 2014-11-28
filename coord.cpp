@@ -10,14 +10,19 @@ Coord::Coord(int x, int y){
 	row = y;
 }
 
-Coord::Coord(const Coord & other){
-	col = other.col;
-	row = other.row;
+Coord::Coord(const Coord & src) {
+	col = src.col;
+	row = src.row;
 }
 
-Coord::Coord(const Coord *){
-	col = other->col;
-	row = other->row;
+Coord::Coord(const Coord * src) {
+	col = src->col;
+	row = src->row;
+}
+
+Coord& Coord::operator=(const Coord & src) {
+	col = src.col;
+	row = src.row;
 }
 
 int Coord::get_col() const {
