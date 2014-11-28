@@ -93,7 +93,7 @@ bool GUI::draw_gfx(const Coord & coord, const char** gfx, int row, int col) {
 		}
 	}
 
-	wmove(main_win, row, col);
+	wmove(main_win, cur_row, cur_col);
 
 	return true;
 }
