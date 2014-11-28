@@ -1,7 +1,4 @@
-#ifndef termd_gui
-#define termd_gui
-#include "gui.h"
-#endif
+#include "gui.hpp"
 
 int main() {
 	GUI gui;
