@@ -26,6 +26,15 @@ Coord& Coord::operator=(const Coord & src) {
 	return *this;
 }
 
+bool Coord::operator==(const Coord & other) const {
+	return other.row == row && other.col == col;
+}
+
+bool Coord::operator!=(const Coord & other) const {
+	return other.row != row || other.col != col;
+}
+
+
 int Coord::get_col() const {
 	return col;
 }
