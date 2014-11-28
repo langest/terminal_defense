@@ -11,6 +11,8 @@ class Coord {
 		Coord(const Coord *);
 
 		Coord& operator=(const Coord &);
+		bool operator==(const Coord &) const;
+		bool operator!=(const Coord &) const;
 
 		int get_col() const;
 		int get_row() const;
