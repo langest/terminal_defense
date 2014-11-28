@@ -6,9 +6,9 @@
 #include <vector>
 #endif //termd_vector
 
-#include "gui.hpp"
-#include "tower.hpp"
-#include "coord.hpp"
+#include "../gui.hpp"
+#include "../tower/tower.hpp"
+#include "../coord.hpp"
 
 
 class GameBoard  {
