@@ -13,7 +13,11 @@
 
 class GameBoard  {
 	private:
-		int** blocking;
+		//player stuff:
+		int money;
+
+		//Board stuff:
+		int** blocking;	//TODO: Replace with another map!
 		int size_rows;
 		int size_cols;
 
@@ -32,7 +36,7 @@ class GameBoard  {
 		const int get_size_cols() const;
 		const int get_pos_value(Coord) const;
 		bool location_availible(Coord) const;
-		bool place_tower(Tower);
+		bool build_tower(Coord, int);
 };
 
 #endif //termd_game_board
