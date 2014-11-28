@@ -12,6 +12,11 @@ class Player {
 	protected:
 		
 	public:
+		Player();
+		Player(const Player &);
+		~Player();
+
+		Player& Player(const Player &);
 		
 };
 
