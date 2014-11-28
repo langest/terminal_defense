@@ -1,19 +1,36 @@
 #include "gameboard.hpp"
 
-class GameBoard  {
-	private:
-		int** blocking;
-		int size_rows;
-		int size_cols;
-	public:
-		//Main Game Loop:
-		void draw(GUI &);
-		bool update();
+GameBoard::GameBoard(){
+	blocking = int*[size_rows];
+	for (int i = 0; i < size_rows; ++i)
+	{
+		blocking[i] = int[size_cols];
+	}
+}
 
-		//Getters and Setters
-		const int get_size_rows() const;
-		const int get_size_cols() const;
-		const int get_pos_value(Coord) const;
-		bool location_availible(Coord) const;
-		bool place_tower(Tower);
-};
+void GameBoard::draw(GUI & g){
+	//g.draw_gfx(pos, blocking, size_rows, size_cols);
+}
+bool GameBoard::update(){
+	return true;
+}
+
+const int GameBoard::get_size_rows() const {
+	return size_rows;
+}
+
+const int GameBoard::get_size_cols() const {
+	return size_cols;
+}
+
+const int GameBoard::get_pos_value(Coord c) const {
+	return blocking[c.get_row()][c.get_col()];
+}
+
+bool GameBoard::location_availible(Coord c) const {
+	return true;
+}
+
+bool GameBoard::place_tower(Tower t) {
+	return true;
+}
