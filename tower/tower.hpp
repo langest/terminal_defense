@@ -35,7 +35,7 @@ class Tower {
 		Tower& operator=(const Tower &);
 
 		//Implemented:
-		void draw(GUI &);
+		bool draw(GUI &);
 		const int get_sell_value() const;
 		const bool get_blocking() const;
 		const int get_size_rows() const;
