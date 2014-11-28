@@ -9,11 +9,13 @@ Coord::Coord(int x, int y){
 	col = x;
 	row = y;
 }
-Coord::Coord(Coord const & other){
+
+Coord::Coord(const Coord & other){
 	col = other.col;
 	row = other.row;
 }
-Coord::Coord(Coord const *){
+
+Coord::Coord(const Coord *){
 	col = other->col;
 	row = other->row;
 }
