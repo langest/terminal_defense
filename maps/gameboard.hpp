@@ -1,10 +1,10 @@
 #ifndef termd_game_board
 #define termd_game_board
 
-#ifndef termd_vector
-#define termd_vector
-#include <vector>
-#endif //termd_vector
+#ifndef termd_unordered_map
+#define termd_unordered_map
+#include <unordered_map>
+#endif //termd_unordered_map
 
 #include "../gui.hpp"
 #include "../tower/tower.hpp"
@@ -18,7 +18,7 @@ class GameBoard  {
 		int size_cols;
 
 		//Dynamic Stuff:
-		std::vector<Tower> towers;
+		std::unordered_map<Coord, Tower> towers;
 	public:
 		GameBoard();
 		~GameBoard();
