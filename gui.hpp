@@ -18,6 +18,9 @@ class GUI {
 	public:
 		GUI();
 		~GUI();
+		GUI(const GUI &);
+
+		GUI& operator=(const GUI &);
 
 		void init_gui();
 		bool move_cursor_up();

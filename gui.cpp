@@ -13,6 +13,15 @@ GUI::~GUI() {
 	endwin(); //End curses mode
 }
 
+GUI::GUI(const GUI & src) {
+	main_win = src.main_win;
+}
+
+GUI& GUI::GUI(const GUI & src) {
+	main_win = src.main_win;
+	return this;
+}
+
 bool GUI::move_cursor_up() {
 	int x,y;
 	getyx(main_win, y, x);
