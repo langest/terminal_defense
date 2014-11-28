@@ -1,25 +1,21 @@
 #include "gui.hpp"
 
 GUI::GUI(){
+	initscr(); //Starts curses mode TODO this should probably be done in main
+	
 	main_win = create_new_win(10, 10, 0, 0);
 
-	initscr(); //Starts curses mode
 	cbreak(); //Since we only want to read characters
 	noecho(); //Turns off echo of input
 }
 
 GUI::~GUI() {
 	destroy_win(main_win);
-	endwin(); //End curses mode
+	endwin(); //End curses mode TODO this should probably be done in main
 }
 
 GUI::GUI(const GUI & src) {
 	main_win = src.main_win;
-}
-
-GUI& GUI::GUI(const GUI & src) {
-	main_win = src.main_win;
-	return this;
 }
 
 bool GUI::move_cursor_up() {
