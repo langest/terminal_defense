@@ -9,6 +9,32 @@ GameBoard::GameBoard() {
 	}
 }
 
+GameBoard::GameBoard(const GameBoard & src) {
+	money = src.money;
+	for (int r = 0; r < size_rows; ++r) {
+		for (int c = 0; c < size_cols; ++c) {
+			blocking[r][c] = src.blocking[r][c];
+		}
+	}
+	size_rows = src.size_rows;
+	size_cols = src.size_cols;
+}
+
+GameBoard::~GameBoard() {
+	//Currently nothing to do here
+}
+
+GameBoard& GameBoard::operator=(const GameBoard & src) {
+	money = src.money;
+	for (int r = 0; r < size_rows; ++r) {
+		for (int c = 0; c < size_cols; ++c) {
+			blocking[r][c] = src.blocking[r][c];
+		}
+	}
+	size_rows = src.size_rows;
+	size_cols = src.size_cols;
+}
+
 void GameBoard::draw(GUI & g) {
 	//Draw Towers:
 	for (std::unordered_map<Coord, Tower>::iterator i = towers.begin(); i != towers.end(); ++i;) {

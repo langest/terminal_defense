@@ -26,7 +26,10 @@ class GameBoard  {
 		std::unordered_map<Coord, Tower> towers;
 	public:
 		GameBoard();
+		GameBoard(const GameBoard &);
 		~GameBoard();
+
+		GameBoard& operator=(const GameBoard &);
 
 		//Main Game Loop:
 		void draw(GUI &);
