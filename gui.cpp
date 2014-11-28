@@ -1,17 +1,11 @@
 #include "gui.hpp"
 
 GUI::GUI(){
-	initscr(); //Starts curses mode TODO this should be done in main
-	cbreak(); //Since we only want to read characters
-	noecho(); //Turns off echo of input
-	
 	main_win = create_new_win(10, 10, 0, 0);
-
 }
 
 GUI::~GUI() {
-	destroy_win(main_win);
-	endwin(); //End curses mode TODO this should be done in main
+	//Currently nothing to do here
 }
 
 GUI::GUI(const GUI & src) {
@@ -103,7 +97,7 @@ void GUI::clear() {
 }
 
 void GUI::refresh() {
-	refresh(); //Refresh curses
+	wrefresh(main_win); //Refresh curses
 }
 
 WINDOW *create_new_win(int height, int width, int starty, int startx) {
