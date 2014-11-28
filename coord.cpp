@@ -5,7 +5,7 @@ Coord::Coord() {
 	row = 0;
 }
 
-Coord::Coord(int x, int y){
+Coord::Coord(int x, int y) {
 	col = x;
 	row = y;
 }
