@@ -23,9 +23,11 @@ Coord::Coord(const Coord *){
 int Coord::get_col() const {
 	return col;
 }
+
 int Coord::get_row() const {
 	return row;
 }
+
 bool Coord::set_col(const int x) {
 	if(x < 0) { //TODO upper bound
 		return false;
@@ -33,6 +35,7 @@ bool Coord::set_col(const int x) {
 	col = x;
 	return true;
 }
+
 bool Coord::set_row(const int y) {
 	if(y < 0) { //TODO upper bound
 		return false;
