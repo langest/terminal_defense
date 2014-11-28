@@ -1,17 +1,17 @@
 #include "gui.hpp"
 
 GUI::GUI(){
-	initscr(); //Starts curses mode TODO this should probably be done in main
+	initscr(); //Starts curses mode TODO this should be done in main
+	cbreak(); //Since we only want to read characters
+	noecho(); //Turns off echo of input
 	
 	main_win = create_new_win(10, 10, 0, 0);
 
-	cbreak(); //Since we only want to read characters
-	noecho(); //Turns off echo of input
 }
 
 GUI::~GUI() {
 	destroy_win(main_win);
-	endwin(); //End curses mode TODO this should probably be done in main
+	endwin(); //End curses mode TODO this should be done in main
 }
 
 GUI::GUI(const GUI & src) {
@@ -19,39 +19,57 @@ GUI::GUI(const GUI & src) {
 }
 
 bool GUI::move_cursor_up() {
-	int x,y;
-	getyx(main_win, y, x);
+	int col, row;
+	getyx(main_win, row, col);
 
-	if (y < 1) {
-		return false;
-	}
-	move(x,y-1); //Move cursor
-	return true;
+	int ret;
+	ret = wmove(main_win, row-1, col); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::move_cursor_down() {
-	int max_x, max_y;
-	getmaxyx(main_win,max_y, max_x);
-	int x,y;
-	getyx(main_win, y, x);
+	int col, row;
+	getyx(main_win, row, col);
 
-	if (y >= max_y) {
-		return false;
-	}
-	move(x,y+1); //Move cursor
-	return true;
+	int ret;
+	ret = wmove(main_win, row+1, col); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::move_cursor_left() {
-	return false;
+	int col, row;
+	getyx(main_win, row, col);
+
+	int ret;
+	ret = wmove(main_win, row, col-1); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::move_cursor_right() {
-	return false;
+	int col, row;
+	getyx(main_win, row, col);
+
+	int ret;
+	ret = wmove(main_win, row, col+1); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
-bool GUI::draw(Coord coord, char ch) {
-	return false;
+//Puts a char at specified coord in the guis window.
+//Does not refresh
+//Returns true iff successful
+bool GUI::draw(const Coord & coord, const char ch) {
+	int col, row;
+	getyx(main_win, row, col);
+
+	int ret;
+	ret = mvwaddch(main_win, coord.get_row(), coord.get_col(), ch);
+	wmove(main_win, row, col);
+	
+	return ret;
 }
 
 void GUI::clear() {
