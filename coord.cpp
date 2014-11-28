@@ -58,3 +58,8 @@ bool Coord::set_row(const int y) {
 	row = y;
 	return true;
 }
+
+std::ostream & operator<<(std::ostream & os, const Coord &) {
+	os << "row: " << row << ", col: " << col;
+	return os;
+}
