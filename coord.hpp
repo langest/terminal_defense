@@ -9,7 +9,7 @@ class Coord {
 		Coord(const Coord &);
 		Coord(const Coord *);
 
-		Coord operator=(const Coord &);
+		Coord& operator=(const Coord &);
 
 		int get_col() const;
 		int get_row() const;
