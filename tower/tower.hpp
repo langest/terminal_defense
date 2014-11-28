@@ -24,6 +24,7 @@ class Tower {
 		int size_cols;		//size of the tower x-wise, used by blocking and gfx
 
 		int sell_value;
+		float sell_decrease;
 
 		//Functions:
 	public:
@@ -41,6 +42,7 @@ class Tower {
 
 		//Virtual:
 		virtual bool update() = 0;
+		virtual bool end_of_wave_update() = 0;
 };
 
 #endif //termd_tower
