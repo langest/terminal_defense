@@ -5,6 +5,7 @@ class Coord {
 	private:
 		int col, row;
 	public:
+		Coord();
 		Coord(int, int);
 		Coord(const Coord &);
 		Coord(const Coord *);
