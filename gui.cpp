@@ -58,8 +58,18 @@ bool GUI::move_cursor_right() {
 	return ret;
 }
 
-bool GUI::draw(Coord coord, char ch) {
-	return false;
+//Puts a char at specified coord in the guis window.
+//Does not refresh
+//Returns true iff successful
+bool GUI::draw(const Coord & coord, const char ch) {
+	int col, row;
+	getyx(main_win, row, col);
+
+	int ret;
+	ret = mvwaddch(main_win, coord.get_row(), coord.get_col(), ch);
+	wmove(main_win, row, col);
+	
+	return ret;
 }
 
 void GUI::clear() {
