@@ -49,7 +49,7 @@ bool GUI::move_cursor_left() {
 }
 
 bool GUI::move_cursor_right() {
-	int col, row;
+	int row, col;
 	getyx(main_win, row, col);
 
 	int ret;
@@ -62,7 +62,7 @@ bool GUI::move_cursor_right() {
 //Does not refresh
 //Returns true iff successful
 bool GUI::draw(const Coord & coord, const char ch) {
-	int col, row;
+	int row, col;
 	getyx(main_win, row, col);
 
 	int ret;
@@ -70,6 +70,32 @@ bool GUI::draw(const Coord & coord, const char ch) {
 	wmove(main_win, row, col);
 	
 	return ret;
+}
+
+//Draws a gfx
+bool GUI::draw_gfx(const Coord & coord, const char** gfx, int row, int col) {
+	int max_row, max_col;
+	getmaxyx(main_win, max_row, max_col);
+	if (   row + coord.get_row() > max_row
+			|| col + coord.get_col() > max_col
+			|| coord.get_row() < 0
+			|| coord.get_col() < 0 ) {
+		return false;
+	}
+
+	int cur_row, cur_col;
+	getyx(main_win, cur_row, cur_col);
+
+	for (int r = 0; r < row; ++r) {
+		wmove(main_win, coord.get_row() + r, coord.get_col());
+		for (int c = 0; c < col; ++c) {
+			waddch(main_win, gfx[r][c]);
+		}
+	}
+
+	wmove(main_win, row, col);
+
+	return true;
 }
 
 void GUI::clear() {

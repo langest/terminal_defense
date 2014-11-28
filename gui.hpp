@@ -29,6 +29,7 @@ class GUI {
 		bool move_cursor_right();
 
 		bool draw(const Coord &, const char); //Does not refresh
+		bool draw_gfx(const Coord &, const char**, int, int);
 		void clear();
 		void refresh();
 
