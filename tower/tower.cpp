@@ -1,9 +1,5 @@
 #include "tower.hpp"
 
-Tower::Tower() : pos(0, 0), blocking(false), gfx(' '){
-
-}
-
 Tower::Tower(const Tower & src) {
 	pos = src.pos;
 	blocking = src.blocking;
@@ -18,6 +14,7 @@ Tower& Tower::operator=(const Tower & src) {
 	pos = src.pos;
 	blocking = src.blocking;
 	gfx = src.gfx;
+	return *this;
 }
 
 void Tower::draw(GUI & g) const {
