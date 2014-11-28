@@ -15,9 +15,17 @@ class Tower {
 	private:
 		
 	protected:
-		Coord pos;
-		bool blocking; //Ground path blocking, children can change this
-		char gfx;	//The high-tech 3D model! Children can change this
+		//Variables:
+		Coord pos;			//Top-left
+
+		bool** blocking; 	//Ground path blocking, children can change this
+		char** gfx;			//The high-tech 3D model! Children can change this
+		int size_rows;		//size of the tower y-wise, used by blocking and gfx
+		int size_cols;		//size of the tower x-wise, used by blocking and gfx
+
+		int sell_value;
+
+		//Functions:
 	public:
 		Tower();
 		Tower(const Tower &);
@@ -26,8 +34,10 @@ class Tower {
 		Tower& operator=(const Tower &);
 
 		//Implemented:
-		void draw(GUI &) const;
-		const bool get_blocking() const;
+		void draw(GUI &);
+		inline const bool get_blocking() const;
+		inline const int get_size_rows() const;
+		inline const int get_size_cols() const;
 
 		//Virtual:
 		virtual bool update() = 0;
