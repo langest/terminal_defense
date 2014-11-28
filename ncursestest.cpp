@@ -19,15 +19,6 @@ int main() {
 
 	lolol();
 
-	getch();			/* Wait for user input */
-
-	clear();
-
-	getch();			/* Wait for user input */
-
-	addch('E');
-	move(3,3);
-	getch();			/* Wait for user input */
 	endwin();			/* End curses mode		  */
 
 	return 0;
@@ -46,7 +37,7 @@ int lolol()
 					 * everty thing to me 		*/
 	keypad(stdscr, TRUE);		/* I need that nifty F1 	*/
 
-	height = 3;
+	height = 10;
 	width = 10;
 	starty = (LINES - height) / 2;	/* Calculating for a center placement */
 	startx = (COLS - width) / 2;	/* of the window		*/
@@ -69,8 +60,11 @@ int lolol()
 				my_win = create_newwin(height, width, --starty,startx);
 				break;
 			case KEY_DOWN:
-				destroy_win(my_win);
-				my_win = create_newwin(height, width, ++starty,startx);
+				//destroy_win(my_win);
+				//my_win = create_newwin(height, width, ++starty,startx);
+				wmove(my_win, 2,2);
+				wrefresh(my_win);
+				std::cout << "move to 2,2";
 				break;	
 		}
 	}
