@@ -23,7 +23,7 @@ Coord::Coord(const Coord * src) {
 Coord& Coord::operator=(const Coord & src) {
 	col = src.col;
 	row = src.row;
-	return this;
+	return *this;
 }
 
 int Coord::get_col() const {
