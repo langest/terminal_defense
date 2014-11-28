@@ -12,6 +12,12 @@ class Virus {
 		bool pathfind(); //Find a path through them maze wich it can follow
 		bool step(); //Make the monster walk along its path
 	public:
+		Virus();
+		Virus(const Virus &);
+		~Virus():
+
+		oprator=(const Virus &);
+
 		bool update(); //Make the mosnster behave
 };
 
