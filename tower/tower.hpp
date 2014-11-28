@@ -36,9 +36,10 @@ class Tower {
 
 		//Implemented:
 		void draw(GUI &);
-		inline const bool get_blocking() const;
-		inline const int get_size_rows() const;
-		inline const int get_size_cols() const;
+		const int get_sell_value() const;
+		const bool get_blocking() const;
+		const int get_size_rows() const;
+		const int get_size_cols() const;
 
 		//Virtual:
 		virtual bool update() = 0;
