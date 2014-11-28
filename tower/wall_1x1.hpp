@@ -1,5 +1,5 @@
-#ifndef termd_tower_wall
-#define termd_tower_wall
+#ifndef termd_tower_wall_1x1
+#define termd_tower_wall_1x1
 
 #ifndef termd_gui
 #define termd_gui
@@ -16,7 +16,7 @@
 #include "coord.hpp"
 #endif //termd_coord
 
-class Wall : public Tower  {
+class Wall_1x1 : public Tower  {
 	private:
 		
 	protected:
@@ -24,10 +24,10 @@ class Wall : public Tower  {
 		//bool blocking; //Ground path blocking, children can change this
 		//char gfx;	//The high-tech 3D model! Children can change this
 	public:
-		Wall(Coord);
+		Wall_1x1(Coord);
 
 		//Virtual:
 		virtual bool update();
 };
 
-#endif //termd_tower_wall
+#endif //termd_tower_wall_1x1
