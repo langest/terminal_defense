@@ -11,12 +11,6 @@ CXXFLAGS = -g \
 all: main.cpp $(maindeps) $(maindepsheaders)
 	$(CXX) $(CXXFLAGS) -o terminaldefense.out main.cpp $(maindeps)
 
-#gui.o: coord.o gui.cpp
-#	$(CXX) -c $(CXXFLAGS) gui.cpp
-#
-#coord.o: coord.cpp
-#	$(CXX) -c $(CXXFLAGS) coord.cpp
-
 ncurses_test: ncursestest.cpp
 	$(CXX) -std=c++0x -g -Wall ncursestest.cpp -lncurses -o ncursestest.out
 
