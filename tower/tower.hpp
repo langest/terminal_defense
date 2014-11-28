@@ -15,9 +15,9 @@ class Tower {
 	private:
 		
 	protected:
-		Coord pos;
-		bool blocking; //Ground path blocking, children can change this
-		char gfx;	//The high-tech 3D model! Children can change this
+		Coord pos;		//Top-left
+		bool[][] blocking; //Ground path blocking, children can change this
+		char[][] gfx;	//The high-tech 3D model! Children can change this
 	public:
 		Tower();
 		Tower(const Tower &);
