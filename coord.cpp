@@ -1,5 +1,10 @@
 #include "coord.hpp"
 
+Coord::Coord() {
+	col = 0;
+	row = 0;
+}
+
 Coord::Coord(int x, int y){
 	col = x;
 	row = y;
