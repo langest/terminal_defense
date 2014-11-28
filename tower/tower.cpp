@@ -21,8 +21,8 @@ Tower& Tower::operator=(const Tower & src) {
 	return *this;
 }
 
-void Tower::draw(GUI & g) {
-	g.draw_gfx(pos, gfx, size_rows, size_cols);
+bool Tower::draw(GUI & g) {
+	return g.draw_gfx(pos, gfx, size_rows, size_cols);
 }
 
 const int Tower::get_sell_value() const {
