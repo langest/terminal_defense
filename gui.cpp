@@ -19,35 +19,43 @@ GUI::GUI(const GUI & src) {
 }
 
 bool GUI::move_cursor_up() {
-	int x,y;
-	getyx(main_win, y, x);
+	int col, row;
+	getyx(main_win, row, col);
 
-	if (y < 1) {
-		return false;
-	}
-	move(x,y-1); //Move cursor
-	return true;
+	int ret;
+	ret = wmove(main_win, row-1, col); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::move_cursor_down() {
-	int max_x, max_y;
-	getmaxyx(main_win,max_y, max_x);
-	int x,y;
-	getyx(main_win, y, x);
+	int col, row;
+	getyx(main_win, row, col);
 
-	if (y >= max_y) {
-		return false;
-	}
-	move(x,y+1); //Move cursor
-	return true;
+	int ret;
+	ret = wmove(main_win, row+1, col); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::move_cursor_left() {
-	return false;
+	int col, row;
+	getyx(main_win, row, col);
+
+	int ret;
+	ret = wmove(main_win, row, col-1); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::move_cursor_right() {
-	return false;
+	int col, row;
+	getyx(main_win, row, col);
+
+	int ret;
+	ret = wmove(main_win, row, col+1); //Move cursor
+	wrefresh(main_win);
+	return ret;
 }
 
 bool GUI::draw(Coord coord, char ch) {
