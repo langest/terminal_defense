@@ -86,6 +86,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 				return true;
 			}else{
 				//FAIL: Not enough RAM
+				delete w;
 			}
 			break;
 	}
