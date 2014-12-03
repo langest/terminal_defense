@@ -21,7 +21,7 @@ class GameBoard  {
 		int** blocking;	//TODO: Replace with another map!
 		int size_rows;
 		int size_cols;
-		std::unordered_map<Coord, Tower> towers;
+		std::map<Coord, Tower> towers;
 
 	public:
 		GameBoard();
