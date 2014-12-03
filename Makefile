@@ -1,5 +1,4 @@
-maindeps = -lncurses \
-			game.o \
+maindeps = game.o \
 			gui.o \
 			coord.o \
 			maps/gameboard.o \
@@ -8,12 +7,13 @@ maindeps = -lncurses \
 
 maindepsheaders = $(maindeps:.o=.hpp)
 
-CXXFLAGS = -g \
+CXXFLAGS = -lncurses \
+					 -g \
 					 -Wall \
 					 -std=c++11
 
 all: main.cpp $(maindeps) $(maindepsheaders)
-	$(CXX) $(CXXFLAGS) -o terminaldefense.out main.cpp $(maindeps)
+	$(CXX) -o terminaldefense.out main.cpp $(CXXFLAGS) $(maindeps)
 
 ncurses_test: ncursestest.cpp
 	$(CXX) -std=c++0x -g -Wall ncursestest.cpp -lncurses -o ncursestest.out
