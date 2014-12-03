@@ -1,5 +1,8 @@
 maindeps = gui.o \
-					 coord.o
+					 coord.o \
+					 maps/gameboard.o \
+					 tower/tower.o \
+					 tower/wall_1x1.o
 
 maindepsheaders = $(maindeps:.o=.hpp)
 
