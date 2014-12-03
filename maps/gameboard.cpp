@@ -15,7 +15,9 @@ GameBoard::GameBoard(const GameBoard & src) {
 }
 
 GameBoard::~GameBoard() {
-	//Not needed, for now
+	for (auto i = towers.begin(); i != towers.end(); ++i) {
+		delete & i->second;
+	}
 }
 
 GameBoard& GameBoard::operator=(const GameBoard & src) {
@@ -75,12 +77,12 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
-			Wall_1x1 w(c);
+			Wall_1x1* w = new Wall_1x1(c);
 			//TODO: Check if blocked
 			if(ram >= WALL_1x1_COST){
 				//SUCCESS!
 				ram -= WALL_1x1_COST;
-				towers.insert( std::pair<Coord, Tower &>(c, w));
+				towers.insert( std::pair<Coord, Tower &>(c, *w));
 				return true;
 			}else{
 				//FAIL: Not enough RAM
