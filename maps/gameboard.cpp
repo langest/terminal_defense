@@ -72,24 +72,20 @@ bool GameBoard::location_availible(Coord c) const {
 }
 
 bool GameBoard::build_tower(Coord c, int tower_id) {
-	bool successfully_built_tower = false;
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
-			Wall_1x1 w = Wall_1x1(c);
+			Wall_1x1 w(c);
 			//TODO: Check if blocked
 			if(ram >= WALL_1x1_COST){
 				//SUCCESS!
 				ram -= WALL_1x1_COST;
-				successfully_built_tower = true;
 				towers.insert( std::pair<Coord, Tower &>(c, w));
+				return true;
 			}else{
 				//FAIL: Not enough RAM
 			}
 			break;
-		default:
-			//unidentified tower_id!
-			return false;
 	}
-	return successfully_built_tower;
+	return false;
 }
