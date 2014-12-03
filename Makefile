@@ -1,4 +1,5 @@
-maindeps = gui.o \
+maindeps = game.o \
+					 gui.o \
 					 coord.o \
 					 maps/gameboard.o \
 					 tower/tower.o \
