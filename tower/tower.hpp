@@ -27,11 +27,7 @@ class Tower {
 
 		//Functions:
 	public:
-		Tower();
-		Tower(const Tower &);
-		virtual ~Tower();
-
-		Tower& operator=(const Tower &);
+		virtual ~Tower() = 0;
 
 		//Implemented:
 		bool draw(GUI &);
