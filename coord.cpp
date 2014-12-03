@@ -34,6 +34,20 @@ bool Coord::operator!=(const Coord & other) const {
 	return other.row != row || other.col != col;
 }
 
+bool Coord::operator<(const Coord & other) const {
+	if (row == other.row) {
+		return col < other.col;
+	}
+	return row < other.row;
+}
+
+bool Coord::operator>(const Coord & other) const {
+	if (row == other.row) {
+		return col > other.col;
+	}
+	return row > other.row;
+}
+
 
 int Coord::get_col() const {
 	return col;
