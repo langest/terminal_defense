@@ -5,7 +5,7 @@
 #include "tower.hpp"
 #include "../coord.hpp"
 
-class Wall_1x1 : public Tower<1, 1> {
+class Wall_1x1 : public Tower {
 	private:
 		
 	protected:
