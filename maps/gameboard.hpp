@@ -22,7 +22,7 @@ class GameBoard  {
 		std::map<Coord, int> grid_bld_state;
 		int size_rows;
 		int size_cols;
-		std::map<Coord, Tower> towers;
+		std::map<Coord, Tower &> towers;
 
 	public:
 		GameBoard();
@@ -38,7 +38,8 @@ class GameBoard  {
 		//Getters and Setters
 		const int get_size_rows() const;
 		const int get_size_cols() const;
-		const int get_pos_value(Coord) const;
+		const int get_env_value(Coord) const;
+		const int get_bld_value(Coord) const;
 		bool location_availible(Coord) const;
 		bool build_tower(Coord, int);
 };

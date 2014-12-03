@@ -26,22 +26,22 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 
 void GameBoard::render(GUI & g) {
 	//Render Towers:
-	for (auto i = towers.begin(); i != towers.end(); ++i;) {
-		if(*i.draw(g) == false) {
+	for (auto i = towers.begin(); i != towers.end(); ++i) {
+		if(i->second.draw(g) == false) {
 			//If tower failed to draw:
 			#ifdef DEBUGGING
 			#include <iostream>
-			std::cout << "Failed to draw Tower: " << *i << std::endl;
+			std::cout << "Failed to draw Tower: " << i->second << std::endl;
 			#endif //DEBUGGING
 		}
 	}
 }
 
 bool GameBoard::update() {
-	for (std::unordered_map<Coord, Tower>::iterator i = towers.begin(); i != towers.end(); ) {
-		if(*i.update() == false) {
+	for (auto i = towers.begin(); i != towers.end(); ) {
+		if(i->second.update() == false) {
 			//If tower is flagging removal, remove it!
-			i = tower.erase(i);
+			i = towers.erase(i);
 		}else{
 			++i;
 		}
@@ -57,8 +57,12 @@ const int GameBoard::get_size_cols() const {
 	return size_cols;
 }
 
-const int GameBoard::get_pos_value(Coord c) const {
-	return blocking[c.get_row()][c.get_col()];
+const int GameBoard::get_env_value(Coord c) const {
+	return 0; //TODO
+}
+
+const int GameBoard::get_bld_value(Coord c) const {
+	return 0; //TODO
 }
 
 bool GameBoard::location_availible(Coord c) const {
@@ -66,12 +70,13 @@ bool GameBoard::location_availible(Coord c) const {
 }
 
 bool GameBoard::build_tower(Coord c, int tower_id) {
+	Wall_1x1* w = new Wall_1x1(c); //TODO memoryleak and proper build
 	switch(tower_id){ //TODO define towers somewhere...
 		case 1: 
 			//is it possible to build here?
 			//enough ram?
 			//success?
-			towers.add(Wall_1x1(c));
+			towers.insert( std::pair<Coord, Tower &>(c, *w));
 			break;
 		default:
 			//unidentified tower_id!
