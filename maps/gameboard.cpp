@@ -11,7 +11,7 @@ GameBoard::GameBoard(const GameBoard & src) {
 	ram = src.ram;
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
-	tower = src.towers;
+	towers = src.towers;
 }
 
 GameBoard::~GameBoard() {
@@ -22,7 +22,7 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 	ram = src.ram;
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
-	tower = src.towers;
+	towers = src.towers;
 	return *this;
 }
 
@@ -76,7 +76,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
-			Wall_1x1 w = Wall_1x1(c)
+			Wall_1x1 w = Wall_1x1(c);
 			//TODO: Check if blocked
 			if(ram >= WALL_1x1_COST){
 				//SUCCESS!
