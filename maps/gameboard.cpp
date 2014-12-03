@@ -26,7 +26,7 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 
 void GameBoard::render(GUI & g) {
 	//Render Towers:
-	for (std::unordered_map<Coord, Tower>::iterator i = towers.begin(); i != towers.end(); ++i;) {
+	for (auto i = towers.begin(); i != towers.end(); ++i;) {
 		if(*i.draw(g) == false) {
 			//If tower failed to draw:
 			#ifdef DEBUGGING
