@@ -31,7 +31,7 @@ class GameBoard  {
 		GameBoard& operator=(const GameBoard &);
 
 		//Main Game Loop:
-		void draw(GUI &);
+		void render(GUI &);
 		bool update();
 
 		//Getters and Setters

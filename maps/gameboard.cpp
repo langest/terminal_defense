@@ -35,8 +35,8 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 	size_cols = src.size_cols;
 }
 
-void GameBoard::draw(GUI & g) {
-	//Draw Towers:
+void GameBoard::render(GUI & g) {
+	//Render Towers:
 	for (std::unordered_map<Coord, Tower>::iterator i = towers.begin(); i != towers.end(); ++i;) {
 		if(*i.draw(g) == false) {
 			//If tower failed to draw:
