@@ -1,0 +1,20 @@
+#ifndef termd_definitions
+#define termd_definitions
+
+#ifndef termd_limits
+#define termd_limits
+#include <limits>
+#endif //termd_limits
+
+//Typically needed numbers
+#define INT_MAX std::numeric_limits<int>::max()
+#define INT_MIN std::numeric_limits<int>::min()
+
+//Map information
+#define NUMROWS 40
+#define NUMCOLS 80
+
+//Buildings
+#define BUILD_WALL_1x1 1
+
+#endif //termd_definitions
