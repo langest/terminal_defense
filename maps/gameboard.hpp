@@ -6,11 +6,11 @@
 #include <map>
 #endif //termd_map
 
+#include "..definitions"
 #include "../gui.hpp"
 #include "../tower/tower.hpp"
 #include "../tower/wall_1x1.hpp"
 #include "../coord.hpp"
-
 
 class GameBoard  {
 	private:
