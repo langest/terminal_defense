@@ -3,24 +3,26 @@
 GameBoard::GameBoard() {
 	ram = 9001; //player ram
 	//TODO set size of board
-	size_rows = 80;
-	size_cols = 80;
+	size_rows = NUMROWS;
+	size_cols = NUMCOLS;
 }
 
 GameBoard::GameBoard(const GameBoard & src) {
 	ram = src.ram;
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
+	tower = src.towers;
 }
 
 GameBoard::~GameBoard() {
-	//Nothing needed to be done here at the moment
+	//Not needed, for now
 }
 
 GameBoard& GameBoard::operator=(const GameBoard & src) {
 	ram = src.ram;
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
+	tower = src.towers;
 	return *this;
 }
 
@@ -70,16 +72,24 @@ bool GameBoard::location_availible(Coord c) const {
 }
 
 bool GameBoard::build_tower(Coord c, int tower_id) {
+	bool successfully_built_tower = false;
 	switch(tower_id){ //TODO define towers somewhere...
-		case BUILD_WALL_1x1: 
+		case WALL_1x1_ID: 
 			//is it possible to build here?
-			//enough ram?
-			//success?
-			towers.insert( std::pair<Coord, Tower &>(c, Wall_1x1(c)));
+			Wall_1x1 w = Wall_1x1(c)
+			//TODO: Check if blocked
+			if(ram >= WALL_1x1_COST){
+				//SUCCESS!
+				ram -= WALL_1x1_COST;
+				successfully_built_tower = true;
+				towers.insert( std::pair<Coord, Tower &>(c, w));
+			}else{
+				//FAIL: Not enough RAM
+			}
 			break;
 		default:
 			//unidentified tower_id!
 			return false;
 	}
-	return true;
+	return successfully_built_tower;
 }
