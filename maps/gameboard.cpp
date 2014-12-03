@@ -21,6 +21,7 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 	ram = src.ram;
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
+	return *this;
 }
 
 void GameBoard::render(GUI & g) {
