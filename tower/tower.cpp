@@ -35,7 +35,7 @@ const int Tower::get_sell_value() const {
 }
 
 const bool Tower::get_blocking() const {
-	return blocking;
+	return false;
 }
 
 int Tower::get_size_rows() const {

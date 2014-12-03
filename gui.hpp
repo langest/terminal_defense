@@ -4,7 +4,12 @@
 #ifndef termd_ncurses
 #define termd_ncurses
 #include <ncurses.h>
-#endif
+#endif //termd_ncurses
+
+#ifndef termd_vector
+#define termd_vector
+#include <vector>
+#endif //termd_vector
 
 #include "coord.hpp"
 
@@ -26,7 +31,7 @@ class GUI {
 		bool move_cursor_right();
 
 		bool draw(const Coord &, const char); //Does not refresh
-		bool draw_gfx(const Coord &, char**, int, int);
+		bool draw_gfx(const Coord &, std::vector<std::vector<char> > &, int, int);
 		void clear();
 		void refresh();
 

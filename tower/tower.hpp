@@ -1,13 +1,19 @@
 #ifndef termd_tower
 #define termd_tower
 
-#include "../gui.hpp"
-#include "../coord.hpp"
-
 #ifndef termd_cstddef
 #define termd_cstddef
 #include <cstddef>
-#endif
+#endif //term_cstddef
+
+#ifndef termd_vector
+#define termd_vector
+#include <vector>
+#endif //termd_vector
+
+#include "../gui.hpp"
+#include "../coord.hpp"
+
 
 class Tower {
 	private:
@@ -16,8 +22,8 @@ class Tower {
 		//Variables:
 		Coord pos;			//Top-left
 
-		bool** blocking; 	//Ground path blocking, children can change this
-		char** gfx;			//The high-tech 3D model! Children can change this
+		std::vector<std::vector<bool> > blocking; 	//Ground path blocking, children can change this
+		std::vector<std::vector<char> > gfx;			//The high-tech 3D model! Children can change this
 
 		int num_rows;
 		int num_cols;
