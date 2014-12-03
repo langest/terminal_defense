@@ -2,6 +2,7 @@
 #define termd_game
 
 #include "gui.hpp"
+#include "maps/gameboard.hpp"
 
 class Game {
 	private:
