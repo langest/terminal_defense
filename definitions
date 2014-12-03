@@ -15,6 +15,9 @@
 #define NUMCOLS 80
 
 //Buildings
-#define BUILD_WALL_1x1 1
+#define WALL_1x1_ID 1
+#define WALL_1x1_COST 100
+
+//Tile info
 
 #endif //termd_definitions
