@@ -6,7 +6,12 @@
 #include <map>
 #endif //termd_map
 
-#include "..definitions"
+#ifndef termd_cstddef
+#define termd_cstddef
+#include <cstddef>
+#endif //termd_cstddef
+
+#include "../definitions"
 #include "../gui.hpp"
 #include "../tower/tower.hpp"
 #include "../tower/wall_1x1.hpp"
@@ -22,7 +27,7 @@ class GameBoard  {
 		std::map<Coord, int> grid_bld_state;
 		int size_rows;
 		int size_cols;
-		std::map<Coord, Tower &> towers;
+		std::map<Coord, Tower> towers;
 
 	public:
 		GameBoard();
