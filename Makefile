@@ -1,16 +1,16 @@
-maindeps = game.o \
-					 gui.o \
-					 coord.o \
-					 maps/gameboard.o \
-					 tower/tower.o \
-					 tower/wall_1x1.o
+maindeps = -lncurses \
+			game.o \
+			gui.o \
+			coord.o \
+			maps/gameboard.o \
+			tower/tower.o \
+			tower/wall_1x1.o
 
 maindepsheaders = $(maindeps:.o=.hpp)
 
 CXXFLAGS = -g \
 					 -Wall \
-					 -std=c++11 \
-					 -lncurses
+					 -std=c++11
 
 all: main.cpp $(maindeps) $(maindepsheaders)
 	$(CXX) $(CXXFLAGS) -o terminaldefense.out main.cpp $(maindeps)
