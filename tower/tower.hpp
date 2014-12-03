@@ -29,7 +29,7 @@ class Tower {
 	public:
 		Tower();
 		Tower(const Tower &);
-		~Tower();
+		virtual ~Tower();
 
 		Tower& operator=(const Tower &);
 
