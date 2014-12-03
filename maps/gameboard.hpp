@@ -27,7 +27,7 @@ class GameBoard  {
 		std::map<Coord, int> grid_bld_state;
 		int size_rows;
 		int size_cols;
-		std::map<Coord, Tower &> towers;
+		std::map<Coord, Tower*> towers;
 
 	public:
 		GameBoard();

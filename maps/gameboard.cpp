@@ -16,7 +16,7 @@ GameBoard::GameBoard(const GameBoard & src) {
 
 GameBoard::~GameBoard() {
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
-		delete & i->second;
+		delete i->second;
 	}
 }
 
@@ -31,7 +31,7 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 void GameBoard::render(GUI & g) {
 	//Render Towers:
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
-		if(i->second.draw(g) == false) {
+		if(i->second->draw(g) == false) {
 			//If tower failed to draw:
 			#ifdef DEBUGGING
 			#include <iostream>
@@ -43,7 +43,7 @@ void GameBoard::render(GUI & g) {
 
 bool GameBoard::update() {
 	for (auto i = towers.begin(); i != towers.end(); ) {
-		if(i->second.update() == false) {
+		if(i->second->update() == false) {
 			//If tower is flagging removal, remove it!
 			i = towers.erase(i);
 		}else{
@@ -82,7 +82,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 			if(ram >= WALL_1x1_COST){
 				//SUCCESS!
 				ram -= WALL_1x1_COST;
-				towers.insert( std::pair<Coord, Tower &>(c, *w));
+				towers.insert( std::pair<Coord, Tower*>(c, w));
 				return true;
 			}else{
 				//FAIL: Not enough RAM
