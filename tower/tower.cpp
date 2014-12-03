@@ -1,44 +1,54 @@
 #include "tower.hpp"
 
-Tower::Tower(const Tower & src) {
+template<size_t row_size, size_t col_size>
+Tower<row_size, col_size>::Tower() {
+	blocking [row_size][col_size];
+	gfx      [row_size][col_size];
+}
+
+template<size_t row_size, size_t col_size> template<size_t a, size_t b>
+Tower<row_size, col_size>::Tower(const Tower<a, b> & src) {
 	pos = src.pos;
 	blocking = src.blocking;
 	gfx = src.gfx;
-	size_rows = src.size_rows;
-	size_cols = src.size_cols;
 }
 
-Tower::~Tower() {
+template<size_t row_size, size_t col_size>
+Tower<row_size, col_size>::~Tower() {
 	//Currently nothing needs to be done
 }
 
-Tower& Tower::operator=(const Tower & src) {
+template<size_t row_size, size_t col_size>
+Tower<row_size, col_size>& Tower<row_size, col_size>::operator=(const Tower<row_size, col_size> & src) {
 	pos = src.pos;
 	blocking = src.blocking;
 	gfx = src.gfx;
-	size_rows = src.size_rows;
-	size_cols = src.size_cols;
 	return *this;
 }
 
-bool Tower::draw(GUI & g) {
-	return g.draw_gfx(pos, gfx, size_rows, size_cols);
+template<size_t row_size, size_t col_size>
+bool Tower<row_size, col_size>::draw(GUI & g) {
+	return g.draw_gfx(pos, gfx, row_size, col_size);
 }
 
-const int Tower::get_sell_value() const {
+template<size_t row_size, size_t col_size>
+const int Tower<row_size, col_size>::get_sell_value() const {
 	return sell_value;
 }
 
-const bool Tower::get_blocking() const {
+template<size_t row_size, size_t col_size>
+const bool Tower<row_size, col_size>::get_blocking() const {
 	return blocking;
 }
 
-const int Tower::get_size_rows() const {
-	return size_rows;
+template<size_t row_size, size_t col_size>
+int Tower<row_size, col_size>::get_size_rows() const {
+	return row_size;
 }
 
-const int Tower::get_size_cols() const {
-	return size_cols;
+template<size_t row_size, size_t col_size>
+int Tower<row_size, col_size>::get_size_cols() const {
+	return col_size;
 }
 
 

@@ -4,6 +4,12 @@
 #include "../gui.hpp"
 #include "../coord.hpp"
 
+#ifndef termd_cstddef
+#define termd_cstddef
+#include <cstddef>
+#endif
+
+template <size_t row_size = 1, size_t col_size = 1>
 class Tower {
 	private:
 		
@@ -13,8 +19,6 @@ class Tower {
 
 		bool** blocking; 	//Ground path blocking, children can change this
 		char** gfx;			//The high-tech 3D model! Children can change this
-		int size_rows;		//size of the tower y-wise, used by blocking and gfx
-		int size_cols;		//size of the tower x-wise, used by blocking and gfx
 
 		int sell_value;
 		float sell_decrease;
@@ -22,10 +26,11 @@ class Tower {
 		//Functions:
 	public:
 		Tower();
-		Tower(const Tower &);
+		template <size_t a, size_t b>
+		Tower(const Tower<a, b> &);
 		~Tower();
 
-		Tower& operator=(const Tower &);
+		Tower<row_size, col_size>& operator=(const Tower<row_size, col_size> &);
 
 		//Implemented:
 		bool draw(GUI &);
