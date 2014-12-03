@@ -30,5 +30,6 @@ void Game::build_phase() {
 bool Game::build_tower() {
 	Coord c(5,5);
 	board.build_tower(c, 1);
+	board.render(gui); //TODO move away from here
 	return true;
 }
