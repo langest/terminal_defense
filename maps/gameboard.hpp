@@ -14,16 +14,15 @@
 
 class GameBoard  {
 	private:
-		//player stuff:
-		int money;
+		//player information:
+		int ram;
 
-		//Board stuff:
+		//Board information:
 		int** blocking;	//TODO: Replace with another map!
 		int size_rows;
 		int size_cols;
-
-		//Dynamic Stuff:
 		std::unordered_map<Coord, Tower> towers;
+
 	public:
 		GameBoard();
 		GameBoard(const GameBoard &);

@@ -1,7 +1,7 @@
 #include "gameboard.hpp"
 
 GameBoard::GameBoard() {
-	money = 9001; //player money
+	ram = 9001; //player ram
 
 	blocking = int*[size_rows];
 	for (int i = 0; i < size_rows; ++i) {
@@ -10,7 +10,7 @@ GameBoard::GameBoard() {
 }
 
 GameBoard::GameBoard(const GameBoard & src) {
-	money = src.money;
+	ram = src.ram;
 	for (int r = 0; r < size_rows; ++r) {
 		for (int c = 0; c < size_cols; ++c) {
 			blocking[r][c] = src.blocking[r][c];
@@ -25,7 +25,7 @@ GameBoard::~GameBoard() {
 }
 
 GameBoard& GameBoard::operator=(const GameBoard & src) {
-	money = src.money;
+	ram = src.ram;
 	for (int r = 0; r < size_rows; ++r) {
 		for (int c = 0; c < size_cols; ++c) {
 			blocking[r][c] = src.blocking[r][c];
@@ -80,7 +80,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case 1: 
 			//is it possible to build here?
-			//enough money?
+			//enough ram?
 			//success?
 			towers.add(Wall_1x1(c));
 			break;
