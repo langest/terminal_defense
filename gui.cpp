@@ -67,7 +67,7 @@ bool GUI::draw(const Coord & coord, const char ch) {
 }
 
 //Draws a gfx
-bool GUI::draw_gfx(const Coord & coord, const char** gfx, int row, int col) {
+bool GUI::draw_gfx(const Coord & coord, char** gfx, int row, int col) {
 	int max_row, max_col;
 	getmaxyx(main_win, max_row, max_col);
 	if (   row + coord.get_row() > max_row
