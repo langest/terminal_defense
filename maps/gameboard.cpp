@@ -2,20 +2,13 @@
 
 GameBoard::GameBoard() {
 	ram = 9001; //player ram
-
-	blocking = int*[size_rows];
-	for (int i = 0; i < size_rows; ++i) {
-		blocking[i] = int[size_cols];
-	}
+	//TODO set size of board
+	size_rows = 80;
+	size_cols = 80;
 }
 
 GameBoard::GameBoard(const GameBoard & src) {
 	ram = src.ram;
-	for (int r = 0; r < size_rows; ++r) {
-		for (int c = 0; c < size_cols; ++c) {
-			blocking[r][c] = src.blocking[r][c];
-		}
-	}
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
 }
@@ -26,11 +19,6 @@ GameBoard::~GameBoard() {
 
 GameBoard& GameBoard::operator=(const GameBoard & src) {
 	ram = src.ram;
-	for (int r = 0; r < size_rows; ++r) {
-		for (int c = 0; c < size_cols; ++c) {
-			blocking[r][c] = src.blocking[r][c];
-		}
-	}
 	size_rows = src.size_rows;
 	size_cols = src.size_cols;
 }

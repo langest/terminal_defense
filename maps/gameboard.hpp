@@ -18,7 +18,8 @@ class GameBoard  {
 		int ram;
 
 		//Board information:
-		int** blocking;	//TODO: Replace with another map!
+		std::map<Coord, int> grid_env_state;
+		std::map<Coord, int> grid_bld_state;
 		int size_rows;
 		int size_cols;
 		std::map<Coord, Tower> towers;
