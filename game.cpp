@@ -26,3 +26,9 @@ void Game::build_phase() {
 		gui.refresh();
 	}
 }
+
+bool Game::build_tower() {
+	Coord c(5,5);
+	board.build_tower(c, 1);
+	return true;
+}

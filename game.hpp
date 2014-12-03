@@ -6,8 +6,10 @@
 class Game {
 	private:
 		GUI gui;
+		GameBoard board;
 	public:
 		void build_phase();
+		bool build_tower();
 };
 
 #endif //termd_game
