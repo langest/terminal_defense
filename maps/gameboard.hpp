@@ -1,10 +1,10 @@
 #ifndef termd_game_board
 #define termd_game_board
 
-#ifndef termd_unordered_map
-#define termd_unordered_map
-#include <unordered_map>
-#endif //termd_unordered_map
+#ifndef termd_map
+#define termd_map
+#include <map>
+#endif //termd_map
 
 #include "../gui.hpp"
 #include "../tower/tower.hpp"
