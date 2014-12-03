@@ -9,7 +9,6 @@
 #include <cstddef>
 #endif
 
-template <size_t row_size = 1, size_t col_size = 1>
 class Tower {
 	private:
 		
@@ -20,17 +19,19 @@ class Tower {
 		bool** blocking; 	//Ground path blocking, children can change this
 		char** gfx;			//The high-tech 3D model! Children can change this
 
+		int num_rows;
+		int num_cols;
+
 		int sell_value;
 		float sell_decrease;
 
 		//Functions:
 	public:
 		Tower();
-		template <size_t a, size_t b>
-		Tower(const Tower<a, b> &);
+		Tower(const Tower &);
 		~Tower();
 
-		Tower<row_size, col_size>& operator=(const Tower<row_size, col_size> &);
+		Tower& operator=(const Tower &);
 
 		//Implemented:
 		bool draw(GUI &);
