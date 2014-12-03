@@ -19,7 +19,7 @@ bool Wall_1x1::update(){
 	return true;
 }
 
-bool Wall_1x1::end_of_wave_update(){
-	sell_value *= sell_decrease;
-	return true;
-}
+//bool Wall_1x1::end_of_wave_update(){
+//	sell_value *= sell_decrease;
+//	return true;
+//}
