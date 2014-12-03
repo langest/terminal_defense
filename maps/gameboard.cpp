@@ -14,7 +14,7 @@ GameBoard::GameBoard(const GameBoard & src) {
 }
 
 GameBoard::~GameBoard() {
-	//Currently nothing to do here
+	//Nothing needed to be done here at the moment
 }
 
 GameBoard& GameBoard::operator=(const GameBoard & src) {
@@ -70,13 +70,12 @@ bool GameBoard::location_availible(Coord c) const {
 }
 
 bool GameBoard::build_tower(Coord c, int tower_id) {
-	Wall_1x1* w = new Wall_1x1(c); //TODO memoryleak and proper build
 	switch(tower_id){ //TODO define towers somewhere...
-		case 1: 
+		case BUILD_WALL_1x1: 
 			//is it possible to build here?
 			//enough ram?
 			//success?
-			towers.insert( std::pair<Coord, Tower &>(c, *w));
+			towers.insert( std::pair<Coord, Tower &>(c, Wall_1x1(c)));
 			break;
 		default:
 			//unidentified tower_id!
