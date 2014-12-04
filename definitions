@@ -19,6 +19,8 @@
 //Buildings
 #define WALL_1x1_ID 1
 #define WALL_1x1_COST 100
+#define WALL_1x1_SELL 100
+#define WALL_1x1_SELL_DECREASE 0.8
 
 //Tile info
 
