@@ -1,7 +1,7 @@
 #include "gui.hpp"
 
 GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), winSpace(WINDOWSPACE) {
-
+	move(startRow, startCol); //initialize cursor position
 }
 
 GUI::~GUI() {
@@ -15,11 +15,17 @@ GUI::GUI(const GUI & src) {
 	boardCols = src.boardCols;
 	intelRows = src.intelRows;
 	intelCols = src.intelCols;
+	move(startRow, startCol); //initialize cursor position
 }
 
 bool GUI::move_cursor_up() {
 	int col, row;
 	getyx(stdscr, row, col);
+
+	if (row <= startRow) {
+		move(startRow, col);
+		return false;
+	}
 
 	int ret;
 	ret = move(row-1, col); //Move cursor
@@ -30,6 +36,11 @@ bool GUI::move_cursor_down() {
 	int col, row;
 	getyx(stdscr, row, col);
 
+	if (row >= startRow + boardRows - 1) {
+		move(startRow + boardRows - 1, col);
+		return false;
+	}
+
 	int ret;
 	ret = move(row+1, col); //Move cursor
 	return ret;
@@ -39,6 +50,11 @@ bool GUI::move_cursor_left() {
 	int col, row;
 	getyx(stdscr, row, col);
 
+	if (col <= startCol) {
+		move(row, startCol);
+		return false;
+	}
+
 	int ret;
 	ret = move(row, col-1); //Move cursor
 	return ret;
@@ -47,6 +63,11 @@ bool GUI::move_cursor_left() {
 bool GUI::move_cursor_right() {
 	int row, col;
 	getyx(stdscr, row, col);
+
+	if (col >= startCol + boardCols - 1) {
+		move(row, startCol + boardCols - 1);
+		return false;
+	}
 
 	int ret;
 	ret = move(row, col+1); //Move cursor
