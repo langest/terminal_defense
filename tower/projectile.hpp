@@ -3,6 +3,7 @@
 
 #include "../gui.hpp"
 #include "../coord.hpp"
+#include "../virus/virus.hpp"
 
 class Projectile{
 	private:
@@ -10,11 +11,11 @@ class Projectile{
 	protected:
 		char gfx;
 		Coord pos;
-		Coord target;
+		Virus& target;
 		int speed_increment;
 		int speed_curr;
 	public:
-		Projectile(Coord, Coord);
+		Projectile(Coord, Virus &);
 		Projectile(const Projectile &);
 		~Projectile();
 		operator=(const Projectile &);
