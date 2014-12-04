@@ -19,6 +19,7 @@ class GUI {
 		int startRow, startCol;
 		int boardRows, boardCols;
 		int intelRows, intelCols;
+		int winSpace;
 
 	public:
 		GUI();
@@ -36,8 +37,8 @@ class GUI {
 
 		bool draw(const Coord &, const char); //Does not refresh
 		bool draw_gfx(const Coord &, std::vector<std::vector<char> > &, int, int);
-		void draw_board();
-		bool draw_intel();
+		void draw_board_frame();
+		void draw_intel_frame();
 		void clear();
 		void refresh();
 

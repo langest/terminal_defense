@@ -1,6 +1,6 @@
 #include "gui.hpp"
 
-GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), intelCols(INTELCOLS) {
+GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), winSpace(WINDOWSPACE) {
 
 }
 
@@ -100,19 +100,36 @@ bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx, i
 	return true;
 }
 
-void GUI::draw_board() {
+void GUI::draw_board_frame() {
 	int cur_row, cur_col;
 	getyx(stdscr, cur_row, cur_col);
 
-	mvaddch(startRow, startCol, BOARDTL);
-	mvaddch(startRow + boardRows + 1, startCol, BOARDBL);
-	mvaddch(startRow, startCol + boardCols + 1, BOARDTR);
-	mvaddch(startRow + boardRows + 1, startCol + boardCols + 1, BOARDBR);
+	mvaddch(startRow - 1, startCol - 1, FRAMETL);
+	mvaddch(startRow + boardRows, startCol - 1, FRAMEBL);
+	mvaddch(startRow - 1, startCol + boardCols, FRAMETR);
+	mvaddch(startRow + boardRows, startCol + boardCols, FRAMEBR);
 
-	mvhline(startRow, startCol + 1, BOARDTS, boardCols);
-	mvvline(startRow + 1, startCol, BOARDLS, boardRows);
-	mvhline(startRow + boardRows + 1, startCol + 1, BOARDBS, boardCols);
-	mvvline(startRow + 1, startCol + boardCols + 1, BOARDRS, boardRows);
+	mvhline(startRow - 1, startCol, FRAMETS, boardCols);
+	mvvline(startRow, startCol - 1, FRAMELS, boardRows);
+	mvhline(startRow + boardRows, startCol, FRAMEBS, boardCols);
+	mvvline(startRow, startCol + boardCols, FRAMERS, boardRows);
+
+	move(cur_row, cur_col);
+}
+
+void GUI::draw_intel_frame() {
+	int cur_row, cur_col;
+	getyx(stdscr, cur_row, cur_col);
+
+	mvaddch(startRow + 2 + winSpace, startCol - 1, FRAMETL);
+	mvaddch(startRow + 2 + winSpace + intelRows + 1, startCol - 1, FRAMEBL);
+	mvaddch(startRow + 2 + winSpace, startCol + boardCols, FRAMETR);
+	mvaddch(startRow + 2 + winSpace + intelRows + 1, startCol + boardCols, FRAMEBR);
+
+	mvhline(startRow + 2 + winSpace, startCol, FRAMETS, boardCols);
+	mvvline(startRow + 2 + winSpace + 1, startCol - 1, FRAMELS, boardRows);
+	mvhline(startRow + 2 + winSpace + intelRows + 1, startCol, FRAMEBS, boardCols);
+	mvvline(startRow + 2 + winSpace + 1, startCol + boardCols, FRAMERS, boardRows);
 
 	move(cur_row, cur_col);
 }
