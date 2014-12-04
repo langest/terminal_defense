@@ -11,8 +11,10 @@
 #define INT_MIN std::numeric_limits<int>::min()
 
 //Map information
-#define NUMROWS 40
-#define NUMCOLS 80
+#define BOARDNUMROWS 40
+#define BOARDNUMCOLS 80
+#define INTELNUMROWS 10
+#define INTELNUMCOLS 80
 
 //Buildings
 #define WALL_1x1_ID 1
