@@ -16,6 +16,7 @@
 #include "../tower/tower.hpp"
 #include "../tower/wall_1x1.hpp"
 #include "../coord.hpp"
+#include "../virus/virus.hpp"
 
 class GameBoard  {
 	private:
@@ -28,6 +29,7 @@ class GameBoard  {
 		int size_rows;
 		int size_cols;
 		std::map<Coord, Tower*> towers;
+		std::map<Coord, Virus*> viruses;
 
 	public:
 		GameBoard();
@@ -47,6 +49,8 @@ class GameBoard  {
 		const int get_bld_value(Coord) const;
 		bool location_availible(Coord) const;
 		bool build_tower(Coord, int);
+		void spawn_virus(int wave_num);
+
 };
 
 #endif //termd_game_board
