@@ -12,7 +12,7 @@ class Path {
 		Path(const Path &);
 		~Path();
 
-		Path& operator=(const Path &);
+		Path & operator=(const Path &);
 
 		void step(int);	 //steps as many steps as possible with the given stamina
 		Coord get_curr_pos();
