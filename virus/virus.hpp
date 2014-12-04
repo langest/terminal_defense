@@ -27,7 +27,7 @@ class Virus {
 
 		operator=(const Virus &);
 
-		bool update(); //Make the monster behave
+		virtual bool update(); //Make the monster behave
 		bool draw(GUI&); //Draw the beauty
 
 		Coord get_pos();
