@@ -105,6 +105,50 @@ bool GameBoard::update() {
 	return ret;
 }
 
+bool GameBoard::is_blocked() {
+	bool visited [size_rows][size_cols];
+	std::queue<Coord> queue;
+
+	queue.push(Coord(size_rows, 0));
+	visited[size_rows][0] = true;
+
+	Coord current;
+	int r, c;
+	while (queue.size() < 0) {
+		current = queue.front();
+		queue.pop();
+		r = current.get_row();
+		c = current.get_col();
+
+		if (r <= 1) {
+			return true;
+		}
+
+		if (r < size_rows &&
+				!visited[r + 1][c]) {
+			visited[r + 1][c] = true;
+			queue.push(Coord(r + 1, c));
+		}
+		if (r > 0 &&
+				!visited[r - 1][c]) {
+			visited[r - 1][c] = true;
+			queue.push(Coord(r - 1, c));
+		}
+		if (c < size_cols &&
+				!visited[r][c + 1]) {
+			visited[r][c + 1] = true;
+			queue.push(Coord(r, c + 1));
+		}
+		if (c > 0 &&
+				!visited[r][c - 1]) {
+			visited[r][c - 1] = true;
+			queue.push(Coord(r, c - 1));
+		}
+	}
+
+	return false;
+}
+
 const int GameBoard::get_size_rows() const {
 	return size_rows;
 }

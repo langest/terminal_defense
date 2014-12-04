@@ -6,6 +6,11 @@
 #include <map>
 #endif //termd_map
 
+#ifndef termd_queue
+#define termd_queue
+#include <queue>
+#endif //termd_queue
+
 #ifndef termd_cstddef
 #define termd_cstddef
 #include <cstddef>
@@ -39,6 +44,8 @@ class GameBoard  {
 		void update_towers();
 		bool update_viruses();
 		void update_projectiles();
+
+		bool is_blocked();
 
 	public:
 		GameBoard();
