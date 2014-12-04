@@ -14,8 +14,9 @@ class Virus {
 	protected:
 		int max_hp;
 		int cur_hp;
-		int stamina_increment;
-		int stamina; //Determines the speed of the virus
+		int stamina_increment;	//Determines the speed of the virus
+		int stamina; 			//current stammina
+		int reward;				//Kill reward
 		std::vector<std::vector<char> > gfx; //The high-tech 3D model! Children can change this
 		Path path;
 
@@ -31,6 +32,7 @@ class Virus {
 		virtual bool update(); //Make the monster behave
 		bool draw(GUI&); //Draw the beauty
 
+		int get_reward();
 		Coord get_pos();
 };
 
