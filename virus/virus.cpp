@@ -1,9 +1,11 @@
 #include "virus.hpp"
 
-Virus::Virus() : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10) /*, TODO path() */{
+Virus::Virus(Coord start) : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10) /*, TODO path() */{
 	gfx.resize(1);
 	gfx[0].resize(1);
 	gfx[0][0] = '@';
+
+	path(start)
 }
 
 Virus::Virus(const Virus & src) {
@@ -45,5 +47,5 @@ bool Virus::update(){
 }
 
 bool Virus::draw(GUI & g){
-	return g.draw_gfx(pos, gfx, num_rows, num_cols);
+	return g.draw_gfx(get_pos(), gfx, num_rows, num_cols);
 }
