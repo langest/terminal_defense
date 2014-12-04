@@ -6,17 +6,15 @@
 class Path {
 	private:
 		Coord start;
-		Coord gaol;
 		Coord curr_pos;
 	public:
-		Path(Coord, Coord); //Start -> Goal
+		Path(Coord); //spawn, goal is everything on final row/col
 		Path(const Path &);
 		~Path();
 
 		Path& operator=(const Path &);
 
-		int get_step_cost(); //Cost for taking another step
-		Coord step(int);	 //steps as many steps as possible with the given stamina, returns the end pos
+		void step(int);	 //steps as many steps as possible with the given stamina
 		Coord get_curr_pos();
 };
 #endif //termd_path
