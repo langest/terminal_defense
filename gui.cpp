@@ -52,6 +52,13 @@ bool GUI::move_cursor_right() {
 	return ret;
 }
 
+Coord GUI::get_cursor_pos() {
+	int row, col;
+	getyx(main_win, row, col);
+	Coord ret(row, col);
+	return ret;
+}
+
 //Puts a char at specified coord in the guis window.
 //Does not refresh
 //Returns true iff successful
