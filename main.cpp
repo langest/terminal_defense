@@ -8,8 +8,6 @@ int main() {
 	
 	Game game;
 
-	game.build_tower();
-
 	game.build_phase();
 	
 	endwin(); //End curses mode
