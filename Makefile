@@ -5,6 +5,7 @@ maindeps = game.o \
 			virus/virus.o \
 			tower/tower.o \
 			tower/wall_1x1.o \
+			tower/wall_3x3.o \
 			maps/gameboard.o
 
 
