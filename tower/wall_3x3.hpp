@@ -1,20 +1,10 @@
 #ifndef termd_tower_wall_3x3
 #define termd_tower_wall_3x3
 
-#ifndef termd_gui
-#define termd_gui
-#include "gui.hpp"
-#endif //termd_gui
-
-#ifndef termd_tower
-#define termd_tower
+#include "../gui.hpp"
 #include "tower.hpp"
-#endif //termd_tower
-
-#ifndef termd_coord
-#define termd_coord
-#include "coord.hpp"
-#endif //termd_coord
+#include "../coord.hpp"
+#include "../definitions"
 
 class Wall_3x3 : public Tower  {
 	private:
