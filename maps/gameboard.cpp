@@ -42,9 +42,19 @@ void GameBoard::render(GUI & g) {
 }
 
 bool GameBoard::update() {
+	for (auto i = viruses.begin(); i != viruses.end(); ) {
+		if(i->second->update() == false) {
+			//If virus is flagging removal, remove it!
+			delete i->second;
+			i = viruses.erase(i);
+		}else{
+			++i;
+		}
+	}
 	for (auto i = towers.begin(); i != towers.end(); ) {
 		if(i->second->update() == false) {
 			//If tower is flagging removal, remove it!
+			delete i->second;
 			i = towers.erase(i);
 		}else{
 			++i;
@@ -91,4 +101,8 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 			break;
 	}
 	return false;
+}
+
+void GameBoard::spawn_virus(int wave_num){
+	//TODO
 }
