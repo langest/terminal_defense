@@ -1,7 +1,9 @@
 #include "virus.hpp"
 
 Virus::Virus() : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10) /*, TODO path() */{
-
+	gfx.resize(1);
+	gfx[0].resize(1);
+	gfx[0][0] = '@';
 }
 
 Virus::Virus(const Virus & src) {
@@ -22,6 +24,14 @@ Virus& Virus::operator=(const Virus & src) {
 	stamina = src.stamina;
 	gfx = src.gfx;
 	return *this;
+}
+
+bool pathfind::step(){
+	return true; //TODO
+}
+
+bool Virus::step(){
+	return true; //TODO
 }
 
 Coord Virus::get_pos(){
