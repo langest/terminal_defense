@@ -8,10 +8,11 @@
 
 #include "../gui.hpp"
 #include "../coord.hpp"
+#include "path.hpp"
 
 class Virus {
 	protected:
-		int max_hp
+		int max_hp;
 		int cur_hp;
 		int stamina_increment;
 		int stamina; //Determines the speed of the virus
@@ -21,11 +22,11 @@ class Virus {
 		bool pathfind(); //Find a path through them maze wich it can follow
 		bool step(); //Make the monster walk along its path
 	public:
-		Virus();
+		Virus(Coord);
 		Virus(const Virus &);
-		~Virus():
+		virtual ~Virus();
 
-		operator=(const Virus &);
+		Virus& operator=(const Virus &);
 
 		virtual bool update(); //Make the monster behave
 		bool draw(GUI&); //Draw the beauty
