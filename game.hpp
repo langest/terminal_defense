@@ -8,9 +8,11 @@ class Game {
 	private:
 		GUI gui;
 		GameBoard board;
+
+		bool build_tower(int);
 	public:
 		void build_phase();
-		bool build_tower(int);
+		void invasion_phase();
 };
 
 #endif //termd_game
