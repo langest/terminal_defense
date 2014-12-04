@@ -20,6 +20,8 @@ void Game::build_phase() {
 			case 'j':
 				gui.move_cursor_down();
 				break;
+			case 'b':
+				this->build_tower(1);
 			default:
 				break;
 		}
@@ -27,9 +29,9 @@ void Game::build_phase() {
 	}
 }
 
-bool Game::build_tower() {
-	Coord c(5,5);
-	board.build_tower(c, 1);
+bool Game::build_tower(int tower_id) {
+	Coord c = gui.get_cursor_pos();
+	board.build_tower(c, tower_id);
 	board.render(gui); //TODO move away from here
 	return true;
 }

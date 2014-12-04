@@ -10,7 +10,7 @@ class Game {
 		GameBoard board;
 	public:
 		void build_phase();
-		bool build_tower();
+		bool build_tower(int);
 };
 
 #endif //termd_game
