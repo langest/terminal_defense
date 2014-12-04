@@ -1,6 +1,8 @@
 #include "game.hpp"
 
 void Game::build_phase() {
+	gui.draw_board_frame();
+	gui.draw_intel_frame();
 	int ch;
 	while((ch = getch()) != 27 && ch != 'q') {
 		switch (ch) {
