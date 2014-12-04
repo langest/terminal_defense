@@ -19,11 +19,11 @@ CXXFLAGS = -lncurses \
 all: main.cpp $(maindeps) $(maindepsheaders)
 	$(CXX) -o terminaldefense.out main.cpp $(CXXFLAGS) $(maindeps)
 
-ncurses_test: ncursestest.cpp
-	$(CXX) -std=c++0x -g -Wall ncursestest.cpp -lncurses -o ncursestest.out
+ncurses_test: test/ncursestest.cpp
+	$(CXX) -std=c++0x -g -Wall test/ncursestest.cpp -lncurses -o ncursestest.out
 
-gui_test: guitest.cpp gui.hpp gui.cpp
-	$(CXX) -std=c++0x -g -Wall guitest.cpp gui.hpp gui.cpp -lncurses -o guitest.out
+gui_test: test/guitest.cpp gui.hpp gui.cpp
+	$(CXX) -std=c++0x -g -Wall test/guitest.cpp gui.hpp gui.cpp -lncurses -o guitest.out
 
 clean:
 	rm -fr *.o *.out
