@@ -121,15 +121,15 @@ void GUI::draw_intel_frame() {
 	int cur_row, cur_col;
 	getyx(stdscr, cur_row, cur_col);
 
-	mvaddch(startRow + 2 + winSpace, startCol - 1, FRAMETL);
-	mvaddch(startRow + 2 + winSpace + intelRows + 1, startCol - 1, FRAMEBL);
-	mvaddch(startRow + 2 + winSpace, startCol + boardCols, FRAMETR);
-	mvaddch(startRow + 2 + winSpace + intelRows + 1, startCol + boardCols, FRAMEBR);
+	mvaddch(startRow + 1 + winSpace + boardRows, startCol - 1, FRAMETL);
+	mvaddch(startRow + 1 + winSpace + boardRows + intelRows + 1, startCol - 1, FRAMEBL);
+	mvaddch(startRow + 1 + winSpace + boardRows, startCol + boardCols, FRAMETR);
+	mvaddch(startRow + 1 + winSpace + boardRows + intelRows + 1, startCol + boardCols, FRAMEBR);
 
-	mvhline(startRow + 2 + winSpace, startCol, FRAMETS, boardCols);
-	mvvline(startRow + 2 + winSpace + 1, startCol - 1, FRAMELS, boardRows);
-	mvhline(startRow + 2 + winSpace + intelRows + 1, startCol, FRAMEBS, boardCols);
-	mvvline(startRow + 2 + winSpace + 1, startCol + boardCols, FRAMERS, boardRows);
+	mvhline(startRow + 1 + winSpace + boardRows, startCol, FRAMETS, boardCols);
+	mvvline(startRow + 2 + winSpace + boardRows, startCol - 1, FRAMELS, intelRows);
+	mvhline(startRow + 2 + winSpace + boardRows + intelRows, startCol, FRAMEBS, boardCols);
+	mvvline(startRow + 2 + winSpace + boardRows, startCol + boardCols, FRAMERS, intelRows);
 
 	move(cur_row, cur_col);
 }
