@@ -4,6 +4,7 @@
 #include "../gui.hpp"
 #include "tower.hpp"
 #include "../coord.hpp"
+#include "../definitions"
 
 class Wall_1x1 : public Tower {
 	private:
