@@ -1,7 +1,7 @@
 #include "gui.hpp"
 
-GUI::GUI(){
-	main_win = create_new_win(10, 10, 0, 0);
+GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), intelCols(INTELCOLS) {
+
 }
 
 GUI::~GUI() {
@@ -9,7 +9,12 @@ GUI::~GUI() {
 }
 
 GUI::GUI(const GUI & src) {
-	main_win = src.main_win;
+	startRow = src.startRow;
+	startCol = src.startCol;
+	boardRows = src.boardRows;
+	boardCols = src.boardCols;
+	intelRows = src.intelRows;
+	intelCols = src.intelCols;
 }
 
 bool GUI::move_cursor_up() {

@@ -16,7 +16,9 @@
 
 class GUI {
 	private:
-		WINDOW * main_win;
+		int startRow, startCol;
+		int boardRows, boardCols;
+		int intelRows, intelCols;
 
 	public:
 		GUI();
