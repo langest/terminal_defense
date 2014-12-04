@@ -1,24 +1,24 @@
 #include "wall_3x3.hpp"
 
 Wall_3x3::Wall_3x3(Coord p) {
-	size_cols = 3;
-	size_rows = 3;
+	num_cols = 3;
+	num_rows = 3;
 	//Blocking:
-	blocking.resize(size_rows);
-	for (int i = 0; i < size_rows; ++i)
+	blocking.resize(num_rows);
+	for (int i = 0; i < num_rows; ++i)
 	{
-		blocking[i].resize(size_cols);
-		for (int j = 0; j < size_cols; ++j)
+		blocking[i].resize(num_cols);
+		for (int j = 0; j < num_cols; ++j)
 		{
 			blocking[i][j] = true;
 		}
 	}
 
-	gfx.resize(size_rows);
-	for (int i = 0; i < size_rows; ++i)
+	gfx.resize(num_rows);
+	for (int i = 0; i < num_rows; ++i)
 	{
-		gfx[i].resize(size_cols);
-		for (int j = 0; j < size_cols; ++j)
+		gfx[i].resize(num_cols);
+		for (int j = 0; j < num_cols; ++j)
 		{
 			gfx[i][j] = '#';
 		}
