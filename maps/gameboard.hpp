@@ -30,6 +30,15 @@ class GameBoard  {
 		int size_cols;
 		std::map<Coord, Tower*> towers;
 		std::map<Coord, Virus*> viruses;
+		//std::vector<Projectile*> projectiles;
+
+		void render_towers(GUI &);
+		void render_viruses(GUI &);
+		void render_projectiles(GUI &);
+
+		void update_towers();
+		bool update_viruses();
+		void update_projectiles();
 
 	public:
 		GameBoard();

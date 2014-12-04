@@ -31,20 +31,9 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 	return *this;
 }
 
-void GameBoard::render(GUI & g) {
-	//Render Towers:
+void GameBoard::render_towers(GUI & gui) {
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
-		if(i->second->draw(g) == false) {
-			//If tower failed to draw:
-			#ifdef DEBUGGING
-			#include <iostream>
-			std::cout << "Failed to draw Tower: " << i->second << std::endl;
-			#endif //DEBUGGING
-		}
-	}
-	//Render Viruses
-	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
-		if(i->second->draw(g) == false) {
+		if(i->second->draw(gui) == false) {
 			//If tower failed to draw:
 			#ifdef DEBUGGING
 			#include <iostream>
@@ -54,16 +43,29 @@ void GameBoard::render(GUI & g) {
 	}
 }
 
-bool GameBoard::update() {
-	for (auto i = viruses.begin(); i != viruses.end(); ) {
-		if(i->second->update() == false) {
-			//If virus is flagging removal, remove it!
-			delete i->second;
-			i = viruses.erase(i);
-		}else{
-			++i;
+void GameBoard::render_viruses(GUI & gui) {
+	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
+		if(i->second->draw(gui) == false) {
+			//If tower failed to draw:
+			#ifdef DEBUGGING
+			#include <iostream>
+			std::cout << "Failed to draw Tower: " << i->second << std::endl;
+			#endif //DEBUGGING
 		}
 	}
+}
+
+void GameBoard::render_projectiles(GUI & gui) {
+
+}
+
+void GameBoard::render(GUI & gui) {
+	this->render_towers(gui);
+	this->render_viruses(gui);
+	this->render_projectiles(gui);
+}
+
+void GameBoard::update_towers() {
 	for (auto i = towers.begin(); i != towers.end(); ) {
 		if(i->second->update() == false) {
 			//If tower is flagging removal, remove it!
@@ -73,7 +75,33 @@ bool GameBoard::update() {
 			++i;
 		}
 	}
+}
+
+bool GameBoard::update_viruses() {
+	if (viruses.begin() == viruses.end()) {
+		return false;
+	}
+	for (auto i = viruses.begin(); i != viruses.end(); ) {
+		if(i->second->update() == false) {
+			//If virus is flagging removal, remove it!
+			delete i->second;
+			i = viruses.erase(i);
+		}else{
+			++i;
+		}
+	}
 	return true;
+}
+
+void GameBoard::update_projectiles() {
+
+}
+
+bool GameBoard::update() {
+	bool ret = this->update_viruses();
+	this->update_towers();
+	this->update_projectiles();
+	return ret;
 }
 
 const int GameBoard::get_size_rows() const {
