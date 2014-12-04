@@ -18,6 +18,9 @@ GameBoard::~GameBoard() {
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
 		delete i->second;
 	}
+	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
+		delete i->second;
+	}
 }
 
 GameBoard& GameBoard::operator=(const GameBoard & src) {
@@ -31,6 +34,16 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 void GameBoard::render(GUI & g) {
 	//Render Towers:
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
+		if(i->second->draw(g) == false) {
+			//If tower failed to draw:
+			#ifdef DEBUGGING
+			#include <iostream>
+			std::cout << "Failed to draw Tower: " << i->second << std::endl;
+			#endif //DEBUGGING
+		}
+	}
+	//Render Viruses
+	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
 		if(i->second->draw(g) == false) {
 			//If tower failed to draw:
 			#ifdef DEBUGGING
@@ -105,4 +118,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 
 void GameBoard::spawn_virus(int wave_num){
 	//TODO
+	Coord c(5,5);
+	Virus * v = new Virus(c);
+	viruses.insert(std::pair<Coord, Virus*>(c, v));
 }
