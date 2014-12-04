@@ -1,5 +1,12 @@
 #include "game.hpp"
 
+bool Game::build_tower(int tower_id) {
+	Coord c = gui.get_cursor_pos();
+	board.build_tower(c, tower_id);
+	board.render(gui); //TODO move away from here
+	return true;
+}
+
 void Game::build_phase() {
 	gui.draw_board_frame();
 	gui.draw_intel_frame();
@@ -31,9 +38,7 @@ void Game::build_phase() {
 	}
 }
 
-bool Game::build_tower(int tower_id) {
-	Coord c = gui.get_cursor_pos();
-	board.build_tower(c, tower_id);
-	board.render(gui); //TODO move away from here
-	return true;
+void Game::invasion_phase() {
+	//TODO loop
+	board.update();
 }
