@@ -9,6 +9,7 @@ int main() {
 	Game game;
 
 	game.build_phase();
+	//game.invasion_phase();
 	
 	endwin(); //End curses mode
 	return 0;
