@@ -4,20 +4,20 @@ Wall_3x3::Wall_3x3(Coord p) {
 	size_cols = 3;
 	size_rows = 3;
 	//Blocking:
-	blocking  = bool*[size_rows];
+	blocking.resize(size_rows);
 	for (int i = 0; i < size_rows; ++i)
 	{
-		blocking[i]		= bool[size_cols];
+		blocking[i].resize(size_cols);
 		for (int j = 0; j < size_cols; ++j)
 		{
 			blocking[i][j] = true;
 		}
 	}
 
-	gfx = char*[size_rows];
+	gfx.resize(size_rows);
 	for (int i = 0; i < size_rows; ++i)
 	{
-		gfx[i] = char[size_cols];
+		gfx[i].resize(size_cols);
 		for (int j = 0; j < size_cols; ++j)
 		{
 			gfx[i][j] = '#';
