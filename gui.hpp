@@ -36,7 +36,7 @@ class GUI {
 		Coord get_cursor_pos();
 
 		bool draw(const Coord &, const char); //Does not refresh
-		bool draw_gfx(const Coord &, std::vector<std::vector<char> > &, int, int);
+		bool draw_gfx(const Coord &, std::vector<std::vector<char> > &);
 		void draw_board_frame();
 		void draw_intel_frame();
 		void clear();

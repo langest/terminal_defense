@@ -51,7 +51,7 @@ bool Virus::update(){
 }
 
 bool Virus::draw(GUI & g){
-	return g.draw_gfx(get_pos(), gfx, gfx.size(), gfx[0].size());
+	return g.draw_gfx(get_pos(), gfx);
 }
 
 int Virus::get_reward(){

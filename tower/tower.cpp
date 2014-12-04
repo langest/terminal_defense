@@ -7,7 +7,7 @@ Tower::~Tower() {
 }
 
 bool Tower::draw(GUI & g) {
-	return g.draw_gfx(pos, gfx, num_rows, num_cols);
+	return g.draw_gfx(pos, gfx);
 }
 
 const int Tower::get_sell_value() const {

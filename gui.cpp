@@ -96,11 +96,11 @@ bool GUI::draw(const Coord & coord, const char ch) {
 }
 
 //Draws a gfx
-bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx, int row, int col) {
+bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 	int max_row, max_col;
 	getmaxyx(stdscr, max_row, max_col);
-	if (   row + coord.get_row() > max_row
-			|| col + coord.get_col() > max_col
+	if (   (int) gfx.size() + coord.get_row() > max_row
+			|| (int) gfx[0].size() + coord.get_col() > max_col
 			|| coord.get_row() < 0
 			|| coord.get_col() < 0 ) {
 		return false;
@@ -109,9 +109,9 @@ bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx, i
 	int cur_row, cur_col;
 	getyx(stdscr, cur_row, cur_col);
 
-	for (int r = 0; r < row; ++r) {
+	for (unsigned int r = 0; r < gfx.size(); ++r) {
 		move(coord.get_row() + r, coord.get_col());
-		for (int c = 0; c < col; ++c) {
+		for (unsigned int c = 0; c < gfx[0].size(); ++c) {
 			addch(gfx[r][c]);
 		}
 	}
