@@ -8,7 +8,7 @@
 
 class Coord {
 	private:
-		int col, row;
+		int row, col;
 	public:
 		Coord();
 		Coord(int, int);

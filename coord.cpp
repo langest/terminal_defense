@@ -1,16 +1,12 @@
 #include "coord.hpp"
 
-Coord::Coord() {
-	col = 0;
-	row = 0;
+Coord::Coord() : row(0), col(0) {
 }
 
-Coord::Coord(int x, int y) {
-	col = x;
-	row = y;
+Coord::Coord(int r, int c) : row(r), col(c) {
 }
 
-Coord::Coord(const Coord & src) {
+Coord::Coord(const Coord & src) { //TODO use initialization list
 	col = src.col;
 	row = src.row;
 }
