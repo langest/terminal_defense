@@ -2,7 +2,7 @@
 
 void Game::build_phase() {
 	int ch;
-	while((ch = getch()) != 27) {
+	while((ch = getch()) != 27 && ch != 'q') {
 		switch (ch) {
 			case KEY_LEFT:
 			case 'h':
