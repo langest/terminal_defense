@@ -1,5 +1,7 @@
 #include "tower.hpp"
 
+Tower::Tower(){}
+
 Tower::~Tower() {
 	//Currently nothing needs to be done
 }

@@ -17,6 +17,7 @@ class Wall_1x1 : public Tower {
 
 		//Virtual:
 		virtual bool update();
+		virtual bool end_of_wave_update();
 };
 
 #endif //termd_tower_wall_1x1

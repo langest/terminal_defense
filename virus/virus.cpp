@@ -1,6 +1,6 @@
 #include "virus.hpp"
 
-Virus::Virus() : max_hp(10), cur_hp(10), stamina(10), gfx(' ') /*, TODO path() */{
+Virus::Virus() : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10) /*, TODO path() */{
 
 }
 
@@ -21,4 +21,19 @@ Virus& Virus::operator=(const Virus & src) {
 	cur_hp = src.cur_hp;
 	stamina = src.stamina;
 	gfx = src.gfx;
+	return *this;
+}
+
+Coord Virus::get_pos(){
+	return path.get_curr_pos();
+}
+
+bool Virus::update(){
+	stamina += stamina_increment;
+	//TODO walk with as much stamina as possible
+	return true;
+}
+
+bool Virus::draw(GUI & g){
+	return g.draw_gfx(pos, gfx, num_rows, num_cols);
 }
