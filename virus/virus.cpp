@@ -1,6 +1,6 @@
 #include "virus.hpp"
 
-Virus::Virus(Coord start) : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10), path(start) /*, TODO path() */{
+Virus::Virus(Coord start) : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10), reward(10), path(start) /*, TODO path() */{
 	gfx.resize(1);
 	gfx[0].resize(1);
 	gfx[0][0] = '@';
@@ -10,6 +10,8 @@ Virus::Virus(const Virus & src) : path(src.path) {
 	max_hp = src.max_hp;
 	cur_hp = src.cur_hp;
 	stamina = src.stamina;
+	stamina_increment = src.stamina_increment;
+	reward = src.reward;
 	gfx = src.gfx;
 }
 
@@ -21,6 +23,8 @@ Virus& Virus::operator=(const Virus & src) {
 	max_hp = src.max_hp;
 	cur_hp = src.cur_hp;
 	stamina = src.stamina;
+	stamina_increment = src.stamina_increment;
+	reward = src.reward;
 	gfx = src.gfx;
 	path = src.path;
 	return *this;
@@ -48,4 +52,8 @@ bool Virus::update(){
 
 bool Virus::draw(GUI & g){
 	return g.draw_gfx(get_pos(), gfx, gfx.size(), gfx[0].size());
+}
+
+int Virus::get_reward(){
+	return reward;
 }
