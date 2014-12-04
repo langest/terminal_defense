@@ -98,6 +98,7 @@ void GameBoard::update_projectiles() {
 }
 
 bool GameBoard::update() {
+	//TODO spawn viruses with cool function
 	bool ret = this->update_viruses();
 	this->update_towers();
 	this->update_projectiles();
