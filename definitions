@@ -11,10 +11,21 @@
 #define INT_MIN std::numeric_limits<int>::min()
 
 //Map information
-#define BOARDROWS 40
-#define BOARDCOLS 80
+#define BOARDROWS 14
+#define BOARDCOLS 20
+#define BOARDR0 0
+#define BOARDC0 0
 #define INTELROWS 10
 #define INTELCOLS 80
+#define WINDOWSPACE 1
+#define BOARDLS '|'
+#define BOARDRS '|'
+#define BOARDBS '-'
+#define BOARDTS '-'
+#define BOARDTL '+'
+#define BOARDTR '+'
+#define BOARDBL '+'
+#define BOARDBR '+'
 
 //Buildings
 #define WALL_1x1_ID 1
