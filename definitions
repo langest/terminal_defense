@@ -9,7 +9,6 @@
 //Typically needed numbers
 #define INT_MAX std::numeric_limits<int>::max()
 #define INT_MIN std::numeric_limits<int>::min()
-#define 
 
 //Virus and Projectile default Stepcosts
 #define STEPCOST 1000
