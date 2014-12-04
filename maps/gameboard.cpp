@@ -3,8 +3,8 @@
 GameBoard::GameBoard() {
 	ram = 9001; //player ram
 	//TODO set size of board
-	size_rows = NUMROWS;
-	size_cols = NUMCOLS;
+	size_rows = BOARDROWS;
+	size_cols = BOARDCOLS;
 }
 
 GameBoard::GameBoard(const GameBoard & src) {
