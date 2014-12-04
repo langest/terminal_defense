@@ -45,7 +45,7 @@ class Tower {
 
 		//Virtual:
 		virtual bool update() = 0;
-		//virtual bool end_of_wave_update() = 0;
+		virtual bool end_of_wave_update() = 0;
 };
 
 #endif //termd_tower
