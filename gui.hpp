@@ -12,6 +12,7 @@
 #endif //termd_vector
 
 #include "coord.hpp"
+#include "definitions"
 
 class GUI {
 	private:
