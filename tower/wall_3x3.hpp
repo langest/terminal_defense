@@ -18,6 +18,7 @@ class Wall_3x3 : public Tower  {
 
 		//Virtual:
 		virtual bool update();
+		virtual bool end_of_wave_update();
 };
 
 #endif //termd_tower_wall_3x3
