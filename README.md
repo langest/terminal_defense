@@ -1,4 +1,6 @@
 Terminal Defense
 ===============
 
-Tower defense game written in C++ run in the terminal using UFT-8 art
+Tower defense game written in C++ run in the terminal using UFT-8 art.
+
+:snail:
