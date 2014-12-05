@@ -10,11 +10,11 @@ bool Tower::draw(GUI & g) {
 	return g.draw_gfx(pos, gfx);
 }
 
-const int Tower::get_sell_value() const {
+int Tower::get_sell_value() const {
 	return sell_value;
 }
 
-const bool Tower::get_blocking() const {
+bool Tower::get_blocking() const {
 	return false;
 }
 
