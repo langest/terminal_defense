@@ -18,7 +18,7 @@ class Projectile{
 		Projectile(Coord, Virus &);
 		Projectile(const Projectile &);
 		~Projectile();
-		operator=(const Projectile &);
+		Projectile& operator=(const Projectile &);
 
 		bool update();
 		bool draw(GUI &);
