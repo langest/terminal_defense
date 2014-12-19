@@ -27,4 +27,4 @@ gui_test: test/guitest.cpp gui.hpp gui.cpp
 	$(CXX) -std=c++0x -g -Wall test/guitest.cpp gui.hpp gui.cpp -lncurses -o guitest.out
 
 clean:
-	rm -fr $(maindeps)
+	rm -f $(maindeps)
