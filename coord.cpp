@@ -73,3 +73,15 @@ std::ostream & operator<<(std::ostream & os, const Coord & coord) {
 	os << "row: " << coord.get_row() << ", col: " << coord.get_col();
 	return os;
 }
+
+Coord Coord::operator-(const Coord & other) const {
+	return Coord(this->row - other->row, this->col - other->col);
+}
+
+Coord Coord::operator+(const Coord & other) const {
+	return Coord(this->row + other->row, this->col + other->col);
+}
+
+double Coord::length() const {
+	return sqrt(row*row + col*col);
+}
