@@ -10,10 +10,10 @@ Wall_1x1::Wall_1x1(Coord p) {
 
 	blocking.resize(num_rows);
 	blocking[0].resize(num_cols);
-	blocking[0][0]	= true;
+	blocking = {{true}};
 	gfx.resize(num_rows);
 	gfx[0].resize(num_cols);
-	gfx[0][0]	= '#';
+	gfx = {{'#'}};
 }
 
 bool Wall_1x1::update(){
