@@ -1,16 +1,16 @@
-#include "projectile.hpp"
+#include "homingprojectile.hpp"
 
-Projectile::Projectile(Coord s, Virus& t) : pos(s), target(t), speed_curr(0), speed_increment(100), gfx('·') {
+HomingProjectile::HomingProjectile(Coord s, Virus& t) : pos(s), target(t), speed_curr(0), speed_increment(100), gfx('·') {
 }
 
-Projectile::~Projectile() {
+HomingProjectile::~HomingProjectile() {
 	//TODO keep track if needed
 }
 
-Projectile::Projectile(const Projectile & src) : pos(src.pos), target(src.target), speed_curr(src.speed_curr), speed_increment(src.speed_increment), gfx(src.gfx) {
+HomingProjectile::HomingProjectile(const HomingProjectile & src) : pos(src.pos), target(src.target), speed_curr(src.speed_curr), speed_increment(src.speed_increment), gfx(src.gfx) {
 }
 
-Projectile& Projectile::operator=(const Projectile & src) {
+HomingProjectile& HomingProjectile::operator=(const HomingProjectile & src) {
 	pos = src.pos;
 	target = src.target;
 	speed_curr = src.speed_curr;
@@ -19,7 +19,7 @@ Projectile& Projectile::operator=(const Projectile & src) {
 	return *this;
 }
 
-bool Projectile::update() {
+bool HomingProjectile::update() {
 	if(pos == target.get_pos()){
 		//hit target!
 		//deal damage!
@@ -27,8 +27,4 @@ bool Projectile::update() {
 	}
 	speed_curr += speed_increment;
 	return true;
-}
-
-bool Projectile::draw(GUI& g) {
-	return g.draw(pos, gfx);
 }
