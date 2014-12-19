@@ -1,6 +1,6 @@
 #include "wall_1x1.hpp"
 
-Wall_1x1::Wall_1x1(Coord p) {
+Wall_1x1::Wall_1x1(Coord p, GameBoard& gb) : Tower(gb) {
 	num_rows = 1;
 	num_cols = 1;
 

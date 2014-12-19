@@ -5,6 +5,7 @@
 #include "tower.hpp"
 #include "../coord.hpp"
 #include "../definitions"
+#include "../maps/gameboard.hpp"
 
 class Wall_1x1 : public Tower {
 	private:
@@ -14,7 +15,7 @@ class Wall_1x1 : public Tower {
 		//bool blocking; //Ground path blocking, children can change this
 		//char gfx;	//The high-tech 3D model! Children can change this
 	public:
-		Wall_1x1(Coord);
+		Wall_1x1(Coord, GameBoard&);
 
 		//Virtual:
 		virtual bool update();
