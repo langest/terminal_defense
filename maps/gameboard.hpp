@@ -29,6 +29,7 @@
 #include "../coord.hpp"
 #include "../virus/virus.hpp"
 
+class Tower; //Forward declaration because of circle reference
 class GameBoard  {
 	private:
 		//player information:
