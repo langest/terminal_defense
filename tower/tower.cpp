@@ -1,6 +1,6 @@
 #include "tower.hpp"
 
-Tower::Tower(){}
+Tower::Tower(GameBoard & gb) : gameboard(gb){}
 
 Tower::~Tower() {
 	//Currently nothing needs to be done

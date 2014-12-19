@@ -36,7 +36,7 @@ class Tower {
 
 		//Functions:
 	public:
-		Tower();
+		Tower(GameBoard &);
 		virtual ~Tower() = 0;
 
 		//Implemented:
