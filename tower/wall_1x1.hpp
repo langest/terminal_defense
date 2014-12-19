@@ -5,7 +5,6 @@
 #include "tower.hpp"
 #include "../coord.hpp"
 #include "../definitions"
-#include "../maps/gameboard.hpp"
 
 class Wall_1x1 : public Tower {
 	private:

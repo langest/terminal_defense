@@ -13,10 +13,7 @@
 
 #include "../gui.hpp"
 #include "../coord.hpp"
-#include "../maps/gameboard.hpp"
 
-
-class GameBoard; //forward declaration because of circle reference
 class Tower {
 	private:
 		
