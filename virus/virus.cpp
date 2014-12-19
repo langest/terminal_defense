@@ -30,13 +30,9 @@ Virus& Virus::operator=(const Virus & src) {
 	return *this;
 }
 
-bool Virus::pathfind(){
-	return true; //TODO
-}
-
 bool Virus::step(){
-	stamina -= stamina_increment;
-	return true; //TODO
+	path.step(stamina);
+	return path.destination_reached() == false; //True if there are more steps, false otherwise
 }
 
 Coord Virus::get_pos(){
@@ -45,7 +41,6 @@ Coord Virus::get_pos(){
 
 bool Virus::update(){
 	stamina += stamina_increment;
-	//TODO walk with as much stamina as possible
 	step();
 	return true;
 }
@@ -56,4 +51,8 @@ bool Virus::draw(GUI & g){
 
 int Virus::get_reward(){
 	return reward;
+}
+
+bool Virus::destination_reached() {
+	return path.destination_reached();
 }
