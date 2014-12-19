@@ -20,8 +20,7 @@ class Virus {
 		std::vector<std::vector<char> > gfx; //The high-tech 3D model! Children can change this
 		Path path;
 
-		bool pathfind(); //Find a path through them maze wich it can follow
-		bool step(); //Make the monster walk along its path
+		bool step(); //Make the monster walk along its path, if it can...
 	public:
 		Virus(Coord);
 		Virus(const Virus &);
