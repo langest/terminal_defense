@@ -19,7 +19,7 @@ GameBoard::~GameBoard() {
 		delete i->second;
 	}
 	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
-		delete i->second;
+		delete *i;
 	}
 }
 
@@ -45,11 +45,11 @@ void GameBoard::render_towers(GUI & gui) {
 
 void GameBoard::render_viruses(GUI & gui) {
 	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
-		if(i->second->draw(gui) == false) {
+		if((*i)->draw(gui) == false) {
 			//If tower failed to draw:
 			#ifdef DEBUGGING
 			#include <iostream>
-			std::cout << "Failed to draw Tower: " << i->second << std::endl;
+			std::cout << "Failed to draw Tower: " << (**i) << std::endl;
 			#endif //DEBUGGING
 		}
 	}
@@ -82,10 +82,10 @@ bool GameBoard::update_viruses() {
 		return false;
 	}
 	for (auto i = viruses.begin(); i != viruses.end(); ) {
-		if(i->second->update() == false) {
+		if((*i)->update() == false) {
 			//If virus is flagging removal, remove it!
 			//delete i->second;
-			dead_viruses.insert(i->second);
+			dead_viruses.push_back(*i);
 			i = viruses.erase(i);
 		}else{
 			//Check if viruses has reached goal and put them in dead_viruses if so
@@ -175,7 +175,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
-			Wall_1x1* w = new Wall_1x1(c);
+			Wall_1x1* w = new Wall_1x1(c, *this);
 			//TODO: Check if blocked
 			if(ram >= WALL_1x1_COST){
 				//SUCCESS!
@@ -197,7 +197,7 @@ void GameBoard::spawn_virus(int wave_num){
 	for(int r = 0; r < size_rows; r += 2){
 		c.set_row(r);
 		v = new Virus(c);
-		viruses.insert(std::pair<Coord, Virus*>(c, v));
+		viruses.push_back(v);
 	}
 }
 
@@ -214,6 +214,6 @@ const std::vector<Projectile*> & GameBoard::get_projectiles() const {
 	return projectiles;
 }
 
-void GameBoard::add_projectile(Projectile& p) {
-	projectiles.insert(p);
+void GameBoard::add_projectile(Projectile* p) {
+	projectiles.push_back(p);
 }

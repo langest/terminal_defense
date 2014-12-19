@@ -29,7 +29,7 @@
 #include "../coord.hpp"
 #include "../virus/virus.hpp"
 
-class Tower; //Forward declaration because of circle reference
+//class Tower; //Forward declaration because of circle reference
 class GameBoard  {
 	private:
 		//player information:
@@ -77,10 +77,10 @@ class GameBoard  {
 		const int get_bld_value(Coord) const;
 		bool location_availible(Coord) const;
 
-		const std::map<Coord, Tower*> get_towers() const;
-		const std::vector<Virus*> get_viruses() const;
-		const std::vector<Projectile*> get_projectiles() const;
-		void add_projectile(Projectile& );
+		const std::map<Coord, Tower*> & get_towers() const;
+		const std::vector<Virus*> & get_viruses() const;
+		const std::vector<Projectile*> & get_projectiles() const;
+		void add_projectile(Projectile*);
 };
 
 #endif //termd_game_board
