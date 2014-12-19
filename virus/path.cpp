@@ -25,7 +25,7 @@ Path & Path::operator=(const Path & src) {
 }
 
 Coord Path::get_curr_pos() {
-	return path.front(); //Must not be called when path is empty!
+	return path.front().coord; //Must not be called when path is empty!
 }
 
 bool Path::destination_reached() {
