@@ -40,6 +40,7 @@ class GameBoard  {
 		int size_cols;
 		std::map<Coord, Tower*> towers;
 		std::vector<Virus*> viruses;
+		std::vector<Virus*> dead_viruses;
 		std::vector<Projectile*> projectiles;
 
 		void render_towers(GUI &);

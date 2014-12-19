@@ -78,15 +78,17 @@ void GameBoard::update_towers() {
 }
 
 bool GameBoard::update_viruses() {
-	if (viruses.begin() == viruses.end()) {
+	if (viruses.empty()) {
 		return false;
 	}
 	for (auto i = viruses.begin(); i != viruses.end(); ) {
 		if(i->second->update() == false) {
 			//If virus is flagging removal, remove it!
-			delete i->second;
+			//delete i->second;
+			dead_viruses.insert(i->second);
 			i = viruses.erase(i);
 		}else{
+			//Check if viruses has reached goal and put them in dead_viruses if so
 			++i;
 		}
 	}
