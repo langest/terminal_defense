@@ -190,7 +190,6 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 }
 
 void GameBoard::spawn_virus(int wave_num){
-	//TODO
 	Coord c(0, size_cols);
 	Virus * v;
 	for(int r = 0; r < size_rows; r += 2){
@@ -198,4 +197,21 @@ void GameBoard::spawn_virus(int wave_num){
 		v = new Virus(c);
 		viruses.insert(std::pair<Coord, Virus*>(c, v));
 	}
+}
+
+
+const std::map<Coord, Tower*> & GameBoard::get_towers() const {
+	return towers;
+}
+
+const std::vector<Virus*> & GameBoard::get_viruses() const {
+	return viruses;
+}
+
+const std::vector<Projectile*> & GameBoard::get_projectiles() const {
+	return projectiles;
+}
+
+void GameBoard::add_projectile(Projectile& p) {
+	projectiles.insert(p);
 }

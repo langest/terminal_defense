@@ -40,7 +40,7 @@ class GameBoard  {
 		int size_cols;
 		std::map<Coord, Tower*> towers;
 		std::vector<Virus*> viruses;
-		//std::vector<Projectile*> projectiles;
+		std::vector<Projectile*> projectiles;
 
 		void render_towers(GUI &);
 		void render_viruses(GUI &);
@@ -63,15 +63,21 @@ class GameBoard  {
 		void render(GUI &);
 		bool update();
 
+		//Game Logic
+		bool build_tower(Coord, int);
+		void spawn_virus(int wave_num);
+
 		//Getters and Setters
 		const int get_size_rows() const;
 		const int get_size_cols() const;
 		const int get_env_value(Coord) const;
 		const int get_bld_value(Coord) const;
 		bool location_availible(Coord) const;
-		bool build_tower(Coord, int);
-		void spawn_virus(int wave_num);
 
+		const std::map<Coord, Tower*> get_towers() const;
+		const std::vector<Virus*> get_viruses() const;
+		const std::vector<Projectile*> get_projectiles() const;
+		void add_projectile(Projectile& );
 };
 
 #endif //termd_game_board

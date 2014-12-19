@@ -75,11 +75,11 @@ std::ostream & operator<<(std::ostream & os, const Coord & coord) {
 }
 
 Coord Coord::operator-(const Coord & other) const {
-	return Coord(this->row - other->row, this->col - other->col);
+	return Coord(this->row - other.row, this->col - other.col);
 }
 
 Coord Coord::operator+(const Coord & other) const {
-	return Coord(this->row + other->row, this->col + other->col);
+	return Coord(this->row + other.row, this->col + other.col);
 }
 
 double Coord::length() const {

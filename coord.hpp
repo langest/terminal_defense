@@ -6,8 +6,8 @@
 #include <iostream>
 #endif
 
-#ifndef termd_math.h
-#define termd_math.h
+#ifndef termd_math
+#define termd_math
 #include <math.h>
 #endif
 
