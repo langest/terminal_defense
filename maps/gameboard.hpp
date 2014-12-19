@@ -6,6 +6,11 @@
 #include <map>
 #endif //termd_map
 
+#ifndef termd_vector
+#define termd_vector
+#include <vector>
+#endif //termd_vector
+
 #ifndef termd_queue
 #define termd_queue
 #include <queue>
@@ -34,7 +39,7 @@ class GameBoard  {
 		int size_rows;
 		int size_cols;
 		std::map<Coord, Tower*> towers;
-		std::map<Coord, Virus*> viruses;
+		std::vector<Virus*> viruses;
 		//std::vector<Projectile*> projectiles;
 
 		void render_towers(GUI &);
