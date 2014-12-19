@@ -1,27 +1,21 @@
-#ifndef termd_projectile
-#define termd_projectile
+#ifndef termd_homing_projectile
+#define termd_homing_projectile
 
-#include "../../gui.hpp"
-#include "../../coord.hpp"
-#include "../../virus/virus.hpp"
-
-class Projectile{
+class HomingProjectile : public Projectile {
 	private:
-
-	protected:
-		char gfx;
-		Coord pos;
 		Virus& target;
 		int speed_increment;
 		int speed_curr;
-	public:
-		Projectile(Coord, Virus &);
-		Projectile(const Projectile &);
-		~Projectile();
-		Projectile& operator=(const Projectile &);
 
-		bool update();
-		bool draw(GUI &);
+	protected:
+
+	public:
+		HomingProjectile(Coord, Virus &);
+		HomingProjectile(const HomingProjectile &);
+		~HomingProjectile();
+		HomingProjectile& operator=(const HomingProjectile &);
+
+		virtual bool update();
 };
 
-#endif //termd_projectile
+#endif //termd_HomingProjectile
