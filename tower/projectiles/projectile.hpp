@@ -1,9 +1,9 @@
 #ifndef termd_projectile
 #define termd_projectile
 
-#include "../gui.hpp"
-#include "../coord.hpp"
-#include "../virus/virus.hpp"
+#include "../../gui.hpp"
+#include "../../coord.hpp"
+#include "../../virus/virus.hpp"
 
 class Projectile{
 	private:
