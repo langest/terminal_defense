@@ -1,5 +1,5 @@
-#ifndef termd_tower_wall_1x1
-#define termd_tower_wall_1x1
+#ifndef termd_wall_1x1
+#define termd_wall_1x1
 
 #include "../gui.hpp"
 #include "tower.hpp"
