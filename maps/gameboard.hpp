@@ -25,6 +25,7 @@
 #include "../gui.hpp"
 #include "../tower/tower.hpp"
 #include "../tower/wall_1x1.hpp"
+#include "../tower/projectiles/projectile.hpp"
 #include "../coord.hpp"
 #include "../virus/virus.hpp"
 
