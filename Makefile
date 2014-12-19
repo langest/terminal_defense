@@ -6,6 +6,7 @@ maindeps = game.o \
 			tower/tower.o \
 			tower/wall_1x1.o \
 			tower/wall_3x3.o \
+			tower/projectiles/projectile.o \
 			maps/gameboard.o
 
 
@@ -26,4 +27,4 @@ gui_test: test/guitest.cpp gui.hpp gui.cpp
 	$(CXX) -std=c++0x -g -Wall test/guitest.cpp gui.hpp gui.cpp -lncurses -o guitest.out
 
 clean:
-	rm -fr *.o *.out
+	rm -fr $(maindeps)
