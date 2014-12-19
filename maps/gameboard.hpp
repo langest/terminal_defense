@@ -41,16 +41,14 @@ class GameBoard  {
 		int size_rows;
 		int size_cols;
 		std::map<Coord, Tower*> towers;
-		std::vector<Virus*> viruses;
-		std::vector<Virus*> dead_viruses;
 		std::vector<Projectile*> projectiles;
 
 		void render_towers(GUI &);
 		void render_viruses(GUI &);
 		void render_projectiles(GUI &);
 
+		VirusManager virus_manager;
 		void update_towers();
-		bool update_viruses();
 		void update_projectiles();
 
 		bool is_blocked();
