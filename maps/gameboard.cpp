@@ -1,10 +1,7 @@
 #include "gameboard.hpp"
 
-GameBoard::GameBoard() {
+GameBoard::GameBoard() : size_rows(BOARDROWS), size_cols(BOARDCOLS) {
 	ram = 9001; //player ram
-	//TODO set size of board
-	size_rows = BOARDROWS;
-	size_cols = BOARDCOLS;
 }
 
 GameBoard::GameBoard(const GameBoard & src) {
