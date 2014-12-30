@@ -34,6 +34,7 @@ class GameBoard  {
 	private:
 		//player information:
 		int ram;
+		int hp;
 
 		//Board information:
 		std::map<Coord, int> grid_env_state;
