@@ -20,7 +20,6 @@ class Tower {
 	protected:
 		//Variables:
 		Coord pos;			//Top-left
-		GameBoard & gameboard;
 
 		std::vector<std::vector<bool> > blocking; 	//Ground path blocking, children can change this
 		std::vector<std::vector<char> > gfx;			//The high-tech 3D model! Children can change this
@@ -33,7 +32,7 @@ class Tower {
 
 		//Functions:
 	public:
-		Tower(GameBoard &);
+		Tower();
 		virtual ~Tower() = 0;
 
 		//Implemented:
