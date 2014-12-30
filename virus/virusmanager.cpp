@@ -9,12 +9,14 @@ void VirusManager::purge_viruses() {
 	for (Virus* vir : viruses) {
 		delete vir;
 	}
+	viruses.clear();
 }
 
 void VirusManager::purge_dead_viruses() {
 	for (Virus* vir : dead_viruses) {
 		delete vir;
 	}
+	dead_viruses.clear();
 }
 
 void VirusManager::update() {
