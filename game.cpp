@@ -2,6 +2,7 @@
 
 bool Game::build_tower(int tower_id) {
 	Coord c = gui.get_cursor_pos();
+	c = c - Coord(BOARDR0, BOARDC0);
 	board.build_tower(c, tower_id);
 	board.draw(gui); //TODO move away from here
 	return true;
