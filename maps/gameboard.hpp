@@ -21,6 +21,7 @@
 #include <cstddef>
 #endif //termd_cstddef
 
+#include "virusmanager.hpp"
 #include "../definitions"
 #include "../gui.hpp"
 #include "../tower/tower.hpp"

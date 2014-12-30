@@ -1,6 +1,8 @@
 #ifndef termd_virus_manager
 #define termd_virus_manager
 
+#include "../virus/virus.hpp"
+
 class VirusManager {
 	private:
 		std::vector<Virus*> viruses;
@@ -13,6 +15,6 @@ class VirusManager {
 
 		bool update();
 		void add_virus(Virus*);
-}
+};
 
 #endif
