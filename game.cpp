@@ -39,9 +39,12 @@ void Game::build_phase() {
 }
 
 void Game::invasion_phase() {
+	int ch;
 	while (board.update()) {
 		board.draw(gui);
 		gui.refresh();
-		getch();//step the simulation
+		if ((ch = getch()) == 27 || ch == 'q') {
+			break;
+		}
 	}
 }
