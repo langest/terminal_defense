@@ -35,6 +35,10 @@ bool VirusManager::update() {
 	return true;
 }
 
+bool VirusManager::draw(GUI &) {
+	return false; //TODO
+}
+
 void VirusManager::add_virus(Virus* vir) {
 	viruses.push_back(vir);
 }
