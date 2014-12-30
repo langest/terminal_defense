@@ -39,6 +39,7 @@ void VirusManager::draw(GUI &) {
 	return false; //TODO
 }
 
-void VirusManager::add_virus(Virus* vir) {
-	viruses.push_back(vir);
+void VirusManager::add_virus(int virus_id) {
+	//TODO switch case over ids and pushback correct virus to vector.
+	//viruses.push_back(vir);
 }
