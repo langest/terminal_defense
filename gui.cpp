@@ -95,7 +95,7 @@ bool GUI::draw(const Coord & coord, const char ch) {
 	return ret;
 }
 
-//Draws a gfx
+//Draws a gfx in board window
 bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 	int max_row, max_col;
 	getmaxyx(stdscr, max_row, max_col);
@@ -110,9 +110,8 @@ bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 	getyx(stdscr, cur_row, cur_col);
 
 	for (unsigned int r = 0; r < gfx.size(); ++r) {
-		move(coord.get_row() + r, coord.get_col());
 		for (unsigned int c = 0; c < gfx[0].size(); ++c) {
-			addch(gfx[r][c]);
+			mvwaddch(stdscr, BOARDR0 + coord.get_row() + r, BOARDC0 + coord.get_col() + c, gfx[r][c]);
 		}
 	}
 
