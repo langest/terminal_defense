@@ -3,11 +3,13 @@ maindeps = game.o \
 			coord.o \
 			virus/path.o \
 			virus/virus.o \
+			virus/virusmanager.o\
 			maps/gameboard.o \
 			tower/tower.o \
 			tower/wall_1x1.o \
 			tower/wall_3x3.o \
-			tower/projectiles/projectile.o
+			tower/projectiles/projectile.o \
+			tower/projectiles/projectilemanager.o
 
 
 maindepsheaders = $(maindeps:.o=.hpp)
