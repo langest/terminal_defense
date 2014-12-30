@@ -1,7 +1,7 @@
 #ifndef termd_virus_manager
 #define termd_virus_manager
 
-#include "../virus/virus.hpp"
+#include "virus.hpp"
 
 class VirusManager {
 	private:
