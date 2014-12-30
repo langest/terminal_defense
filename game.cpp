@@ -40,6 +40,7 @@ void Game::build_phase() {
 
 void Game::invasion_phase() {
 	int ch;
+	board.spawn_virus(0);
 	while (board.update()) {
 		board.draw(gui);
 		gui.refresh();
