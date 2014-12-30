@@ -15,7 +15,7 @@ class VirusManager {
 
 		bool update();
 		void draw_viruses(GUI &);
-		void add_virus(int);
+		void add_virus(Virus*);
 };
 
 #endif
