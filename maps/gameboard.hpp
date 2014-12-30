@@ -49,9 +49,8 @@ class GameBoard  {
 	public:
 		GameBoard();
 		GameBoard(const GameBoard &);
-		~GameBoard();
 
-		GameBoard& operator=(const GameBoard &);
+		GameBoard& operator=(const GameBoard &) = delete;
 
 		//Main Game Loop:
 		void draw(GUI &);

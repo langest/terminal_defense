@@ -6,14 +6,6 @@ GameBoard::GameBoard() : ram(9001), size_rows(BOARDROWS), size_cols(BOARDCOLS), 
 GameBoard::GameBoard(const GameBoard & src) : ram(src.ram), size_rows(src.size_rows), size_cols(src.size_cols), tman(vman, pman), pman(src.pman), vman(src.vman) {
 }
 
-GameBoard& GameBoard::operator=(const GameBoard & src) {
-	ram = src.ram;
-	size_rows = src.size_rows;
-	size_cols = src.size_cols;
-	towers = src.towers;
-	return *this;
-}
-
 void GameBoard::draw(GUI & gui) {
 	tman.draw_towers(gui);
 	vman.draw_viruses(gui);
