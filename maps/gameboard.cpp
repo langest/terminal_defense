@@ -1,6 +1,6 @@
 #include "gameboard.hpp"
 
-GameBoard::GameBoard() : ram(9001), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman) {
+GameBoard::GameBoard() : ram(9001), hp(10), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman), vman(ram, hp) {
 }
 
 GameBoard::GameBoard(const GameBoard & src) : ram(src.ram), size_rows(src.size_rows), size_cols(src.size_cols), tman(vman, pman), pman(src.pman), vman(src.vman) {
