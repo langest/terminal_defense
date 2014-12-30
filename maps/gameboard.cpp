@@ -28,55 +28,10 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 	return *this;
 }
 
-void GameBoard::draw_towers(GUI & gui) {
-	for (auto i = towers.begin(); i != towers.end(); ++i) {
-		if(i->second->draw(gui) == false) {
-			//If tower failed to draw:
-			#ifdef DEBUGGING
-			#include <iostream>
-			std::cout << "Failed to draw Tower: " << i->second << std::endl;
-			#endif //DEBUGGING
-		}
-	}
-}
-
-void GameBoard::draw_viruses(GUI & gui) {
-	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
-		if((*i)->draw(gui) == false) {
-			//If tower failed to draw:
-			#ifdef DEBUGGING
-			#include <iostream>
-			std::cout << "Failed to draw Tower: " << (**i) << std::endl;
-			#endif //DEBUGGING
-		}
-	}
-}
-
-void GameBoard::draw_projectiles(GUI & gui) {
-
-}
-
 void GameBoard::draw(GUI & gui) {
-	this->draw_towers(gui);
-	this->draw_viruses(gui);
-	this->draw_projectiles(gui);
-}
-
-void GameBoard::update_towers() {
-	for (auto i = towers.begin(); i != towers.end(); ) {
-		if(i->second->update() == false) {
-			//If tower is flagging removal, remove it!
-			delete i->second;
-			i = towers.erase(i);
-		}else{
-			++i;
-		}
-	}
-}
-
-
-void GameBoard::update_projectiles() {
-	pman.update();
+	tman.draw_towers(gui);
+	vman.draw_viruses(gui);
+	pman.draw_projectiles(gui);
 }
 
 bool GameBoard::update() {
