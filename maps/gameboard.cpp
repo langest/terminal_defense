@@ -1,10 +1,10 @@
 #include "gameboard.hpp"
 
-GameBoard::GameBoard() : size_rows(BOARDROWS), size_cols(BOARDCOLS) {
+GameBoard::GameBoard() : size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman) {
 	ram = 9001; //player ram
 }
 
-GameBoard::GameBoard(const GameBoard & src) : size_rows(src.size_rows), size_cols(src.size_cols) {
+GameBoard::GameBoard(const GameBoard & src) : size_rows(src.size_rows), size_cols(src.size_cols), tman(vman, pman), pman(src.pman), vman(src.vman) {
 	ram = src.ram;
 	towers = src.towers;
 }
