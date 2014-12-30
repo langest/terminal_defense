@@ -28,7 +28,7 @@ GameBoard& GameBoard::operator=(const GameBoard & src) {
 	return *this;
 }
 
-void GameBoard::render_towers(GUI & gui) {
+void GameBoard::draw_towers(GUI & gui) {
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
 		if(i->second->draw(gui) == false) {
 			//If tower failed to draw:
@@ -40,7 +40,7 @@ void GameBoard::render_towers(GUI & gui) {
 	}
 }
 
-void GameBoard::render_viruses(GUI & gui) {
+void GameBoard::draw_viruses(GUI & gui) {
 	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
 		if((*i)->draw(gui) == false) {
 			//If tower failed to draw:
@@ -52,14 +52,14 @@ void GameBoard::render_viruses(GUI & gui) {
 	}
 }
 
-void GameBoard::render_projectiles(GUI & gui) {
+void GameBoard::draw_projectiles(GUI & gui) {
 
 }
 
-void GameBoard::render(GUI & gui) {
-	this->render_towers(gui);
-	this->render_viruses(gui);
-	this->render_projectiles(gui);
+void GameBoard::draw(GUI & gui) {
+	this->draw_towers(gui);
+	this->draw_viruses(gui);
+	this->draw_projectiles(gui);
 }
 
 void GameBoard::update_towers() {

@@ -44,9 +44,9 @@ class GameBoard  {
 		std::map<Coord, Tower*> towers;
 		std::vector<Projectile*> projectiles;
 
-		void render_towers(GUI &);
-		void render_viruses(GUI &);
-		void render_projectiles(GUI &);
+		void draw_towers(GUI &);
+		void draw_viruses(GUI &);
+		void draw_projectiles(GUI &);
 
 		VirusManager virus_manager;
 		void update_towers();
@@ -62,7 +62,7 @@ class GameBoard  {
 		GameBoard& operator=(const GameBoard &);
 
 		//Main Game Loop:
-		void render(GUI &);
+		void draw(GUI &);
 		bool update();
 
 		//Game Logic
