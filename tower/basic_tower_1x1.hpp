@@ -3,20 +3,23 @@
 
 #ifndef termd_limits
 #define termd_limits
-include <limits>
+#include <limits>
 #endif
 
 #include "tower.hpp"
 #include "../definitions"
-#include "/prjectile/projectile.hpp"
+#include "/projectile/projectile.hpp"
+#include "/projectile/homingprojectile.hpp"
+#include "/projectile/projectilemanager.hpp"
 
 class BasicTower_1x1 : public Tower {
 	private:
-
+		std::vector<Virus*>& viruses;
+		ProjectileManager& projectileManager;
 	protected:
 
 	public:
-		BasicTower(Coord, std::vector<Virus*>&);
+		BasicTower(Coord, const std::vector<Virus*>&, ProjectileManager&);
 
 		void shoot();
 
