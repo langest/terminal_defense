@@ -17,7 +17,7 @@ void ProjectileManager::update() {
 	}
 }
 
-void ProjectileManager::draw(GUI & gui) {
+void ProjectileManager::draw_projectiles(GUI & gui) {
 	for (projectile* proj : projectiles) {
 		proj->draw(gui);
 	}

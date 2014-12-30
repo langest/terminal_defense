@@ -12,7 +12,7 @@ class ProjectileManager {
 		~ProjectileManager();
 
 		void update();
-		void draw(GUI &);
+		void draw_projectiles(GUI &);
 		void add_projectile(Projectile*);
 };
 
