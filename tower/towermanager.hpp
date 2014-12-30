@@ -14,19 +14,21 @@
 #include "../gui.hpp"
 #include "../coord.hpp"
 #include "../definitions"
+#include "../virus/virus.hpp"
+#include "../virus/virusmanager.hpp"
 #include "tower.hpp"
 #include "wall_1x1.hpp"
 #include "projectiles/projectile.hpp"
-#include "../virus/virus.hpp"
+#include "projectiles/projectilemanager.hpp"
 
 
 class TowerManager {
 	private:
 		std::map<Coord, Tower*> towers;
-		std::vector<Virus*>& viruses;
-		std::vector<Projectile*>& projectiles;
+		VirusManager& viruses;
+		ProjectileManager& projectiles;
 	public:
-		TowerManager(std::vector<Virus*>&, std::vector<Projectile*>&);
+		TowerManager(VirusManager&, ProjectileManager&);
 		~TowerManager();
 
 		void update();
