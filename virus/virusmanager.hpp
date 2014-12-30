@@ -13,8 +13,8 @@ class VirusManager {
 	public:
 		~VirusManager();
 
-		bool update();
-		bool draw(GUI &);
+		void update();
+		void draw(GUI &);
 		void add_virus(Virus*);
 };
 

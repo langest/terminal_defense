@@ -17,7 +17,7 @@ void VirusManager::purge_dead_viruses() {
 	}
 }
 
-bool VirusManager::update() {
+void VirusManager::update() {
 	if (viruses.empty()) {
 		return false;
 	}
@@ -35,7 +35,7 @@ bool VirusManager::update() {
 	return true;
 }
 
-bool VirusManager::draw(GUI &) {
+void VirusManager::draw(GUI &) {
 	return false; //TODO
 }
 
