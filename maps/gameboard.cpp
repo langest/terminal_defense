@@ -6,15 +6,6 @@ GameBoard::GameBoard() : ram(9001), size_rows(BOARDROWS), size_cols(BOARDCOLS), 
 GameBoard::GameBoard(const GameBoard & src) : ram(src.ram), size_rows(src.size_rows), size_cols(src.size_cols), tman(vman, pman), pman(src.pman), vman(src.vman) {
 }
 
-GameBoard::~GameBoard() {
-	for (auto i = towers.begin(); i != towers.end(); ++i) {
-		delete i->second;
-	}
-	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
-		delete *i;
-	}
-}
-
 GameBoard& GameBoard::operator=(const GameBoard & src) {
 	ram = src.ram;
 	size_rows = src.size_rows;
