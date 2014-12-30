@@ -1,6 +1,6 @@
 #include "towermanager.hpp"
 
-TowerManager::TowerManager(std::vector<Virus*>& v, std::vector<Projectile*>& p) : viruses(v), projectiles(p){
+TowerManager::TowerManager(VirusManager& v, ProjectileManager& p) : viruses(v), projectiles(p){
 
 }
 
