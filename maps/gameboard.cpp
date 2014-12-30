@@ -82,6 +82,6 @@ void GameBoard::spawn_virus(int wave_num){
 	for(int r = 0; r < size_rows; r += 2){
 		c.set_row(r);
 		v = new Virus(c);
-		//virus_manager.add(v); TODO who should create virus?
+		vman.add_virus(v);
 	}
 }
