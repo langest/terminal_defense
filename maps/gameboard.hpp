@@ -44,13 +44,6 @@ class GameBoard  {
 		ProjectileManager pman;
 		VirusManager vman;
 
-		void draw_towers(GUI &);
-		void draw_viruses(GUI &);
-		void draw_projectiles(GUI &);
-
-		void update_towers();
-		void update_projectiles();
-
 		bool is_blocked();
 
 	public:
