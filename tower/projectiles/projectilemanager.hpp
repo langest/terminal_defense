@@ -11,9 +11,9 @@ class ProjectileManager {
 	public:
 		~ProjectileManager();
 
-		bool update();
-		bool draw(GUI &);
-		void add_rojectile(Projectile*);
+		void update();
+		void draw(GUI &);
+		void add_rojectile(int);
 };
 
 #endif
