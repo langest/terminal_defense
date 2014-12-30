@@ -4,10 +4,8 @@ GameBoard::GameBoard() : size_rows(BOARDROWS), size_cols(BOARDCOLS) {
 	ram = 9001; //player ram
 }
 
-GameBoard::GameBoard(const GameBoard & src) {
+GameBoard::GameBoard(const GameBoard & src) : size_rows(src.size_rows), size_cols(src.size_cols) {
 	ram = src.ram;
-	size_rows = src.size_rows;
-	size_cols = src.size_cols;
 	towers = src.towers;
 }
 
