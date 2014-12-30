@@ -30,8 +30,8 @@ class TowerManager {
 		~TowerManager();
 
 		void update();
-		void draw(GUI &);
-		void add_tower(Coord, int);
+		void draw_towers(GUI &);
+		void build_tower(Coord, int);
 };
 
 #endif

@@ -74,14 +74,14 @@ void GameBoard::update_towers() {
 
 
 void GameBoard::update_projectiles() {
-
+	pman.update();
 }
 
 bool GameBoard::update() {
 	//TODO spawn viruses with cool function
-	bool ret = this->update_viruses();
-	this->update_towers();
-	this->update_projectiles();
+	bool ret = vman.update();
+	tman.update();
+	pman.update();
 	return ret;
 }
 
@@ -137,36 +137,8 @@ const int GameBoard::get_size_cols() const {
 	return size_cols;
 }
 
-const int GameBoard::get_env_value(Coord c) const {
-	return 0; //TODO
-}
-
-const int GameBoard::get_bld_value(Coord c) const {
-	return 0; //TODO
-}
-
-bool GameBoard::location_availible(Coord c) const {
-	return true;
-}
-
 bool GameBoard::build_tower(Coord c, int tower_id) {
-	switch(tower_id){ //TODO define towers somewhere...
-		case WALL_1x1_ID: 
-			//is it possible to build here?
-			Wall_1x1* w = new Wall_1x1(c, *this);
-			//TODO: Check if blocked
-			if(ram >= WALL_1x1_COST){
-				//SUCCESS!
-				ram -= WALL_1x1_COST;
-				towers.insert( std::pair<Coord, Tower*>(c, w));
-				return true;
-			}else{
-				//FAIL: Not enough RAM
-				delete w;
-			}
-			break;
-	}
-	return false;
+	return tman.build_tower(c, tower_id);
 }
 
 void GameBoard::spawn_virus(int wave_num){
@@ -177,21 +149,4 @@ void GameBoard::spawn_virus(int wave_num){
 		v = new Virus(c);
 		virus_manager.add(v);
 	}
-}
-
-
-const std::map<Coord, Tower*> & GameBoard::get_towers() const {
-	return towers;
-}
-
-const std::vector<Virus*> & GameBoard::get_viruses() const {
-	return viruses;
-}
-
-const std::vector<Projectile*> & GameBoard::get_projectiles() const {
-	return projectiles;
-}
-
-void GameBoard::add_projectile(Projectile* p) {
-	projectiles.push_back(p);
 }

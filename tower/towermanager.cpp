@@ -22,7 +22,7 @@ void TowerManager::update() {
 	}
 }
 
-bool TowerManager::add_tower(Coord c, int tower_id) {
+bool TowerManager::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
@@ -42,7 +42,7 @@ bool TowerManager::add_tower(Coord c, int tower_id) {
 	return false;
 }
 
-void TowerManager::draw(GUI & gui) {
+void TowerManager::draw_towers(GUI & gui) {
 	for (auto i = towers.begin(); i != towers.end(); ++i) {
 		if(i->second->draw(gui) == false) {
 			//If tower failed to draw:
