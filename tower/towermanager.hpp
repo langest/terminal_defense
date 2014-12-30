@@ -33,7 +33,7 @@ class TowerManager {
 
 		void update();
 		void draw_towers(GUI &);
-		bool build_tower(Coord, int);
+		bool build_tower(Coord, int, int&);
 };
 
 #endif
