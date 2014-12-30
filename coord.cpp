@@ -82,6 +82,16 @@ Coord Coord::operator+(const Coord & other) const {
 	return Coord(this->row + other.row, this->col + other.col);
 }
 
+void Coord::operator-=(const Coord & other) {
+	row = row - other.row;
+	col = col - other.col;
+}
+
+void Coord::operator+=(const Coord & other) {
+	row = row + other.row;
+	col = col + other.col;
+}
+
 double Coord::length() const {
 	return sqrt(row*row + col*col);
 }

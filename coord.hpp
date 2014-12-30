@@ -32,6 +32,8 @@ class Coord {
 		bool set_row(const int);
 		Coord operator-(const Coord&) const;
 		Coord operator+(const Coord&) const;
+		void operator-=(const Coord&);
+		void operator+=(const Coord&);
 		double length() const;
 };
 
