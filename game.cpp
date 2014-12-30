@@ -39,6 +39,8 @@ void Game::build_phase() {
 }
 
 void Game::invasion_phase() {
-	//TODO loop
-	board.update();
+	while (board.update()) {
+		gui.refresh();
+		getch();//step the simulation
+	}
 }
