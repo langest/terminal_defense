@@ -73,7 +73,7 @@ const int GameBoard::get_size_cols() const {
 }
 
 bool GameBoard::build_tower(Coord c, int tower_id) {
-	return tman.build_tower(c, tower_id);
+	return tman.build_tower(c, tower_id, ram);
 }
 
 void GameBoard::spawn_virus(int wave_num){
