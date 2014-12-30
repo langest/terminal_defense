@@ -14,7 +14,6 @@
 #include "../gui.hpp"
 #include "../coord.hpp"
 
-
 class Tower {
 	private:
 		

@@ -6,6 +6,11 @@
 #include <iostream>
 #endif
 
+#ifndef termd_math
+#define termd_math
+#include <math.h>
+#endif
+
 class Coord {
 	private:
 		int row, col;
@@ -25,6 +30,9 @@ class Coord {
 		int get_row() const;
 		bool set_col(const int);
 		bool set_row(const int);
+		Coord operator-(const Coord&) const;
+		Coord operator+(const Coord&) const;
+		double length() const;
 };
 
 std::ostream & operator<<(std::ostream &, const Coord &);

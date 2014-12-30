@@ -6,6 +6,11 @@
 #include <map>
 #endif //termd_map
 
+#ifndef termd_vector
+#define termd_vector
+#include <vector>
+#endif //termd_vector
+
 #ifndef termd_queue
 #define termd_queue
 #include <queue>
@@ -18,11 +23,13 @@
 
 #include "../definitions"
 #include "../gui.hpp"
-#include "../tower/tower.hpp"
-#include "../tower/wall_1x1.hpp"
 #include "../coord.hpp"
 #include "../virus/virus.hpp"
+#include "../virus/virusmanager.hpp"
+#include "../tower/towermanager.hpp"
+#include "../tower/projectiles/projectilemanager.hpp"
 
+//class Tower; //Forward declaration because of circle reference
 class GameBoard  {
 	private:
 		//player information:
@@ -33,40 +40,29 @@ class GameBoard  {
 		std::map<Coord, int> grid_bld_state;
 		int size_rows;
 		int size_cols;
-		std::map<Coord, Tower*> towers;
-		std::map<Coord, Virus*> viruses;
-		//std::vector<Projectile*> projectiles;
-
-		void render_towers(GUI &);
-		void render_viruses(GUI &);
-		void render_projectiles(GUI &);
-
-		void update_towers();
-		bool update_viruses();
-		void update_projectiles();
+		TowerManager tman;
+		ProjectileManager pman;
+		VirusManager vman;
 
 		bool is_blocked();
 
 	public:
 		GameBoard();
 		GameBoard(const GameBoard &);
-		~GameBoard();
 
-		GameBoard& operator=(const GameBoard &);
+		GameBoard& operator=(const GameBoard &) = delete;
 
 		//Main Game Loop:
-		void render(GUI &);
+		void draw(GUI &);
 		bool update();
+
+		//Game Logic
+		bool build_tower(Coord, int);
+		void spawn_virus(int wave_num);
 
 		//Getters and Setters
 		const int get_size_rows() const;
 		const int get_size_cols() const;
-		const int get_env_value(Coord) const;
-		const int get_bld_value(Coord) const;
-		bool location_availible(Coord) const;
-		bool build_tower(Coord, int);
-		void spawn_virus(int wave_num);
-
 };
 
 #endif //termd_game_board

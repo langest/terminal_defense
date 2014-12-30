@@ -3,7 +3,7 @@
 bool Game::build_tower(int tower_id) {
 	Coord c = gui.get_cursor_pos();
 	board.build_tower(c, tower_id);
-	board.render(gui); //TODO move away from here
+	board.draw(gui); //TODO move away from here
 	return true;
 }
 
