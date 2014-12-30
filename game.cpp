@@ -40,7 +40,7 @@ void Game::build_phase() {
 
 void Game::invasion_phase() {
 	while (board.update()) {
-		board.draw();
+		board.draw(gui);
 		gui.refresh();
 		getch();//step the simulation
 	}
