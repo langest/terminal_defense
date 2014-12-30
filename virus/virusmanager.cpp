@@ -1,6 +1,6 @@
 #include "virusmanager.hpp"
 
-VirsuManager::~VirusManager() {
+VirusManager::~VirusManager() {
 	purge_viruses();
 	purge_dead_viruses();
 }
@@ -19,7 +19,7 @@ void VirusManager::purge_dead_viruses() {
 	dead_viruses.clear();
 }
 
-void VirusManager::update() {
+bool VirusManager::update() {
 	if (viruses.empty()) {
 		return false;
 	}
@@ -37,8 +37,8 @@ void VirusManager::update() {
 	return true;
 }
 
-void VirusManager::draw(GUI &) {
-	return false; //TODO
+void VirusManager::draw_viruses(GUI &) {
+	//TODO
 }
 
 void VirusManager::add_virus(int virus_id) {
