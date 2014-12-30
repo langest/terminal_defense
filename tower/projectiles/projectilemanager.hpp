@@ -13,7 +13,7 @@ class ProjectileManager {
 
 		void update();
 		void draw(GUI &);
-		void add_rojectile(int);
+		void add_projectile(Projectile*);
 };
 
 #endif
