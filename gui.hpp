@@ -11,6 +11,11 @@
 #include <vector>
 #endif //termd_vector
 
+#ifndef termd_string
+#define termd_string
+#include <string>
+#endif
+
 #include "coord.hpp"
 #include "definitions"
 
@@ -37,6 +42,7 @@ class GUI {
 
 		bool draw(const Coord &, const char); //Does not refresh
 		bool draw_gfx(const Coord &, std::vector<std::vector<char> > &);
+		void print_intel(std::string);
 		void draw_board_frame();
 		void draw_intel_frame();
 		void clear();

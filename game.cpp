@@ -9,6 +9,7 @@ bool Game::build_tower(int tower_id) {
 }
 
 void Game::build_phase() {
+	gui.print_intel(std::string("Build Phase"));
 	gui.draw_board_frame();
 	gui.draw_intel_frame();
 	int ch;
@@ -40,6 +41,7 @@ void Game::build_phase() {
 }
 
 void Game::invasion_phase() {
+	gui.print_intel("Invasion phase");
 	int ch;
 	board.spawn_virus(0);
 	while (board.update()) {

@@ -120,6 +120,10 @@ bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 	return true;
 }
 
+void print_intel(std::string message) {
+	mvwprintw(stdscr, BOARDR0 + BOARDROWS + WINDOWSPACE + 1, BOARDC0, message.c_str());
+}
+
 void GUI::draw_board_frame() {
 	int cur_row, cur_col;
 	getyx(stdscr, cur_row, cur_col);
