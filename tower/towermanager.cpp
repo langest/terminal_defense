@@ -26,7 +26,7 @@ bool TowerManager::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
-			Wall_1x1* w = new Wall_1x1(c, *this);
+			Wall_1x1* w = new Wall_1x1(c);
 			//TODO: Check if blocked
 			if(ram >= WALL_1x1_COST){
 				//SUCCESS!
