@@ -1,6 +1,6 @@
 #include "virus.hpp"
 
-Virus::Virus(Coord start) : max_hp(10), cur_hp(10), stamina(0), stamina_increment(10), reward(10), path(start) /*, TODO path() */{
+Virus::Virus(Coord start) : max_hp(10), cur_hp(10), stamina(0), stamina_increment(1000), reward(10), path(start) /*, TODO path() */{
 	gfx.resize(1);
 	gfx[0].resize(1);
 	gfx[0][0] = '@';
