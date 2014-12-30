@@ -37,11 +37,19 @@ bool VirusManager::update() {
 	return true;
 }
 
-void VirusManager::draw_viruses(GUI &) {
-	//TODO
+void VirusManager::draw_viruses(GUI & gui) {
+	for (auto i = viruses.begin(); i != viruses.end(); ++i) {
+		if((*i)->draw(gui) == false) {
+			//If tower failed to draw:
+			#ifdef DEBUGGING
+			#include <iostream>
+			std::cout << "Failed to draw Virus! " << std::endl;
+			#endif //DEBUGGING
+		}
+	}
 }
 
-void VirusManager::add_virus(int virus_id) {
+void VirusManager::add_virus(Virus* vir) {
 	//TODO switch case over ids and pushback correct virus to vector.
-	//viruses.push_back(vir);
+	viruses.push_back(vir);
 }
