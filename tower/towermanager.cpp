@@ -22,7 +22,7 @@ void TowerManager::update() {
 	}
 }
 
-bool TowerManager::build_tower(Coord c, int tower_id) {
+bool TowerManager::build_tower(Coord c, int tower_id, int& ram) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
