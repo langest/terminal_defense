@@ -14,7 +14,7 @@ class Wall_1x1 : public Tower {
 		//bool blocking; //Ground path blocking, children can change this
 		//char gfx;	//The high-tech 3D model! Children can change this
 	public:
-		Wall_1x1(Coord, GameBoard&);
+		Wall_1x1(Coord);
 
 		//Virtual:
 		virtual bool update();
