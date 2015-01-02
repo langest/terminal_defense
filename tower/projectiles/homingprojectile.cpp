@@ -16,11 +16,11 @@ bool HomingProjectile::hit() {
 }
 
 bool HomingProjectile::step() {
-	delta = target.get_pos() - pos;
-
 	if (hit()) return false; //We already reached the target
 
-	float angle = atan2(delta.row, delta.col) * 180 / PI;
+	Coord delta = target.get_pos() - pos;
+
+	float angle = atan2(delta.get_row(), delta.get_col()) * 180 / PI;
 	if (angle < 45.0f/2.0f) { //go right
 		if (speed_curr >= STEPCOST) {
 			speed_curr -= STEPCOST;
