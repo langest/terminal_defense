@@ -38,6 +38,20 @@ bool TowerManager::build_tower(Coord c, int tower_id) {
 				delete w;
 			}
 			break;
+		case BASIC_TOWER_1x1_ID: 
+			//is it possible to build here?
+			Basic_Tower_1x1* w = new Basic_Tower_1x1(c);
+			//TODO: Check if blocked
+			if(player.get_ram() >= BASIC_TOWER_1x1_COST){
+				//SUCCESS!
+				player.modify_ram(-BASIC_TOWER_1x1_COST);
+				towers.insert( std::pair<Coord, Tower*>(c, w));
+				return true;
+			}else{
+				//FAIL: Not enough RAM
+				delete w;
+			}
+			break;
 	}
 	return false;
 }
