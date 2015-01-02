@@ -8,8 +8,10 @@ int main() {
 	
 	Game game;
 
+	game.intro();
 	game.build_phase();
 	game.invasion_phase();
+	game.outro();
 	
 	endwin(); //End curses mode
 	return 0;

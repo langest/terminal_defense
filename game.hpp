@@ -16,6 +16,8 @@ class Game {
 	public:
 		Game();
 		
+		void intro();
+		void outro();
 		void build_phase();
 		void invasion_phase();
 };
