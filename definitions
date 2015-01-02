@@ -14,6 +14,10 @@
 #define STEPCOST 1000
 #define STEPCOSTDIAGONAL 1414
 
+//Player info
+#define PLAYER_DEFAULT_HP 10
+#define PLAYER_DEFAULT_RAM 100
+
 //Map information
 #define BOARDROWS 4
 #define BOARDCOLS 20
