@@ -17,12 +17,10 @@ class Player {
 		
 	public:
 		Player();
-		Player(const Player &);
+		Player(const Player &) = delete;
 		~Player();
-
-		Player& Player(const Player &);
 		
-		void new_map();
+		void new_map_refresh();
 		inline bool is_alive();
 		inline void take_damage(int); //returns is_alive after damage is taken
 };
