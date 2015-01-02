@@ -14,10 +14,14 @@ void HomingProjectile::move() {
 	while (step());
 }
 
+bool HomingProjectile::hit() {
+	return pos == target.get_position();
+}
+
 bool HomingProjectile::step() {
 	delta = target.get_pos() - pos;
 
-	if (delta.get_row() == 0 && delta.get_col() == 0) return false; //We already reached the target
+	if (hit()) return false; //We already reached the target
 
 	float angle = atan2(delta.row, delta.col) * 180 / PI;
 	if (angle < 45.0f/2.0f) { //go right
@@ -92,7 +96,7 @@ HomingProjectile& HomingProjectile::operator=(const HomingProjectile & src) {
 }
 
 bool HomingProjectile::update() {
-	if(pos == target.get_pos()){
+	if(hit()){
 		//hit target!
 		//deal damage!
 		return false; 
