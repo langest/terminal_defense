@@ -15,7 +15,6 @@ bool HomingProjectile::hit() {
 	return pos == target.get_pos();
 }
 
-#include <iostream>
 bool HomingProjectile::step() {
 	if (hit()) return false; //We already reached the target
 
