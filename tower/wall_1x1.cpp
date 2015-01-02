@@ -1,13 +1,6 @@
 #include "wall_1x1.hpp"
 
-Wall_1x1::Wall_1x1(Coord p) {
-	num_rows = 1;
-	num_cols = 1;
-
-	pos = p;
-	sell_value = WALL_1x1_SELL;
-	sell_decrease = WALL_1x1_SELL_DECREASE; 
-
+Wall_1x1::Wall_1x1(Coord p) : Tower(p, 1, 1, WALL_1x1_SELL, WALL_1x1_SELL_DECREASE) {
 	blocking.resize(num_rows);
 	blocking[0].resize(num_cols);
 	blocking = {{true}};
