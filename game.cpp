@@ -10,6 +10,7 @@ bool Game::build_tower(int tower_id) {
 }
 
 void Game::build_phase() {
+	gui.print_intel("test");
 	int ch;
 	gui.draw_board_frame();
 	gui.draw_intel_frame();
