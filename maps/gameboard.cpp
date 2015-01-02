@@ -78,7 +78,7 @@ bool GameBoard::build_tower(Coord c, int tower_id) {
 void GameBoard::spawn_virus(int wave_num){
 	Coord c(0, size_cols - 1);
 	Virus * v;
-	for(int r = 0; r < size_rows; r += 2){
+	for(int r = 2; r < size_rows; r += 2){
 		c.set_row(r);
 		v = new Virus(c);
 		vman.add_virus(v);
