@@ -12,7 +12,7 @@ void HomingProjectile::move() {
 }
 
 bool HomingProjectile::hit() {
-	return pos == target.get_position();
+	return pos == target.get_pos();
 }
 
 bool HomingProjectile::step() {
