@@ -7,6 +7,9 @@ class HomingProjectile : public Projectile {
 		int speed_increment;
 		int speed_curr;
 
+		bool step();
+		void move();
+
 	protected:
 
 	public:

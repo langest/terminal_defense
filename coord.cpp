@@ -49,7 +49,7 @@ int Coord::get_col() const {
 	return col;
 }
 
-void Coord::add_col(int amount) const {
+void Coord::add_col(int amount) {
 	col += amount;
 }
 
@@ -65,7 +65,7 @@ int Coord::get_row() const {
 	return row;
 }
 
-void Coord::add_row(int amount) const {
+void Coord::add_row(int amount) {
 	row += amount;
 }
 
