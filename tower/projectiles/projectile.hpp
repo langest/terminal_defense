@@ -12,6 +12,7 @@ class Projectile {
 		char gfx;
 		Coord pos;
 	public:
+		Projectile(char, Coord);
 		virtual ~Projectile() = 0;
 
 		virtual bool update() = 0;
