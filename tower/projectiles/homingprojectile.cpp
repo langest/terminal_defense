@@ -7,9 +7,6 @@ HomingProjectile::~HomingProjectile() {
 	//TODO keep track if needed
 }
 
-HomingProjectile::HomingProjectile(const HomingProjectile & src) : pos(src.pos), target(src.target), speed_curr(src.speed_curr), speed_increment(src.speed_increment), gfx(src.gfx) {
-}
-
 void HomingProjectile::move() {
 	while (step());
 }

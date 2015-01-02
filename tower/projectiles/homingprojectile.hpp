@@ -17,8 +17,8 @@ class HomingProjectile : public Projectile {
 
 	public:
 		HomingProjectile(Coord, Virus &);
-		HomingProjectile(const HomingProjectile &);
-		~HomingProjectile();
+		HomingProjectile(const HomingProjectile &) = delete;
+		virtual ~HomingProjectile();
 		HomingProjectile& operator=(const HomingProjectile &);
 
 		virtual bool update();
