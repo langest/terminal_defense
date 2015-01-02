@@ -116,8 +116,17 @@ bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 	}
 
 	move(cur_row, cur_col);
-
 	return true;
+}
+
+bool GUI::draw_gfx(const Coord & coord, char gfx) {
+	int cur_row, cur_col;
+	getyx(stdscr, cur_row, cur_col);
+
+	bool ret =  mvwaddch(stdscr, BOARDR0 + coord.get_row(), BOARDC0 + coord.get_col(), gfx);
+	
+	move(cur_row, cur_col);
+	return ret;
 }
 
 void print_intel(std::string message) {
