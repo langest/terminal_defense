@@ -27,8 +27,10 @@ class Coord {
 		bool operator>(const Coord &) const;
 
 		int get_col() const;
-		int get_row() const;
+		void add_col(int);
 		bool set_col(const int);
+		int get_row() const;
+		void add_row(int);
 		bool set_row(const int);
 		Coord operator-(const Coord&) const;
 		Coord operator+(const Coord&) const;

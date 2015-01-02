@@ -49,8 +49,8 @@ int Coord::get_col() const {
 	return col;
 }
 
-int Coord::get_row() const {
-	return row;
+void Coord::add_col(int amount) const {
+	col += amount;
 }
 
 bool Coord::set_col(const int x) {
@@ -59,6 +59,14 @@ bool Coord::set_col(const int x) {
 	}
 	col = x;
 	return true;
+}
+
+int Coord::get_row() const {
+	return row;
+}
+
+void Coord::add_row(int amount) const {
+	row += amount;
 }
 
 bool Coord::set_row(const int y) {
