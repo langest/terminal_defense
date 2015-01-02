@@ -32,7 +32,7 @@ void Game::build_phase() {
 				gui.move_cursor_down();
 				break;
 			case 'b':
-				this->build_tower(1);
+				this->build_tower(BASIC_TOWER_1x1_ID);
 			default:
 				break;
 		}

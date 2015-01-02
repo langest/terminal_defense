@@ -1,6 +1,7 @@
 #ifndef termd_game
 #define termd_game
 
+#include "definitions"
 #include "gui.hpp"
 #include "player.hpp"
 #include "maps/gameboard.hpp"
