@@ -17,7 +17,7 @@
 
 //Player info
 #define PLAYER_DEFAULT_HP 10
-#define PLAYER_DEFAULT_RAM 100
+#define PLAYER_DEFAULT_RAM 10000
 
 //Map information
 #define BOARDROWS 4
