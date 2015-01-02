@@ -34,6 +34,7 @@ class Virus {
 		int get_reward();
 		Coord get_pos();
 		bool destination_reached();
+		void take_damage(int);
 };
 
 #endif //termd_virus
