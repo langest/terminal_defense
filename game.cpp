@@ -50,8 +50,10 @@ void Game::build_phase() {
 				break;
 			case 'b':
 				this->build_tower(BASIC_TOWER_1x1_ID);
+				break;
 			case 'n':
 				this->build_tower(RIGHT_TOWER_1x1_ID);
+				break;
 			default:
 				break;
 		}
