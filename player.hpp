@@ -6,9 +6,13 @@
 #include <vector>
 #endif
 
+#include definitions;
+
 class Player {
 	private:
 		std::vector<String> completed_maps;
+		int ram;
+		int hp;
 	protected:
 		
 	public:
@@ -18,6 +22,9 @@ class Player {
 
 		Player& Player(const Player &);
 		
+		void new_map();
+		inline bool is_alive();
+		inline void take_damage(int); //returns is_alive after damage is taken
 };
 
 #endif //termd_player
