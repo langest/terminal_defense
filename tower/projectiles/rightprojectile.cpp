@@ -1,13 +1,13 @@
 #include "rightprojectile.hpp"
 
-RightProjectile::RightProjectile(Coord s, Virus& t) : Projectile(')', s) {
+RightProjectile::RightProjectile(Coord s, std::vector<Virus*>& t) : Projectile(')', s), viruses(t) {
 }
 
 RightProjectile::~RightProjectile() {
 }
 
 void RightProjectile::move() {
-	position.add_col(1);
+	pos.add_col(1);
 }
 
 Virus* RightProjectile::hit() {
@@ -17,24 +17,14 @@ Virus* RightProjectile::hit() {
 		vc = vir->get_pos().get_col();
 		if (vr == pos.get_row()) {
 			if (vc == pos.get_col()) {
-				return vir
+				return vir;
 			}
 		}
 	}
 	return nullptr;
 }
 
-RightProjectile& RightProjectile::operator=(const RightProjectile & src) {
-	pos = src.pos;
-	target = src.target;
-	speed_curr = src.speed_curr;
-	speed_increment = src.speed_increment;
-	gfx = src.gfx;
-	return *this;
-}
-
 bool RightProjectile::update() {
-	speed_curr += speed_increment;
 	Virus* target = hit();
 	if(target != nullptr){
 		//hit target!
