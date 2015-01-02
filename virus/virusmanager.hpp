@@ -20,6 +20,7 @@ class VirusManager {
 		bool update();
 		void draw_viruses(GUI &);
 		void add_virus(Virus*);
+		std::vector<Virus*>& get_viruses();
 };
 
 #endif

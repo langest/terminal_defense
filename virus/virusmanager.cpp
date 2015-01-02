@@ -59,3 +59,7 @@ void VirusManager::add_virus(Virus* vir) {
 	//TODO switch case over ids and pushback correct virus to vector.
 	viruses.push_back(vir);
 }
+
+std::vector<Virus*>& VirusManager::get_viruses() {
+	return viruses;
+}
