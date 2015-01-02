@@ -1,9 +1,6 @@
 #include "gameboard.hpp"
 
-GameBoard::GameBoard() : ram(9001), hp(10), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman), vman(ram, hp) {
-}
-
-GameBoard::GameBoard(const GameBoard & src) : ram(src.ram), size_rows(src.size_rows), size_cols(src.size_cols), tman(vman, pman), pman(src.pman), vman(src.vman) {
+GameBoard::GameBoard(Player& p) : player(p), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p) {
 }
 
 void GameBoard::draw(GUI & gui) {
@@ -73,7 +70,7 @@ const int GameBoard::get_size_cols() const {
 }
 
 bool GameBoard::build_tower(Coord c, int tower_id) {
-	return tman.build_tower(c, tower_id, ram);
+	return tman.build_tower(c, tower_id);
 }
 
 void GameBoard::spawn_virus(int wave_num){
