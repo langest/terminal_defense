@@ -6,11 +6,16 @@
 #include <vector>
 #endif
 
-#include definitions;
+#ifndef termd_string
+#define termd_string
+#include <string>
+#endif
+
+#include "definitions"
 
 class Player {
 	private:
-		std::vector<String> completed_maps;
+		std::vector<std::string> completed_maps;
 		int ram;
 		int hp;
 	protected:
@@ -21,8 +26,10 @@ class Player {
 		~Player();
 		
 		void new_map_refresh();
-		inline bool is_alive();
-		inline void take_damage(int); //returns is_alive after damage is taken
+		bool is_alive();
+		void take_damage(int);
+		void modify_ram(int);
+		int get_ram();
 };
 
 #endif //termd_player

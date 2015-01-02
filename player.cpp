@@ -12,10 +12,18 @@ void Player::new_map_refresh() {
 	ram = PLAYER_DEFAULT_RAM;
 }
 
-inline bool Player::is_alive() {
+bool Player::is_alive() {
 	return hp > 0;
 }
 
-inline void Player::take_damage(int amount) {
+void Player::take_damage(int amount) {
 	hp -= amount;
+}
+
+void Player::modify_ram(int amount) {
+	ram += amount;
+}
+
+int Player::get_ram() {
+	return ram;
 }
