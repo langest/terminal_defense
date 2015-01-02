@@ -27,6 +27,8 @@ class GUI {
 		int winSpace;
 
 	public:
+		void clear_game();
+
 		GUI();
 		~GUI();
 		GUI(const GUI &);

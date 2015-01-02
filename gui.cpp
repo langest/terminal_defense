@@ -158,8 +158,16 @@ void GUI::draw_intel_frame() {
 	move(cur_row, cur_col);
 }
 
-void GUI::clear() {
-	clear(); //Clear curses
+void GUI::clear_game() {
+	int cur_row, cur_col;
+	getyx(stdscr, cur_row, cur_col);
+	for (int i = startRow; i < boardRows + startRow; ++i) {
+		move(i, startCol);
+		for (int j = 0; j < boardCols; ++j) {
+			addch(' ');
+		}
+	}
+	move(cur_row, cur_col);
 }
 
 void GUI::refresh() {
