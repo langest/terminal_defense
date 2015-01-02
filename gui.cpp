@@ -120,6 +120,10 @@ bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 }
 
 bool GUI::draw_gfx(const Coord & coord, char gfx) {
+	if (coord.get_row() > BOARDROWS ||
+			coord.get_col() > BOARDCOLS ||
+			coord.get_row() < 0 ||
+			coord.get_col() < 0) return false;
 	int cur_row, cur_col;
 	getyx(stdscr, cur_row, cur_col);
 
