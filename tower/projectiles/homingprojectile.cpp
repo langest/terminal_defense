@@ -20,7 +20,9 @@ bool HomingProjectile::step() {
 
 	Coord delta = target.get_pos() - pos;
 
-	float angle = atan2(delta.get_row(), delta.get_col()) * 180 / PI;
+	double angle = atan2(delta.get_row(), delta.get_col()) * 180 / PI;
+	angle = (angle > 0 ? angle : (2*PI + angle));
+
 	if (angle < 45.0f/2.0f) { //go right
 		if (speed_curr >= STEPCOST) {
 			speed_curr -= STEPCOST;
