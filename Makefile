@@ -11,6 +11,7 @@ maindeps = game.o \
 			tower/basic_tower_1x1.o \
 			tower/wall_1x1.o \
 			tower/projectiles/projectilemanager.o \
+			tower/projectiles/homingprojectile.o \
 			tower/projectiles/projectile.o
 
 maindepsheaders = $(maindeps:.o=.hpp)
