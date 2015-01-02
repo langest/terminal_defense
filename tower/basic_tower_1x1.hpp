@@ -17,6 +17,9 @@ class BasicTower_1x1 : public Tower {
 	private:
 		ProjectileManager& pman;
 		VirusManager& vman;
+
+		int recharge_rate;
+		int recharge;
 	protected:
 
 	public:
