@@ -16,7 +16,7 @@ bool BasicTower_1x1::update() {
 
 bool BasicTower_1x1::end_of_wave_update() {
 	sell_value *= sell_decrease;
-	true;
+	return true;
 }
 
 void BasicTower_1x1::shoot() {
