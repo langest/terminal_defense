@@ -8,23 +8,24 @@
 
 #include "tower.hpp"
 #include "../definitions"
-#include "/projectile/projectile.hpp"
-#include "/projectile/homingprojectile.hpp"
-#include "/projectile/projectilemanager.hpp"
+#include "../virus/virusmanager.hpp"
+#include "projectiles/projectile.hpp"
+#include "projectiles/homingprojectile.hpp"
+#include "projectiles/projectilemanager.hpp"
 
 class BasicTower_1x1 : public Tower {
 	private:
-		std::vector<Virus*>& viruses;
-		ProjectileManager& projectileManager;
+		ProjectileManager& pman;
+		VirusManager& vman;
 	protected:
 
 	public:
-		BasicTower(Coord, const std::vector<Virus*>&, ProjectileManager&);
+		BasicTower_1x1(Coord, VirusManager&, ProjectileManager&);
 
 		void shoot();
 
 		virtual bool update();
-		virtual end_of_wave_update();
+		virtual bool end_of_wave_update();
 };
 
 #endif //terd_basictower_1x1
