@@ -9,6 +9,23 @@ bool Game::build_tower(int tower_id) {
 	return true;
 }
 
+void Game::intro() {
+	addstr("awesome game YOLO!");
+	getch();
+	clear();
+}
+
+void Game::outro() {
+	clear();
+	move(0,0);
+	if (player.is_alive()) {
+		addstr("gz, you won");
+	} else {
+		addstr("gz, you lose");
+	}
+	getch();
+}
+
 void Game::build_phase() {
 	int ch;
 	gui.draw_board_frame();
