@@ -13,7 +13,7 @@ class Projectile {
 		Coord pos;
 	public:
 		Projectile(char, Coord);
-		virtual ~Projectile() = 0;
+		virtual ~Projectile();
 
 		virtual bool update() = 0;
 		bool draw(GUI &);
