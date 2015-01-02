@@ -7,6 +7,8 @@ GameBoard::GameBoard(const GameBoard & src) : ram(src.ram), size_rows(src.size_r
 }
 
 void GameBoard::draw(GUI & gui) {
+	gui.clear_game();
+
 	tman.draw_towers(gui);
 	vman.draw_viruses(gui);
 	pman.draw_projectiles(gui);
