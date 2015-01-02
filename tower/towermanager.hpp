@@ -29,8 +29,8 @@ class TowerManager {
 		Player& player;
 
 		std::map<Coord, Tower*> towers;
-		VirusManager& viruses;
-		ProjectileManager& projectiles;
+		VirusManager& vman;
+		ProjectileManager& pman;
 	public:
 		TowerManager(VirusManager&, ProjectileManager&, Player&);
 		~TowerManager();

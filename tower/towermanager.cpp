@@ -1,6 +1,6 @@
 #include "towermanager.hpp"
 
-TowerManager::TowerManager(VirusManager& v, ProjectileManager& pm, Player& p) : player(p), viruses(v), projectiles(pm) {
+TowerManager::TowerManager(VirusManager& v, ProjectileManager& pm, Player& p) : player(p), vman(v), pman(pm) {
 
 }
 
@@ -23,33 +23,34 @@ void TowerManager::update() {
 }
 
 bool TowerManager::build_tower(Coord c, int tower_id) {
+	Tower* tp;
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
-			Wall_1x1* w = new Wall_1x1(c);
+			tp = new Wall_1x1(c);
 			//TODO: Check if blocked
 			if(player.get_ram() >= WALL_1x1_COST){
 				//SUCCESS!
 				player.modify_ram(-WALL_1x1_COST);
-				towers.insert( std::pair<Coord, Tower*>(c, w));
+				towers.insert( std::pair<Coord, Tower*>(c, tp));
 				return true;
 			}else{
 				//FAIL: Not enough RAM
-				delete w;
+				delete tp;
 			}
 			break;
 		case BASIC_TOWER_1x1_ID: 
 			//is it possible to build here?
-			Basic_Tower_1x1* w = new Basic_Tower_1x1(c);
+			tp = new BasicTower_1x1(c, vman, pman);
 			//TODO: Check if blocked
 			if(player.get_ram() >= BASIC_TOWER_1x1_COST){
 				//SUCCESS!
 				player.modify_ram(-BASIC_TOWER_1x1_COST);
-				towers.insert( std::pair<Coord, Tower*>(c, w));
+				towers.insert( std::pair<Coord, Tower*>(c, tp));
 				return true;
 			}else{
 				//FAIL: Not enough RAM
-				delete w;
+				delete tp;
 			}
 			break;
 	}
