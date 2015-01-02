@@ -1,5 +1,7 @@
 #include "game.hpp"
 
+Game::Game() : board(player) {}
+
 bool Game::build_tower(int tower_id) {
 	Coord c = gui.get_cursor_pos();
 	c -= Coord(BOARDR0, BOARDC0);

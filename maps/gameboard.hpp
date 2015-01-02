@@ -24,6 +24,7 @@
 #include "../definitions"
 #include "../gui.hpp"
 #include "../coord.hpp"
+#include "../player.hpp"
 #include "../virus/virus.hpp"
 #include "../virus/virusmanager.hpp"
 #include "../tower/towermanager.hpp"
@@ -33,8 +34,7 @@
 class GameBoard  {
 	private:
 		//player information:
-		int ram;
-		int hp;
+		Player& player;
 
 		//Board information:
 		std::map<Coord, int> grid_env_state;
@@ -48,9 +48,8 @@ class GameBoard  {
 		bool is_blocked();
 
 	public:
-		GameBoard();
-		GameBoard(const GameBoard &);
-
+		GameBoard(Player&);
+		GameBoard(const GameBoard &) = delete;
 		GameBoard& operator=(const GameBoard &) = delete;
 
 		//Main Game Loop:

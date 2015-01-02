@@ -1,6 +1,6 @@
 #include "towermanager.hpp"
 
-TowerManager::TowerManager(VirusManager& v, ProjectileManager& p) : viruses(v), projectiles(p){
+TowerManager::TowerManager(VirusManager& v, ProjectileManager& pm, Player& p) : player(p), viruses(v), projectiles(pm) {
 
 }
 
@@ -22,15 +22,15 @@ void TowerManager::update() {
 	}
 }
 
-bool TowerManager::build_tower(Coord c, int tower_id, int& ram) {
+bool TowerManager::build_tower(Coord c, int tower_id) {
 	switch(tower_id){ //TODO define towers somewhere...
 		case WALL_1x1_ID: 
 			//is it possible to build here?
 			Wall_1x1* w = new Wall_1x1(c);
 			//TODO: Check if blocked
-			if(ram >= WALL_1x1_COST){
+			if(player.get_ram() >= WALL_1x1_COST){
 				//SUCCESS!
-				ram -= WALL_1x1_COST;
+				player.modify_ram(-WALL_1x1_COST);
 				towers.insert( std::pair<Coord, Tower*>(c, w));
 				return true;
 			}else{

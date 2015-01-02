@@ -13,6 +13,7 @@
 
 #include "../gui.hpp"
 #include "../coord.hpp"
+#include "../player.hpp"
 #include "../definitions"
 #include "../virus/virus.hpp"
 #include "../virus/virusmanager.hpp"
@@ -24,16 +25,18 @@
 
 class TowerManager {
 	private:
+		Player& player;
+
 		std::map<Coord, Tower*> towers;
 		VirusManager& viruses;
 		ProjectileManager& projectiles;
 	public:
-		TowerManager(VirusManager&, ProjectileManager&);
+		TowerManager(VirusManager&, ProjectileManager&, Player&);
 		~TowerManager();
 
 		void update();
 		void draw_towers(GUI &);
-		bool build_tower(Coord, int, int&);
+		bool build_tower(Coord, int);
 };
 
 #endif
