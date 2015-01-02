@@ -93,12 +93,13 @@ HomingProjectile& HomingProjectile::operator=(const HomingProjectile & src) {
 }
 
 bool HomingProjectile::update() {
+	speed_curr += speed_increment;
+	move();
 	if(hit()){
 		//hit target!
 		//deal damage!
+		target.take_damage(2);
 		return false; 
 	}
-	speed_curr += speed_increment;
-	move();
 	return true;
 }
