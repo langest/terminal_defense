@@ -16,7 +16,7 @@ void ProjectileManager::update() {
 		if((*i)->update() == false) {
 			//Projectile flags removal (probably a hit)
 			delete *i;
-			i = viruses.erase(i);
+			i = projectiles.erase(i);
 		} else {
 			++i;
 		}
