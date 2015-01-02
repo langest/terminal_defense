@@ -137,7 +137,7 @@ void GUI::print_intel(std::string message) {
 	int cur_row, cur_col;
 	getyx(stdscr, cur_row, cur_col);
 
-	mvwaddstr(stdscr, BOARDR0 + BOARDROWS + WINDOWSPACE + 1, BOARDC0, message.c_str());
+	mvwaddstr(stdscr, BOARDR0 + BOARDROWS + WINDOWSPACE + 2, BOARDC0, message.c_str());
 
 	move(cur_row, cur_col);
 }
