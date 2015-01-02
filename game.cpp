@@ -9,10 +9,9 @@ bool Game::build_tower(int tower_id) {
 }
 
 void Game::build_phase() {
-	gui.print_intel(std::string("Build Phase"));
+	int ch;
 	gui.draw_board_frame();
 	gui.draw_intel_frame();
-	int ch;
 	while((ch = getch()) != 27 && ch != 'q') {
 		switch (ch) {
 			case KEY_LEFT:
@@ -41,7 +40,6 @@ void Game::build_phase() {
 }
 
 void Game::invasion_phase() {
-	gui.print_intel("Invasion phase");
 	int ch;
 	board.spawn_virus(0);
 	while (board.update()) {
