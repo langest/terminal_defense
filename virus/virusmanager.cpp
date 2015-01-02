@@ -1,6 +1,6 @@
 #include "virusmanager.hpp"
 
-VirusManager::VirusManager(int& r, int& hp) : ram(r), player_hp(hp) {}
+VirusManager::VirusManager(Player& p) : player(p) {}
 
 VirusManager::~VirusManager() {
 	purge_viruses();
@@ -29,11 +29,11 @@ bool VirusManager::update() {
 		if((*i)->update() == false) {
 			//If virus is flagging removal, remove it!
 			dead_viruses.push_back(*i);
-			ram += (*i)->get_reward();
+			player.modify_ram( (*i)->get_reward() );
 			i = viruses.erase(i);
 		}else if((*i)->destination_reached()){
 			//Reached goal!
-			player_hp -= 1;
+			player.take_damage(1);
 			dead_viruses.push_back(*i);
 			i = viruses.erase(i);
 		}else{

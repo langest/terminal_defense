@@ -1,13 +1,12 @@
 #ifndef termd_virus_manager
 #define termd_virus_manager
 
+#include "../player.hpp"
 #include "virus.hpp"
 
 class VirusManager {
 	private:
-		//TODO, change to a player class reference with logic to check if dead etc.
-		int & ram;			//Player money
-		int & player_hp;	//Player hp
+		Player& player;
 
 		std::vector<Virus*> viruses;
 		std::vector<Virus*> dead_viruses;
@@ -15,7 +14,7 @@ class VirusManager {
 		void purge_viruses();
 		void purge_dead_viruses();
 	public:
-		VirusManager(int&, int&);
+		VirusManager(Player&);
 		~VirusManager();
 
 		bool update();
