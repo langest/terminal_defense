@@ -1,6 +1,6 @@
 #include "basic_tower_1x1.hpp"
 
-BasicTower::BasicTower(Coord coord, std::vector<Virus*>& v, ProjectileManager& pm) : projectileManager(pm), viruses(v), num_rows(1), num_cols(1), pos(coord), sell_value(BASICTOWER_1x1_SELL), sell_decrease(BASICTOWER_1x1_SELL_DECREASE) {
+BasicTower_1x1::BasicTower_1x1(Coord coord, VirusManager& v, ProjectileManager& pm) : Tower(coord, 1, 1, BASIC_TOWER_1x1_SELL, BASIC_TOWER_1x1_SELL_DECREASE), pman(pm), vman(v) {
 	blocking.resize(num_rows);
 	blocking[0].resize(num_cols);
 	blocking = {{true}};
@@ -9,22 +9,22 @@ BasicTower::BasicTower(Coord coord, std::vector<Virus*>& v, ProjectileManager& p
 	gfx = {{'i'}};
 }
 
-bool BasicTower::update() {
+bool BasicTower_1x1::update() {
 	shoot();
 	return true;
 }
 
-bool BasicTower::end_of_wave_update() {
-		sell_value *= sell_decrease;
-		true;
+bool BasicTower_1x1::end_of_wave_update() {
+	sell_value *= sell_decrease;
+	true;
 }
 
-void BasicTower::shoot() {
+void BasicTower_1x1::shoot() {
 	Virus* closest = nullptr;
 	float min_dist = std::numeric_limits<float>::max();
 	float cur_dist;
 
-	for (Virus* vir : viruses) {
+	for (Virus* vir : vman.get_viruses()) {
 		cur_dist = (vir->get_pos() - pos).length();
 		if (cur_dist < min_dist) {
 			min_dist = cur_dist;
@@ -33,6 +33,6 @@ void BasicTower::shoot() {
 	}
 	if (closest != nullptr) {
 		Projectile* proj = new HomingProjectile(pos, *closest);
-		projectileManager.add_projectile(proj);
+		pman.add_projectile(proj);
 	}
 }
