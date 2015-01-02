@@ -1,6 +1,7 @@
 maindeps = game.o \
 			gui.o \
 			coord.o \
+			player.o \
 			virus/virusmanager.o\
 			virus/path.o \
 			virus/virus.o \
