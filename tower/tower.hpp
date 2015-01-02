@@ -32,7 +32,7 @@ class Tower {
 
 		//Functions:
 	public:
-		Tower();
+		Tower(Coord, int, int, int, float);
 		virtual ~Tower() = 0;
 
 		//Implemented:
