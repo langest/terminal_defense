@@ -30,7 +30,7 @@ void RightTower_1x1::shoot() {
 	int cur_dist;
 
 	for (Virus* vir : vman.get_viruses()) {
-		if(vir->get_pos().get_row() == pos.get_row() && vir->get_pos().get_col() > pos.get_col(){
+		if(vir->get_pos().get_row() == pos.get_row() && vir->get_pos().get_col() > pos.get_col()) {
 			//If same row and to the right:
 			cur_dist = vir->get_pos().get_col() - pos.get_col();
 			if (cur_dist < min_dist) {
