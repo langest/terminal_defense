@@ -40,7 +40,7 @@ Coord Virus::get_pos(){
 }
 
 bool Virus::update(){
-	if(curr_hp <= 0) {
+	if(cur_hp <= 0) {
 		return false;
 	}
 	stamina += stamina_increment;
@@ -61,5 +61,5 @@ bool Virus::destination_reached() {
 }
 
 void Virus::take_damage(int amount) {
-	curr_hp -= amount;
+	cur_hp -= amount;
 }
