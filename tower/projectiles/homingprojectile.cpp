@@ -1,6 +1,6 @@
 #include "homingprojectile.hpp"
 
-HomingProjectile::HomingProjectile(Coord s, Virus& t) : pos(s), target(t), speed_curr(0), speed_increment(100), gfx('·') {
+HomingProjectile::HomingProjectile(Coord s, Virus& t) : Projectile('o', s), target(t), speed_increment(100), speed_curr(0) {
 }
 
 HomingProjectile::~HomingProjectile() {
