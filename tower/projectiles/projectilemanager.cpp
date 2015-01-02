@@ -12,8 +12,14 @@ void ProjectileManager::purge_projectiles() {
 }
 
 void ProjectileManager::update() {
-	for (Projectile* proj : projectiles) {
-		proj->update();
+	for (auto i = projectiles.begin(); i != projectiles.end(); ) {
+		if((*i)->update() == false) {
+			//Projectile flags removal (probably a hit)
+			delete *i;
+			i = viruses.erase(i);
+		} else {
+			++i;
+		}
 	}
 }
 
