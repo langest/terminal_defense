@@ -14,8 +14,8 @@ void GameBoard::draw(GUI & gui) {
 bool GameBoard::update() {
 	//TODO spawn viruses with cool function
 	bool ret = vman.update();
-	tman.update();
 	pman.update();
+	tman.update();
 	return ret;
 }
 
