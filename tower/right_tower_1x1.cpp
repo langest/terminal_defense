@@ -25,23 +25,6 @@ void RightTower_1x1::shoot() {
 		return;
 	}
 	recharge = recharge_rate;
-	Virus* closest = nullptr;
-	int min_dist = INT_MAX;
-	int cur_dist;
-
-	for (Virus* vir : vman.get_viruses()) {
-		if(vir->get_pos().get_row() == pos.get_row() && vir->get_pos().get_col() > pos.get_col()) {
-			//If same row and to the right:
-			cur_dist = vir->get_pos().get_col() - pos.get_col();
-			if (cur_dist < min_dist) {
-				//Get closest virus:
-				min_dist = cur_dist;
-				closest = vir;
-			}
-		}
-	}
-	if (closest != nullptr) {
-		Projectile* proj = new HomingProjectile(pos, *closest);
-		pman.add_projectile(proj);
-	}
+	Projectile* proj = new RightProjectile(pos, vman.get_viruses());
+	pman.add_projectile(proj);
 }

@@ -10,7 +10,7 @@
 #include "../definitions"
 #include "../virus/virusmanager.hpp"
 #include "projectiles/projectile.hpp"
-#include "projectiles/homingprojectile.hpp"
+#include "projectiles/rightprojectile.hpp"
 #include "projectiles/projectilemanager.hpp"
 
 class RightTower_1x1 : public Tower {
