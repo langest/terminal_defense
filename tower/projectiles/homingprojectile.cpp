@@ -15,12 +15,13 @@ bool HomingProjectile::hit() {
 	return pos == target.get_pos();
 }
 
+#include <iostream>
 bool HomingProjectile::step() {
 	if (hit()) return false; //We already reached the target
 
 	Coord delta = target.get_pos() - pos;
 
-	double angle = atan2(delta.get_row(), delta.get_col()) * 180 / PI;
+	double angle = atan2(delta.get_row(), delta.get_col()) * -180 / PI;
 	angle = (angle > 0 ? angle : (360.0 + angle));
 
 	if (angle < 45.0f/2.0f) { //go right
