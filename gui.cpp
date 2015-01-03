@@ -98,6 +98,7 @@ namespace termd {
 	}
 
 	//Draws a gfx in board window
+	//Does not refresh
 	bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
