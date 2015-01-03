@@ -37,6 +37,7 @@ namespace termd {
 
 			void unlock_tower(int);
 			void lock_tower(int);
+			bool has_tower(int) const;
 	};
 
 }

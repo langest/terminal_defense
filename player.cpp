@@ -42,4 +42,8 @@ namespace termd {
 		availiable_towers.erase(id);
 	}
 
+	bool Player::has_tower(int id) const {
+		return availiable_towers.find(id) != availiable_towers.end();
+	}
+
 }
