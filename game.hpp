@@ -1,6 +1,16 @@
 #ifndef termd_game
 #define termd_game
 
+#ifndef termd_map
+#define termd_map
+#include <map>
+#endif
+
+#ifndef termd_functional
+#define termd_functional
+#include <functional>
+#endif
+
 #include "definitions"
 #include "gui.hpp"
 #include "player.hpp"
@@ -15,6 +25,8 @@ namespace termd {
 			GameBoard board;
 
 			bool build_tower(int);
+
+			std::map<int, std::function<void()>> inputcalls;
 		public:
 			Game();
 			
