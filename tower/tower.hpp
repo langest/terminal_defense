@@ -38,7 +38,7 @@ namespace termd {
 			virtual ~Tower() = 0;
 
 			//Implemented:
-			bool draw(GUI &);
+			bool draw(const GUI &);
 			int get_sell_value() const;
 			bool get_blocking() const;
 			int get_size_rows() const;

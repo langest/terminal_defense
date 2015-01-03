@@ -3,7 +3,7 @@ namespace termd {
 	GameBoard::GameBoard(Player& p) : player(p), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p), availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}) {
 	}
 
-	void GameBoard::draw(GUI & gui) {
+	void GameBoard::draw(const GUI & gui) {
 		gui.clear_game();
 
 		tman.draw_towers(gui);

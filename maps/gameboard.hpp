@@ -56,7 +56,7 @@ namespace termd {
 			GameBoard& operator=(const GameBoard &) = delete;
 
 			//Main Game Loop:
-			void draw(GUI &);
+			void draw(const GUI &);
 			bool update();
 
 			//Game Logic
