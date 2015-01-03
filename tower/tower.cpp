@@ -30,6 +30,7 @@ namespace termd {
 
 	bool Tower::end_of_wave() {
 		sell_value *= sell_decrease;
+		return true;
 	}
 
 }
