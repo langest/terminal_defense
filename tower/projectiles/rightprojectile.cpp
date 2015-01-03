@@ -2,7 +2,7 @@
 
 namespace termd {
 		
-	RightProjectile::RightProjectile(Coord s, std::vector<Virus*>& t) : Projectile(')', s), viruses(t) {
+	RightProjectile::RightProjectile(Coord s, const std::vector<Virus*>& t) : Projectile(')', s), viruses(t) {
 	}
 
 	RightProjectile::~RightProjectile() {
