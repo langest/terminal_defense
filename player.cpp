@@ -3,8 +3,8 @@
 namespace termd {
 
 	Player::Player() : ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
-		unlock_tower(BASIC_TOWER_1x1_ID);
-		unlock_tower(RIGHT_TOWER_1x1_ID);
+		availiable_towers.insert(BASIC_TOWER_1x1_ID);
+		availiable_towers.insert(RIGHT_TOWER_1x1_ID);
 	}
 
 	Player::~Player() {

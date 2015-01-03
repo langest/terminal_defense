@@ -33,8 +33,9 @@ namespace termd {
 			void take_damage(int);
 			void modify_ram(int);
 			int get_ram() const;
-			void lock_tower();
-			void unlock_tower();
+
+			void unlock_tower(int);
+			void lock_tower(int);
 	};
 
 }
