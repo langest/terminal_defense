@@ -62,6 +62,11 @@ namespace termd {
 		viruses.push_back(vir);
 	}
 
+	void VirusManager::end_of_wave() {
+		purge_dead_viruses();
+		purge_viruses();
+	}
+
 	const std::vector<Virus*>& VirusManager::get_viruses() {
 		return viruses;
 	}
