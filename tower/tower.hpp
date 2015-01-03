@@ -14,37 +14,40 @@
 #include "../gui.hpp"
 #include "../coord.hpp"
 
-class Tower {
-	private:
-		
-	protected:
-		//Variables:
-		Coord pos;			//Top-left
+namespace termd {
 
-		std::vector<std::vector<bool> > blocking; 	//Ground path blocking, children can change this
-		std::vector<std::vector<char> > gfx;			//The high-tech 3D model! Children can change this
+	class Tower {
+		private:
+			
+		protected:
+			//Variables:
+			Coord pos;			//Top-left
 
-		int num_rows;
-		int num_cols;
+			std::vector<std::vector<bool> > blocking; 	//Ground path blocking, children can change this
+			std::vector<std::vector<char> > gfx;			//The high-tech 3D model! Children can change this
 
-		int sell_value;
-		float sell_decrease;
+			int num_rows;
+			int num_cols;
 
-		//Functions:
-	public:
-		Tower(Coord, int, int, int, float);
-		virtual ~Tower() = 0;
+			int sell_value;
+			float sell_decrease;
 
-		//Implemented:
-		bool draw(GUI &);
-		int get_sell_value() const;
-		bool get_blocking() const;
-		int get_size_rows() const;
-		int get_size_cols() const;
+			//Functions:
+		public:
+			Tower(Coord, int, int, int, float);
+			virtual ~Tower() = 0;
 
-		//Virtual:
-		virtual bool update() = 0;
-		virtual bool end_of_wave_update() = 0;
-};
+			//Implemented:
+			bool draw(GUI &);
+			int get_sell_value() const;
+			bool get_blocking() const;
+			int get_size_rows() const;
+			int get_size_cols() const;
 
+			//Virtual:
+			virtual bool update() = 0;
+			virtual bool end_of_wave_update() = 0;
+	};
+
+}
 #endif //termd_tower

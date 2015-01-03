@@ -24,21 +24,23 @@
 #include "projectiles/projectile.hpp"
 #include "projectiles/projectilemanager.hpp"
 
+namespace termd {
+	
+	class TowerManager {
+		private:
+			Player& player;
 
-class TowerManager {
-	private:
-		Player& player;
+			std::map<Coord, Tower*> towers;
+			VirusManager& vman;
+			ProjectileManager& pman;
+		public:
+			TowerManager(VirusManager&, ProjectileManager&, Player&);
+			~TowerManager();
 
-		std::map<Coord, Tower*> towers;
-		VirusManager& vman;
-		ProjectileManager& pman;
-	public:
-		TowerManager(VirusManager&, ProjectileManager&, Player&);
-		~TowerManager();
+			void update();
+			void draw_towers(GUI &);
+			bool build_tower(Coord, int);
+	};
 
-		void update();
-		void draw_towers(GUI &);
-		bool build_tower(Coord, int);
-};
-
+}
 #endif

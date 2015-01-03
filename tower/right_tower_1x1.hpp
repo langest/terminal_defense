@@ -13,22 +13,26 @@
 #include "projectiles/rightprojectile.hpp"
 #include "projectiles/projectilemanager.hpp"
 
-class RightTower_1x1 : public Tower {
-	private:
-		ProjectileManager& pman;
-		VirusManager& vman;
+namespace termd {
 
-		int recharge_rate;
-		int recharge;
-	protected:
+	class RightTower_1x1 : public Tower {
+		private:
+			ProjectileManager& pman;
+			VirusManager& vman;
 
-	public:
-		RightTower_1x1(Coord, VirusManager&, ProjectileManager&);
+			int recharge_rate;
+			int recharge;
+		protected:
 
-		void shoot();
+		public:
+			RightTower_1x1(Coord, VirusManager&, ProjectileManager&);
 
-		virtual bool update();
-		virtual bool end_of_wave_update();
-};
+			void shoot();
+
+			virtual bool update();
+			virtual bool end_of_wave_update();
+	};
+
+}
 
 #endif //termd_righttower_1x1

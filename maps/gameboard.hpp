@@ -30,39 +30,40 @@
 #include "../tower/towermanager.hpp"
 #include "../tower/projectiles/projectilemanager.hpp"
 
-//class Tower; //Forward declaration because of circle reference
-class GameBoard  {
-	private:
-		//player information:
-		Player& player;
+namespace termd {
+	
+	class GameBoard  {
+		private:
+			//player information:
+			Player& player;
 
-		//Board information:
-		std::map<Coord, int> grid_env_state;
-		std::map<Coord, int> grid_bld_state;
-		int size_rows;
-		int size_cols;
-		TowerManager tman;
-		ProjectileManager pman;
-		VirusManager vman;
+			//Board information:
+			std::map<Coord, int> grid_env_state;
+			std::map<Coord, int> grid_bld_state;
+			int size_rows;
+			int size_cols;
+			TowerManager tman;
+			ProjectileManager pman;
+			VirusManager vman;
 
-		bool is_blocked();
+			bool is_blocked();
 
-	public:
-		GameBoard(Player&);
-		GameBoard(const GameBoard &) = delete;
-		GameBoard& operator=(const GameBoard &) = delete;
+		public:
+			GameBoard(Player&);
+			GameBoard(const GameBoard &) = delete;
+			GameBoard& operator=(const GameBoard &) = delete;
 
-		//Main Game Loop:
-		void draw(GUI &);
-		bool update();
+			//Main Game Loop:
+			void draw(GUI &);
+			bool update();
 
-		//Game Logic
-		bool build_tower(Coord, int);
-		void spawn_virus(int wave_num);
+			//Game Logic
+			bool build_tower(Coord, int);
+			void spawn_virus(int wave_num);
 
-		//Getters and Setters
-		const int get_size_rows() const;
-		const int get_size_cols() const;
-};
-
+			//Getters and Setters
+			const int get_size_rows() const;
+			const int get_size_cols() const;
+	};
+}
 #endif //termd_game_board

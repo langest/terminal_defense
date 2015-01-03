@@ -3,25 +3,27 @@
 
 #include "projectile.hpp"
 
-class HomingProjectile : public Projectile {
-	private:
-		Virus& target;
-		int speed_increment;
-		int speed_curr;
+namespace termd {
+	
+	class HomingProjectile : public Projectile {
+		private:
+			Virus& target;
+			int speed_increment;
+			int speed_curr;
 
-		bool hit();
-		bool step();
-		void move();
+			bool hit();
+			bool step();
+			void move();
 
-	protected:
+		protected:
 
-	public:
-		HomingProjectile(Coord, Virus &);
-		HomingProjectile(const HomingProjectile &) = delete;
-		virtual ~HomingProjectile();
-		HomingProjectile& operator=(const HomingProjectile &);
+		public:
+			HomingProjectile(Coord, Virus &);
+			HomingProjectile(const HomingProjectile &) = delete;
+			virtual ~HomingProjectile();
+			HomingProjectile& operator=(const HomingProjectile &);
 
-		virtual bool update();
-};
-
+			virtual bool update();
+	};
+}
 #endif //termd_HomingProjectile
