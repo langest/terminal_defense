@@ -16,6 +16,7 @@ namespace termd {
 			void update();
 			void draw_projectiles(GUI &);
 			void add_projectile(Projectile*);
+			void end_of_wave();
 	};
 
 }

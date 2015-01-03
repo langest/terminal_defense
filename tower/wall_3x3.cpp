@@ -34,9 +34,4 @@ namespace termd {
 	bool Wall_3x3::update(){
 		return true;
 	}
-
-	bool Wall_3x3::end_of_wave_update(){
-		sell_value *= sell_decrease;
-		return true;
-	}
 }

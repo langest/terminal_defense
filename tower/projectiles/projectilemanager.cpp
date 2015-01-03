@@ -34,4 +34,8 @@ namespace termd {
 		projectiles.push_back(p);
 	}
 
+	void ProjectileManager::end_of_wave() {
+		purge_projectiles();
+	}
+
 }

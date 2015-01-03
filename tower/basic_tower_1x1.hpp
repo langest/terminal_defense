@@ -30,7 +30,6 @@ namespace termd {
 			void shoot();
 
 			virtual bool update();
-			virtual bool end_of_wave_update();
 	};
 }
 #endif //terd_basictower_1x1

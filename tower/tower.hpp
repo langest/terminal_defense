@@ -45,8 +45,9 @@ namespace termd {
 			int get_size_cols() const;
 
 			//Virtual:
+			virtual bool end_of_wave();
+			//Pure Virtual:
 			virtual bool update() = 0;
-			virtual bool end_of_wave_update() = 0;
 	};
 
 }
