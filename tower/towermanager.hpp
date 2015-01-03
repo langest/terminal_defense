@@ -31,10 +31,10 @@ namespace termd {
 			Player& player;
 
 			std::map<Coord, Tower*> towers;
-			VirusManager& vman;
+			const VirusManager& vman;
 			ProjectileManager& pman;
 		public:
-			TowerManager(VirusManager&, ProjectileManager&, Player&);
+			TowerManager(const VirusManager&, ProjectileManager&, Player&);
 			~TowerManager();
 
 			void update();

@@ -2,7 +2,7 @@
 
 namespace termd {
 	
-	RightTower_1x1::RightTower_1x1(Coord coord, VirusManager& v, ProjectileManager& pm) : Tower(coord, 1, 1, RIGHT_TOWER_1x1_SELL, RIGHT_TOWER_1x1_SELL_DECREASE), pman(pm), vman(v), recharge_rate(RIGHT_TOWER_1x1_RECHARGE_RATE), recharge(RIGHT_TOWER_1x1_RECHARGE_RATE) {
+	RightTower_1x1::RightTower_1x1(Coord coord, const VirusManager& v, ProjectileManager& pm) : Tower(coord, 1, 1, RIGHT_TOWER_1x1_SELL, RIGHT_TOWER_1x1_SELL_DECREASE), pman(pm), vman(v), recharge_rate(RIGHT_TOWER_1x1_RECHARGE_RATE), recharge(RIGHT_TOWER_1x1_RECHARGE_RATE) {
 		blocking.resize(num_rows);
 		blocking[0].resize(num_cols);
 		blocking = {{true}};

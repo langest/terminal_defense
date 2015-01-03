@@ -2,7 +2,7 @@
 
 namespace termd {
 		
-	BasicTower_1x1::BasicTower_1x1(Coord coord, VirusManager& v, ProjectileManager& pm) : Tower(coord, 1, 1, BASIC_TOWER_1x1_SELL, BASIC_TOWER_1x1_SELL_DECREASE), pman(pm), vman(v), recharge_rate(BASIC_TOWER_1x1_RECHARGE_RATE), recharge(BASIC_TOWER_1x1_RECHARGE_RATE) {
+	BasicTower_1x1::BasicTower_1x1(Coord coord, const VirusManager& v, ProjectileManager& pm) : Tower(coord, 1, 1, BASIC_TOWER_1x1_SELL, BASIC_TOWER_1x1_SELL_DECREASE), pman(pm), vman(v), recharge_rate(BASIC_TOWER_1x1_RECHARGE_RATE), recharge(BASIC_TOWER_1x1_RECHARGE_RATE) {
 		blocking.resize(num_rows);
 		blocking[0].resize(num_cols);
 		blocking = {{true}};
@@ -26,13 +26,15 @@ namespace termd {
 		float min_dist = std::numeric_limits<float>::max();
 		float cur_dist;
 
-		for (Virus* vir : vman.get_viruses()) {
-			cur_dist = (vir->get_pos() - pos).length();
+		std::vector<Virus*>::const_iterator vir;
+		for (vir = vman.get_viruses().begin(); vir != vman.get_viruses().end(); ++vir) {
+			cur_dist = ((*vir)->get_pos() - pos).length();
 			if (cur_dist < min_dist) {
 				min_dist = cur_dist;
-				closest = vir;
+				closest = *vir;
 			}
 		}
+
 		if (closest != nullptr) {
 			Projectile* proj = new HomingProjectile(pos, *closest);
 			pman.add_projectile(proj);

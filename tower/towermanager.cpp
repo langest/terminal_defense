@@ -2,7 +2,7 @@
 
 namespace termd {
 		
-	TowerManager::TowerManager(VirusManager& v, ProjectileManager& pm, Player& p) : player(p), vman(v), pman(pm) {
+	TowerManager::TowerManager(const VirusManager& v, ProjectileManager& pm, Player& p) : player(p), vman(v), pman(pm) {
 
 	}
 

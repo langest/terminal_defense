@@ -67,7 +67,7 @@ namespace termd {
 		purge_viruses();
 	}
 
-	const std::vector<Virus*>& VirusManager::get_viruses() {
+	const std::vector<Virus*>& VirusManager::get_viruses() const {
 		return viruses;
 	}
 

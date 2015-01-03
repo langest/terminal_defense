@@ -18,14 +18,14 @@ namespace termd {
 	class BasicTower_1x1 : public Tower {
 		private:
 			ProjectileManager& pman;
-			VirusManager& vman;
+			const VirusManager& vman;
 
 			int recharge_rate;
 			int recharge;
 		protected:
 
 		public:
-			BasicTower_1x1(Coord, VirusManager&, ProjectileManager&);
+			BasicTower_1x1(Coord, const VirusManager&, ProjectileManager&);
 
 			void shoot();
 
