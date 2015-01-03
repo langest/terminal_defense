@@ -6,10 +6,10 @@
 #include <map>
 #endif //termd_map
 
-#ifndef termd_vector
-#define termd_vector
-#include <vector>
-#endif //termd_vector
+#ifndef termd_set
+#define termd_set
+#include <set>
+#endif //termd_set
 
 #ifndef termd_queue
 #define termd_queue
@@ -45,6 +45,8 @@ namespace termd {
 			TowerManager tman;
 			ProjectileManager pman;
 			VirusManager vman;
+
+			std::set<int> availible_towers;
 
 			bool is_blocked();
 
