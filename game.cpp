@@ -22,8 +22,13 @@ namespace termd {
 
 		inputcalls['i'] = [&]() { build_tower(BASIC_TOWER_1x1_ID); };
 		inputcalls['d'] = [&]() { build_tower(RIGHT_TOWER_1x1_ID); };
+
+		inputcalls['+'] = std::bind( &Game::awesome, this );
 	}
 
+	void Game::awesome() {
+		gui.print_intel("Thomas and Daniel are awesome!\nYeah. Foh shoo!");
+	}
 	
 	bool Game::build_tower(int tower_id) {
 		Coord c = gui.get_cursor_pos();

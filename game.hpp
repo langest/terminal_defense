@@ -27,6 +27,7 @@ namespace termd {
 			bool build_tower(int);
 
 			std::map<int, std::function<void()>> inputcalls;
+			void awesome();
 		public:
 			Game();
 			
