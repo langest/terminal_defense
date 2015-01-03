@@ -29,6 +29,7 @@ namespace termd {
 			~Player();
 			
 			void new_map_refresh();
+			int get_hp() const;
 			bool is_alive() const;
 			void take_damage(int);
 			void modify_ram(int);
