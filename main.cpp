@@ -11,6 +11,8 @@ int main() {
 	game.intro();
 	game.build_phase();
 	game.invasion_phase();
+	game.build_phase();
+	game.invasion_phase();
 	game.outro();
 	
 	endwin(); //End curses mode
