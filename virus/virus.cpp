@@ -50,7 +50,7 @@ namespace termd {
 		return true;
 	}
 
-	bool Virus::draw(GUI & g){
+	bool Virus::draw(const GUI & g){
 		return g.draw_gfx(get_pos(), gfx);
 	}
 

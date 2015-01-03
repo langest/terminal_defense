@@ -8,7 +8,7 @@ namespace termd {
 		//Currently nothing needs to be done
 	}
 
-	bool Tower::draw(GUI & g) {
+	bool Tower::draw(const GUI & g) {
 		return g.draw_gfx(pos, gfx);
 	}
 
