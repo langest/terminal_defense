@@ -1,9 +1,9 @@
 #ifndef termd_player
 #define termd_player
 
-#ifndef termd_vector
-#define termd_vector
-#include <vector>
+#ifndef termd_set
+#define termd_set
+#include <set>
 #endif
 
 #ifndef termd_string
@@ -17,7 +17,8 @@ namespace termd {
 
 	class Player {
 		private:
-			std::vector<std::string> completed_maps;
+			std::set<std::string> completed_maps;
+			std::set<int> availiable_towers;
 			int ram;
 			int hp;
 		protected:
@@ -28,10 +29,13 @@ namespace termd {
 			~Player();
 			
 			void new_map_refresh();
-			bool is_alive();
+			bool is_alive() const;
 			void take_damage(int);
 			void modify_ram(int);
-			int get_ram();
+			int get_ram() const;
+
+			void unlock_tower(int);
+			void lock_tower(int);
 	};
 
 }

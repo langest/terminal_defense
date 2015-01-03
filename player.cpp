@@ -3,6 +3,8 @@
 namespace termd {
 
 	Player::Player() : ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
+		availiable_towers.insert(BASIC_TOWER_1x1_ID);
+		availiable_towers.insert(RIGHT_TOWER_1x1_ID);
 	}
 
 	Player::~Player() {
@@ -14,7 +16,7 @@ namespace termd {
 		ram = PLAYER_DEFAULT_RAM;
 	}
 
-	bool Player::is_alive() {
+	bool Player::is_alive() const {
 		return hp > 0;
 	}
 
@@ -26,8 +28,16 @@ namespace termd {
 		ram += amount;
 	}
 
-	int Player::get_ram() {
+	int Player::get_ram() const{
 		return ram;
+	}
+
+	void Player::unlock_tower(int id) {
+		availiable_towers.insert(id);
+	}
+
+	void Player::lock_tower(int id) {
+		availiable_towers.erase(id);
 	}
 
 }

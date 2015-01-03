@@ -8,14 +8,10 @@ namespace termd {
 	Coord::Coord(int r, int c) : row(r), col(c) {
 	}
 
-	Coord::Coord(const Coord & src) { //TODO use initialization list
-		col = src.col;
-		row = src.row;
+	Coord::Coord(const Coord & src) : row(src.row), col(src.col) {
 	}
 
-	Coord::Coord(const Coord * src) {
-		col = src->col;
-		row = src->row;
+	Coord::Coord(const Coord * src) : row(src->row), col(src->col) {
 	}
 
 	Coord& Coord::operator=(const Coord & src) {
