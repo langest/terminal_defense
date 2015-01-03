@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	Player::Player() : availiable_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID}), ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
+	Player::Player() : availiable_towers({BASIC_TOWER_1x1_ID}), ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
 	}
 
 	Player::~Player() {
