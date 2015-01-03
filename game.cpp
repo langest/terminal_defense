@@ -1,75 +1,79 @@
 #include "game.hpp"
 
-Game::Game() : board(player) {}
+namespace termd {
 
-bool Game::build_tower(int tower_id) {
-	Coord c = gui.get_cursor_pos();
-	c -= Coord(BOARDR0, BOARDC0);
-	board.build_tower(c, tower_id);
-	return true;
-}
+	Game::Game() : board(player) {}
 
-void Game::intro() {
-	addstr("awesome game YOLO!");
-	getch();
-	clear();
-}
-
-void Game::outro() {
-	clear();
-	move(0,0);
-	if (player.is_alive()) {
-		addstr("gz, you won");
-	} else {
-		addstr("gz, you lose");
+	bool Game::build_tower(int tower_id) {
+		Coord c = gui.get_cursor_pos();
+		c -= Coord(BOARDR0, BOARDC0);
+		board.build_tower(c, tower_id);
+		return true;
 	}
-	getch();
-}
 
-void Game::build_phase() {
-	int ch;
-	gui.draw_board_frame();
-	gui.draw_intel_frame();
-	while((ch = getch()) != 27 && ch != 'q') {
-		switch (ch) {
-			case KEY_LEFT:
-			case 'h':
-				gui.move_cursor_left();
-				break;
-			case KEY_RIGHT:
-			case 'l':
-				gui.move_cursor_right();
-				break;
-			case KEY_UP:
-			case 'k':
-				gui.move_cursor_up();
-				break;
-			case KEY_DOWN:
-			case 'j':
-				gui.move_cursor_down();
-				break;
-			case 'b':
-				this->build_tower(BASIC_TOWER_1x1_ID);
-				break;
-			case 'n':
-				this->build_tower(RIGHT_TOWER_1x1_ID);
-				break;
-			default:
-				break;
+	void Game::intro() {
+		addstr("awesome game YOLO!");
+		getch();
+		clear();
+	}
+
+	void Game::outro() {
+		clear();
+		move(0,0);
+		if (player.is_alive()) {
+			addstr("gz, you won");
+		} else {
+			addstr("gz, you lose");
 		}
-		board.draw(gui);
-		gui.refresh();
+		getch();
 	}
-}
 
-void Game::invasion_phase() {
-	int ch;
-	board.spawn_virus(0);
-	while (board.update()) {
-		board.draw(gui);
-		gui.refresh();
-		if ((ch = getch()) == 27 || ch == 'q') {
-			break;
+	void Game::build_phase() {
+		int ch;
+		gui.draw_board_frame();
+		gui.draw_intel_frame();
+		while((ch = getch()) != 27 && ch != 'q') {
+			switch (ch) {
+				case KEY_LEFT:
+				case 'h':
+					gui.move_cursor_left();
+					break;
+				case KEY_RIGHT:
+				case 'l':
+					gui.move_cursor_right();
+					break;
+				case KEY_UP:
+				case 'k':
+					gui.move_cursor_up();
+					break;
+				case KEY_DOWN:
+				case 'j':
+					gui.move_cursor_down();
+					break;
+				case 'b':
+					this->build_tower(BASIC_TOWER_1x1_ID);
+					break;
+				case 'n':
+					this->build_tower(RIGHT_TOWER_1x1_ID);
+					break;
+				default:
+					break;
+			}
+			board.draw(gui);
+			gui.refresh();
 		}
 	}
+
+	void Game::invasion_phase() {
+		int ch;
+		board.spawn_virus(0);
+		while (board.update()) {
+			board.draw(gui);
+			gui.refresh();
+			if ((ch = getch()) == 27 || ch == 'q') {
+				break;
+			}
+		}
+	}
+
 }

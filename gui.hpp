@@ -19,41 +19,45 @@
 #include "coord.hpp"
 #include "definitions"
 
-class GUI {
-	private:
-		int startRow, startCol;
-		int boardRows, boardCols;
-		int intelRows, intelCols;
-		int winSpace;
+namespace termd {
 
-	public:
-		void clear_game();
+	class GUI {
+		private:
+			int startRow, startCol;
+			int boardRows, boardCols;
+			int intelRows, intelCols;
+			int winSpace;
 
-		GUI();
-		~GUI();
-		GUI(const GUI &);
+		public:
+			void clear_game();
 
-		GUI& operator=(const GUI &);
+			GUI();
+			~GUI();
+			GUI(const GUI &);
 
-		void init_gui();
-		bool move_cursor_up();
-		bool move_cursor_down();
-		bool move_cursor_left();
-		bool move_cursor_right();
-		Coord get_cursor_pos();
+			GUI& operator=(const GUI &);
 
-		bool draw(const Coord &, const char); //Does not refresh
-		bool draw_gfx(const Coord &, std::vector<std::vector<char> > &);
-		bool draw_gfx(const Coord &, char);
-		void print_intel(std::string);
-		void draw_board_frame();
-		void draw_intel_frame();
-		void clear();
-		void refresh();
+			void init_gui();
+			bool move_cursor_up();
+			bool move_cursor_down();
+			bool move_cursor_left();
+			bool move_cursor_right();
+			Coord get_cursor_pos();
 
-};
+			bool draw(const Coord &, const char); //Does not refresh
+			bool draw_gfx(const Coord &, std::vector<std::vector<char> > &);
+			bool draw_gfx(const Coord &, char);
+			void print_intel(std::string);
+			void draw_board_frame();
+			void draw_intel_frame();
+			void clear();
+			void refresh();
 
-WINDOW *create_new_win(int, int, int, int);
-void destroy_win(WINDOW *);
+	};
+
+	WINDOW *create_new_win(int, int, int, int);
+	void destroy_win(WINDOW *);
+
+}
 
 #endif //termd_gui

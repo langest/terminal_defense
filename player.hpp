@@ -13,23 +13,27 @@
 
 #include "definitions"
 
-class Player {
-	private:
-		std::vector<std::string> completed_maps;
-		int ram;
-		int hp;
-	protected:
-		
-	public:
-		Player();
-		Player(const Player &) = delete;
-		~Player();
-		
-		void new_map_refresh();
-		bool is_alive();
-		void take_damage(int);
-		void modify_ram(int);
-		int get_ram();
-};
+namespace termd {
+
+	class Player {
+		private:
+			std::vector<std::string> completed_maps;
+			int ram;
+			int hp;
+		protected:
+			
+		public:
+			Player();
+			Player(const Player &) = delete;
+			~Player();
+			
+			void new_map_refresh();
+			bool is_alive();
+			void take_damage(int);
+			void modify_ram(int);
+			int get_ram();
+	};
+
+}
 
 #endif //termd_player

@@ -1,3 +1,7 @@
 #include "game.hpp"
 
-int main();
+namespace termd {
+
+	int main();
+
+}

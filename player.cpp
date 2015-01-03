@@ -1,29 +1,33 @@
 #include "player.hpp"
 
-Player::Player() : ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
-}
+namespace termd {
 
-Player::~Player() {
-	//Currently nothing needs to be done
-}
+	Player::Player() : ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
+	}
 
-void Player::new_map_refresh() {
-	hp = PLAYER_DEFAULT_HP;
-	ram = PLAYER_DEFAULT_RAM;
-}
+	Player::~Player() {
+		//Currently nothing needs to be done
+	}
 
-bool Player::is_alive() {
-	return hp > 0;
-}
+	void Player::new_map_refresh() {
+		hp = PLAYER_DEFAULT_HP;
+		ram = PLAYER_DEFAULT_RAM;
+	}
 
-void Player::take_damage(int amount) {
-	hp -= amount;
-}
+	bool Player::is_alive() {
+		return hp > 0;
+	}
 
-void Player::modify_ram(int amount) {
-	ram += amount;
-}
+	void Player::take_damage(int amount) {
+		hp -= amount;
+	}
 
-int Player::get_ram() {
-	return ram;
+	void Player::modify_ram(int amount) {
+		ram += amount;
+	}
+
+	int Player::get_ram() {
+		return ram;
+	}
+
 }

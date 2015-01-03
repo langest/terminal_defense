@@ -6,25 +6,29 @@
 #include <cstdlib>
 #endif //termd_cstdlib - needed for rand()
 
-class Damage{
-private:
-	int base;
-	int random;
-	/**
-	* Damage Types:
-	* 0: hacking
-	* 1: bruteforce
-	* 2: spam
-	*/
-	//int type;
-public:
-	Damage(int, int);
-	~Damage();
-	Damage(const Damage &);
-	operator=(const Damage &);
+namespace termd {
 
-	int get_value() const;
-	//int get_type() const;
-};
+	class Damage{
+	private:
+		int base;
+		int random;
+		/**
+		* Damage Types:
+		* 0: hacking
+		* 1: bruteforce
+		* 2: spam
+		*/
+		//int type;
+	public:
+		Damage(int, int);
+		~Damage();
+		Damage(const Damage &);
+		operator=(const Damage &);
+
+		int get_value() const;
+		//int get_type() const;
+	};
+
+}
 
 #endif //termd_damage

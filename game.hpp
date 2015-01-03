@@ -6,20 +6,24 @@
 #include "player.hpp"
 #include "maps/gameboard.hpp"
 
-class Game {
-	private:
-		GUI gui;
-		Player player;
-		GameBoard board;
+namespace termd {
 
-		bool build_tower(int);
-	public:
-		Game();
-		
-		void intro();
-		void outro();
-		void build_phase();
-		void invasion_phase();
-};
+	class Game {
+		private:
+			GUI gui;
+			Player player;
+			GameBoard board;
+
+			bool build_tower(int);
+		public:
+			Game();
+			
+			void intro();
+			void outro();
+			void build_phase();
+			void invasion_phase();
+	};
+
+}
 
 #endif //termd_game
