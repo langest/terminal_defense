@@ -16,7 +16,7 @@
 #define STEPCOSTDIAGONAL 1414
 
 //Player info
-#define PLAYER_DEFAULT_HP 1
+#define PLAYER_DEFAULT_HP 2
 #define PLAYER_DEFAULT_RAM 10000
 
 //Map information
