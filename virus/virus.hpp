@@ -25,17 +25,17 @@ namespace termd {
 			bool step(); //Make the monster walk along its path, if it can...
 		public:
 			Virus(Coord);
-			Virus(const Virus &);
+			Virus(const Virus &) = delete;
 			virtual ~Virus();
 
-			Virus& operator=(const Virus &);
+			Virus& operator=(const Virus &) = delete;
 
 			virtual bool update(); //Make the monster behave
-			bool draw(const GUI&); //Draw the beauty
+			bool draw(const GUI&) const; //Draw the beauty
 
-			int get_reward();
-			Coord get_pos();
-			bool destination_reached();
+			int get_reward() const;
+			Coord get_pos() const;
+			bool destination_reached() const;
 			void take_damage(int);
 	};
 

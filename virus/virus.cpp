@@ -8,28 +8,8 @@ namespace termd {
 		gfx[0][0] = '@';
 	}
 
-	Virus::Virus(const Virus & src) : path(src.path) {
-		max_hp = src.max_hp;
-		cur_hp = src.cur_hp;
-		stamina = src.stamina;
-		stamina_increment = src.stamina_increment;
-		reward = src.reward;
-		gfx = src.gfx;
-	}
-
 	Virus::~Virus() {
 		//Currently nothing to do
-	}
-
-	Virus& Virus::operator=(const Virus & src) {
-		max_hp = src.max_hp;
-		cur_hp = src.cur_hp;
-		stamina = src.stamina;
-		stamina_increment = src.stamina_increment;
-		reward = src.reward;
-		gfx = src.gfx;
-		path = src.path;
-		return *this;
 	}
 
 	bool Virus::step(){
@@ -37,7 +17,7 @@ namespace termd {
 		return path.destination_reached() == false; //True if there are more steps, false otherwise
 	}
 
-	Coord Virus::get_pos(){
+	Coord Virus::get_pos() const{
 		return path.get_curr_pos();
 	}
 
@@ -50,15 +30,15 @@ namespace termd {
 		return true;
 	}
 
-	bool Virus::draw(const GUI & g){
+	bool Virus::draw(const GUI & g) const {
 		return g.draw_gfx(get_pos(), gfx);
 	}
 
-	int Virus::get_reward(){
+	int Virus::get_reward() const {
 		return reward;
 	}
 
-	bool Virus::destination_reached() {
+	bool Virus::destination_reached() const {
 		return path.destination_reached();
 	}
 

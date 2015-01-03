@@ -2,7 +2,7 @@
 
 namespace termd {
 	
-	HomingProjectile::HomingProjectile(Coord s, Virus& t) : Projectile('o', s), target(t), speed_increment(1500), speed_curr(0) {
+	HomingProjectile::HomingProjectile(Coord s, Virus& t) : Projectile('\'', s), target(t), speed_increment(1500), speed_curr(0) {
 	}
 
 	HomingProjectile::~HomingProjectile() {
@@ -13,7 +13,7 @@ namespace termd {
 		while (step());
 	}
 
-	bool HomingProjectile::hit() {
+	bool HomingProjectile::hit() const {
 		return pos == target.get_pos();
 	}
 
@@ -85,15 +85,6 @@ namespace termd {
 			}
 		}
 		return false;
-	}
-
-	HomingProjectile& HomingProjectile::operator=(const HomingProjectile & src) {
-		pos = src.pos;
-		target = src.target;
-		speed_curr = src.speed_curr;
-		speed_increment = src.speed_increment;
-		gfx = src.gfx;
-		return *this;
 	}
 
 	bool HomingProjectile::update() {

@@ -18,7 +18,7 @@ namespace termd {
 			virtual ~Projectile();
 
 			virtual bool update() = 0;
-			bool draw(const GUI &);
+			bool draw(const GUI &) const;
 
 	};
 

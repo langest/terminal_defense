@@ -26,8 +26,8 @@ namespace termd {
 			std::vector<std::vector<bool> > blocking; 	//Ground path blocking, children can change this
 			std::vector<std::vector<char> > gfx;			//The high-tech 3D model! Children can change this
 
-			int num_rows;
-			int num_cols;
+			const int num_rows;
+			const int num_cols;
 
 			int sell_value;
 			float sell_decrease;
@@ -38,7 +38,7 @@ namespace termd {
 			virtual ~Tower() = 0;
 
 			//Implemented:
-			bool draw(const GUI &);
+			bool draw(const GUI &) const;
 			int get_sell_value() const;
 			bool get_blocking() const;
 			int get_size_rows() const;

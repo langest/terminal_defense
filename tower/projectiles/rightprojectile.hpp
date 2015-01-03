@@ -16,7 +16,7 @@ namespace termd {
 		private:
 			const std::vector<Virus*>& viruses;
 
-			Virus* hit();
+			Virus* hit() const;
 			void move();
 
 		protected:

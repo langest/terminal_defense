@@ -20,7 +20,7 @@ namespace termd {
 			~VirusManager();
 
 			bool update();
-			void draw_viruses(const GUI &);
+			void draw_viruses(const GUI &) const;
 			void add_virus(Virus*);
 			void end_of_wave();
 			const std::vector<Virus*>& get_viruses() const;
