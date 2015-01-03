@@ -10,22 +10,24 @@
 #include "projectile.hpp"
 #include "../../virus/virus.hpp"
 
-class RightProjectile : public Projectile {
-	private:
-		std::vector<Virus*>& viruses;
+namespace termd {
+	
+	class RightProjectile : public Projectile {
+		private:
+			std::vector<Virus*>& viruses;
 
-		Virus* hit();
-		void move();
+			Virus* hit();
+			void move();
 
-	protected:
+		protected:
 
-	public:
-		RightProjectile(Coord, std::vector<Virus*>&);
-		RightProjectile(const RightProjectile&) = delete;
-		virtual ~RightProjectile();
-		RightProjectile& operator=(const RightProjectile &) = delete;
+		public:
+			RightProjectile(Coord, std::vector<Virus*>&);
+			RightProjectile(const RightProjectile&) = delete;
+			virtual ~RightProjectile();
+			RightProjectile& operator=(const RightProjectile &) = delete;
 
-		virtual bool update();
-};
-
+			virtual bool update();
+	};
+}
 #endif //termd_HomingProjectile

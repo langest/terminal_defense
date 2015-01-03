@@ -5,19 +5,22 @@
 #include "../../coord.hpp"
 #include "../../virus/virus.hpp"
 
-class Projectile {
-	private:
+namespace termd {
+		
+	class Projectile {
+		private:
 
-	protected:
-		char gfx;
-		Coord pos;
-	public:
-		Projectile(char, Coord);
-		virtual ~Projectile();
+		protected:
+			char gfx;
+			Coord pos;
+		public:
+			Projectile(char, Coord);
+			virtual ~Projectile();
 
-		virtual bool update() = 0;
-		bool draw(GUI &);
+			virtual bool update() = 0;
+			bool draw(GUI &);
 
-};
+	};
 
+}
 #endif

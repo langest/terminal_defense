@@ -1,10 +1,14 @@
 #include "projectile.hpp"
 
-Projectile::Projectile(char g, Coord p) : gfx(g), pos(p) {
-}
+namespace termd {
+		
+	Projectile::Projectile(char g, Coord p) : gfx(g), pos(p) {
+	}
 
-Projectile::~Projectile(){}
+	Projectile::~Projectile(){}
 
-bool Projectile::draw(GUI& g) {
-	return g.draw_gfx(pos, gfx);
+	bool Projectile::draw(GUI& g) {
+		return g.draw_gfx(pos, gfx);
+	}
+
 }
