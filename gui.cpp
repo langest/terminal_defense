@@ -102,8 +102,8 @@ namespace termd {
 	bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) {
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
-		if (   (int) gfx.size() + coord.get_row() > max_row
-				|| (int) gfx[0].size() + coord.get_col() > max_col
+		if (   (int) gfx.size() + coord.get_row() >= max_row
+				|| (int) gfx[0].size() + coord.get_col() >= max_col
 				|| coord.get_row() < 0
 				|| coord.get_col() < 0 ) {
 			return false;
@@ -123,8 +123,8 @@ namespace termd {
 	}
 
 	bool GUI::draw_gfx(const Coord & coord, char gfx) {
-		if (coord.get_row() > BOARDROWS ||
-				coord.get_col() > BOARDCOLS ||
+		if (coord.get_row() >= BOARDROWS ||
+				coord.get_col() >= BOARDCOLS ||
 				coord.get_row() < 0 ||
 				coord.get_col() < 0) return false;
 		int cur_row, cur_col;
