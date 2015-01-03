@@ -13,10 +13,15 @@ namespace termd {
 
 	bool GameBoard::update() {
 		//TODO spawn viruses with cool function
-		bool ret = vman.update();
+		bool cont = vman.update();
 		pman.update();
 		tman.update();
-		return ret;
+		if (!cont) {
+			vman.end_of_wave();
+			pman.end_of_wave();
+			tman.end_of_wave();
+		}
+		return cont;
 	}
 
 	bool GameBoard::is_blocked() {
