@@ -62,7 +62,7 @@ namespace termd {
 		viruses.push_back(vir);
 	}
 
-	std::vector<Virus*>& VirusManager::get_viruses() {
+	const std::vector<Virus*>& VirusManager::get_viruses() {
 		return viruses;
 	}
 

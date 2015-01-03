@@ -14,7 +14,7 @@ namespace termd {
 	
 	class RightProjectile : public Projectile {
 		private:
-			std::vector<Virus*>& viruses;
+			const std::vector<Virus*>& viruses;
 
 			Virus* hit();
 			void move();
@@ -22,7 +22,7 @@ namespace termd {
 		protected:
 
 		public:
-			RightProjectile(Coord, std::vector<Virus*>&);
+			RightProjectile(Coord, const std::vector<Virus*>&);
 			RightProjectile(const RightProjectile&) = delete;
 			virtual ~RightProjectile();
 			RightProjectile& operator=(const RightProjectile &) = delete;
