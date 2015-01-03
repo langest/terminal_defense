@@ -2,9 +2,7 @@
 
 namespace termd {
 
-	Player::Player() : ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
-		availiable_towers.insert(BASIC_TOWER_1x1_ID);
-		availiable_towers.insert(RIGHT_TOWER_1x1_ID);
+	Player::Player() : availiable_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID}), ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
 	}
 
 	Player::~Player() {
@@ -14,6 +12,10 @@ namespace termd {
 	void Player::new_map_refresh() {
 		hp = PLAYER_DEFAULT_HP;
 		ram = PLAYER_DEFAULT_RAM;
+	}
+
+	int Player::get_hp() const {
+		return hp;
 	}
 
 	bool Player::is_alive() const {
