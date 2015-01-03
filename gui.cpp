@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), winSpace(WINDOWSPACE) {
+	GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), intelCols(BOARDROWS), winSpace(WINDOWSPACE) {
 		move(startRow, startCol); //initialize cursor position
 	}
 
