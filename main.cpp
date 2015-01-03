@@ -11,6 +11,9 @@ int main() {
 	game.intro();
 	game.build_phase();
 	game.invasion_phase();
+	if(game.get_player_hp() < PLAYER_DEFAULT_HP) {
+		game.unlock_tower(RIGHT_TOWER_1x1_ID);
+	}
 	game.build_phase();
 	game.invasion_phase();
 	game.outro();
