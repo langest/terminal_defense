@@ -10,16 +10,6 @@ namespace termd {
 		//Currently nothing to do here
 	}
 
-	GUI::GUI(const GUI & src) {
-		startRow = src.startRow;
-		startCol = src.startCol;
-		boardRows = src.boardRows;
-		boardCols = src.boardCols;
-		intelRows = src.intelRows;
-		intelCols = src.intelCols;
-		move(startRow, startCol); //initialize cursor position
-	}
-
 	bool GUI::move_cursor_up() {
 		int col, row;
 		getyx(stdscr, row, col);

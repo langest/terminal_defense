@@ -33,7 +33,7 @@ namespace termd {
 
 			GUI();
 			~GUI();
-			GUI(const GUI &);
+			GUI(const GUI &) = delete;
 
 			GUI& operator=(const GUI &);
 
