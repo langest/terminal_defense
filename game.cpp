@@ -75,4 +75,13 @@ namespace termd {
 		}
 	}
 
+	int Game::get_player_hp() const {
+		return player.get_hp();
+	}
+
+	void Game::unlock_tower(int id) {
+		player.unlock_tower(id);
+	}
+
+
 }

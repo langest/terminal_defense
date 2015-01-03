@@ -34,6 +34,9 @@ namespace termd {
 			void outro();
 			void build_phase();
 			void invasion_phase();
+
+			int get_player_hp() const;
+			void unlock_tower(int);
 	};
 
 }

@@ -11,7 +11,7 @@ namespace termd {
 			int speed_increment;
 			int speed_curr;
 
-			bool hit();
+			bool hit() const;
 			bool step();
 			void move();
 
@@ -21,7 +21,7 @@ namespace termd {
 			HomingProjectile(Coord, Virus &);
 			HomingProjectile(const HomingProjectile &) = delete;
 			virtual ~HomingProjectile();
-			HomingProjectile& operator=(const HomingProjectile &);
+			HomingProjectile& operator=(const HomingProjectile &) = delete;
 
 			virtual bool update();
 	};

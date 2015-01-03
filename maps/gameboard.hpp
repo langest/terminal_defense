@@ -40,8 +40,8 @@ namespace termd {
 			//Board information:
 			std::map<Coord, int> grid_env_state;
 			std::map<Coord, int> grid_bld_state;
-			int size_rows;
-			int size_cols;
+			const int size_rows;
+			const int size_cols;
 			TowerManager tman;
 			ProjectileManager pman;
 			VirusManager vman;
@@ -56,14 +56,14 @@ namespace termd {
 			GameBoard& operator=(const GameBoard &) = delete;
 
 			//Main Game Loop:
-			void draw(const GUI &);
+			void draw(const GUI &) const;
 			bool update();
 
 			//Game Logic
 			bool build_tower(Coord, int);
 			void spawn_virus(int wave_num);
 
-			//Getters and Setters
+			//Getters
 			const int get_size_rows() const;
 			const int get_size_cols() const;
 	};

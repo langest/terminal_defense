@@ -25,7 +25,7 @@ namespace termd {
 		}
 	}
 
-	void ProjectileManager::draw_projectiles(const GUI & gui) {
+	void ProjectileManager::draw_projectiles(const GUI & gui) const {
 		for (Projectile* proj : projectiles) {
 			proj->draw(gui);
 		}

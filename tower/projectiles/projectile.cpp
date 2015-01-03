@@ -7,7 +7,7 @@ namespace termd {
 
 	Projectile::~Projectile(){}
 
-	bool Projectile::draw(const GUI& g) {
+	bool Projectile::draw(const GUI& g) const {
 		return g.draw_gfx(pos, gfx);
 	}
 

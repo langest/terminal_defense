@@ -11,26 +11,15 @@ namespace termd {
 		}
 	}
 
-	Path::Path(const Path & src) {
-		path = src.path;
-		//TODO keep updated
-	}
-
 	Path::~Path() {
 		//Nothing needed here at the moment
 	}
 
-	Path & Path::operator=(const Path & src) {
-		path = src.path;
-		//TODO keep updated
-		return *this;
-	}
-
-	Coord Path::get_curr_pos() {
+	Coord Path::get_curr_pos() const {
 		return path.front().coord; //Must not be called when path is empty!
 	}
 
-	bool Path::destination_reached() {
+	bool Path::destination_reached() const {
 		return path.empty();
 	}
 

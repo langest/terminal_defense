@@ -1,9 +1,9 @@
 #include "gameboard.hpp"
 namespace termd {
-	GameBoard::GameBoard(Player& p) : player(p), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p) {
+	GameBoard::GameBoard(Player& p) : player(p), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p), availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}) {
 	}
 
-	void GameBoard::draw(const GUI & gui) {
+	void GameBoard::draw(const GUI & gui) const {
 		gui.clear_game();
 
 		tman.draw_towers(gui);
@@ -77,7 +77,11 @@ namespace termd {
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {
-		return tman.build_tower(c, tower_id);
+		if(availible_towers.find(tower_id) != availible_towers.end() && player.has_tower(tower_id)) {
+			return tman.build_tower(c, tower_id);
+		} else {
+			return false;
+		}
 	}
 
 	void GameBoard::spawn_virus(int wave_num){

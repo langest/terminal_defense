@@ -43,8 +43,8 @@ namespace termd {
 			Coord get_cursor_pos() const;
 
 			bool draw(const Coord &, const char) const; //Does not refresh
-			bool draw_gfx(const Coord &, std::vector<std::vector<char> > &) const;
-			bool draw_gfx(const Coord &, char) const;
+			bool draw_gfx(const Coord &, const std::vector<std::vector<char> > &) const;
+			bool draw_gfx(const Coord &, const char) const;
 			void print_intel(const std::string) const;
 			void draw_board_frame() const;
 			void draw_intel_frame() const;

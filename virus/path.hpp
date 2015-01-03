@@ -13,8 +13,8 @@ namespace termd {
 
 	struct Step
 	{
-		Coord coord;
-		int cost;
+		const Coord coord;
+		const int cost;
 		Step(Coord a, int b) : coord(a), cost(b) {}
 	};
 
@@ -23,14 +23,14 @@ namespace termd {
 			std::queue<Step> path;
 		public:
 			Path(Coord); //spawn, goal is everything on final row/col
-			Path(const Path &);
+			Path(const Path &) = delete;
 			~Path();
 
-			Path & operator=(const Path &);
+			Path & operator=(const Path &) = delete;
 
 			void step(int &);	 //steps as many steps as possible with the given stamina, will side-effect the inputed stamina
-			Coord get_curr_pos();
-			bool destination_reached();
+			Coord get_curr_pos() const;
+			bool destination_reached() const;
 	};
 
 }

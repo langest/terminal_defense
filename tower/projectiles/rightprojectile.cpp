@@ -12,7 +12,7 @@ namespace termd {
 		pos.add_col(1);
 	}
 
-	Virus* RightProjectile::hit() {
+	Virus* RightProjectile::hit() const {
 		int vr, vc;
 		for (Virus* vir : viruses) {
 			vr = vir->get_pos().get_row();

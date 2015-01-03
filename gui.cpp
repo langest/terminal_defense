@@ -89,7 +89,7 @@ namespace termd {
 
 	//Draws a gfx in board window
 	//Does not refresh
-	bool GUI::draw_gfx(const Coord & coord, std::vector<std::vector<char> > & gfx) const {
+	bool GUI::draw_gfx(const Coord & coord, const std::vector<std::vector<char> > & gfx) const {
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
 		if (   (int) gfx.size() + coord.get_row() >= max_row
@@ -112,7 +112,7 @@ namespace termd {
 		return true;
 	}
 
-	bool GUI::draw_gfx(const Coord & coord, char gfx) const {
+	bool GUI::draw_gfx(const Coord & coord, const char gfx) const {
 		if (coord.get_row() >= BOARDROWS ||
 				coord.get_col() >= BOARDCOLS ||
 				coord.get_row() < 0 ||
