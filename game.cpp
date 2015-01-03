@@ -15,6 +15,7 @@ namespace termd {
 		addstr("awesome game YOLO!");
 		getch();
 		clear();
+		move(BOARDR0, BOARDC0);
 	}
 
 	void Game::outro() {

@@ -23,35 +23,33 @@ namespace termd {
 
 	class GUI {
 		private:
-			int startRow, startCol;
-			int boardRows, boardCols;
-			int intelRows, intelCols;
-			int winSpace;
+			const int startRow, startCol;
+			const int boardRows, boardCols;
+			const int intelRows, intelCols;
+			const int winSpace;
 
 		public:
-			void clear_game();
-
 			GUI();
 			~GUI();
-			GUI(const GUI &);
+			GUI(const GUI &) = delete;
 
 			GUI& operator=(const GUI &);
 
-			void init_gui();
-			bool move_cursor_up();
-			bool move_cursor_down();
-			bool move_cursor_left();
-			bool move_cursor_right();
-			Coord get_cursor_pos();
+			void init_gui() const;
+			bool move_cursor_up() const;
+			bool move_cursor_down() const;
+			bool move_cursor_left() const;
+			bool move_cursor_right() const;
+			Coord get_cursor_pos() const;
 
-			bool draw(const Coord &, const char); //Does not refresh
-			bool draw_gfx(const Coord &, std::vector<std::vector<char> > &);
-			bool draw_gfx(const Coord &, char);
-			void print_intel(std::string);
-			void draw_board_frame();
-			void draw_intel_frame();
-			void clear();
-			void refresh();
+			bool draw(const Coord &, const char) const; //Does not refresh
+			bool draw_gfx(const Coord &, std::vector<std::vector<char> > &) const;
+			bool draw_gfx(const Coord &, char) const;
+			void print_intel(const std::string) const;
+			void draw_board_frame() const;
+			void draw_intel_frame() const;
+			void clear_game() const;
+			void refresh() const;
 
 	};
 
