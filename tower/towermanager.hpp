@@ -40,6 +40,7 @@ namespace termd {
 			void update();
 			void draw_towers(GUI &);
 			bool build_tower(Coord, int);
+			void end_of_wave();
 	};
 
 }

@@ -28,4 +28,8 @@ namespace termd {
 		return num_cols;
 	}
 
+	bool Tower::end_of_wate() {
+		sell_value *= sell_decrease;
+	}
+
 }

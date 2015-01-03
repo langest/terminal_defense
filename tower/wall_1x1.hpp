@@ -20,7 +20,6 @@ namespace termd {
 
 			//Virtual:
 			virtual bool update();
-			virtual bool end_of_wave_update();
 	};
 
 }

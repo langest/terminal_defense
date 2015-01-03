@@ -85,4 +85,10 @@ namespace termd {
 		}
 	}
 
+	void TowerManager::end_of_wave() {
+		for(Tower* t : towers) {
+			t->end_of_wave();
+		}
+	}
+
 }

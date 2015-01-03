@@ -16,11 +16,6 @@ namespace termd {
 		return true;
 	}
 
-	bool BasicTower_1x1::end_of_wave_update() {
-		sell_value *= sell_decrease;
-		return true;
-	}
-
 	void BasicTower_1x1::shoot() {
 		if (recharge > 0) {
 			--recharge;
