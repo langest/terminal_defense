@@ -1,10 +1,12 @@
 #ifndef termd_gui
 #define termd_gui
 
+#ifndef mock_gui
 #ifndef termd_ncurses
 #define termd_ncurses
 #include <ncurses.h>
 #endif //termd_ncurses
+#endif //mock_gui
 
 #ifndef termd_vector
 #define termd_vector
@@ -47,10 +49,6 @@ namespace termd {
 			void refresh() const;
 
 	};
-
-	WINDOW *create_new_win(int, int, int, int);
-	void destroy_win(WINDOW *);
-
 }
 
 #endif //termd_gui
