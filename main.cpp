@@ -24,7 +24,7 @@ int main() {
 	game.build_phase();
 	game.invasion_phase();
 	game.outro();
-	
+
 #ifndef mock_gui
 	endwin(); //End curses mode
 #endif //mock_gui
