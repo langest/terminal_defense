@@ -42,7 +42,11 @@ namespace termd {
 Viruses (as you all know) begins on the right side and flies to the left. \n\
 You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
 You lose when you lose control over your terminal (reach 0 terminal control points). \n\
-You win by defeating ALL the viruses! \n\n\n\
+You win by defeating ALL the viruses! \n\
+\n\
+You defend your terminal by building towers.\n\
+Towers costs RAM to build, you gain more RAM by destroying viruses\n\
+\n\
 q - Start the next wave of viruses \n\
 i - Build a BASIC TOWER \n\
 MOVE CURSOR as you normally would (arrows or vim-like)\n");
@@ -67,11 +71,15 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		int ch;
 		gui.draw_board_frame();
 		gui.draw_intel_frame();
+		char intelmsg[BOARDCOLS];
 		while((ch = getch()) != 27 && ch != 'q') {
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();
 			}
 			board.draw(gui);
+			gui.clear_intel();
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
+			gui.print_intel(intelmsg);
 			gui.refresh();
 		}
 	}
@@ -79,9 +87,10 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	void Game::invasion_phase() {
 		int ch;
 		board.spawn_virus(0);
-		char intelmsg[60];
+		char intelmsg[BOARDCOLS];
 		while (board.update()) {
-			sprintf(intelmsg, "Terminal Control Points: %d", player.get_hp());
+			gui.clear_intel();
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
 			gui.print_intel(intelmsg);
 			board.draw(gui);
 			gui.refresh();
@@ -103,6 +112,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		//TODO - removed hardcodedness
 		gui.print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
 		player.unlock_tower(id);
+		getch(); //make sure to display the intel!
 	}
 
 
