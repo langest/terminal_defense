@@ -25,7 +25,7 @@ namespace termd {
 	}
 
 	bool TowerManager::build_tower(Coord c, int tower_id) {
-		if(auto towers.find(c) != towers.end()) {
+		if(towers.find(c) != towers.end()) {
 			//space taken by other tower!
 			return false;
 		}
