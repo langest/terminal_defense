@@ -48,9 +48,6 @@ namespace termd {
 
 	};
 
-	WINDOW *create_new_win(int, int, int, int);
-	void destroy_win(WINDOW *);
-
 }
 
 #endif //termd_gui
