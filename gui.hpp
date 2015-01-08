@@ -49,6 +49,7 @@ namespace termd {
 			void draw_board_frame() const;
 			void draw_intel_frame() const;
 			void clear_game() const;
+			void clear_intel() const;
 			void refresh() const;
 
 	};

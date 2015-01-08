@@ -181,6 +181,18 @@ namespace termd {
 		move(cur_row, cur_col);
 	}
 
+	void GUI::clear_intel() const {
+		int cur_row, cur_col;
+		getyx(stdscr, cur_row, cur_col);
+		for (int i = BOARDR0 + BOARDROWS + WINSPACE + 2; i < BOARDR0 + BOARDROWS + WINSPACE + 2 + INTELROWS; ++i) {
+			move(i, startCol);
+			for (int j = 0; j < boardCols; ++j) {
+				addch(' ');
+			}
+		}
+		move(cur_row, cur_col);
+	}
+
 	void GUI::refresh() const {
 		wrefresh(stdscr); //Refresh curses
 	}
