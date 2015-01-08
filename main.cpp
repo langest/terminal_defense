@@ -28,7 +28,7 @@ int main() {
 	return 0;
 }
 
-void quit_game(termd::Game game) {
+void quit_game(termd::Game & game) {
 	game.outro();
 #ifndef mock_gui
 	endwin(); //End curses mode
