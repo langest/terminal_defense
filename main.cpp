@@ -11,6 +11,11 @@ int main() {
 	game.intro();
 	game.build_phase();
 	game.invasion_phase();
+	if(game.is_player_alive() == false) {
+		game.outro(); 
+		endwin();
+		return 0;
+	}
 	if(game.get_player_hp() < PLAYER_DEFAULT_HP) {
 		game.unlock_tower(RIGHT_TOWER_1x1_ID);
 	}

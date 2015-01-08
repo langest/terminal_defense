@@ -36,6 +36,7 @@ namespace termd {
 			void build_phase();
 			void invasion_phase();
 
+			bool is_player_alive() const;
 			int get_player_hp() const;
 			void unlock_tower(int);
 	};

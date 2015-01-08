@@ -38,7 +38,15 @@ namespace termd {
 	}
 
 	void Game::intro() {
-		addstr("awesome game YOLO!");
+		std::string intromsg("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
+Viruses (as you all know) begins on the right side and flies to the left. \n\
+You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
+You lose when you lose control over your terminal (reach 0 terminal control points). \n\
+You win by defeating ALL the viruses! \n\n\n\
+q - Start the next wave of viruses \n\
+i - Build a BASIC TOWER \n\
+MOVE CURSOR as you normally would (arrows or vim-like)\n");
+		addstr(intromsg.c_str());
 		getch();
 		clear();
 		move(BOARDR0, BOARDC0);
@@ -50,7 +58,7 @@ namespace termd {
 		if (player.is_alive()) {
 			addstr("gz, you won");
 		} else {
-			addstr("gz, you lose");
+			addstr("You lost control over your terminal. There is nothing you can do...");
 		}
 		getch();
 	}
@@ -71,7 +79,10 @@ namespace termd {
 	void Game::invasion_phase() {
 		int ch;
 		board.spawn_virus(0);
+		char intelmsg[60];
 		while (board.update()) {
+			sprintf(intelmsg, "Terminal Control Points: %d", player.get_hp());
+			gui.print_intel(intelmsg);
 			board.draw(gui);
 			gui.refresh();
 			if ((ch = getch()) == 27 || ch == 'q') {
@@ -80,11 +91,17 @@ namespace termd {
 		}
 	}
 
+	bool Game::is_player_alive() const {
+		return player.is_alive();
+	}
+
 	int Game::get_player_hp() const {
 		return player.get_hp();
 	}
 
 	void Game::unlock_tower(int id) {
+		//TODO - removed hardcodedness
+		gui.print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
 		player.unlock_tower(id);
 	}
 
