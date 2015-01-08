@@ -22,12 +22,6 @@
 namespace termd {
 
 	class GUI {
-		private:
-			const int startRow, startCol;
-			const int boardRows, boardCols;
-			const int intelRows, intelCols;
-			const int winSpace;
-
 		public:
 			GUI();
 			~GUI();

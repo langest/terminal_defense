@@ -2,8 +2,8 @@
 
 namespace termd {
 
-	GUI::GUI() : startRow(BOARDR0), startCol(BOARDC0), boardRows(BOARDROWS), boardCols(BOARDCOLS), intelRows(INTELROWS), intelCols(BOARDROWS), winSpace(WINDOWSPACE) {
-		move(startRow, startCol); //initialize cursor position
+	GUI::GUI() {
+		move(BOARDR0, BOARDC0); //initialize cursor position
 	}
 
 	GUI::~GUI() {
@@ -14,8 +14,8 @@ namespace termd {
 		int col, row;
 		getyx(stdscr, row, col);
 
-		if (row <= startRow) {
-			move(startRow, col);
+		if (row <= BOARDR0) {
+			move(BOARDR0, col);
 			return false;
 		}
 
@@ -28,8 +28,8 @@ namespace termd {
 		int col, row;
 		getyx(stdscr, row, col);
 
-		if (row >= startRow + boardRows - 1) {
-			move(startRow + boardRows - 1, col);
+		if (row >= BOARDR0 + BOARDROWS - 1) {
+			move(BOARDR0 + BOARDROWS - 1, col);
 			return false;
 		}
 
@@ -42,8 +42,8 @@ namespace termd {
 		int col, row;
 		getyx(stdscr, row, col);
 
-		if (col <= startCol) {
-			move(row, startCol);
+		if (col <= BOARDC0) {
+			move(row, BOARDC0);
 			return false;
 		}
 
@@ -56,8 +56,8 @@ namespace termd {
 		int row, col;
 		getyx(stdscr, row, col);
 
-		if (col >= startCol + boardCols - 1) {
-			move(row, startCol + boardCols - 1);
+		if (col >= BOARDC0 + BOARDCOLS - 1) {
+			move(row, BOARDC0 + BOARDCOLS - 1);
 			return false;
 		}
 
@@ -139,15 +139,15 @@ namespace termd {
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
-		mvaddch(startRow - 1, startCol - 1, FRAMETL);
-		mvaddch(startRow + boardRows, startCol - 1, FRAMEBL);
-		mvaddch(startRow - 1, startCol + boardCols, FRAMETR);
-		mvaddch(startRow + boardRows, startCol + boardCols, FRAMEBR);
+		mvaddch(BOARDR0 - 1, BOARDC0 - 1, FRAMETL);
+		mvaddch(BOARDR0 + BOARDROWS, BOARDC0 - 1, FRAMEBL);
+		mvaddch(BOARDR0 - 1, BOARDC0 + BOARDCOLS, FRAMETR);
+		mvaddch(BOARDR0 + BOARDROWS, BOARDC0 + BOARDCOLS, FRAMEBR);
 
-		mvhline(startRow - 1, startCol, FRAMETS, boardCols);
-		mvvline(startRow, startCol - 1, FRAMELS, boardRows);
-		mvhline(startRow + boardRows, startCol, FRAMEBS, boardCols);
-		mvvline(startRow, startCol + boardCols, FRAMERS, boardRows);
+		mvhline(BOARDR0 - 1, BOARDC0, FRAMETS, BOARDCOLS);
+		mvvline(BOARDR0, BOARDC0 - 1, FRAMELS, BOARDROWS);
+		mvhline(BOARDR0 + BOARDROWS, BOARDC0, FRAMEBS, BOARDCOLS);
+		mvvline(BOARDR0, BOARDC0 + BOARDCOLS, FRAMERS, BOARDROWS);
 
 		move(cur_row, cur_col);
 	}
@@ -156,15 +156,15 @@ namespace termd {
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
-		mvaddch(startRow + 1 + winSpace + boardRows, startCol - 1, FRAMETL);
-		mvaddch(startRow + 1 + winSpace + boardRows + intelRows + 1, startCol - 1, FRAMEBL);
-		mvaddch(startRow + 1 + winSpace + boardRows, startCol + boardCols, FRAMETR);
-		mvaddch(startRow + 1 + winSpace + boardRows + intelRows + 1, startCol + boardCols, FRAMEBR);
+		mvaddch(BOARDR0 + 1 + WINDOWSPACE + BOARDROWS, BOARDC0 - 1, FRAMETL);
+		mvaddch(BOARDR0 + 1 + WINDOWSPACE + BOARDROWS + INTELROWS + 1, BOARDC0 - 1, FRAMEBL);
+		mvaddch(BOARDR0 + 1 + WINDOWSPACE + BOARDROWS, BOARDC0 + BOARDCOLS, FRAMETR);
+		mvaddch(BOARDR0 + 1 + WINDOWSPACE + BOARDROWS + INTELROWS + 1, BOARDC0 + BOARDCOLS, FRAMEBR);
 
-		mvhline(startRow + 1 + winSpace + boardRows, startCol, FRAMETS, boardCols);
-		mvvline(startRow + 2 + winSpace + boardRows, startCol - 1, FRAMELS, intelRows);
-		mvhline(startRow + 2 + winSpace + boardRows + intelRows, startCol, FRAMEBS, boardCols);
-		mvvline(startRow + 2 + winSpace + boardRows, startCol + boardCols, FRAMERS, intelRows);
+		mvhline(BOARDR0 + 1 + WINDOWSPACE + BOARDROWS, BOARDC0, FRAMETS, BOARDCOLS);
+		mvvline(BOARDR0 + 2 + WINDOWSPACE + BOARDROWS, BOARDC0 - 1, FRAMELS, INTELROWS);
+		mvhline(BOARDR0 + 2 + WINDOWSPACE + BOARDROWS + INTELROWS, BOARDC0, FRAMEBS, BOARDCOLS);
+		mvvline(BOARDR0 + 2 + WINDOWSPACE + BOARDROWS, BOARDC0 + BOARDCOLS, FRAMERS, INTELROWS);
 
 		move(cur_row, cur_col);
 	}
@@ -172,9 +172,9 @@ namespace termd {
 	void GUI::clear_game() const {
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
-		for (int i = startRow; i < boardRows + startRow; ++i) {
-			move(i, startCol);
-			for (int j = 0; j < boardCols; ++j) {
+		for (int i = BOARDR0; i < BOARDROWS + BOARDR0; ++i) {
+			move(i, BOARDC0);
+			for (int j = 0; j < BOARDCOLS; ++j) {
 				addch(' ');
 			}
 		}
@@ -184,9 +184,9 @@ namespace termd {
 	void GUI::clear_intel() const {
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
-		for (int i = BOARDR0 + BOARDROWS + WINSPACE + 2; i < BOARDR0 + BOARDROWS + WINSPACE + 2 + INTELROWS; ++i) {
-			move(i, startCol);
-			for (int j = 0; j < boardCols; ++j) {
+		for (int i = BOARDR0 + BOARDROWS + WINDOWSPACE + 2; i < BOARDR0 + BOARDROWS + WINDOWSPACE + 2 + INTELROWS; ++i) {
+			move(i, BOARDC0);
+			for (int j = 0; j < BOARDCOLS; ++j) {
 				addch(' ');
 			}
 		}
