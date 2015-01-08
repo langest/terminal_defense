@@ -26,16 +26,16 @@ int main() {
 }
 
 void init_ncurses() {
-#ifndef mock_gui
+#ifndef MOCK_GUI
 	initscr(); //Starts curses mode
 	cbreak(); //Since we only want to read characters
 	noecho(); //Turns off echo of input
 	keypad(stdscr, TRUE);
-#endif //mock_gui
+#endif //MOCK_GUI
 }
 
 void end_ncurses() {
-#ifndef mock_gui
+#ifndef MOCK_GUI
 	endwin(); //End curses mode
-#endif //mock_gui
+#endif //MOCK_GUI
 }

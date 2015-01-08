@@ -1,12 +1,12 @@
 #ifndef termd_gui
 #define termd_gui
 
-#ifndef mock_gui
+#ifndef MOCK_GUI
 #ifndef termd_ncurses
 #define termd_ncurses
 #include <ncurses.h>
 #endif //termd_ncurses
-#endif //mock_gui
+#endif //MOCK_GUI
 
 #ifndef termd_vector
 #define termd_vector
