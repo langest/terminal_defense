@@ -89,10 +89,10 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		board.spawn_virus(0);
 		char intelmsg[BOARDCOLS];
 		while (board.update()) {
+			board.draw(gui);
 			gui.clear_intel();
 			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
 			gui.print_intel(intelmsg);
-			board.draw(gui);
 			gui.refresh();
 			if ((ch = getch()) == 27 || ch == 'q') {
 				break;
