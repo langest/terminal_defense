@@ -25,48 +25,40 @@ namespace termd {
 	}
 
 	bool TowerManager::build_tower(Coord c, int tower_id) {
+		if(auto towers.find(c) != towers.end()) {
+			//space taken by other tower!
+			return false;
+		}
 		Tower* tp;
-		switch(tower_id){ //TODO define towers somewhere...
+		switch(tower_id){ 
 			case WALL_1x1_ID: 
-				//is it possible to build here?
-				tp = new Wall_1x1(c);
-				//TODO: Check if blocked
 				if(player.get_ram() >= WALL_1x1_COST){
-					//SUCCESS!
+					tp = new Wall_1x1(c);
 					player.modify_ram(-WALL_1x1_COST);
 					towers.insert( std::pair<Coord, Tower*>(c, tp));
 					return true;
 				}else{
 					//FAIL: Not enough RAM
-					delete tp;
 				}
 				break;
 			case BASIC_TOWER_1x1_ID: 
-				//is it possible to build here?
-				tp = new BasicTower_1x1(c, vman, pman);
-				//TODO: Check if blocked
 				if(player.get_ram() >= BASIC_TOWER_1x1_COST){
-					//SUCCESS!
+					tp = new BasicTower_1x1(c, vman, pman);
 					player.modify_ram(-BASIC_TOWER_1x1_COST);
 					towers.insert( std::pair<Coord, Tower*>(c, tp));
 					return true;
 				}else{
 					//FAIL: Not enough RAM
-					delete tp;
 				}
 				break;
 			case RIGHT_TOWER_1x1_ID: 
-				//is it possible to build here?
-				tp = new RightTower_1x1(c, vman, pman);
-				//TODO: Check if blocked
 				if(player.get_ram() >= RIGHT_TOWER_1x1_COST){
-					//SUCCESS!
+					tp = new RightTower_1x1(c, vman, pman);
 					player.modify_ram(-RIGHT_TOWER_1x1_COST);
 					towers.insert( std::pair<Coord, Tower*>(c, tp));
 					return true;
 				}else{
 					//FAIL: Not enough RAM
-					delete tp;
 				}
 				break;
 		}
