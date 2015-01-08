@@ -1,10 +1,12 @@
 #include "main.hpp"
 
 int main() {
+#ifndef mock_gui
 	initscr(); //Starts curses mode
 	cbreak(); //Since we only want to read characters
 	noecho(); //Turns off echo of input
 	keypad(stdscr, TRUE);
+#endif //mock_gui
 	
 	termd::Game game;
 
@@ -23,6 +25,8 @@ int main() {
 	game.invasion_phase();
 	game.outro();
 	
+#ifndef mock_gui
 	endwin(); //End curses mode
+#endif //mock_gui
 	return 0;
 }
