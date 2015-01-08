@@ -14,10 +14,7 @@ int main() {
 	game.build_phase();
 	game.invasion_phase();
 	if(game.is_player_alive() == false) {
-		game.outro(); 
-#ifndef mock_gui
-		endwin(); //End curses mode
-#endif //mock_gui
+		quit_game(game);
 		return 0;
 	}
 	if(game.get_player_hp() < PLAYER_DEFAULT_HP) {
@@ -25,10 +22,15 @@ int main() {
 	}
 	game.build_phase();
 	game.invasion_phase();
-	game.outro();
 
+	quit_game(game);
+
+	return 0;
+}
+
+void quit_game(termd::Game game) {
+	game.outro();
 #ifndef mock_gui
 	endwin(); //End curses mode
 #endif //mock_gui
-	return 0;
 }
