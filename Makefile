@@ -18,9 +18,9 @@ maindeps = game.o \
 maindepsheaders = $(maindeps:.o=.hpp)
 
 CXXFLAGS = -lncurses \
-					 -g \
-					 -Wall \
-					 -std=c++11
+           -g \
+           -Wall \
+           -std=c++11
 
 all: gui_non_mock main.cpp $(maindeps) $(maindepsheaders)
 	$(CXX) -o terminaldefense.out main.cpp $(CXXFLAGS) $(maindeps) gui.o
