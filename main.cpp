@@ -1,12 +1,7 @@
 #include "main.hpp"
 
 int main() {
-#ifndef mock_gui
-	initscr(); //Starts curses mode
-	cbreak(); //Since we only want to read characters
-	noecho(); //Turns off echo of input
-	keypad(stdscr, TRUE);
-#endif //mock_gui
+	init_ncurses();
 	
 	termd::Game game;
 
@@ -14,7 +9,8 @@ int main() {
 	game.build_phase();
 	game.invasion_phase();
 	if(game.is_player_alive() == false) {
-		quit_game(game);
+		game.outro();
+		end_ncurses();
 		return 0;
 	}
 	if(game.get_player_hp() < PLAYER_DEFAULT_HP) {
@@ -22,14 +18,23 @@ int main() {
 	}
 	game.build_phase();
 	game.invasion_phase();
+	game.outro();
 
-	quit_game(game);
+	end_ncurses();
 
 	return 0;
 }
 
-void quit_game(termd::Game & game) {
-	game.outro();
+void init_ncurses() {
+#ifndef mock_gui
+	initscr(); //Starts curses mode
+	cbreak(); //Since we only want to read characters
+	noecho(); //Turns off echo of input
+	keypad(stdscr, TRUE);
+#endif //mock_gui
+}
+
+void end_ncurses() {
 #ifndef mock_gui
 	endwin(); //End curses mode
 #endif //mock_gui

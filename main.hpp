@@ -2,4 +2,5 @@
 #include "definitions"
 
 int main();
-void quit_game(termd::Game &);
+void init_ncurses();
+void end_ncurses();
