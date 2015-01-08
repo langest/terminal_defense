@@ -79,13 +79,20 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	void Game::invasion_phase() {
 		int ch;
 		board.spawn_virus(0);
+		char intelmsg[60];
 		while (board.update()) {
+			sprintf(intelmsg, "Terminal Control Points: %d", player.get_hp());
+			gui.print_intel(intelmsg);
 			board.draw(gui);
 			gui.refresh();
 			if ((ch = getch()) == 27 || ch == 'q') {
 				break;
 			}
 		}
+	}
+
+	bool Game::is_player_alive() const {
+		return player.is_alive();
 	}
 
 	int Game::get_player_hp() const {
