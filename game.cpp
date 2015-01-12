@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	Game::Game() : board(player) {
+	Game::Game(GUI & g, Player & p) : gui(g), player(p), board(player) {
 		//initialize input calls
 		std::function<void()> f = [&]() { gui.move_cursor_left(); };
 		inputcalls['h'] = f;
@@ -108,6 +108,23 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			}
 #endif
 		}
+	}
+
+	bool Game::run() {
+		intro();
+		build_phase();
+		invasion_phase();
+		if(is_player_alive() == false) {
+			outro();
+			return false;
+		}
+		if(get_player_hp() < PLAYER_DEFAULT_HP) {
+			unlock_tower(RIGHT_TOWER_1x1_ID);
+		}
+		build_phase();
+		invasion_phase();
+		outro();
+		return true;
 	}
 
 	bool Game::is_player_alive() const {
