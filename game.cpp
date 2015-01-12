@@ -4,31 +4,31 @@ namespace termd {
 
 	Game::Game(GUI & g, Player & p) : gui(g), player(p), board(player) {
 		//initialize input calls
-		std::function<void()> f = [&]() { gui.move_cursor_left(); };
+		std::function<void()> f = [this]() { gui.move_cursor_left(); };
 		inputcalls['h'] = f;
 		inputcalls[KEY_LEFT] = f;
 
-		f = [&]() { gui.move_cursor_up(); };
+		f = [this]() { gui.move_cursor_up(); };
 		inputcalls['k'] = f;
 		inputcalls[KEY_UP] = f;
 
-		f = [&]() { gui.move_cursor_right(); };
+		f = [this]() { gui.move_cursor_right(); };
 		inputcalls['l'] = f;
 		inputcalls[KEY_RIGHT] = f;
 
-		f = [&]() { gui.move_cursor_down(); };
+		f = [this]() { gui.move_cursor_down(); };
 		inputcalls['j'] = f;
 		inputcalls[KEY_DOWN] = f;
 
 		inputcalls['i'] = [&]() { build_tower(BASIC_TOWER_1x1_ID); };
 		inputcalls['d'] = [&]() { build_tower(RIGHT_TOWER_1x1_ID); };
 
-		inputcalls['+'] = std::bind( &Game::awesome, this );
+		//inputcalls['+'] = std::bind( &Game::awesome, this );
 	}
 
-	void Game::awesome() {
-		gui.print_intel("Thomas and Daniel are awesome!\nYeah. Foh shoo!");
-	}
+	//void Game::awesome() {
+		//gui.print_intel("Thomas and Daniel are awesome!\nYeah. Foh shoo!");
+	//}
 	
 	bool Game::build_tower(int tower_id) {
 		Coord c = gui.get_cursor_pos();
