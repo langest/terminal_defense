@@ -20,24 +20,24 @@ namespace termd {
 
 	class Game {
 		private:
-			GUI gui;
-			Player player;
+			GUI& gui;
+			Player& player;
 			GameBoard board;
 
 			bool build_tower(int);
 
 			std::map<int, std::function<void()>> inputcalls;
 			void awesome();
-		public:
-			Game();
-			
 			void intro();
 			void outro();
 			void build_phase();
 			void invasion_phase();
-
 			bool is_player_alive() const;
 			int get_player_hp() const;
+		public:
+			Game(GUI&, Player&);
+
+			bool run();
 			void unlock_tower(int);
 	};
 

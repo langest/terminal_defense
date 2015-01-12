@@ -1,4 +1,5 @@
 maindeps = game.o \
+         menu.o \
          coord.o \
          player.o \
          virus/virusmanager.o \

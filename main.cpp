@@ -3,22 +3,11 @@
 int main() {
 	init_ncurses();
 	
-	termd::Game game;
+	termd::GUI gui;
+	termd::Player player;
 
-	game.intro();
-	game.build_phase();
-	game.invasion_phase();
-	if(game.is_player_alive() == false) {
-		game.outro();
-		end_ncurses();
-		return 0;
-	}
-	if(game.get_player_hp() < PLAYER_DEFAULT_HP) {
-		game.unlock_tower(RIGHT_TOWER_1x1_ID);
-	}
-	game.build_phase();
-	game.invasion_phase();
-	game.outro();
+	termd::Menu menu(gui, player);
+	menu.run();
 
 	end_ncurses();
 
