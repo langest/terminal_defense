@@ -31,7 +31,6 @@ namespace termd {
 
 			GUI& operator=(const GUI &);
 
-			void init_gui() const;
 			bool move_cursor_up() const;
 			bool move_cursor_down() const;
 			bool move_cursor_left() const;
