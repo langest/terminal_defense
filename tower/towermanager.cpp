@@ -91,7 +91,7 @@ namespace termd {
 		}
 	}
 
-	void TowerManager::save_to_file(std::string filename) {
+	bool TowerManager::save_to_file(std::string filename) {
 		std::ofstream savefile;
 		savefile.open(filename);
 		if(savefile.is_open()) {
@@ -102,11 +102,13 @@ namespace termd {
 				savefile << (it->second)->get_id() << " " << it->first << " " << (it->second)->get_age();
 			}
 			savefile << std::endl;
-			
 			savefile.close();
+			return true;
+		} else {
+			return false;
 		}
 	}
-	void TowerManager::load_to_file(std::string filename) {
+	bool TowerManager::load_to_file(std::string filename) {
 		std::ifstream loadfile;
 		loadfile.open(filename);
 		if(loadfile.is_open()) {
@@ -125,6 +127,9 @@ namespace termd {
 				}
 			}			
 			loadfile.close();
+			return true;
+		} else {
+			return false;
 		}
 	}
 }
