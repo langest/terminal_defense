@@ -6,6 +6,11 @@
 #include <vector>
 #endif //termd_vector
 
+#ifndef termd_cstdlib
+#define termd_cstdlib
+#include <cstdlib>
+#endif //termd_cstdlib - needed for rand()
+
 #include "../gui.hpp"
 #include "../coord.hpp"
 #include "path.hpp"
