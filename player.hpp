@@ -11,13 +11,26 @@
 #include <string>
 #endif
 
+#ifndef termd_fstream
+#define termd_fstream
+#include <fstream>
+#endif
+
+#ifndef termd_iostream
+#define termd_iostream
+#include <iostream>
+#endif
+
+
+#include "gui.hpp"
+
 #include "definitions"
 
 namespace termd {
 
 	class Player {
 		private:
-			std::set<std::string> completed_maps;
+			std::set<int> completed_maps;
 			std::set<int> availiable_towers;
 			int ram;
 			int hp;
@@ -37,7 +50,10 @@ namespace termd {
 
 			void unlock_tower(int);
 			void lock_tower(int);
-			bool has_tower(int) const;
+			bool has_tower(int) const; 
+
+			void save_to_file(std::string);
+			void load_from_file(std::string);
 	};
 
 }
