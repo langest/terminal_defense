@@ -45,9 +45,9 @@ namespace termd {
 		return true;
 	}
 
-	void VirusManager::draw_viruses(const GUI & gui) const {
+	void VirusManager::draw_viruses() const {
 		for (auto i = viruses.begin(); i != viruses.end(); ++i) {
-			if((*i)->draw(gui) == false) {
+			if((*i)->draw() == false) {
 				//If tower failed to draw:
 				#ifdef DEBUGGING
 				#include <iostream>

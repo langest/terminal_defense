@@ -8,8 +8,8 @@ namespace termd {
 		//Currently nothing needs to be done
 	}
 
-	bool Tower::draw(const GUI & g) const {
-		return g.draw_gfx(pos, gfx);
+	bool Tower::draw() const {
+		return GUI::draw_gfx(pos, gfx);
 	}
 
 	int Tower::get_sell_value() const {

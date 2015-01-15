@@ -14,7 +14,6 @@ namespace termd {
 
 	class Menu {
 		private:
-			GUI& gui;
 			Player& player;
 			std::map<int, std::function<bool()>> inputcalls;
 			void intro();
@@ -24,7 +23,7 @@ namespace termd {
 			bool run_game();
 
 		public:
-			Menu(GUI&, Player&);
+			Menu(Player&);
 
 			//blocking until menu is exited
 			void run();

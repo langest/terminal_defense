@@ -65,9 +65,9 @@ namespace termd {
 		return false;
 	}
 
-	void TowerManager::draw_towers(const GUI & gui) const {
+	void TowerManager::draw_towers() const {
 		for (auto i = towers.begin(); i != towers.end(); ++i) {
-			if(i->second->draw(gui) == false) {
+			if(i->second->draw() == false) {
 				//If tower failed to draw:
 				#ifdef DEBUGGING
 				#include <iostream>
