@@ -2,7 +2,7 @@
 
 namespace termd {
 	
-	Tower::Tower(Coord c, int nr, int nc, int sellval, float selldec) : pos(c), num_rows(nr), num_cols(nc), sell_value(sellval), sell_decrease(selldec) {}
+	Tower::Tower(Coord c, int nr, int nc, int sellval, float selldec) : pos(c), num_rows(nr), num_cols(nc), age(0), sell_value(sellval), sell_decrease(selldec) {}
 
 	Tower::~Tower() {
 		//Currently nothing needs to be done
