@@ -44,8 +44,8 @@ namespace termd {
 			bool build_tower(Coord, int); //Tries to build a tower (player has to pay if successfull)
 			bool place_tower(Coord, int); //Tries to place a tower at the location
 
-			void save_game(std::string filename);
-			void load_game(std::string filename);
+			void save_to_file(std::string filename);
+			void load_to_file(std::string filename);
 	};
 
 }

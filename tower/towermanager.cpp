@@ -91,7 +91,7 @@ namespace termd {
 		}
 	}
 
-	void TowerManager::save_game(std::string filename) {
+	void TowerManager::save_to_file(std::string filename) {
 		std::ofstream savefile;
 		savefile.open(filename);
 		if(savefile.is_open()) {
@@ -106,7 +106,7 @@ namespace termd {
 			savefile.close();
 		}
 	}
-	void TowerManager::load_game(std::string filename) {
+	void TowerManager::load_to_file(std::string filename) {
 		std::ifstream loadfile;
 		loadfile.open(filename);
 		if(loadfile.is_open()) {
