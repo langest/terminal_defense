@@ -12,8 +12,11 @@
 
 namespace termd {
 	
-	class RightProjectile : public Projectile {
+	class DirectionProjectile : public Projectile {
 		private:
+			const int col_spd;
+			const int row_spd;
+
 			const std::vector<Virus*>& viruses;
 
 			Virus* hit() const;
@@ -22,10 +25,10 @@ namespace termd {
 		protected:
 
 		public:
-			RightProjectile(Coord, const std::vector<Virus*>&);
-			RightProjectile(const RightProjectile&) = delete;
-			virtual ~RightProjectile();
-			RightProjectile& operator=(const RightProjectile &) = delete;
+			DirectionProjectile(Coord, const std::vector<Virus*>&, int cs = 1, int rs = 0);
+			DirectionProjectile(const DirectionProjectile&) = delete;
+			virtual ~DirectionProjectile();
+			DirectionProjectile& operator=(const DirectionProjectile &) = delete;
 
 			virtual bool update();
 	};
