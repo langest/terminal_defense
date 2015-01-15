@@ -10,7 +10,7 @@
 #include "../definitions"
 #include "../virus/virusmanager.hpp"
 #include "projectiles/projectile.hpp"
-#include "projectiles/rightprojectile.hpp"
+#include "projectiles/directionprojectile.hpp"
 #include "projectiles/projectilemanager.hpp"
 
 namespace termd {

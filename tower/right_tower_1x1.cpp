@@ -22,7 +22,7 @@ namespace termd {
 			return;
 		}
 		recharge = recharge_rate;
-		Projectile* proj = new RightProjectile(pos, vman.get_viruses());
+		Projectile* proj = new DirectionProjectile(pos, vman.get_viruses(), 1, 0);
 		pman.add_projectile(proj);
 	}
 
