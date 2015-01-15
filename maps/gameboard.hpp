@@ -78,7 +78,8 @@ namespace termd {
 			//Getters
 			const int get_size_rows() const;
 			const int get_size_cols() const;
-			unsigned int get_number_of_waves() const;
+			int get_current_wave_number() const;
+			int get_number_of_waves() const;
 	};
 }
 #endif //termd_game_board

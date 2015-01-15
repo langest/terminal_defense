@@ -44,7 +44,7 @@ namespace termd {
 
 		print_menu();
 		char ch;
-		while((ch = getch()) != '4') {
+		while((ch = getch()) != '3') {
 			clear_menu();
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();

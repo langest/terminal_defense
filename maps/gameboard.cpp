@@ -89,8 +89,13 @@ namespace termd {
 		return size_cols;
 	}
 
-	unsigned int GameBoard::get_number_of_waves() const {
-		return waves.size();
+	int GameBoard::get_current_wave_number() const {
+		return wave_number;
+	}
+
+	int GameBoard::get_number_of_waves() const {
+		return 1;
+		//return waves.size();
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {

@@ -122,7 +122,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	bool Game::run() {
 		intro();
 		build_phase();
-		while (invasion_phase()) {
+		while (board.get_current_wave_number() < board.get_number_of_waves() && invasion_phase()) {
 			if(false == is_player_alive()) {
 				outro();
 				return false;
