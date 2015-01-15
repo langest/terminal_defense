@@ -15,8 +15,11 @@
 
 namespace termd {
 
-	class RightTower_1x1 : public Tower {
+	class DirectionTower_1x1 : public Tower {
 		private:
+			//Direction to shoot:
+			const int col_spd;
+			const int row_spd;
 			ProjectileManager& pman;
 			const VirusManager& vman;
 
@@ -25,7 +28,7 @@ namespace termd {
 		protected:
 
 		public:
-			RightTower_1x1(Coord, const VirusManager&, ProjectileManager&);
+			DirectionTower_1x1(Coord, const VirusManager&, ProjectileManager&, int, int);
 
 			void shoot();
 
