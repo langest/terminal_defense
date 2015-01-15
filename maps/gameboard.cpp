@@ -93,4 +93,13 @@ namespace termd {
 			vman.add_virus(v);
 		}
 	}
+
+	void GameBoard::save_game(std::string filename) {
+		tman.save_game(filename);
+	}
+
+	void GameBoard::load_game(std::string filename) {
+		tman.load_game(filename);
+	}
+
 }
