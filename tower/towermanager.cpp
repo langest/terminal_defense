@@ -96,12 +96,12 @@ namespace termd {
 		savefile.open(filename);
 		if(savefile.is_open()) {
 			//Number of towers on map:
-			savefile << towers.size() << std::endl;
+			savefile << towers.size() << std::endl<< std::endl;
 			//ID numbers for each tower:
 			for(auto it = towers.begin(); it != towers.end(); ++it) {
-				savefile << (it->second)->get_id() << " " << it->first << " " << (it->second)->get_age();
+				savefile << (it->second)->get_id() << " " << it->first << " " << (it->second)->get_age() << std::endl;
 			}
-			savefile << std::endl;
+			savefile << std::endl << std::endl;
 			savefile.close();
 			return true;
 		} else {
