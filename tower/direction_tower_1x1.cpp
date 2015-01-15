@@ -1,4 +1,4 @@
-#include "right_tower_1x1.hpp"
+#include "direction_tower_1x1.hpp"
 
 namespace termd {
 	
