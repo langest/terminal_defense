@@ -20,7 +20,7 @@
 #include "tower.hpp"
 #include "wall_1x1.hpp"
 #include "basic_tower_1x1.hpp"
-#include "right_tower_1x1.hpp"
+#include "direction_tower_1x1.hpp"
 #include "projectiles/projectile.hpp"
 #include "projectiles/projectilemanager.hpp"
 
