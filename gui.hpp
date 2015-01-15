@@ -25,28 +25,27 @@ namespace termd {
 
 	class GUI {
 		public:
-			GUI();
+			GUI() = delete;
 			~GUI();
 			GUI(const GUI &) = delete;
 
-			GUI& operator=(const GUI &);
+			//GUI& operator=(const GUI &);
 
-			void init_gui() const;
-			bool move_cursor_up() const;
-			bool move_cursor_down() const;
-			bool move_cursor_left() const;
-			bool move_cursor_right() const;
-			Coord get_cursor_pos() const;
+			static bool move_cursor_up();
+			static bool move_cursor_down();
+			static bool move_cursor_left();
+			static bool move_cursor_right();
+			static Coord get_cursor_pos();
 
-			bool draw(const Coord &, const char) const; //Does not refresh
-			bool draw_gfx(const Coord &, const std::vector<std::vector<char> > &) const;
-			bool draw_gfx(const Coord &, const char) const;
-			void print_intel(const std::string) const;
-			void draw_board_frame() const;
-			void draw_intel_frame() const;
-			void clear_game() const;
-			void clear_intel() const;
-			void refresh() const;
+			static bool draw(const Coord &, const char); //Does not refresh
+			static bool draw_gfx(const Coord &, const std::vector<std::vector<char> > &);
+			static bool draw_gfx(const Coord &, const char);
+			static void print_intel(const std::string);
+			static void draw_board_frame();
+			static void draw_intel_frame();
+			static void clear_game();
+			static void clear_intel();
+			static void refresh();
 
 	};
 }

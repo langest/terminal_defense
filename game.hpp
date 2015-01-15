@@ -20,7 +20,6 @@ namespace termd {
 
 	class Game {
 		private:
-			GUI& gui;
 			Player& player;
 			GameBoard board;
 
@@ -35,7 +34,7 @@ namespace termd {
 			bool is_player_alive() const;
 			int get_player_hp() const;
 		public:
-			Game(GUI&, Player&);
+			Game(Player&);
 
 			bool run();
 			void unlock_tower(int);

@@ -38,11 +38,11 @@ namespace termd {
 			~TowerManager();
 
 			void update();
-			void draw_towers(const GUI &) const;
+			void draw_towers() const;
 			void end_of_wave();
 
-			bool build_tower(Coord, int); //Tries to build a tower
-			bool place_tower(Coord, int); //Forces a tower to the coord
+			bool build_tower(Coord, int); //Tries to build a tower (player has to pay if successfull)
+			bool place_tower(Coord, int); //Tries to place a tower at the location
 	};
 
 }

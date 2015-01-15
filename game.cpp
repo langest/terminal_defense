@@ -2,21 +2,21 @@
 
 namespace termd {
 
-	Game::Game(GUI & g, Player & p) : gui(g), player(p), board(player) {
+	Game::Game(Player & p) : player(p), board(player) {
 		//initialize input calls
-		std::function<void()> f = [this]() { gui.move_cursor_left(); };
+		std::function<void()> f = [this]() { GUI::move_cursor_left(); };
 		inputcalls['h'] = f;
 		inputcalls[KEY_LEFT] = f;
 
-		f = [this]() { gui.move_cursor_up(); };
+		f = [this]() { GUI::move_cursor_up(); };
 		inputcalls['k'] = f;
 		inputcalls[KEY_UP] = f;
 
-		f = [this]() { gui.move_cursor_right(); };
+		f = [this]() { GUI::move_cursor_right(); };
 		inputcalls['l'] = f;
 		inputcalls[KEY_RIGHT] = f;
 
-		f = [this]() { gui.move_cursor_down(); };
+		f = [this]() { GUI::move_cursor_down(); };
 		inputcalls['j'] = f;
 		inputcalls[KEY_DOWN] = f;
 
@@ -27,11 +27,11 @@ namespace termd {
 	}
 
 	//void Game::awesome() {
-		//gui.print_intel("Thomas and Daniel are awesome!\nYeah. Foh shoo!");
+		//GUI::print_intel("Thomas and Daniel are awesome!\nYeah. Foh shoo!");
 	//}
 	
 	bool Game::build_tower(int tower_id) {
-		Coord c = gui.get_cursor_pos();
+		Coord c = GUI::get_cursor_pos();
 		c -= Coord(BOARDR0, BOARDC0);
 		board.build_tower(c, tower_id);
 		return true;
@@ -73,8 +73,8 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 	void Game::build_phase() {
 		int ch;
-		gui.draw_board_frame();
-		gui.draw_intel_frame();
+		GUI::draw_board_frame();
+		GUI::draw_intel_frame();
 		char intelmsg[BOARDCOLS];
 #ifndef MOCK_GUI
 		while((ch = getch()) != 27 && ch != 'q') {
@@ -84,11 +84,11 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();
 			}
-			board.draw(gui);
-			gui.clear_intel();
+			board.draw();
+			GUI::clear_intel();
 			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
-			gui.print_intel(intelmsg);
-			gui.refresh();
+			GUI::print_intel(intelmsg);
+			GUI::refresh();
 		}
 	}
 
@@ -97,11 +97,11 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		board.spawn_virus(0);
 		char intelmsg[BOARDCOLS];
 		while (board.update()) {
-			board.draw(gui);
-			gui.clear_intel();
+			board.draw();
+			GUI::clear_intel();
 			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
-			gui.print_intel(intelmsg);
-			gui.refresh();
+			GUI::print_intel(intelmsg);
+			GUI::refresh();
 #ifndef MOCK_GUI
 			if ((ch = getch()) == 27 || ch == 'q') {
 				break;
@@ -137,7 +137,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 	void Game::unlock_tower(int id) {
 		//TODO - removed hardcodedness
-		gui.print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
+		GUI::print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
 		player.unlock_tower(id);
 #ifndef MOCK_GUI
 		getch(); //make sure to display the intel!

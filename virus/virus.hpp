@@ -31,7 +31,7 @@ namespace termd {
 			Virus& operator=(const Virus &) = delete;
 
 			virtual bool update(); //Make the monster behave
-			bool draw(const GUI&) const; //Draw the beauty
+			bool draw() const; //Draw the beauty
 
 			int get_reward() const;
 			Coord get_pos() const;

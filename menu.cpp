@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	Menu::Menu(GUI& g, Player& p) : gui(g), player(p) {
+	Menu::Menu(Player& p) : player(p) {
 		std::function<bool()> f = [this]() { return run_game(); };
 		inputcalls['1'] = f;
 	}
@@ -16,16 +16,16 @@ namespace termd {
 	}
 
 	void Menu::print_menu() {
-		gui.print_intel(std::string("1. New game   2. Continue\n")+
+		GUI::print_intel(std::string("1. New game   2. Continue\n")+
 										std::string("3. Exit game"));
 	}
 
 	void Menu::clear_menu() {
-		gui.clear_intel();
+		GUI::clear_intel();
 	}
 
 	bool Menu::run_game() {
-		Game game(gui, player);
+		Game game(player);
 		return game.run();
 	}
 

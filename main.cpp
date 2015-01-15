@@ -3,10 +3,9 @@
 int main() {
 	init_ncurses();
 	
-	termd::GUI gui;
 	termd::Player player;
 
-	termd::Menu menu(gui, player);
+	termd::Menu menu(player);
 	menu.run();
 
 	end_ncurses();

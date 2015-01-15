@@ -2,15 +2,15 @@
 
 namespace termd {
 
-	GUI::GUI() {
-		move(BOARDR0, BOARDC0); //initialize cursor position
-	}
+//	GUI::GUI() {
+//		move(BOARDR0, BOARDC0); //initialize cursor position
+//	}
+//
+//	GUI::~GUI() {
+//		//Currently nothing to do here
+//	}
 
-	GUI::~GUI() {
-		//Currently nothing to do here
-	}
-
-	bool GUI::move_cursor_up() const {
+	bool GUI::move_cursor_up(){
 		int col, row;
 		getyx(stdscr, row, col);
 
@@ -24,7 +24,7 @@ namespace termd {
 		return ret;
 	}
 
-	bool GUI::move_cursor_down() const {
+	bool GUI::move_cursor_down(){
 		int col, row;
 		getyx(stdscr, row, col);
 
@@ -38,7 +38,7 @@ namespace termd {
 		return ret;
 	}
 
-	bool GUI::move_cursor_left() const {
+	bool GUI::move_cursor_left(){
 		int col, row;
 		getyx(stdscr, row, col);
 
@@ -52,7 +52,7 @@ namespace termd {
 		return ret;
 	}
 
-	bool GUI::move_cursor_right() const {
+	bool GUI::move_cursor_right(){
 		int row, col;
 		getyx(stdscr, row, col);
 
@@ -66,7 +66,7 @@ namespace termd {
 		return ret;
 	}
 
-	Coord GUI::get_cursor_pos() const {
+	Coord GUI::get_cursor_pos(){
 		int row, col;
 		getyx(stdscr, row, col);
 		Coord ret(row, col);
@@ -76,7 +76,7 @@ namespace termd {
 	//Puts a char at specified coord in the guis window.
 	//Does not refresh
 	//Returns true iff successful
-	bool GUI::draw(const Coord & coord, const char ch) const {
+	bool GUI::draw(const Coord & coord, const char ch){
 		int row, col;
 		getyx(stdscr, row, col);
 
@@ -89,7 +89,7 @@ namespace termd {
 
 	//Draws a gfx in board window
 	//Does not refresh
-	bool GUI::draw_gfx(const Coord & coord, const std::vector<std::vector<char> > & gfx) const {
+	bool GUI::draw_gfx(const Coord & coord, const std::vector<std::vector<char> > & gfx){
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
 		if (   (int) gfx.size() + coord.get_row() >= max_row
@@ -112,7 +112,7 @@ namespace termd {
 		return true;
 	}
 
-	bool GUI::draw_gfx(const Coord & coord, const char gfx) const {
+	bool GUI::draw_gfx(const Coord & coord, const char gfx){
 		if (coord.get_row() >= BOARDROWS ||
 				coord.get_col() >= BOARDCOLS ||
 				coord.get_row() < 0 ||
@@ -126,7 +126,7 @@ namespace termd {
 		return ret;
 	}
 
-	void GUI::print_intel(std::string message) const {
+	void GUI::print_intel(std::string message){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
@@ -135,7 +135,7 @@ namespace termd {
 		move(cur_row, cur_col);
 	}
 
-	void GUI::draw_board_frame() const {
+	void GUI::draw_board_frame(){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
@@ -152,7 +152,7 @@ namespace termd {
 		move(cur_row, cur_col);
 	}
 
-	void GUI::draw_intel_frame() const {
+	void GUI::draw_intel_frame(){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
@@ -169,7 +169,7 @@ namespace termd {
 		move(cur_row, cur_col);
 	}
 
-	void GUI::clear_game() const {
+	void GUI::clear_game(){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 		for (int i = BOARDR0; i < BOARDROWS + BOARDR0; ++i) {
@@ -181,7 +181,7 @@ namespace termd {
 		move(cur_row, cur_col);
 	}
 
-	void GUI::clear_intel() const {
+	void GUI::clear_intel(){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 		for (int i = BOARDR0 + BOARDROWS + WINDOWSPACE + 2; i < BOARDR0 + BOARDROWS + WINDOWSPACE + 2 + INTELROWS; ++i) {
@@ -193,7 +193,7 @@ namespace termd {
 		move(cur_row, cur_col);
 	}
 
-	void GUI::refresh() const {
+	void GUI::refresh(){
 		wrefresh(stdscr); //Refresh curses
 	}
 

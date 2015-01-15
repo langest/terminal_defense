@@ -30,8 +30,8 @@ namespace termd {
 		return true;
 	}
 
-	bool Virus::draw(const GUI & g) const {
-		return g.draw_gfx(get_pos(), gfx);
+	bool Virus::draw() const {
+		return GUI::draw_gfx(get_pos(), gfx);
 	}
 
 	int Virus::get_reward() const {
