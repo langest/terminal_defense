@@ -76,9 +76,19 @@ namespace termd {
 	}
 
 	std::ostream & operator<<(std::ostream & os, const Coord & coord) {
-		os << "row: " << coord.get_row() << ", col: " << coord.get_col();
+		os << coord.get_row() << coord.get_col();
 		return os;
 	}
+
+	std::istream & operator>>(std::istream & is, Coord & coord) {
+		int r, c;
+		is >> r;
+		is >> c;
+		coord.set_row(r);
+		coord.set_col(c);
+		return is;
+	}
+
 
 	Coord Coord::operator-(const Coord & other) const {
 		return Coord(this->row - other.row, this->col - other.col);

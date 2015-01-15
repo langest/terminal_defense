@@ -42,6 +42,7 @@ namespace termd {
 	};
 
 	std::ostream & operator<<(std::ostream &, const Coord &);
+	std::istream & operator>>(std::istream &, Coord &);
 
 }
 

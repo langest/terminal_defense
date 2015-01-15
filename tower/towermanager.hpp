@@ -39,8 +39,13 @@ namespace termd {
 
 			void update();
 			void draw_towers() const;
-			bool build_tower(Coord, int);
 			void end_of_wave();
+
+			bool build_tower(Coord, int); //Tries to build a tower (player has to pay if successfull)
+			bool place_tower(Coord, int); //Tries to place a tower at the location
+
+			void save_game(std::string filename);
+			void load_game(std::string filename);
 	};
 
 }

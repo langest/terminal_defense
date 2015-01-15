@@ -25,42 +25,50 @@ namespace termd {
 	}
 
 	bool TowerManager::build_tower(Coord c, int tower_id) {
-		if(towers.find(c) != towers.end()) {
-			//space taken by other tower!
-			return false;
-		}
-		Tower* tp;
 		switch(tower_id){ 
 			case WALL_1x1_ID: 
 				if(player.get_ram() >= WALL_1x1_COST){
-					tp = new Wall_1x1(c);
-					player.modify_ram(-WALL_1x1_COST);
-					towers.insert( std::pair<Coord, Tower*>(c, tp));
-					return true;
-				}else{
-					//FAIL: Not enough RAM
+					if(place_tower(c, tower_id) == true) {
+						player.modify_ram(-WALL_1x1_COST);
+						return true;
+					}
 				}
 				break;
 			case BASIC_TOWER_1x1_ID: 
 				if(player.get_ram() >= BASIC_TOWER_1x1_COST){
-					tp = new BasicTower_1x1(c, vman, pman);
-					player.modify_ram(-BASIC_TOWER_1x1_COST);
-					towers.insert( std::pair<Coord, Tower*>(c, tp));
-					return true;
-				}else{
-					//FAIL: Not enough RAM
+					if(place_tower(c, tower_id) == true) {
+						player.modify_ram(-BASIC_TOWER_1x1_COST);
+						return true;
+					}
 				}
 				break;
-			case RIGHT_TOWER_1x1_ID: 
+			case RIGHT_TOWER_1x1_ID:
 				if(player.get_ram() >= RIGHT_TOWER_1x1_COST){
-					tp = new RightTower_1x1(c, vman, pman);
-					player.modify_ram(-RIGHT_TOWER_1x1_COST);
-					towers.insert( std::pair<Coord, Tower*>(c, tp));
-					return true;
-				}else{
-					//FAIL: Not enough RAM
+					if(place_tower(c, tower_id) == true) {
+						player.modify_ram(-RIGHT_TOWER_1x1_COST);
+						return true;
+					}
 				}
 				break;
+		}
+		return false;
+	}
+
+	bool TowerManager::place_tower(Coord c, int tower_id) {
+		if(towers.find(c) != towers.end()) {
+			//space taken by other tower!
+			return false;
+		}
+		switch(tower_id){ 
+			case WALL_1x1_ID: 
+				towers.insert( std::pair<Coord, Tower*>(c, new Wall_1x1(c)));
+				return true;
+			case BASIC_TOWER_1x1_ID: 
+				towers.insert( std::pair<Coord, Tower*>(c, new BasicTower_1x1(c, vman, pman)));
+				return true;
+			case RIGHT_TOWER_1x1_ID: 
+				towers.insert( std::pair<Coord, Tower*>(c, new RightTower_1x1(c, vman, pman)));
+				return true;
 		}
 		return false;
 	}
@@ -83,4 +91,36 @@ namespace termd {
 		}
 	}
 
+	void TowerManager::save_game(std::string filename) {
+		std::ofstream savefile;
+		savefile.open(filename);
+		if(savefile.is_open()) {
+			//Number of towers on map:
+			savefile << towers.size() << std::endl;
+			//ID numbers for each tower:
+			for(auto it = towers.begin(); it != towers.end(); ++it) {
+				savefile << (it->second)->get_id() << " " << it->first;
+			}
+			savefile << std::endl;
+			
+			savefile.close();
+		}
+	}
+	void TowerManager::load_game(std::string filename) {
+		std::ifstream loadfile;
+		loadfile.open(filename);
+		if(loadfile.is_open()) {
+			int size;
+			int id;
+			Coord c;
+			//Number of towers on map:
+			loadfile >> size;
+			//ID numbers for each tower:
+			for(int i = 0; i < size; ++i) {
+				loadfile >> id >> c;
+				place_tower(c, id);
+			}			
+			loadfile.close();
+		}
+	}
 }

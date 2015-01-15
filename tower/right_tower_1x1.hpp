@@ -30,6 +30,7 @@ namespace termd {
 			void shoot();
 
 			virtual bool update();
+			virtual int get_id() const { return RIGHT_TOWER_1x1_ID;};
 	};
 
 }
