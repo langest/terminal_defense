@@ -1,6 +1,7 @@
 #include "gameboard.hpp"
 namespace termd {
-	GameBoard::GameBoard(Player& p) : player(p), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p), availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}) {
+	GameBoard::GameBoard(Player& p, int mapid) : player(p), map_id(mapid), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p), availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}) {
+		//TODO load map of mapid
 	}
 
 	void GameBoard::draw() const {
@@ -76,6 +77,10 @@ namespace termd {
 		return size_cols;
 	}
 
+	unsigned int GameBoard::get_number_of_waves() const {
+		return waves.size();
+	}
+
 	bool GameBoard::build_tower(Coord c, int tower_id) {
 		if(availible_towers.find(tower_id) != availible_towers.end() && player.has_tower(tower_id)) {
 			return tman.build_tower(c, tower_id);
@@ -94,12 +99,21 @@ namespace termd {
 		}
 	}
 
-	void GameBoard::save_game(std::string filename) {
-		tman.save_game(filename);
+	bool GameBoard::save_to_file() {
+		bool b1 = tman.save_to_file(std::string("tman.save"));
+		std::ofstream savefile;
+		savefile.open("board.save");
+		if (savefile.is_open()) {
+			savefile << map_id << std::endl;
+			savefile.close();
+		} else {
+			return false;
+		}
+		return b1;
 	}
 
-	void GameBoard::load_game(std::string filename) {
-		tman.load_game(filename);
+	void GameBoard::set_wave_number(int num) {
+		if (num < 0) return;
+		wave_number = num;
 	}
-
 }

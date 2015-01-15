@@ -38,6 +38,7 @@ namespace termd {
 			Player& player;
 
 			//Board information:
+			const int map_id;
 			std::map<Coord, int> grid_env_state;
 			std::map<Coord, int> grid_bld_state;
 			const int size_rows;
@@ -50,10 +51,13 @@ namespace termd {
 
 			std::set<int> availible_towers;
 
+			int wave_number;
+			std::vector<int> waves; //TODO wave object for this map in this vector
+
 			bool is_blocked();
 
 		public:
-			GameBoard(Player&);
+			GameBoard(Player&, int);
 			GameBoard(const GameBoard &) = delete;
 			GameBoard& operator=(const GameBoard &) = delete;
 
@@ -64,6 +68,8 @@ namespace termd {
 			//Game Logic
 			bool build_tower(Coord, int);
 			void spawn_virus(int wave_num);
+			bool save_to_file();
+			void set_wave_number(int);
 
 			//Save/load
 			void save_game(std::string filename);
@@ -72,6 +78,7 @@ namespace termd {
 			//Getters
 			const int get_size_rows() const;
 			const int get_size_cols() const;
+			unsigned int get_number_of_waves() const;
 	};
 }
 #endif //termd_game_board
