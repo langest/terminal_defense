@@ -48,6 +48,7 @@ namespace termd {
 			virtual bool end_of_wave();
 			//Pure Virtual:
 			virtual bool update() = 0;
+			virtual int get_id() const = 0;
 	};
 
 }
