@@ -93,20 +93,27 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	}
 
 	void Game::invasion_phase() {
-		int ch;
 		board.spawn_virus(0);
 		char intelmsg[BOARDCOLS];
+
+		std::chrono::milliseconds interval(500);
+		std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
+				std::chrono::system_clock::now() - interval );
+		std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;
+
+		int counter = 0;
 		while (board.update()) {
 			board.draw();
 			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d, counter: %d", player.get_ram(), player.get_hp(), counter);
+			++counter;
 			GUI::print_intel(intelmsg);
 			GUI::refresh();
-#ifndef MOCK_GUI
-			if ((ch = getch()) == 27 || ch == 'q') {
-				break;
-			}
-#endif
+
+			cur_update = std::chrono::system_clock::now();
+			auto sleep_dur = 2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(cur_update - last_update);
+			last_update = cur_update;
+			std::this_thread::sleep_for(sleep_dur);
 		}
 	}
 

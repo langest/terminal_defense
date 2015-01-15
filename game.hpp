@@ -11,6 +11,16 @@
 #include <functional>
 #endif
 
+#ifndef termd_thread
+#define termd_thread
+#include <thread>
+#endif
+
+#ifndef termd_chrono
+#define termd_chrono
+#include <chrono>
+#endif
+
 #include "definitions"
 #include "gui.hpp"
 #include "player.hpp"
