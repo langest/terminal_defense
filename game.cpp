@@ -101,12 +101,10 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 				std::chrono::system_clock::now() - interval );
 		std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;
 
-		int counter = 0;
 		while (board.update()) {
 			board.draw();
 			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d, counter: %d", player.get_ram(), player.get_hp(), counter);
-			++counter;
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
 			GUI::print_intel(intelmsg);
 			GUI::refresh();
 
