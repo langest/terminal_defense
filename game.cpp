@@ -20,6 +20,9 @@ namespace termd {
 		inputcalls['j'] = f;
 		inputcalls[KEY_DOWN] = f;
 
+		f = [this]() { show_menu(); };
+		inputcalls['m'] = f;
+
 		inputcalls['i'] = [&]() { build_tower(BASIC_TOWER_1x1_ID); };
 		inputcalls['d'] = [&]() { build_tower(RIGHT_TOWER_1x1_ID); };
 
@@ -118,16 +121,16 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	bool Game::run() {
 		intro();
 		build_phase();
-		invasion_phase();
-		if(is_player_alive() == false) {
-			outro();
-			return false;
+		while (invasion_phase()) {
+			if(false == is_player_alive()) {
+				outro();
+				return false;
+			}
+			if(get_player_hp() < PLAYER_DEFAULT_HP) {
+				unlock_tower(RIGHT_TOWER_1x1_ID);
+			}
+			build_phase();
 		}
-		if(get_player_hp() < PLAYER_DEFAULT_HP) {
-			unlock_tower(RIGHT_TOWER_1x1_ID);
-		}
-		build_phase();
-		invasion_phase();
 		outro();
 		return true;
 	}
@@ -138,6 +141,43 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 	int Game::get_player_hp() const {
 		return player.get_hp();
+	}
+
+	unsigned int Game::get_number_of_waves() const {
+		return board.get_number_of_waves();
+	}
+
+	void Game::set_wave_number(unsigned int) {
+		board.set_wave_number();
+	}
+
+	void Game::show_menu() {
+		char ch;
+		bool done = false;
+		while (!done) {
+			GUI::clear_intel();
+			GUI::print_intel(std::string("1.Save and quit    2.Return to game"));
+			while (ch = getch() != '1' && ch != '2');
+
+			if (ch == '1') {
+				if (save_game()) {
+					set_wave_number(get_number_of_waves());
+					done = true;
+				} else {
+					GUI::print_intel(std::string("Failed to save game, press any key to resume menu.");
+					getch();
+				}
+			} else {
+				done = true;
+			}
+		}
+		GUI::clear_intel();
+	}
+
+	bool Game::save_game() {
+		bool b1 = player.save_to_file(std::string("player.save");
+		bool b2 = board.save_to_file("board.save");
+		return b1 && b2;
 	}
 
 	void Game::unlock_tower(int id) {

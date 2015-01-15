@@ -93,4 +93,17 @@ namespace termd {
 			vman.add_virus(v);
 		}
 	}
+
+	bool GameBoard::save_to_file() {
+		bool b1 = tman.save_to_file(std::string("tman.save"));
+		std::ofstream savefile;
+		savefile.open("board.save");
+		if (savefile.is_open()) {
+			savefile << map_id << std::endl;
+			savefile.close();
+		} else {
+			return false;
+		}
+		return b1;
+	}
 }

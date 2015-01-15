@@ -62,6 +62,7 @@ namespace termd {
 			//Game Logic
 			bool build_tower(Coord, int);
 			void spawn_virus(int wave_num);
+			bool save_to_file();
 
 			//Getters
 			const int get_size_rows() const;
