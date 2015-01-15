@@ -15,8 +15,8 @@
 #define INT_MIN std::numeric_limits<int>::min()
 
 //Virus default stepcosts
-#define VIRUS_STEPCOST 10000
-#define VIRUS_STEPCOSTDIAGONAL 14140
+#define VIRUS_STEPCOST 1000
+#define VIRUS_STEPCOSTDIAGONAL 1414
 
 //Projectile default stepcost
 #define PROJ_STEPCOST 1000
