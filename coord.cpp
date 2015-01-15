@@ -76,7 +76,7 @@ namespace termd {
 	}
 
 	std::ostream & operator<<(std::ostream & os, const Coord & coord) {
-		os << coord.get_row() << coord.get_col();
+		os << coord.get_row()<< " " << coord.get_col();
 		return os;
 	}
 
