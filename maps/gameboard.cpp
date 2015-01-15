@@ -1,6 +1,14 @@
 #include "gameboard.hpp"
 namespace termd {
-	GameBoard::GameBoard(Player& p, int mapid) : player(p), map_id(mapid), size_rows(BOARDROWS), size_cols(BOARDCOLS), tman(vman, pman, p), vman(p), availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}) {
+	GameBoard::GameBoard(Player& p, int mapid) :
+		player(p),
+		map_id(mapid),
+		size_rows(BOARDROWS),
+	 	size_cols(BOARDCOLS),
+		tman(vman, pman, p),
+		vman(p),
+		availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}),
+		wave_number(0) {
 		//TODO load map of mapid
 	}
 
