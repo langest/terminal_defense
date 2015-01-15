@@ -45,7 +45,7 @@ namespace termd {
 			bool place_tower(Coord, int); //Tries to place a tower at the location
 
 			bool save_to_file(std::string filename);
-			bool load_to_file(std::string filename);
+			bool load_from_file(std::string filename);
 	};
 
 }

@@ -69,6 +69,10 @@ namespace termd {
 		return false;
 	}
 
+	void GameBoard::load_map() {
+		//TODO load map from file
+	}
+
 	const int GameBoard::get_size_rows() const {
 		return size_rows;
 	}
@@ -110,6 +114,18 @@ namespace termd {
 			return false;
 		}
 		return b1;
+	}
+
+	bool GameBoard::load_from_file() {
+		bool b = tman.load_from_file(std::string("tman.save"));
+		std::ifstream loadfile;
+		loadfile.open("board.save");
+		if (loadfile.is_open()) {
+			loadfile >> map_id;
+			load_map();
+			return b && true;
+		}
+		return false;
 	}
 
 	void GameBoard::set_wave_number(int num) {

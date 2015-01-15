@@ -108,7 +108,7 @@ namespace termd {
 			return false;
 		}
 	}
-	bool TowerManager::load_to_file(std::string filename) {
+	bool TowerManager::load_from_file(std::string filename) {
 		std::ifstream loadfile;
 		loadfile.open(filename);
 		if(loadfile.is_open()) {

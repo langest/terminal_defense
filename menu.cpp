@@ -5,6 +5,10 @@ namespace termd {
 	Menu::Menu(Player& p) : player(p) {
 		std::function<bool()> f = [this]() { return run_game(); };
 		inputcalls['1'] = f;
+		f = [this]() {
+			return load_quicksave(); //TODO Test if valid save-file
+		};
+		inputcalls['2'] = f;
 	}
 
 	void Menu::intro() {
@@ -16,7 +20,7 @@ namespace termd {
 	}
 
 	void Menu::print_menu() {
-		GUI::print_intel(std::string("1. New game   2. Continue\n")+
+		GUI::print_intel(std::string("1. New game   2. Load quicksave\n")+
 										std::string("3. Exit game"));
 	}
 
@@ -29,12 +33,18 @@ namespace termd {
 		return game.run();
 	}
 
+	bool Menu::load_quicksave() {
+		Game game(player, 1);
+		game.load_game();
+		return game.run();
+	}
+
 	void Menu::run() {
 		intro();
 
 		print_menu();
 		char ch;
-		while((ch = getch()) != 27 && ch != '3') {
+		while((ch = getch()) != '4') {
 			clear_menu();
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();

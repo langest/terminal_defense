@@ -182,6 +182,10 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		return b1 && b2;
 	}
 
+	bool Game::load_game() {
+		return board.load_from_file();
+	}
+
 	void Game::unlock_tower(int id) {
 		//TODO - removed hardcodedness
 		GUI::print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");

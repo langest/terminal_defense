@@ -21,6 +21,7 @@ namespace termd {
 			void print_menu();
 			void clear_menu();
 			bool run_game();
+			bool load_quicksave();
 
 		public:
 			Menu(Player&);

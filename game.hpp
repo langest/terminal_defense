@@ -50,6 +50,7 @@ namespace termd {
 		public:
 			Game(Player&, int);
 
+			bool load_game();
 			bool run();
 			void unlock_tower(int);
 	};
