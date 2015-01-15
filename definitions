@@ -6,8 +6,8 @@
 #include <limits>
 #endif //termd_limits
 
-//Framerate ms between frames
-#define FRAMERATE 100
+//Framerate, number of frames / 1000ms
+#define FRAMES 30
 
 //Typically needed numbers
 #define PI 3.1415
