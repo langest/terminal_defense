@@ -39,8 +39,10 @@ namespace termd {
 
 			void update();
 			void draw_towers(const GUI &) const;
-			bool build_tower(Coord, int);
 			void end_of_wave();
+
+			bool build_tower(Coord, int); //Tries to build a tower
+			bool place_tower(Coord, int); //Forces a tower to the coord
 	};
 
 }
