@@ -26,60 +26,60 @@ namespace termd {
 		angle = (angle > 0 ? angle : (360.0 + angle));
 
 		if (angle < 45.0f/2.0f) { //go right
-			if (speed_curr >= STEPCOST) {
-				speed_curr -= STEPCOST;
+			if (speed_curr >= PROJ_STEPCOST) {
+				speed_curr -= PROJ_STEPCOST;
 				pos.add_col(1);
 				return true;
 			}
 		} else if (angle < 45.0f+45.0f/2.0f) { //go up right
-			if (speed_curr >= STEPCOSTDIAGONAL) {
-				speed_curr -= STEPCOSTDIAGONAL;
+			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
+				speed_curr -= PROJ_STEPCOSTDIAGONAL;
 				pos.add_col(1);
 				pos.add_row(-1);
 				return true;
 			}
 		} else if (angle < 2*45.0f+45.0f/2.0f) { //go up
-			if (speed_curr >= STEPCOST) {
-				speed_curr -= STEPCOST;
+			if (speed_curr >= PROJ_STEPCOST) {
+				speed_curr -= PROJ_STEPCOST;
 				pos.add_row(-1);
 				return true;
 			}
 		} else if (angle < 3*45.0f+45.0f/2.0f) { //go up left
-			if (speed_curr >= STEPCOSTDIAGONAL) {
-				speed_curr -= STEPCOSTDIAGONAL;
+			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
+				speed_curr -= PROJ_STEPCOSTDIAGONAL;
 				pos.add_col(-1);
 				pos.add_row(-1);
 				return true;
 			}
 		} else if (angle < 4*45.0f+45.0f/2.0f) { //go left
-			if (speed_curr >= STEPCOST) {
-				speed_curr -= STEPCOST;
+			if (speed_curr >= PROJ_STEPCOST) {
+				speed_curr -= PROJ_STEPCOST;
 				pos.add_col(-1);
 				return true;
 			}
 		} else if (angle < 5*45.0f+45.0f/2.0f) { //go down left
-			if (speed_curr >= STEPCOSTDIAGONAL) {
-				speed_curr -= STEPCOSTDIAGONAL;
+			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
+				speed_curr -= PROJ_STEPCOSTDIAGONAL;
 				pos.add_col(-1);
 				pos.add_row(1);
 				return true;
 			}
 		} else if (angle < 6*45.0f+45.0f/2.0f) { //go down
-			if (speed_curr >= STEPCOST) {
-				speed_curr -= STEPCOST;
+			if (speed_curr >= PROJ_STEPCOST) {
+				speed_curr -= PROJ_STEPCOST;
 				pos.add_row(1);
 				return true;
 			}
 		} else if (angle < 7*45.0f+45.0f/2.0f) { //go down right
-			if (speed_curr >= STEPCOSTDIAGONAL) {
-				speed_curr -= STEPCOSTDIAGONAL;
+			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
+				speed_curr -= PROJ_STEPCOSTDIAGONAL;
 				pos.add_col(1);
 				pos.add_row(1);
 				return true;
 			}
 		} else { //go right
-			if (speed_curr >= STEPCOST) {
-				speed_curr -= STEPCOST;
+			if (speed_curr >= PROJ_STEPCOST) {
+				speed_curr -= PROJ_STEPCOST;
 				pos.add_col(1);
 				return true;
 			}

@@ -96,7 +96,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		board.spawn_virus(0);
 		char intelmsg[BOARDCOLS];
 
-		std::chrono::milliseconds interval(500);
+		std::chrono::milliseconds interval(FRAMERATE);
 		std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
 				std::chrono::system_clock::now() - interval );
 		std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;

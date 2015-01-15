@@ -7,7 +7,7 @@ namespace termd {
 		for (int i = col; i > 0; --i)
 		{
 			s.set_col(i);
-			path.push(Step(s, STEPCOST)); //Copy that 's' Coord!
+			path.push(Step(s, VIRUS_STEPCOST)); //Copy that 's' Coord!
 		}
 	}
 

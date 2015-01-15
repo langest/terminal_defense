@@ -6,14 +6,21 @@
 #include <limits>
 #endif //termd_limits
 
+//Framerate ms between frames
+#define FRAMERATE 100
+
 //Typically needed numbers
 #define PI 3.1415
 #define INT_MAX std::numeric_limits<int>::max()
 #define INT_MIN std::numeric_limits<int>::min()
 
-//Virus and Projectile default Stepcosts
-#define STEPCOST 1000
-#define STEPCOSTDIAGONAL 1414
+//Virus default stepcosts
+#define VIRUS_STEPCOST 10000
+#define VIRUS_STEPCOSTDIAGONAL 14140
+
+//Projectile default stepcost
+#define PROJ_STEPCOST 1000
+#define PROJ_STEPCOSTDIAGONAL 1414
 
 //Player info
 #define PLAYER_DEFAULT_HP 3
@@ -45,13 +52,13 @@
 #define BASIC_TOWER_1x1_COST 10
 #define BASIC_TOWER_1x1_SELL 10
 #define BASIC_TOWER_1x1_SELL_DECREASE 0.8
-#define BASIC_TOWER_1x1_RECHARGE_RATE 3
+#define BASIC_TOWER_1x1_RECHARGE_RATE 25
 
 #define RIGHT_TOWER_1x1_ID 3
 #define RIGHT_TOWER_1x1_COST 10
 #define RIGHT_TOWER_1x1_SELL 10
 #define RIGHT_TOWER_1x1_SELL_DECREASE 0.8
-#define RIGHT_TOWER_1x1_RECHARGE_RATE 2
+#define RIGHT_TOWER_1x1_RECHARGE_RATE 18
 
 //Tile info
 
