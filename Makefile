@@ -42,3 +42,6 @@ gui_test: test/guitest.cpp gui.hpp gui.cpp
 
 clean:
 	rm -f $(maindeps) gui_mock.o gui.o terminaldefense.out
+
+clean_saves:
+	rm -f *.save
