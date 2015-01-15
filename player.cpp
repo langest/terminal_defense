@@ -51,28 +51,19 @@ namespace termd {
 		std::ofstream savefile;
 		savefile.open(filename);
 		if(savefile.is_open()) {
-			//writes the size of the completed_maps set
-			//cast the value as an array of chars, then print each char. 
-			//write binary data instead of text.
-			//std::set<int>::size_type set_size(completed_maps.size());
-			//savefile.write((char *)&(set_size), sizeof(std::set<int>::size_type));
+			//Number of completed maps:
 			savefile << completed_maps.size() << std::endl;
-			//writes the ints representing the completed maps
+			//ID numbers for each completed map:
 			for(auto it = completed_maps.begin(); it != completed_maps.end(); ++it) {
 				savefile << (*it) << " ";
-				//savefile.write((char *)&(*it), sizeof(int));
 			}
 			savefile << std::endl;
 
-
-			//writes the size of the availiable_towers set
-			//set_size = availiable_towers.size();
-			//savefile.write((char *)&(set_size), sizeof(std::set<int>::size_type));
+			//Number of availible towers:
 			savefile << availiable_towers.size() << std::endl;
-			//writes the ints representing the availible towers
+			//ID representing towers:
 			for(auto it = availiable_towers.begin(); it != availiable_towers.end(); ++it) {
 				savefile << (*it) << " ";
-				//savefile.write((char *)&(*it), sizeof(int));
 			}
 			savefile << std::endl;
 			
@@ -83,36 +74,24 @@ namespace termd {
 	void Player::load_from_file(std::string filename) {
 		std::ifstream loadfile;
 		loadfile.open(filename);
-		std::cout << "READING SAVED FILE";
 		if(loadfile.is_open()) {
-			//empty data to write to:
 			int data;
 			std::set<int>::size_type set_size;
-			std::cout << "READING SAVED FILE";
 
-			//read "Completed Maps" size
-			//loadfile.read((char *)&set_size, sizeof(std::set<int>::size_type));
+			//number of completed maps
 			loadfile >> set_size;
-			//Iterate through each element
+			//Iterate through each element (map ID:s)
 			for(std::set<int>::size_type i = 0; i < set_size; ++i) {
 				loadfile >> data;
 				completed_maps.insert(data);
-				
-				//Read the data, and out it to "Completed Maps" set
-				//loadfile.read((char *)&data, sizeof(int));
-				std::cout << data;
 			}
-			std::cout << std::endl;
 
-			//loadfile.read((char *)&set_size, sizeof(std::set<int>::size_type));
+			//Number of availiable towers:
 			loadfile >> set_size;
 			for(std::set<int>::size_type i = 0; i < set_size; ++i) {				
 				loadfile >> data;
-				//loadfile.read((char *)&data, sizeof(int));
 				availiable_towers.insert(data);
-				std::cout << data;
 			}
-			getch();
 			loadfile.close();
 		}
 	}
