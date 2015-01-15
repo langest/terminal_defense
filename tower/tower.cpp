@@ -16,8 +16,12 @@ namespace termd {
 		return sell_value;
 	}
 
-	bool Tower::get_blocking() const {
-		return false;
+	const std::vector<std::vector<bool>>& Tower::get_blocking() const {
+		return blocking;
+	}
+
+	int Tower::get_age() const {
+		return age;
 	}
 
 	int Tower::get_size_rows() const {
@@ -30,7 +34,9 @@ namespace termd {
 
 	bool Tower::end_of_wave() {
 		sell_value *= sell_decrease;
+		++age;
 		return true;
 	}
+
 
 }

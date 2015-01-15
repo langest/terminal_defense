@@ -29,6 +29,8 @@ namespace termd {
 			const int num_rows;
 			const int num_cols;
 
+
+			int age; //Used when save/load, will run this many "end_of_wave" when load game
 			int sell_value;
 			float sell_decrease;
 
@@ -40,9 +42,10 @@ namespace termd {
 			//Implemented:
 			bool draw() const;
 			int get_sell_value() const;
-			bool get_blocking() const;
+			const std::vector<std::vector<bool> >& get_blocking() const;
 			int get_size_rows() const;
 			int get_size_cols() const;
+			int get_age() const;
 
 			//Virtual:
 			virtual bool end_of_wave();

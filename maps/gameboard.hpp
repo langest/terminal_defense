@@ -45,6 +45,8 @@ namespace termd {
 			TowerManager tman;
 			ProjectileManager pman;
 			VirusManager vman;
+			std::vector<std::vector<int>> pathing;
+			std::vector<std::vector<char>> gfx;
 
 			std::set<int> availible_towers;
 
@@ -63,6 +65,10 @@ namespace termd {
 			bool build_tower(Coord, int);
 			void spawn_virus(int wave_num);
 			bool save_to_file();
+
+			//Save/load
+			void save_game(std::string filename);
+			void load_game(std::string filename);
 
 			//Getters
 			const int get_size_rows() const;
