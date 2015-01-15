@@ -99,7 +99,7 @@ namespace termd {
 			savefile << towers.size() << std::endl;
 			//ID numbers for each tower:
 			for(auto it = towers.begin(); it != towers.end(); ++it) {
-				savefile << (it->second)->get_id() << " " << it->first;
+				savefile << (it->second)->get_id() << " " << it->first << " " << (it->second)->get_age();
 			}
 			savefile << std::endl;
 			
@@ -112,13 +112,17 @@ namespace termd {
 		if(loadfile.is_open()) {
 			int size;
 			int id;
+			int age;
 			Coord c;
 			//Number of towers on map:
 			loadfile >> size;
 			//ID numbers for each tower:
 			for(int i = 0; i < size; ++i) {
-				loadfile >> id >> c;
+				loadfile >> id >> c >> age;
 				place_tower(c, id);
+				for(int a = 0; a < age; ++a) {
+					towers[c]->end_of_wave();
+				}
 			}			
 			loadfile.close();
 		}
