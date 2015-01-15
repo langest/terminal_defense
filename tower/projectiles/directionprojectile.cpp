@@ -1,18 +1,19 @@
-#include "rightprojectile.hpp"
+#include "directionprojectile.hpp"
 
 namespace termd {
-		
-	RightProjectile::RightProjectile(Coord s, const std::vector<Virus*>& t) : Projectile(')', s), viruses(t) {
+	//Default value: cs = 1, rs = 0;
+	DirectionProjectile::DirectionProjectile(Coord s, const std::vector<Virus*>& t, int cs, int rs) : Projectile(')', s), col_spd(cs), row_spd(rs),  viruses(t) {
 	}
 
-	RightProjectile::~RightProjectile() {
+	DirectionProjectile::~DirectionProjectile() {
 	}
 
-	void RightProjectile::move() {
-		pos.add_col(1);
+	void DirectionProjectile::move() {
+		pos.add_col(col_spd);
+		pos.add_row(row_spd);
 	}
 
-	Virus* RightProjectile::hit() const {
+	Virus* DirectionProjectile::hit() const {
 		int vr, vc;
 		for (Virus* vir : viruses) {
 			vr = vir->get_pos().get_row();
@@ -26,7 +27,7 @@ namespace termd {
 		return nullptr;
 	}
 
-	bool RightProjectile::update() {
+	bool DirectionProjectile::update() {
 		Virus* target = hit();
 		if(target != nullptr){
 			//hit target!

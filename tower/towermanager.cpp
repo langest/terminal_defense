@@ -67,7 +67,7 @@ namespace termd {
 				towers.insert( std::pair<Coord, Tower*>(c, new BasicTower_1x1(c, vman, pman)));
 				return true;
 			case RIGHT_TOWER_1x1_ID: 
-				towers.insert( std::pair<Coord, Tower*>(c, new RightTower_1x1(c, vman, pman)));
+				towers.insert( std::pair<Coord, Tower*>(c, new DirectionTower_1x1(c, vman, pman, 1, 0)));
 				return true;
 		}
 		return false;
