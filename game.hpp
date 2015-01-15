@@ -40,15 +40,15 @@ namespace termd {
 			void intro();
 			void outro();
 			void build_phase();
-			void invasion_phase();
+			bool invasion_phase();
 			bool is_player_alive() const;
 			int get_player_hp() const;
 			unsigned int get_number_of_waves() const;
-			void set_wave_number(unsigned int);
-			void show_menu() const;
-			void save_game() const;
+			void set_wave_number(int);
+			void show_menu();
+			bool save_game();
 		public:
-			Game(Player&);
+			Game(Player&, int);
 
 			bool run();
 			void unlock_tower(int);

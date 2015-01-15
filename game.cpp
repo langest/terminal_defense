@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	Game::Game(Player & p) : player(p), board(player) {
+	Game::Game(Player & p, int map_id) : player(p), board(player, map_id) {
 		//initialize input calls
 		std::function<void()> f = [this]() { GUI::move_cursor_left(); };
 		inputcalls['h'] = f;
@@ -95,7 +95,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		}
 	}
 
-	void Game::invasion_phase() {
+	bool Game::invasion_phase() {
 		board.spawn_virus(0);
 		char intelmsg[BOARDCOLS];
 
@@ -116,6 +116,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			last_update = cur_update;
 			std::this_thread::sleep_for(sleep_dur);
 		}
+		return false; //TODO check if there are any waves left and return true iff it is.
 	}
 
 	bool Game::run() {
@@ -147,8 +148,9 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		return board.get_number_of_waves();
 	}
 
-	void Game::set_wave_number(unsigned int) {
-		board.set_wave_number();
+	//board.set_wave_number(int) has check for negative numbers
+	void Game::set_wave_number(int num) {
+		board.set_wave_number(num);
 	}
 
 	void Game::show_menu() {
@@ -157,14 +159,14 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		while (!done) {
 			GUI::clear_intel();
 			GUI::print_intel(std::string("1.Save and quit    2.Return to game"));
-			while (ch = getch() != '1' && ch != '2');
+			while ((ch = getch()) != '1' && ch != '2');
 
 			if (ch == '1') {
 				if (save_game()) {
 					set_wave_number(get_number_of_waves());
 					done = true;
 				} else {
-					GUI::print_intel(std::string("Failed to save game, press any key to resume menu.");
+					GUI::print_intel(std::string("Failed to save game, press any key to resume menu."));
 					getch();
 				}
 			} else {
@@ -175,8 +177,8 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	}
 
 	bool Game::save_game() {
-		bool b1 = player.save_to_file(std::string("player.save");
-		bool b2 = board.save_to_file("board.save");
+		bool b1 = player.save_to_file(std::string("player.save"));
+		bool b2 = board.save_to_file();
 		return b1 && b2;
 	}
 

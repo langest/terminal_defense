@@ -52,7 +52,7 @@ namespace termd {
 			void lock_tower(int);
 			bool has_tower(int) const; 
 
-			void save_to_file(std::string);
+			bool save_to_file(std::string);
 			void load_from_file(std::string);
 	};
 

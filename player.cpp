@@ -47,7 +47,7 @@ namespace termd {
 		return availiable_towers.find(id) != availiable_towers.end();
 	}
 
-	void Player::save_to_file(std::string filename) {
+	bool Player::save_to_file(std::string filename) {
 		std::ofstream savefile;
 		savefile.open(filename);
 		if(savefile.is_open()) {
@@ -68,7 +68,9 @@ namespace termd {
 			savefile << std::endl;
 			
 			savefile.close();
+			return true;
 		}
+		return false;
 	}
 
 	void Player::load_from_file(std::string filename) {

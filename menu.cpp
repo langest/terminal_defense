@@ -25,7 +25,7 @@ namespace termd {
 	}
 
 	bool Menu::run_game() {
-		Game game(player);
+		Game game(player, 1);
 		return game.run();
 	}
 
