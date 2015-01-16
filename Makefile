@@ -5,6 +5,7 @@ maindeps = game.o \
          virus/virusmanager.o \
          virus/path.o \
          virus/virus.o \
+         maps/wave.o \
          maps/gameboard.o \
          tower/towermanager.o \
          tower/tower.o \
