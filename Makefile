@@ -9,6 +9,7 @@ maindeps = game.o \
          maps/wave.o \
          maps/gameboard.o \
          tower/towermanager.o \
+         tower/towerloader.o \
          tower/tower.o \
          tower/basic_tower_1x1.o \
          tower/direction_tower_1x1.o \
