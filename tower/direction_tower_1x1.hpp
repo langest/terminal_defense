@@ -6,7 +6,7 @@
 #include <limits>
 #endif
 
-#include "tower_base.hpp"
+#include "towerbase.hpp"
 #include "tower.hpp"
 #include "../definitions"
 #include "../virus/virusmanager.hpp"
