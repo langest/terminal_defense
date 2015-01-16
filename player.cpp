@@ -44,7 +44,7 @@ namespace termd {
 	}
 
 	bool Player::has_tower(int id) const {
-		return availiable_towers.find(id) != availiable_towers.end();
+		return true;
 	}
 
 	bool Player::save_to_file(std::string filename) {

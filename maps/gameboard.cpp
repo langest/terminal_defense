@@ -100,11 +100,13 @@ namespace termd {
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {
+		return tman.build_tower(c, tower_id);
+		/*
 		if(availible_towers.find(tower_id) != availible_towers.end() && player.has_tower(tower_id)) {
-			return tman.build_tower(c, tower_id);
 		} else {
 			return false;
 		}
+		*/
 	}
 
 	void GameBoard::spawn_virus(){
