@@ -2,10 +2,27 @@
 
 namespace termd {
 
-	Virus::Virus(Coord start) : max_hp(15), cur_hp(max_hp), stamina(0), stamina_increment(75), reward(10), path(start) /*, TODO path() */{
+	Virus::Virus(int hp, int sta_inc, int rew, char fx) : 
+	max_hp(hp), 
+	cur_hp(max_hp), 
+	stamina(0), 
+	stamina_increment(sta_inc), 
+	reward(rew), 
+	path(Coord()) /*, TODO path() */{
 		gfx.resize(1);
 		gfx[0].resize(1);
-		gfx[0][0] = '@';
+		gfx[0][0] = fx;
+	}
+
+	Virus::Virus(const Virus & src) :
+	max_hp(src.max_hp),
+	cur_hp(src.cur_hp),
+	stamina(0),
+	stamina_increment(src.stamina_increment),
+	reward(src.reward),
+	gfx(src.gfx),
+	path(Coord()) {
+		
 	}
 
 	Virus::~Virus() {
