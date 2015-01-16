@@ -10,6 +10,11 @@ namespave termd {
 		int speed_increment;
 		int damage;
 	};
+
+	struct direction_proj_base : proj_base {
+		int col_spd;
+		int row_spd;
+	};
 }
 
 #endif
