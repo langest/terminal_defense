@@ -30,6 +30,7 @@
 #include "projectiles/projectilemanager.hpp"
 
 namespace termd {
+	typedef std::unique_ptr<Tower> tower_ptr;
 	
 	class TowerManager {
 		private:
@@ -39,8 +40,6 @@ namespace termd {
 			const VirusManager& vman;
 			ProjectileManager& pman;
 		public:
-			typedef std::unique_ptr<Tower> tower_ptr;
-
 			TowerManager(const VirusManager&, ProjectileManager&, Player&);
 			~TowerManager();
 
