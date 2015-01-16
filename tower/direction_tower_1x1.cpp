@@ -7,7 +7,8 @@ namespace termd {
 			pman(pm), 
 			vman(v), 
 			recharge_rate(atb.recharge_rate), 
-			recharge(0) {
+			recharge(0),
+			proj_id(atb.projectile_id) {
 	}
 
 	bool DirectionTower_1x1::update() {
@@ -21,7 +22,8 @@ namespace termd {
 			return;
 		}
 		recharge = recharge_rate;
-		proj_ptr proj(new DirectionProjectile(')', pos, vman.get_viruses(), 1, 0));
+		Direction_projectile_base* dp = static_cast<Direction_projectile_base*>(pman.get_projectile_base(proj_id));
+		proj_ptr proj(new DirectionProjectile(*dp, pos, vman.get_viruses()));
 		pman.add_projectile(std::move(proj));
 	}
 

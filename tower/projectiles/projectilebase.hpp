@@ -1,7 +1,7 @@
 #ifndef termd_projectile_base
 #define termd_projectile_base
 
-namespave termd {
+namespace termd {
 	struct Projectile_base {
 		char gfx;
 		int damage;

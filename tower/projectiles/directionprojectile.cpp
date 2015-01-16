@@ -2,10 +2,10 @@
 
 namespace termd {
 	//Default value: cs = 1, rs = 0;
-	DirectionProjectile::DirectionProjectile(char gfx, Coord s, const std::vector<virus_ptr>& t, int cs, int rs) :
-		Projectile(gfx, s),
-		col_spd(cs),
-		row_spd(rs),
+	DirectionProjectile::DirectionProjectile(const Direction_projectile_base& dp, Coord s, const std::vector<virus_ptr>& t) :
+		Projectile(dp, s),
+		col_spd(dp.col_spd),
+		row_spd(dp.row_spd),
 		viruses(t) {}
 
 	DirectionProjectile::~DirectionProjectile() {
@@ -35,7 +35,7 @@ namespace termd {
 		if(target != nullptr){
 			//hit target!
 			//deal damage!
-			target->take_damage(3);
+			target->take_damage(damage);
 			return false; 
 		}
 		move();
@@ -43,7 +43,7 @@ namespace termd {
 		if(target != nullptr){
 			//hit target!
 			//deal damage!
-			target->take_damage(3);
+			target->take_damage(damage);
 			return false; 
 		}
 		return true;

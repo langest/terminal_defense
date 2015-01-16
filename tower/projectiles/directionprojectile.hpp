@@ -7,8 +7,9 @@
 #endif
 
 #include "../../definitions"
-#include "projectile.hpp"
 #include "../../virus/virus.hpp"
+#include "projectilebase.hpp"
+#include "projectile.hpp"
 
 namespace termd {
 	
@@ -25,7 +26,7 @@ namespace termd {
 		protected:
 
 		public:
-			DirectionProjectile(char gfx, Coord start, const std::vector<virus_ptr>&, int col_speed = 1, int row_speed = 0);
+			DirectionProjectile(const Direction_projectile_base&, Coord start, const std::vector<virus_ptr>&);
 			DirectionProjectile(const DirectionProjectile&) = delete;
 			virtual ~DirectionProjectile();
 			DirectionProjectile& operator=(const DirectionProjectile &) = delete;

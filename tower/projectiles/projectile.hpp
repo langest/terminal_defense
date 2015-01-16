@@ -6,6 +6,7 @@
 #include <memory>
 #endif
 
+#include "projectilebase.hpp"
 #include "../../gui.hpp"
 #include "../../coord.hpp"
 #include "../../virus/virus.hpp"
@@ -17,9 +18,10 @@ namespace termd {
 
 		protected:
 			char gfx;
+			int damage;
 			Coord pos;
 		public:
-			Projectile(char, Coord);
+			Projectile(const Projectile_base &, Coord);
 			virtual ~Projectile();
 
 			virtual bool update() = 0;
