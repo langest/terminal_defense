@@ -35,7 +35,8 @@ namespace termd {
 		}
 
 		if (closest != nullptr) {
-			proj_ptr p(new HomingProjectile('\'', pos, *closest, 1500, 1));
+			Homing_projectile_base* hp = static_cast<Homing_projectile_base*>(pm.get_projectile_base(proj_id));
+			proj_ptr p(new HomingProjectile(*hp, pos, *closest));
 			pman.add_projectile(std::move(p));
 		}
 	}
