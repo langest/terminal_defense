@@ -2,7 +2,12 @@
 
 namespace termd {
 	
-	HomingProjectile::HomingProjectile(Coord s, Virus& t) : Projectile('\'', s), target(t), speed_increment(1500), speed_curr(0) {
+	HomingProjectile::HomingProjectile(char gfx, Coord s, Virus& t, int spd, int dmg) :
+		Projectile(gfx, s),
+		target(t),
+		speed_increment(spd),
+		speed_curr(0),
+		damage(dmg)	{
 	}
 
 	HomingProjectile::~HomingProjectile() {
@@ -93,7 +98,7 @@ namespace termd {
 		if(hit()){
 			//hit target!
 			//deal damage!
-			target.take_damage(2);
+			target.take_damage(damage);
 			return false; 
 		}
 		return true;

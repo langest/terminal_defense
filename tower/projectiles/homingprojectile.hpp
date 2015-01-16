@@ -10,6 +10,7 @@ namespace termd {
 			Virus& target;
 			int speed_increment;
 			int speed_curr;
+			int damage;
 
 			bool hit() const;
 			bool step();
@@ -18,7 +19,7 @@ namespace termd {
 		protected:
 
 		public:
-			HomingProjectile(Coord, Virus &);
+			HomingProjectile(char gfx, Coord start, Virus& target, int speed, int damage);
 			HomingProjectile(const HomingProjectile &) = delete;
 			virtual ~HomingProjectile();
 			HomingProjectile& operator=(const HomingProjectile &) = delete;
