@@ -8,10 +8,29 @@ namespace termd {
 		if (loadfile.is_open()) {
 			char gfx;
 			int damage;
+			int type;
 
 			for (int i = 0; i < 2; ++i) {
 				loadfile >> gfx;
 				loadfile >> damage;
+				loadfile >> type;
+				if(type == HOMING) {
+					int speed;
+					loadfile >> speed;
+					loaded_proj.insert(
+						std::pair<int, std::unique_ptr<Projectile_base> >(id, 
+							std::unique_ptr<Projectile_base>(new Homing_projectile_base(gfx, damage, type, speed))));
+				} else if (type == DIRECTION) {
+					int col_spd;
+					int row_spd;
+					loadfile >> col_spd;
+					loadfile >> row_spd;
+					loaded_proj.insert(
+						std::pair<int, std::unique_ptr<Projectile_base> >(id, 
+							std::unique_ptr<Projectile_base>(new Direction_projectile_base(gfx, damage, type, col_spd, row_spd))));
+				} else {
+					//??
+				}
 			}
 		}
 	}
