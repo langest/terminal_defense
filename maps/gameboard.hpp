@@ -55,7 +55,7 @@ namespace termd {
 			int wave_number;
 			Wave wave;
 
-			bool is_blocked();
+			bool blocked_with(Coord);
 			void load_map();
 
 		public:

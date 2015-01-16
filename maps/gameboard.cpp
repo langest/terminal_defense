@@ -34,48 +34,62 @@ namespace termd {
 		return cont;
 	}
 
-	bool GameBoard::is_blocked() {
+	bool GameBoard::blocked_with(Coord coord) {
 		bool visited [size_rows][size_cols];
+		for (int r = 0; r < size_rows; ++r) {
+			for (int c = 0; c < size_cols; ++c) {
+				visited[r][c] = false;
+			}
+		}
+		visited[coord.get_row()][coord.get_col()] = true;
 		std::queue<Coord> queue;
 
-		queue.push(Coord(size_rows, 0));
-		visited[size_rows][0] = true;
+		queue.push(Coord(0, size_cols-1));
+		visited[0][size_cols-1] = true;
 
 		Coord current;
 		int r, c;
-		while (queue.size() < 0) {
+		while (!queue.empty()) {
 			current = queue.front();
 			queue.pop();
 			r = current.get_row();
 			c = current.get_col();
 
-			if (r <= 1) {
-				return true;
+			//GUI::draw_gfx(current, '*');
+			//getch();
+			//GUI::clear_game();
+
+			if (c <= 1) {
+				return false;
 			}
 
-			if (r < size_rows &&
-					!visited[r + 1][c]) {
+			if (r+1 < size_rows &&
+					!visited[r + 1][c] &&
+					tman.get(Coord(r+1,c)) == nullptr) {
 				visited[r + 1][c] = true;
 				queue.push(Coord(r + 1, c));
 			}
 			if (r > 0 &&
-					!visited[r - 1][c]) {
+					!visited[r - 1][c] &&
+					tman.get(Coord(r-1,c)) == nullptr) {
 				visited[r - 1][c] = true;
 				queue.push(Coord(r - 1, c));
 			}
-			if (c < size_cols &&
-					!visited[r][c + 1]) {
+			if (c+1 < size_cols &&
+					!visited[r][c + 1] &&
+					tman.get(Coord(r,c+1)) == nullptr) {
 				visited[r][c + 1] = true;
 				queue.push(Coord(r, c + 1));
 			}
 			if (c > 0 &&
-					!visited[r][c - 1]) {
+					!visited[r][c - 1] &&
+					tman.get(Coord(r,c-1)) == nullptr) {
 				visited[r][c - 1] = true;
 				queue.push(Coord(r, c - 1));
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	void GameBoard::load_map() {
@@ -100,6 +114,7 @@ namespace termd {
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {
+		if (blocked_with(c)) return false;
 		return tman.build_tower(c, tower_id);
 		/*
 		if(availible_towers.find(tower_id) != availible_towers.end() && player.has_tower(tower_id)) {
