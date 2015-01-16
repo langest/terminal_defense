@@ -23,6 +23,7 @@ namespace termd {
 
 			int recharge_rate;
 			int recharge;
+			int proj_id;
 		protected:
 
 		public:

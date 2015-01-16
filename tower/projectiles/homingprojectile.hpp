@@ -1,8 +1,8 @@
 #ifndef termd_homing_projectile
 #define termd_homing_projectile
 
-#include "projectile.hpp"
 #include "projectilebase.hpp"
+#include "projectile.hpp"
 
 namespace termd {
 	

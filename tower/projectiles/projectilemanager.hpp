@@ -8,7 +8,7 @@ namespace termd {
 	
 	class ProjectileManager {
 		private:
-			projectile_loader projload;
+			Projectile_loader projload;
 			std::vector<proj_ptr> projectiles;
 
 			void purge_projectiles();

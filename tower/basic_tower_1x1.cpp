@@ -7,7 +7,8 @@ namespace termd {
 	pman(pm), 
 	vman(v), 
 	recharge_rate(atb.recharge_rate), 
-	recharge(0) {
+	recharge(0),
+	proj_id(atb.projectile_id) {
 	}
 
 	bool BasicTower_1x1::update() {
@@ -35,7 +36,7 @@ namespace termd {
 		}
 
 		if (closest != nullptr) {
-			Homing_projectile_base* hp = static_cast<Homing_projectile_base*>(pm.get_projectile_base(proj_id));
+			Homing_projectile_base* hp = static_cast<Homing_projectile_base*>(pman.get_projectile_base(proj_id));
 			proj_ptr p(new HomingProjectile(*hp, pos, *closest));
 			pman.add_projectile(std::move(p));
 		}

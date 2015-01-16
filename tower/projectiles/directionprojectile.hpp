@@ -7,8 +7,9 @@
 #endif
 
 #include "../../definitions"
-#include "projectile.hpp"
 #include "../../virus/virus.hpp"
+#include "projectilebase.hpp"
+#include "projectile.hpp"
 
 namespace termd {
 	

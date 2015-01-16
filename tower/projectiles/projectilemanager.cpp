@@ -39,7 +39,7 @@ namespace termd {
 	}
 
 	Projectile_base* ProjectileManager::get_projectile_base(int id) const {
-		return projload.get(id);
+		return projload.get_id(id);
 	}
 
 

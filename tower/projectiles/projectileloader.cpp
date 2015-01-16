@@ -6,6 +6,7 @@ namespace termd {
 		std::ifstream loadfile;
 		loadfile.open("tower/projectiles/projectile.info");
 		if (loadfile.is_open()) {
+			int id;
 			char gfx;
 			int damage;
 			int type;
@@ -13,6 +14,7 @@ namespace termd {
 			int noProjs;
 			loadfile >> noProjs;
 			for (int i = 0; i < noProjs; ++i) {
+				loadfile >> id;
 				loadfile >> gfx;
 				loadfile >> damage;
 				loadfile >> type;
@@ -38,11 +40,11 @@ namespace termd {
 	}
 
 	Projectile_base* Projectile_loader::get_id(int id) const {
-		auto it loaded_proj.find(id);
+		auto it = loaded_proj.find(id);
 		if (it == loaded_proj.end()) {
 			throw std::invalid_argument("No such projectile");
 		}
-		return loaded_proj;
+		return (it->second).get();
 	}
 
 }

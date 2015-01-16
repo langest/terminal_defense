@@ -2,7 +2,7 @@
 
 namespace termd {
 	//Default value: cs = 1, rs = 0;
-	DirectionProjectile::DirectionProjectile(const Direction_projectile_base& dp, Coord s, const std::vector<virus_ptr>& t, int cs, int rs) :
+	DirectionProjectile::DirectionProjectile(const Direction_projectile_base& dp, Coord s, const std::vector<virus_ptr>& t) :
 		Projectile(dp, s),
 		col_spd(dp.col_spd),
 		row_spd(dp.row_spd),

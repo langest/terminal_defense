@@ -6,6 +6,7 @@
 #include <memory>
 #endif
 
+#include "projectilebase.hpp"
 #include "../../gui.hpp"
 #include "../../coord.hpp"
 #include "../../virus/virus.hpp"
