@@ -2,16 +2,16 @@
 #define termd_projectile_base
 
 namespave termd {
-	struct proj_base {
+	struct Projectile_base {
 		char gfx;
-	};
-
-	struct homing_proj_base : proj_base {
-		int speed_increment;
 		int damage;
 	};
 
-	struct direction_proj_base : proj_base {
+	struct homing_projectile_base : projectile_base {
+		int speed_increment;
+	};
+
+	struct direction_projectile_base : projectile_base {
 		int col_spd;
 		int row_spd;
 	};
