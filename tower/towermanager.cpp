@@ -7,16 +7,12 @@ namespace termd {
 	}
 
 	TowerManager::~TowerManager() {
-		for (auto i = towers.begin(); i != towers.end(); ++i) {
-			delete i->second;
-		}
 	}
 
 	void TowerManager::update() {
 		for (auto i = towers.begin(); i != towers.end(); ) {
 			if(i->second->update() == false) {
 				//If tower is flagging removal, remove it!
-				delete i->second;
 				i = towers.erase(i);
 			}else{
 				++i;
@@ -61,13 +57,13 @@ namespace termd {
 		}
 		switch(tower_id){ 
 			case WALL_1x1_ID: 
-				towers.insert( std::pair<Coord, Tower*>(c, new Wall_1x1(c)));
+				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new Wall_1x1(c))));
 				return true;
 			case BASIC_TOWER_1x1_ID: 
-				towers.insert( std::pair<Coord, Tower*>(c, new BasicTower_1x1(c, vman, pman)));
+				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new BasicTower_1x1(c, vman, pman))));
 				return true;
 			case RIGHT_TOWER_1x1_ID: 
-				towers.insert( std::pair<Coord, Tower*>(c, new DirectionTower_1x1(c, vman, pman, 1, 0)));
+				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new DirectionTower_1x1(c, vman, pman, 1, 0))));
 				return true;
 		}
 		return false;

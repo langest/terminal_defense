@@ -11,6 +11,11 @@
 #include <vector>
 #endif //termd_vector
 
+#ifndef termd_memory
+#define termd_memory
+#include <memory>
+#endif
+
 #include "../gui.hpp"
 #include "../coord.hpp"
 #include "../player.hpp"
@@ -28,9 +33,10 @@ namespace termd {
 	
 	class TowerManager {
 		private:
+			typedef std::unique_ptr<Tower> tower_ptr;
 			Player& player;
 
-			std::map<Coord, Tower*> towers;
+			std::map<Coord, tower_ptr> towers;
 			const VirusManager& vman;
 			ProjectileManager& pman;
 		public:
