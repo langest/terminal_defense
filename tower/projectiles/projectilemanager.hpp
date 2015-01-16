@@ -2,11 +2,13 @@
 #define termd_projectile_manager
 
 #include "projectile.hpp"
+#include "projectileloader.hpp"
 
 namespace termd {
 	
 	class ProjectileManager {
 		private:
+			projectile_loader projload;
 			std::vector<proj_ptr> projectiles;
 
 			void purge_projectiles();
@@ -17,6 +19,7 @@ namespace termd {
 			void draw_projectiles() const;
 			void add_projectile(proj_ptr&&);
 			void end_of_wave();
+			Projectile_base* get_projectile_base(int id) const;
 	};
 
 }
