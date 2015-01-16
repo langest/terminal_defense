@@ -2,12 +2,12 @@
 
 namespace termd {
 
-	Player::Player() : availiable_towers({BASIC_TOWER_1x1_ID}), ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
+	//TODO carefull about hardcodedness
+	Player::Player() : availiable_towers({0}), ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
 		
 	}
 
 	Player::~Player() {
-		//Currently nothing needs to be done
 	}
 
 	void Player::new_map_refresh() {
