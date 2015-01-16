@@ -6,6 +6,11 @@
 #include <string>
 #endif
 
+#ifndef termd_exception
+#define termd_exception
+#include <stdexcept>
+#endif
+
 #ifndef termd_fstream
 #define termd_fstream
 #include <fstream>
@@ -25,7 +30,7 @@ namespace termd {
 	public:
 		VirusLoader();
 
-		Virus get(int) const;
+		Virus get(int);
 	};
 }
 
