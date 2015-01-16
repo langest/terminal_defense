@@ -7,9 +7,6 @@ namespace termd {
 	}
 
 	void ProjectileManager::purge_projectiles() {
-		for (Projectile* proj : projectiles) {
-			delete proj;
-		}
 		projectiles.clear();
 	}
 
@@ -17,7 +14,6 @@ namespace termd {
 		for (auto i = projectiles.begin(); i != projectiles.end(); ) {
 			if((*i)->update() == false) {
 				//Projectile flags removal (probably a hit)
-				delete *i;
 				i = projectiles.erase(i);
 			} else {
 				++i;
@@ -26,12 +22,16 @@ namespace termd {
 	}
 
 	void ProjectileManager::draw_projectiles() const {
-		for (Projectile* proj : projectiles) {
-			proj->draw();
+		auto it = projectiles.begin();
+		auto end = projectiles.end();
+		while (it != end) {
+			(*it)->draw();
+			++it;
 		}
 	}
-	void ProjectileManager::add_projectile(Projectile* p) {
-		projectiles.push_back(p);
+
+	void ProjectileManager::add_projectile(proj_ptr&& p) {
+		projectiles.push_back(std::move(p));
 	}
 
 	void ProjectileManager::end_of_wave() {

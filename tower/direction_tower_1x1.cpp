@@ -29,8 +29,8 @@ namespace termd {
 			return;
 		}
 		recharge = recharge_rate;
-		Projectile* proj = new DirectionProjectile(pos, vman.get_viruses(), col_spd, row_spd);
-		pman.add_projectile(proj);
+		proj_ptr proj(new DirectionProjectile(pos, vman.get_viruses(), col_spd, row_spd));
+		pman.add_projectile(std::move(proj));
 	}
 
 }
