@@ -3,6 +3,7 @@ maindeps = game.o \
          coord.o \
          player.o \
          virus/virusmanager.o \
+         virus/virusloader.o \
          virus/path.o \
          virus/virus.o \
          maps/wave.o \
