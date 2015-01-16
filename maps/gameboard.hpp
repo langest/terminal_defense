@@ -32,7 +32,7 @@
 
 namespace termd {
 	
-	class GameBoard  {
+	class GameBoard {
 		private:
 			//player information:
 			Player& player;
