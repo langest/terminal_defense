@@ -6,12 +6,17 @@
 #include <vector>
 #endif //termd_vector
 
+#ifndef termd_memory
+#define termd_memory
+#include <memory>
+#endif //memory
+
 #include "../gui.hpp"
 #include "../coord.hpp"
 #include "path.hpp"
 
 namespace termd {
-
+	//typedef virus_ptr below!
 	class Virus {
 		protected:
 			int max_hp;
@@ -38,7 +43,7 @@ namespace termd {
 			bool destination_reached() const;
 			void take_damage(int);
 	};
-
+	typedef std::unique_ptr<Virus> virus_ptr;
 }
 
 #endif //termd_virus

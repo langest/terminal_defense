@@ -26,12 +26,12 @@ namespace termd {
 		float min_dist = std::numeric_limits<float>::max();
 		float cur_dist;
 
-		std::vector<Virus*>::const_iterator vir;
+		std::vector<virus_ptr>::const_iterator vir;
 		for (vir = vman.get_viruses().begin(); vir != vman.get_viruses().end(); ++vir) {
 			cur_dist = ((*vir)->get_pos() - pos).length();
 			if (cur_dist < min_dist) {
 				min_dist = cur_dist;
-				closest = *vir;
+				closest = (*vir).get();
 			}
 		}
 
