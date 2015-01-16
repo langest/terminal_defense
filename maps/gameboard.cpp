@@ -8,7 +8,8 @@ namespace termd {
 		tman(vman, pman, p),
 		vman(p),
 		availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}),
-		wave_number(0) {
+		wave_number(0),
+		wave(vman)	{
 		//TODO load map of mapid
 	}
 

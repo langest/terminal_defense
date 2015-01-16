@@ -53,7 +53,7 @@ namespace termd {
 			std::set<int> availible_towers;
 
 			int wave_number;
-			std::vector<int> waves; //TODO wave object for this map in this vector
+			Wave wave;
 
 			bool is_blocked();
 			void load_map();
@@ -69,7 +69,7 @@ namespace termd {
 
 			//Game Logic
 			bool build_tower(Coord, int);
-			void spawn_virus(int wave_num);
+			void spawn_virus();
 			void set_wave_number(int);
 
 			//Save/load

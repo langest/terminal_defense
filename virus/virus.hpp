@@ -37,7 +37,7 @@ namespace termd {
 
 			virtual bool update(); //Make the monster behave
 			bool draw() const; //Draw the beauty
-			bool move_to(Coord);
+			void move_to(Coord);
 
 			int get_reward() const;
 			Coord get_pos() const;

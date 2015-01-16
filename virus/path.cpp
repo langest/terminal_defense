@@ -11,8 +11,21 @@ namespace termd {
 		}
 	}
 
+	Path::Path(const Path & src) : path(src.path) {}
+	Path::Path(Path && src) : path(std::move(src.path)) {}
+
 	Path::~Path() {
 		//Nothing needed here at the moment
+	}
+
+	Path& Path::operator=(const Path & src) {
+		path = src.path;
+		return (*this);
+	}
+
+	Path& Path::operator=(Path && src) {
+		path = std::move(src.path);
+		return (*this);
 	}
 
 	Coord Path::get_curr_pos() const {

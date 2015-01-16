@@ -15,7 +15,7 @@ namespace termd {
 		//TODO definition of waves
 		public:
 			Wave(VirusManager&);
-			void spawn();
+			void spawn(int);
 	};
 
 }
