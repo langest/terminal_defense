@@ -50,13 +50,13 @@ namespace termd {
 			return false;
 		}
 		switch(tbp->type){
-			case TOWER_DIRECTION: 
+			case DIRECTION: 
 			{
 				attacking_tower_base* atbp = (attacking_tower_base*) tbp;
 				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new DirectionTower_1x1(c, *atbp, vman, pman))));
 			return true;
 			}
-			case TOWER_HOMING:
+			case HOMING:
 			{
 				attacking_tower_base* atbp = (attacking_tower_base*) tbp;
 				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new BasicTower_1x1(c, *atbp, vman, pman))));
