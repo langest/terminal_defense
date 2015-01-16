@@ -84,6 +84,16 @@ namespace termd {
 		}
 	}
 
+	Tower* TowerManager::get(Coord c) const {
+		auto it = towers.find(c);
+		if(it != towers.end()) {
+			return it->second.get();
+		} else {
+			return nullptr;
+		}
+	}
+
+
 	void TowerManager::end_of_wave() {
 		for (auto i = towers.begin(); i != towers.end(); ++i) {
 			i->second->end_of_wave();

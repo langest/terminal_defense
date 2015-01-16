@@ -44,6 +44,8 @@ namespace termd {
 			void draw_towers() const;
 			void end_of_wave();
 
+			Tower* get(Coord) const;
+
 			bool build_tower(Coord, int); //Tries to build a tower (player has to pay if successfull)
 			bool place_tower(Coord, int); //Tries to place a tower at the location
 
