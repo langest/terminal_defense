@@ -18,7 +18,7 @@ namespace termd {
 				continue;
 			}
 			virus_ptr v(new Virus(*vir));
-			v->move_to(Coord(5 + 3*i, 25 + ((7*i) % 5)));
+			v->move_to(Coord(1+ i, 50 + ((7*i) % 5)));
 			vman.add_virus(std::move(v));
 			id = (id + 1) % 2;
 		}

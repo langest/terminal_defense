@@ -27,7 +27,7 @@
 #define PLAYER_DEFAULT_RAM 10000
 
 //Map information
-#define BOARDROWS 20
+#define BOARDROWS 10
 #define BOARDCOLS 60
 #define BOARDR0 1
 #define BOARDC0 1
