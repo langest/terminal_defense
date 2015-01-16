@@ -7,7 +7,7 @@ namespace termd {
 		vman(vm) {}
 
 	void Wave::spawn(int wave_number) {
-		int id(1); //TODO read from wave definition instead
+		int id(0); //TODO read from wave definition instead
 		// something like this ... for (int id : wavedefinition) ...
 		Virus* vir;
 		virus_ptr vp;
@@ -18,8 +18,9 @@ namespace termd {
 				continue;
 			}
 			virus_ptr v(new Virus(*vir));
-			v->move_to(Coord(2*i, 2*i));
+			v->move_to(Coord(5 + 3*i, 25 + ((7*i) % 5)));
 			vman.add_virus(std::move(v));
+			id = (id + 1) % 2;
 		}
 	}
 
