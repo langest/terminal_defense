@@ -20,7 +20,6 @@ namespace termd {
 
 			//Virtual:
 			virtual bool update();
-			virtual int get_id() const { return WALL_1x1_ID;};
 	};
 
 }

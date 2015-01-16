@@ -18,6 +18,7 @@
 #include "../virus/virus.hpp"
 #include "../virus/virusmanager.hpp"
 #include "tower.hpp"
+#include "towerloader.hpp"
 #include "wall_1x1.hpp"
 #include "basic_tower_1x1.hpp"
 #include "direction_tower_1x1.hpp"
@@ -28,6 +29,8 @@ namespace termd {
 	
 	class TowerManager {
 		private:
+			Tower_loader tl;
+
 			Player& player;
 
 			std::map<Coord, tower_ptr> towers;

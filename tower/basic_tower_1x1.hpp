@@ -6,6 +6,7 @@
 #include <limits>
 #endif
 
+#include "tower_base.hpp"
 #include "tower.hpp"
 #include "../definitions"
 #include "../virus/virusmanager.hpp"
@@ -25,12 +26,11 @@ namespace termd {
 		protected:
 
 		public:
-			BasicTower_1x1(Coord, const VirusManager&, ProjectileManager&);
+			BasicTower_1x1(Coord c, attacking_tower_base, const VirusManager&, ProjectileManager&);
 
 			void shoot();
 
 			virtual bool update();
-			virtual int get_id() const { return BASIC_TOWER_1x1_ID;};
 	};
 }
 #endif //terd_basictower_1x1

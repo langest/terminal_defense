@@ -2,13 +2,7 @@
 
 namespace termd {
 	
-	Wall_1x1::Wall_1x1(Coord p) : Tower(p, 1, 1, WALL_1x1_SELL, WALL_1x1_SELL_DECREASE) {
-		blocking.resize(num_rows);
-		blocking[0].resize(num_cols);
-		blocking = {{true}};
-		gfx.resize(num_rows);
-		gfx[0].resize(num_cols);
-		gfx = {{'#'}};
+	Wall_1x1::Wall_1x1(Coord p) : Tower(p, tower_base(3, '#', 10, 10, 0.8, -1)) {
 	}
 
 	bool Wall_1x1::update(){

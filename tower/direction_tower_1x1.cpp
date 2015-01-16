@@ -2,20 +2,12 @@
 
 namespace termd {
 	
-	DirectionTower_1x1::DirectionTower_1x1(Coord coord, const VirusManager& v, ProjectileManager& pm, int cs, int rs) : 
-			Tower(coord, 1, 1, RIGHT_TOWER_1x1_SELL, RIGHT_TOWER_1x1_SELL_DECREASE), 
-			col_spd(cs), 
-			row_spd(rs), 
+	DirectionTower_1x1::DirectionTower_1x1(Coord coord, attacking_tower_base atb, const VirusManager& v, ProjectileManager& pm) : 
+			Tower(coord, atb), 
 			pman(pm), 
 			vman(v), 
-			recharge_rate(RIGHT_TOWER_1x1_RECHARGE_RATE), 
-			recharge(RIGHT_TOWER_1x1_RECHARGE_RATE) {
-		blocking.resize(num_rows);
-		blocking[0].resize(num_cols);
-		blocking = {{true}};
-		gfx.resize(num_rows);
-		gfx[0].resize(num_cols);
-		gfx = {{'D'}};
+			recharge_rate(atb.recharge_rate), 
+			recharge(0) {
 	}
 
 	bool DirectionTower_1x1::update() {
@@ -29,7 +21,7 @@ namespace termd {
 			return;
 		}
 		recharge = recharge_rate;
-		proj_ptr proj(new DirectionProjectile(pos, vman.get_viruses(), col_spd, row_spd));
+		proj_ptr proj(new DirectionProjectile(pos, vman.get_viruses(), 1, 0));
 		pman.add_projectile(std::move(proj));
 	}
 

@@ -2,7 +2,17 @@
 
 namespace termd {
 	
-	Tower::Tower(Coord c, int nr, int nc, int sellval, float selldec) : pos(c), num_rows(nr), num_cols(nc), age(0), sell_value(sellval), sell_decrease(selldec) {}
+	Tower::Tower(Coord c, tower_base tb) : 
+	id(tb.id),
+	pos(c),
+	num_rows(1), 
+	num_cols(1), 
+	blocking(num_rows, std::vector<bool>(num_cols, true)),
+	gfx(num_rows, std::vector<char>(num_cols, tb.gfx)),
+	age(0), 
+	buy_cost(tb.cost), 
+	sell_value(tb.sell_value), 
+	sell_decrease(tb.sell_decrease) {}
 
 	Tower::~Tower() {
 		//Currently nothing needs to be done
@@ -20,9 +30,6 @@ namespace termd {
 		return blocking;
 	}
 
-	int Tower::get_age() const {
-		return age;
-	}
 
 	int Tower::get_size_rows() const {
 		return num_rows;
@@ -30,6 +37,22 @@ namespace termd {
 
 	int Tower::get_size_cols() const {
 		return num_cols;
+	}
+	
+	int Tower::get_age() const {
+		return age;
+	}
+
+	int Tower::get_id() const {
+		return id;
+	}
+
+	int Tower::get_cost() const {
+		return buy_cost;
+	}
+	
+	void Tower::set_pos(Coord c) {
+		pos = c;
 	}
 
 	bool Tower::end_of_wave() {

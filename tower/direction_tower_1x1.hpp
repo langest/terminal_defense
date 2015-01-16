@@ -6,6 +6,7 @@
 #include <limits>
 #endif
 
+#include "tower_base.hpp"
 #include "tower.hpp"
 #include "../definitions"
 #include "../virus/virusmanager.hpp"
@@ -18,8 +19,6 @@ namespace termd {
 	class DirectionTower_1x1 : public Tower {
 		private:
 			//Direction to shoot:
-			const int col_spd;
-			const int row_spd;
 			ProjectileManager& pman;
 			const VirusManager& vman;
 
@@ -28,12 +27,11 @@ namespace termd {
 		protected:
 
 		public:
-			DirectionTower_1x1(Coord, const VirusManager&, ProjectileManager&, int, int);
+			DirectionTower_1x1(Coord, attacking_tower_base, const VirusManager&, ProjectileManager&);
 
 			void shoot();
 
 			virtual bool update();
-			virtual int get_id() const { return RIGHT_TOWER_1x1_ID;};
 	};
 
 }

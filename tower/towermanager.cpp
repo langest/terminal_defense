@@ -21,31 +21,18 @@ namespace termd {
 	}
 
 	bool TowerManager::build_tower(Coord c, int tower_id) {
-		switch(tower_id){ 
-			case WALL_1x1_ID: 
-				if(player.get_ram() >= WALL_1x1_COST){
-					if(place_tower(c, tower_id) == true) {
-						player.modify_ram(-WALL_1x1_COST);
-						return true;
-					}
-				}
-				break;
-			case BASIC_TOWER_1x1_ID: 
-				if(player.get_ram() >= BASIC_TOWER_1x1_COST){
-					if(place_tower(c, tower_id) == true) {
-						player.modify_ram(-BASIC_TOWER_1x1_COST);
-						return true;
-					}
-				}
-				break;
-			case RIGHT_TOWER_1x1_ID:
-				if(player.get_ram() >= RIGHT_TOWER_1x1_COST){
-					if(place_tower(c, tower_id) == true) {
-						player.modify_ram(-RIGHT_TOWER_1x1_COST);
-						return true;
-					}
-				}
-				break;
+		tower_base * tbp;
+		try {
+			tbp = tl.get(tower_id);
+		} catch (const std::invalid_argument &) {
+			//invalid tower tried to load
+			return false;
+		}
+		if(player.get_ram() >= tbp->cost) {
+			if(true == place_tower(c, tower_id)){
+				player.modify_ram(-tbp->cost);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -55,16 +42,29 @@ namespace termd {
 			//space taken by other tower!
 			return false;
 		}
-		switch(tower_id){ 
-			case WALL_1x1_ID: 
+		tower_base * tbp;
+		try {
+			tbp = tl.get(tower_id);
+		} catch (const std::invalid_argument &) {
+			//invalid tower tried to load
+			return false;
+		}
+		switch(tbp->type){
+			case TOWER_DIRECTION: 
+			{
+				attacking_tower_base* atbp = (attacking_tower_base*) tbp;
+				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new DirectionTower_1x1(c, *atbp, vman, pman))));
+			return true;
+			}
+			case TOWER_HOMING:
+			{
+				attacking_tower_base* atbp = (attacking_tower_base*) tbp;
+				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new BasicTower_1x1(c, *atbp, vman, pman))));
+			return true;
+			}
+			case TOWER_WALL:
 				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new Wall_1x1(c))));
-				return true;
-			case BASIC_TOWER_1x1_ID: 
-				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new BasicTower_1x1(c, vman, pman))));
-				return true;
-			case RIGHT_TOWER_1x1_ID: 
-				towers.insert( std::pair<Coord, tower_ptr>(c, tower_ptr(new DirectionTower_1x1(c, vman, pman, 1, 0))));
-				return true;
+			return true;
 		}
 		return false;
 	}
