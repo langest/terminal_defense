@@ -22,6 +22,7 @@ namespace termd {
 				Virus v(hp, sta_inc, rew, fx);
 				loadedvir.insert(std::pair<int, Virus>(id, v));
 			}
+			loadfile.close();
 		}
 	}
 
