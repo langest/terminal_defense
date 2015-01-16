@@ -33,13 +33,14 @@ namespace termd {
 	
 	class TowerManager {
 		private:
-			typedef std::unique_ptr<Tower> tower_ptr;
 			Player& player;
 
 			std::map<Coord, tower_ptr> towers;
 			const VirusManager& vman;
 			ProjectileManager& pman;
 		public:
+			typedef std::unique_ptr<Tower> tower_ptr;
+
 			TowerManager(const VirusManager&, ProjectileManager&, Player&);
 			~TowerManager();
 
