@@ -43,8 +43,8 @@
 #define FRAMEBR ACS_LRCORNER
 
 //Buildings
-#define TOWER_HOMING 0
-#define TOWER_DIRECTION 1
+#define HOMING 0
+#define DIRECTION 1
 #define TOWER_WALL 2
 //Tile info
 
