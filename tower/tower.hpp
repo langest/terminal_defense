@@ -18,7 +18,7 @@
 
 #include "../gui.hpp"
 #include "../coord.hpp"
-#include "tower_base.hpp"
+#include "towerbase.hpp"
 
 namespace termd {
 
