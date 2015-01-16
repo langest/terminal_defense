@@ -23,8 +23,10 @@ namespace termd {
 		f = [this]() { show_menu(); };
 		inputcalls['m'] = f;
 
+		//TODO read from file
 		inputcalls['i'] = [&]() { build_tower(HOMING); };
 		inputcalls['d'] = [&]() { build_tower(DIRECTION); };
+		inputcalls['y'] = [&]() { build_tower(3); };
 
 		//inputcalls['+'] = std::bind( &Game::awesome, this );
 	}
