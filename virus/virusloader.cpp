@@ -19,12 +19,17 @@ namespace termd {
 				loadfile >> sta_inc;
 				loadfile >> rew;
 				loadfile >> fx;
-				loadedvir.insert(std::pair<int, Virus>(id, Virus(hp, sta_inc, rew, fx)));
+				Virus v(hp, sta_inc, rew, fx);
+				loadedvir.insert(std::pair<int, Virus>(id, v));
 			}
 		}
 	}
 
 	Virus VirusLoader::get(int id) {
-		return loadedvir[id];
+		auto ptr(loadedvir.find(id));
+		if(ptr == loadedvir.end()) {
+			throw std::invalid_argument ("No such virus");
+		}
+		return ptr->second;
 	}
 }
