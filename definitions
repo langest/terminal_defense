@@ -45,7 +45,7 @@
 //Buildings
 #define TOWER_HOMING 0
 #define TOWER_DIRECTION 1
-#define TOWER_WALL 3
+#define TOWER_WALL 2
 //Tile info
 
 #endif //termd_definitions
