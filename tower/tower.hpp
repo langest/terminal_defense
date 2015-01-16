@@ -11,10 +11,16 @@
 #include <vector>
 #endif //termd_vector
 
+#ifndef termd_memory
+#define termd_memory
+#include <memory>
+#endif
+
 #include "../gui.hpp"
 #include "../coord.hpp"
 
 namespace termd {
+	typedef std::unique_ptr<Tower> tower_ptr;
 
 	class Tower {
 		private:
