@@ -10,7 +10,9 @@ namespace termd {
 			int damage;
 			int type;
 
-			for (int i = 0; i < 2; ++i) {
+			int noProjs;
+			loadfile >> noProjs;
+			for (int i = 0; i < noProjs; ++i) {
 				loadfile >> gfx;
 				loadfile >> damage;
 				loadfile >> type;

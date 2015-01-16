@@ -2,6 +2,7 @@
 #define termd_homing_projectile
 
 #include "projectile.hpp"
+#include "projectilebase.hpp"
 
 namespace termd {
 	
@@ -10,7 +11,6 @@ namespace termd {
 			Virus& target;
 			int speed_increment;
 			int speed_curr;
-			int damage;
 
 			bool hit() const;
 			bool step();
@@ -19,7 +19,7 @@ namespace termd {
 		protected:
 
 		public:
-			HomingProjectile(char gfx, Coord start, Virus& target, int speed, int damage);
+			HomingProjectile(const Homing_projectile_base &, Coord start, Virus& target);
 			HomingProjectile(const HomingProjectile &) = delete;
 			virtual ~HomingProjectile();
 			HomingProjectile& operator=(const HomingProjectile &) = delete;

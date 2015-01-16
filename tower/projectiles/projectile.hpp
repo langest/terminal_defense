@@ -17,9 +17,10 @@ namespace termd {
 
 		protected:
 			char gfx;
+			int damage;
 			Coord pos;
 		public:
-			Projectile(char, Coord);
+			Projectile(const Projectile_base &, Coord);
 			virtual ~Projectile();
 
 			virtual bool update() = 0;

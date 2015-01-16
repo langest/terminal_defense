@@ -2,7 +2,10 @@
 
 namespace termd {
 		
-	Projectile::Projectile(char g, Coord p) : gfx(g), pos(p) {
+	Projectile::Projectile(const Projectile_base & pb, Coord p) : 
+	gfx(pb.gfx), 
+	damage(pb.damage), 
+	pos(p) {
 	}
 
 	Projectile::~Projectile(){}

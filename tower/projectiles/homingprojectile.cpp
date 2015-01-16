@@ -2,12 +2,11 @@
 
 namespace termd {
 	
-	HomingProjectile::HomingProjectile(char gfx, Coord s, Virus& t, int spd, int dmg) :
-		Projectile(gfx, s),
+	HomingProjectile::HomingProjectile(const Homing_projectile_base & hp, Coord s, Virus& t) :
+		Projectile(hp, s),
 		target(t),
-		speed_increment(spd),
-		speed_curr(0),
-		damage(dmg)	{
+		speed_increment(hp.speed_increment),
+		speed_curr(0) {
 	}
 
 	HomingProjectile::~HomingProjectile() {
