@@ -17,7 +17,7 @@ namespace termd {
 			const int col_spd;
 			const int row_spd;
 
-			const std::vector<Virus*>& viruses;
+			const std::vector<virus_ptr>& viruses;
 
 			Virus* hit() const;
 			void move();
@@ -25,7 +25,7 @@ namespace termd {
 		protected:
 
 		public:
-			DirectionProjectile(Coord, const std::vector<Virus*>&, int cs = 1, int rs = 0);
+			DirectionProjectile(Coord, const std::vector<virus_ptr>&, int cs = 1, int rs = 0);
 			DirectionProjectile(const DirectionProjectile&) = delete;
 			virtual ~DirectionProjectile();
 			DirectionProjectile& operator=(const DirectionProjectile &) = delete;

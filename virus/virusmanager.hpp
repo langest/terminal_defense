@@ -10,8 +10,8 @@ namespace termd {
 		private:
 			Player& player;
 
-			std::vector<Virus*> viruses;
-			std::vector<Virus*> dead_viruses;
+			std::vector<virus_ptr> viruses;
+			std::vector<virus_ptr> dead_viruses;
 
 			void purge_viruses();
 			void purge_dead_viruses();
@@ -21,9 +21,9 @@ namespace termd {
 
 			bool update();
 			void draw_viruses() const;
-			void add_virus(Virus*);
+			void add_virus(virus_ptr);
 			void end_of_wave();
-			const std::vector<Virus*>& get_viruses() const;
+			const std::vector<virus_ptr>& get_viruses() const;
 	};
 
 }

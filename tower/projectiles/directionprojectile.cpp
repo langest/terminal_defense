@@ -2,7 +2,7 @@
 
 namespace termd {
 	//Default value: cs = 1, rs = 0;
-	DirectionProjectile::DirectionProjectile(Coord s, const std::vector<Virus*>& t, int cs, int rs) : Projectile(')', s), col_spd(cs), row_spd(rs),  viruses(t) {
+	DirectionProjectile::DirectionProjectile(Coord s, const std::vector<virus_ptr>& t, int cs, int rs) : Projectile(')', s), col_spd(cs), row_spd(rs),  viruses(t) {
 	}
 
 	DirectionProjectile::~DirectionProjectile() {
@@ -15,12 +15,12 @@ namespace termd {
 
 	Virus* DirectionProjectile::hit() const {
 		int vr, vc;
-		for (Virus* vir : viruses) {
-			vr = vir->get_pos().get_row();
-			vc = vir->get_pos().get_col();
+		for (auto it = viruses.begin(); it != viruses.end(); ++it) {
+			vr = (*it)->get_pos().get_row();
+			vc = (*it)->get_pos().get_col();
 			if (vr == pos.get_row()) {
 				if (vc == pos.get_col()) {
-					return vir;
+					return (*it).get();
 				}
 			}
 		}
