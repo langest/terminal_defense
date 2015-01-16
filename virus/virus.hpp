@@ -29,8 +29,8 @@ namespace termd {
 
 			bool step(); //Make the monster walk along its path, if it can...
 		public:
-			Virus(Coord);
-			Virus(const Virus &) = delete;
+			Virus(int hp, int sta_inc, int rew, char fx);
+			Virus(const Virus &);
 			virtual ~Virus();
 
 			Virus& operator=(const Virus &) = delete;
