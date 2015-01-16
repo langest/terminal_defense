@@ -25,7 +25,7 @@ namespace termd {
 		protected:
 
 		public:
-			DirectionProjectile(Coord, const std::vector<virus_ptr>&, int cs = 1, int rs = 0);
+			DirectionProjectile(char gfx, Coord start, const std::vector<virus_ptr>&, int col_speed = 1, int row_speed = 0);
 			DirectionProjectile(const DirectionProjectile&) = delete;
 			virtual ~DirectionProjectile();
 			DirectionProjectile& operator=(const DirectionProjectile &) = delete;
