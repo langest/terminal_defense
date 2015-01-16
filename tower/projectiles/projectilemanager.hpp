@@ -1,15 +1,9 @@
 #ifndef termd_projectile_manager
 #define termd_projectile_manager
 
-#ifndef termd_memory
-#define termd_memory
-#include <memory>
-#endif
-
 #include "projectile.hpp"
 
 namespace termd {
-	typedef std::unique_ptr<Projectile> proj_ptr;
 	
 	class ProjectileManager {
 		private:
