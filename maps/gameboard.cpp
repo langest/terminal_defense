@@ -7,7 +7,7 @@ namespace termd {
 	 	size_cols(BOARDCOLS),
 		tman(vman, pman, p),
 		vman(p),
-		availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}),
+		availible_towers({0, 1, 2}), //TODO solve hardcodedness
 		wave_number(0),
 		wave(vman)	{
 		//TODO load map of mapid
