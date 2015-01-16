@@ -8,7 +8,8 @@ namespace termd {
 		tman(vman, pman, p),
 		vman(p),
 		availible_towers({BASIC_TOWER_1x1_ID, RIGHT_TOWER_1x1_ID, WALL_1x1_ID}),
-		wave_number(0) {
+		wave_number(0),
+		wave(vman)	{
 		//TODO load map of mapid
 	}
 
@@ -106,13 +107,8 @@ namespace termd {
 		}
 	}
 
-	void GameBoard::spawn_virus(int wave_num){
-		Coord c(0, size_cols - 1);
-		for(int r = 2; r < size_rows; r += 2){
-			c.set_row(r);
-			//virus_ptr v(new Virus(15, 75));
-			//vman.add_virus(std::move(v));
-		}
+	void GameBoard::spawn_virus(){
+		wave.spawn(wave_number);
 	}
 
 	bool GameBoard::save_to_file() {

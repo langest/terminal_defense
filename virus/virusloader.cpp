@@ -3,7 +3,7 @@
 namespace termd {
 	VirusLoader::VirusLoader() {
 		std::ifstream loadfile;
-		loadfile.open("virus.info");
+		loadfile.open("virus/virus.info");
 		if(loadfile.is_open()) {
 			int id;
 			int hp;
@@ -25,11 +25,11 @@ namespace termd {
 		}
 	}
 
-	Virus VirusLoader::get(int id) {
+	Virus* VirusLoader::get(int id) {
 		auto ptr(loadedvir.find(id));
 		if(ptr == loadedvir.end()) {
 			throw std::invalid_argument ("No such virus");
 		}
-		return ptr->second;
+		return &(ptr->second);
 	}
 }

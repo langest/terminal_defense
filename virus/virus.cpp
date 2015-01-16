@@ -51,6 +51,10 @@ namespace termd {
 		return GUI::draw_gfx(get_pos(), gfx);
 	}
 
+	void Virus::move_to(Coord c) {
+		path = Path(c);
+	}
+
 	int Virus::get_reward() const {
 		return reward;
 	}

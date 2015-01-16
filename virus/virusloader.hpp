@@ -30,7 +30,7 @@ namespace termd {
 	public:
 		VirusLoader();
 
-		Virus get(int);
+		Virus* get(int);
 	};
 }
 

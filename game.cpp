@@ -96,7 +96,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	}
 
 	bool Game::invasion_phase() {
-		board.spawn_virus(0);
+		board.spawn_virus();
 		char intelmsg[BOARDCOLS];
 
 		std::chrono::milliseconds interval(1000/FRAMES);
