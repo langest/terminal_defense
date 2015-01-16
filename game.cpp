@@ -23,8 +23,8 @@ namespace termd {
 		f = [this]() { show_menu(); };
 		inputcalls['m'] = f;
 
-		inputcalls['i'] = [&]() { build_tower(BASIC_TOWER_1x1_ID); };
-		inputcalls['d'] = [&]() { build_tower(RIGHT_TOWER_1x1_ID); };
+		inputcalls['i'] = [&]() { build_tower(0); }; //TODO fix hardcodedness
+		inputcalls['d'] = [&]() { build_tower(1); }; //TODO fix hardcodedness
 
 		//inputcalls['+'] = std::bind( &Game::awesome, this );
 	}
@@ -128,7 +128,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 				return false;
 			}
 			if(get_player_hp() < PLAYER_DEFAULT_HP) {
-				unlock_tower(RIGHT_TOWER_1x1_ID);
+				unlock_tower(1); //TODO remove hardcodedness
 			}
 			build_phase();
 		}
