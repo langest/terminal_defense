@@ -29,7 +29,7 @@ namespace termd {
 			return;
 		}
 		recharge = recharge_rate;
-		proj_ptr proj(new DirectionProjectile(pos, vman.get_viruses(), col_spd, row_spd));
+		proj_ptr proj(new DirectionProjectile(')', pos, vman.get_viruses(), col_spd, row_spd));
 		pman.add_projectile(std::move(proj));
 	}
 
