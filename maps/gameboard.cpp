@@ -106,13 +106,8 @@ namespace termd {
 		}
 	}
 
-	void GameBoard::spawn_virus(int wave_num){
-		Coord c(0, size_cols - 1);
-		for(int r = 2; r < size_rows; r += 2){
-			c.set_row(r);
-			//virus_ptr v(new Virus(15, 75));
-			//vman.add_virus(std::move(v));
-		}
+	void GameBoard::spawn_virus(){
+		wave.spawn(wave_number);
 	}
 
 	bool GameBoard::save_to_file() {
