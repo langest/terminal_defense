@@ -20,7 +20,6 @@
 #include "../coord.hpp"
 
 namespace termd {
-	typedef std::unique_ptr<Tower> tower_ptr;
 
 	class Tower {
 		private:
@@ -59,6 +58,8 @@ namespace termd {
 			virtual bool update() = 0;
 			virtual int get_id() const = 0;
 	};
+
+	typedef std::unique_ptr<Tower> tower_ptr;
 
 }
 #endif //termd_tower

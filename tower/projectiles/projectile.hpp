@@ -11,7 +11,6 @@
 #include "../../virus/virus.hpp"
 
 namespace termd {
-	typedef std::unique_ptr<Projectile> proj_ptr;
 		
 	class Projectile {
 		private:
@@ -27,6 +26,8 @@ namespace termd {
 			bool draw() const;
 
 	};
+
+	typedef std::unique_ptr<Projectile> proj_ptr;
 
 }
 #endif
