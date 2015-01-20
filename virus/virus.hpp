@@ -31,13 +31,13 @@ namespace termd {
 		public:
 			Virus(int hp, int sta_inc, int rew, char fx);
 			Virus(const Virus &);
+			Virus(const Virus &, Path);
 			virtual ~Virus();
 
 			Virus& operator=(const Virus &) = delete;
 
 			virtual bool update(); //Make the monster behave
 			bool draw() const; //Draw the beauty
-			void move_to(Coord);
 
 			int get_reward() const;
 			Coord get_pos() const;

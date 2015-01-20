@@ -6,7 +6,7 @@ namespace termd {
 		virus_loader(),
 		vman(vm) {}
 
-	void Wave::spawn(int wave_number) {
+	void Wave::spawn(int wave_number, int size_r, int size_c, const std::vector<std::vector<bool> > & towers) {
 		int id(0); //TODO read from wave definition instead
 		// something like this ... for (int id : wavedefinition) ...
 		Virus* vir;
@@ -17,8 +17,8 @@ namespace termd {
 			} catch (const std::invalid_argument &) {
 				continue;
 			}
-			virus_ptr v(new Virus(*vir));
-			v->move_to(Coord(1+ i, 50 + ((7*i) % 5)));
+			Path p(Coord(size_r - (i*5%3), size_c), size_r, size_c, towers);
+			virus_ptr v(new Virus(*vir, p));
 			vman.add_virus(std::move(v));
 			id = (id + 1) % 2;
 		}

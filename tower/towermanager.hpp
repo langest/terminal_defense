@@ -46,6 +46,8 @@ namespace termd {
 
 			Tower* get(Coord) const;
 
+			//This function assumes that coord is inside the game area.
+			//Check is done in gameboard where the dimensions are available.
 			bool build_tower(Coord, int); //Tries to build a tower (player has to pay if successfull)
 			bool place_tower(Coord, int); //Tries to place a tower at the location
 

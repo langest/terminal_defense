@@ -20,10 +20,8 @@ namespace termd {
 		}
 	}
 
+	//This function assumes that coord is inside the game area
 	bool TowerManager::build_tower(Coord c, int tower_id) {
-		if(c.get_col() <= 0){ //TODO check left side of map!
-			return false;
-		}
 		tower_base * tbp;
 		try {
 			tbp = tl.get(tower_id);

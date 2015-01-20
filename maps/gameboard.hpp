@@ -45,6 +45,7 @@ namespace termd {
 			const int size_rows;
 			const int size_cols;
 			TowerManager tman;
+			std::vector<std::vector<bool> > towers;
 			ProjectileManager pman;
 			VirusManager vman;
 			std::vector<std::vector<int>> pathing;

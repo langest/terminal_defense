@@ -8,7 +8,7 @@ namespace termd {
 	stamina(0), 
 	stamina_increment(sta_inc), 
 	reward(rew), 
-	path(Coord()) /*, TODO path() */{
+	path(Coord(0,0)) /*, TODO path() */{
 		gfx.resize(1);
 		gfx[0].resize(1);
 		gfx[0][0] = fx;
@@ -21,7 +21,18 @@ namespace termd {
 	stamina_increment(src.stamina_increment),
 	reward(src.reward),
 	gfx(src.gfx),
-	path(Coord()) {
+	path(src.path) {
+		
+	}
+
+	Virus::Virus(const Virus & src, Path p) :
+	max_hp(src.max_hp),
+	cur_hp(src.cur_hp),
+	stamina(0),
+	stamina_increment(src.stamina_increment),
+	reward(src.reward),
+	gfx(src.gfx),
+	path(p) {
 		
 	}
 
@@ -49,10 +60,6 @@ namespace termd {
 
 	bool Virus::draw() const {
 		return GUI::draw_gfx(get_pos(), gfx);
-	}
-
-	void Virus::move_to(Coord c) {
-		path = Path(c);
 	}
 
 	int Virus::get_reward() const {
