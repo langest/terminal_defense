@@ -11,6 +11,8 @@
 #include <stack>
 #endif //termd_stack
 
+#include "../gui.hpp"
+
 #include "../definitions"
 #include "../coord.hpp"
 #include "../definitions"

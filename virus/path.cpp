@@ -12,6 +12,8 @@ namespace termd {
 	}
 
 	Path::Path(Coord start, int num_rows, int num_cols, const std::vector<std::vector<bool> > & towers) {
+GUI::print_intel(std::string("new path"));
+getch();
 		Coord current(start);
 		bool visited [num_rows][num_cols];
 		Coord backtrack [num_rows][num_cols];
@@ -26,6 +28,7 @@ namespace termd {
 		visited[current.get_row()][current.get_col()] = true;
 		queue.push(current);
 
+
 		while (current.get_col() > 0 && !queue.empty()) {
 			current = queue.front();
 			queue.pop();
@@ -33,24 +36,60 @@ namespace termd {
 			int c = current.get_col();
 
 			auto available = [&num_rows, &num_cols, &towers](int r, int c){
-				return r > 0 &&
+				return r >= 0 &&
 					c > 0 &&
 					r < num_rows &&
 					c < num_cols &&
 					!towers[r][c];
 			};
 
-			if (available(r, c-1) && !visited[r][c-1]) {
-				visited[r][c-1] = true;
-				backtrack[r][c-1] = current;
-			}
-			if (available(r-1, c-1) && !visited[r][c-1]) {
+			//Up left
+			if (available(r-1, c-1) && !visited[r-1][c-1]) {
+				queue.push(Coord(r-1, c-1));
 				visited[r-1][c-1] = true;
 				backtrack[r-1][c-1] = current;
 			}
+			//Down left
 			if (available(r+1, c-1) && !visited[r+1][c-1]) {
+				queue.push(Coord(r+1, c-1));
 				visited[r+1][c-1] = true;
 				backtrack[r+1][c-1] = current;
+			}
+			//Up right
+			if (available(r-1, c+1) && !visited[r-1][c+1]) {
+				queue.push(Coord(r-1, c+1));
+				visited[r-1][c+1] = true;
+				backtrack[r-1][c+1] = current;
+			}
+			//Down right
+			if (available(r+1, c+1) && !visited[r+1][c+1]) {
+				queue.push(Coord(r+1, c+1));
+				visited[r+1][c+1] = true;
+				backtrack[r+1][c+1] = current;
+			}
+			//Left
+			if (available(r, c-1) && !visited[r][c-1]) {
+				queue.push(Coord(r, c-1));
+				visited[r][c-1] = true;
+				backtrack[r][c-1] = current;
+			}
+			//Right
+			if (available(r, c+1) && !visited[r][c+1]) {
+				queue.push(Coord(r, c+1));
+				visited[r][c+1] = true;
+				backtrack[r][c+1] = current;
+			}
+			//Up
+			if (available(r-1, c) && !visited[r-1][c]) {
+				queue.push(Coord(r-1, c));
+				visited[r-1][c] = true;
+				backtrack[r-1][c] = current;
+			}
+			//Down
+			if (available(r+1, c) && !visited[r+1][c]) {
+				queue.push(Coord(r+1, c));
+				visited[r+1][c] = true;
+				backtrack[r+1][c] = current;
 			}
 		}
 
@@ -73,6 +112,7 @@ namespace termd {
 				cost = VIRUS_STEPCOST;
 			}
 			path.push(Step(current, cost)); //Copy that 's' Coord!
+			last = current;
 		}
 	}
 
