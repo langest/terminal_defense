@@ -15,17 +15,10 @@ namespace termd {
 GUI::print_intel(std::string("new path"));
 getch();
 		Coord current(start);
-		bool visited [num_rows][num_cols];
-		Coord backtrack [num_rows][num_cols];
+		std::vector<std::vector<Coord> > backtrack( num_rows, std::vector<Coord>( num_cols, Coord(-1,-1)));
 
-		for (int r = 0; r < num_rows; ++r) {
-			for(int c = 0; c < num_cols; ++c) {
-				visited[r][c] = false;
-			}
-		}
 		std::queue<Coord> queue;
 
-		visited[current.get_row()][current.get_col()] = true;
 		queue.push(current);
 
 
@@ -35,62 +28,34 @@ getch();
 			int r = current.get_row();
 			int c = current.get_col();
 
-			auto available = [&num_rows, &num_cols, &towers](int r, int c){
-				return r >= 0 &&
-					c > 0 &&
-					r < num_rows &&
-					c < num_cols &&
-					!towers[r][c];
+			auto step = [&](int row, int col){
+				if ( row >= 0 &&
+					col > 0 &&
+					row < num_rows &&
+					col < num_cols &&
+					backtrack[row][col].get_row() == -1 && //not visited
+					!towers[row][col] ) {
+					queue.push(Coord(row, col));
+					backtrack[row][col] = current;
+				}
 			};
 
 			//Up left
-			if (available(r-1, c-1) && !visited[r-1][c-1]) {
-				queue.push(Coord(r-1, c-1));
-				visited[r-1][c-1] = true;
-				backtrack[r-1][c-1] = current;
-			}
+			step(r-1, c-1);
 			//Down left
-			if (available(r+1, c-1) && !visited[r+1][c-1]) {
-				queue.push(Coord(r+1, c-1));
-				visited[r+1][c-1] = true;
-				backtrack[r+1][c-1] = current;
-			}
-			//Up right
-			if (available(r-1, c+1) && !visited[r-1][c+1]) {
-				queue.push(Coord(r-1, c+1));
-				visited[r-1][c+1] = true;
-				backtrack[r-1][c+1] = current;
-			}
-			//Down right
-			if (available(r+1, c+1) && !visited[r+1][c+1]) {
-				queue.push(Coord(r+1, c+1));
-				visited[r+1][c+1] = true;
-				backtrack[r+1][c+1] = current;
-			}
+			step(r+1, c-1);
 			//Left
-			if (available(r, c-1) && !visited[r][c-1]) {
-				queue.push(Coord(r, c-1));
-				visited[r][c-1] = true;
-				backtrack[r][c-1] = current;
-			}
+			step(r, c-1);
+			//Up right
+			step(r-1,c+1);
+			//Down right
+			step(r+1,c+1);
 			//Right
-			if (available(r, c+1) && !visited[r][c+1]) {
-				queue.push(Coord(r, c+1));
-				visited[r][c+1] = true;
-				backtrack[r][c+1] = current;
-			}
+			step(r, c+1);
 			//Up
-			if (available(r-1, c) && !visited[r-1][c]) {
-				queue.push(Coord(r-1, c));
-				visited[r-1][c] = true;
-				backtrack[r-1][c] = current;
-			}
+			step(r-1,c);
 			//Down
-			if (available(r+1, c) && !visited[r+1][c]) {
-				queue.push(Coord(r+1, c));
-				visited[r+1][c] = true;
-				backtrack[r+1][c] = current;
-			}
+			step(r+1,c);
 		}
 
 		std::stack<Coord> reverse;
