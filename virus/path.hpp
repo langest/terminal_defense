@@ -43,6 +43,8 @@ namespace termd {
 	class Path {
 		private:
 			std::queue<Step> path;
+
+			int heuristic_cost(const Coord &, const Coord &);
 		public:
 			Path(Coord);
 			Path(Coord, int nr, int nc, const std::vector<std::vector<bool> > & towers); //spawn, goal is everything on final row/col
