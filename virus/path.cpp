@@ -32,12 +32,14 @@ namespace termd {
 			int r = current.get_row();
 			int c = current.get_col();
 
-			auto step = [&](int row, int col, int cost){
-				if ( row >= 0 &&
-					col > 0 &&
+			auto check_bound = [&num_rows, &num_cols](int row, int col) {
+				return row >= 0 &&
+					col >= 0 &&
 					row < num_rows &&
-					col < num_cols &&
-					backtrack[row][col].first > cost && //shorter path
+					col < num_cols;
+			};
+			auto step = [&](int row, int col, int cost) {
+				if (backtrack[row][col].first > cost && //shorter path
 					!towers[row][col] ) {
 					queue.push(Coord(row, col));
 					backtrack[row][col] = std::pair<int, Coord>(cost, current);
@@ -45,21 +47,29 @@ namespace termd {
 			};
 
 			//Up left
-			step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			if (check_bound(r-1, c-1) && !towers[r-1][c] && !towers[r][c-1])
+				step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Down left
-			step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
-			//Left
-			step(r, c-1, VIRUS_STEPCOST + backtrack[r][c].first);
+			if (check_bound(r+1, c-1) && !towers[r+1][c] && !towers[r][c-1])
+				step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Up right
-			step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			if (check_bound(r-1, c+1) && !towers[r-1][c] && !towers[r][c+1])
+				step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Down right
-			step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			if (check_bound(r+1, c+1) && !towers[r+1][c] && !towers[r][c+1])
+				step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Left
+			if (check_bound(r, c-1))
+				step(r, c-1, VIRUS_STEPCOST + backtrack[r][c].first);
 			//Right
-			step(r, c+1, VIRUS_STEPCOST + backtrack[r][c].first);
+			if (check_bound(r, c+1))
+				step(r, c+1, VIRUS_STEPCOST + backtrack[r][c].first);
 			//Up
-			step(r-1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+			if (check_bound(r-1, c))
+				step(r-1,c, VIRUS_STEPCOST + backtrack[r][c].first);
 			//Down
-			step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+			if (check_bound(r+1, c))
+				step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
 		}
 
 		std::stack<Coord> reverse;
