@@ -38,7 +38,6 @@ namespace termd {
 	}
 
 	void Game::intro() {
-#ifndef MOCK_GUI
 		std::string intromsg("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
 Viruses (as you all know) begins on the right side and flies to the left. \n\
 You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
@@ -55,11 +54,9 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		getch();
 		clear();
 		move(BOARDR0, BOARDC0);
-#endif
 	}
 
 	void Game::outro() {
-#ifndef MOCK_GUI
 		clear();
 		move(0,0);
 		if (player.is_alive()) {
@@ -68,7 +65,6 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			addstr("You lost control over your terminal. There is nothing you can do...");
 		}
 		getch();
-#endif
 	}
 
 	void Game::build_phase() {
@@ -76,11 +72,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		GUI::draw_board_frame();
 		GUI::draw_intel_frame();
 		char intelmsg[BOARDCOLS];
-#ifndef MOCK_GUI
 		while((ch = getch()) != 27 && ch != 'q') {
-#else
-		{
-#endif
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();
 			}
@@ -187,9 +179,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		//TODO - removed hardcodedness
 		GUI::print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
 		player.unlock_tower(id);
-#ifndef MOCK_GUI
 		getch(); //make sure to display the intel!
-#endif
 	}
 
 

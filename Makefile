@@ -28,16 +28,8 @@ CXXFLAGS = -lncurses \
            -Wall \
            -std=c++11
 
-all: gui_non_mock main.cpp $(maindeps) $(maindepsheaders)
-	$(CXX) -o terminaldefense.out main.cpp $(CXXFLAGS) $(maindeps) gui.o
-
-mock: gui_mock main.cpp $(maindeps) $(maindepsheaders)
-	$(CXX) -o terminaldefense.out main.cpp $(CXXFLAGS) -DMOCK_GUI $(maindeps) gui_mock.o
-
-gui_non_mock: gui.hpp gui.cpp
-	$(CXX) -c gui.hpp gui.cpp $(CXXFLAGS)
-gui_mock: gui.hpp gui_mock.cpp
-	$(CXX) -c gui.hpp gui_mock.cpp $(CXXFLAGS) -DMOCK_GUI
+all: main.cpp $(maindeps) $(maindepsheaders)
+	$(CXX) -o terminaldefense.out main.cpp $(CXXFLAGS) $(maindeps)
 
 ncurses_test: test/ncursestest.cpp
 	$(CXX) -std=c++0x -g -Wall test/ncursestest.cpp -lncurses -o ncursestest.out
