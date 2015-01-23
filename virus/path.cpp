@@ -11,6 +11,10 @@ namespace termd {
 		}
 	}
 
+	//Algorithm used is not optimal for performance. Though it
+	//should not matter since this is a pretty light-weight
+	//game and it is only performed a limited number of times
+	//on a very restricted amount of nodes.
 	Path::Path(Coord start, int num_rows, int num_cols, const std::vector<std::vector<bool> > & towers) {
 GUI::print_intel(std::string("new path"));
 getch();
