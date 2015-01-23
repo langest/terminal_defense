@@ -1,24 +1,25 @@
 maindeps = game.o \
-         menu.o \
-         coord.o \
-         player.o \
-         virus/virusmanager.o \
-         virus/virusloader.o \
-         virus/path.o \
-         virus/virus.o \
-         maps/wave.o \
-         maps/gameboard.o \
-         tower/towermanager.o \
-         tower/towerloader.o \
-         tower/tower.o \
-         tower/basic_tower_1x1.o \
-         tower/direction_tower_1x1.o \
-         tower/wall_1x1.o \
-         tower/projectiles/projectilemanager.o \
-         tower/projectiles/projectileloader.o \
-         tower/projectiles/homingprojectile.o \
-         tower/projectiles/directionprojectile.o \
-         tower/projectiles/projectile.o
+           gui.o \
+           menu.o \
+           coord.o \
+           player.o \
+           virus/virusmanager.o \
+           virus/virusloader.o \
+           virus/path.o \
+           virus/virus.o \
+           maps/wave.o \
+           maps/gameboard.o \
+           tower/towermanager.o \
+           tower/towerloader.o \
+           tower/tower.o \
+           tower/basic_tower_1x1.o \
+           tower/direction_tower_1x1.o \
+           tower/wall_1x1.o \
+           tower/projectiles/projectilemanager.o \
+           tower/projectiles/projectileloader.o \
+           tower/projectiles/homingprojectile.o \
+           tower/projectiles/directionprojectile.o \
+           tower/projectiles/projectile.o
 
 maindepsheaders = $(maindeps:.o=.hpp)
 
