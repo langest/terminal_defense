@@ -16,8 +16,8 @@ namespace termd {
 	//game and it is only performed a limited number of times
 	//on a very restricted amount of nodes.
 	Path::Path(Coord start, int num_rows, int num_cols, const std::vector<std::vector<bool> > & towers) {
-GUI::print_intel(std::string("new path"));
-getch();
+		if (start.get_row() >= num_rows || start.get_col() >= num_cols ||
+				start.get_row() < 0 || start.get_col() < 0) return; //invalid start, make no path
 		Coord current(start);
 		std::vector<std::vector<std::pair<int, Coord> > > backtrack( num_rows, std::vector<std::pair<int, Coord> >( num_cols, std::pair<int, Coord>(INT_MAX, Coord(-1,-1))));
 
