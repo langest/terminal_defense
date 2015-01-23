@@ -15,7 +15,7 @@ namespace termd {
 GUI::print_intel(std::string("new path"));
 getch();
 		Coord current(start);
-		std::vector<std::vector<Coord> > backtrack( num_rows, std::vector<Coord>( num_cols, Coord(-1,-1)));
+		std::vector<std::vector<std::pair<int, Coord> > > backtrack( num_rows, std::vector<std::pair<int, Coord> >( num_cols, std::pair<int, Coord>(INT_MAX, Coord(-1,-1))));
 
 		std::queue<Coord> queue;
 
@@ -28,40 +28,40 @@ getch();
 			int r = current.get_row();
 			int c = current.get_col();
 
-			auto step = [&](int row, int col){
+			auto step = [&](int row, int col, int cost){
 				if ( row >= 0 &&
 					col > 0 &&
 					row < num_rows &&
 					col < num_cols &&
-					backtrack[row][col].get_row() == -1 && //not visited
+					backtrack[row][col].first > cost && //shorter path
 					!towers[row][col] ) {
 					queue.push(Coord(row, col));
-					backtrack[row][col] = current;
+					backtrack[row][col] = std::pair<int, Coord>(cost, current);
 				}
 			};
 
 			//Up left
-			step(r-1, c-1);
+			step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Down left
-			step(r+1, c-1);
+			step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Left
-			step(r, c-1);
+			step(r, c-1, VIRUS_STEPCOST + backtrack[r][c].first);
 			//Up right
-			step(r-1,c+1);
+			step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Down right
-			step(r+1,c+1);
+			step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Right
-			step(r, c+1);
+			step(r, c+1, VIRUS_STEPCOST + backtrack[r][c].first);
 			//Up
-			step(r-1,c);
+			step(r-1,c, VIRUS_STEPCOST + backtrack[r][c].first);
 			//Down
-			step(r+1,c);
+			step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
 		}
 
 		std::stack<Coord> reverse;
 		while (current != start) {
 			reverse.push(current);
-			current = backtrack[current.get_row()][current.get_col()];
+			current = backtrack[current.get_row()][current.get_col()].second;
 		}
 		reverse.push(start);
 

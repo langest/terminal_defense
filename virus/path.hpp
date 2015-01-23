@@ -11,6 +11,11 @@
 #include <stack>
 #endif //termd_stack
 
+#ifndef termd_utility
+#define termd_utility
+#include <utility>
+#endif
+
 #include "../gui.hpp"
 
 #include "../definitions"
