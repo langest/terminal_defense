@@ -106,12 +106,6 @@ getch();
 		return path.empty();
 	}
 
-	int Path::heuristic_cost(const Coord & c1, const Coord & c2) {
-		int r = c1.get_row() - c2.get_row();
-		int c = c1.get_col() - c2.get_col();
-		return r*r+c*c;
-	}
-
 	void Path::step(int& sta) {
 		while(path.empty() == false && sta >= path.front().cost){
 			sta -= path.front().cost;
