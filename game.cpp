@@ -28,13 +28,8 @@ namespace termd {
 		inputcalls['d'] = [&]() { build_tower(DIRECTION); };
 		inputcalls['y'] = [&]() { build_tower(3); };
 
-		//inputcalls['+'] = std::bind( &Game::awesome, this );
 	}
 
-	//void Game::awesome() {
-		//GUI::print_intel("Thomas and Daniel are awesome!\nYeah. Foh shoo!");
-	//}
-	
 	bool Game::build_tower(int tower_id) {
 		Coord c = GUI::get_cursor_pos();
 		c -= Coord(BOARDR0, BOARDC0);
