@@ -17,7 +17,7 @@ namespace termd {
 			} catch (const std::invalid_argument &) {
 				continue;
 			}
-			Path p(Coord(size_r - (i*5%3), size_c), size_r, size_c, towers);
+			Path p(Coord(size_r - (i*5%3), size_c - 3 * i), size_r, size_c, towers);
 			virus_ptr v(new Virus(*vir, p));
 			vman.add_virus(std::move(v));
 			id = (id + 1) % 2;
