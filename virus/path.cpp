@@ -11,6 +11,90 @@ namespace termd {
 		}
 	}
 
+	//Algorithm used is not optimal for performance. Though it
+	//should not matter since this is a pretty light-weight
+	//game and it is only performed a limited number of times
+	//on a very restricted amount of nodes.
+	Path::Path(Coord start, int num_rows, int num_cols, const std::vector<std::vector<bool> > & towers) {
+		if (start.get_row() >= num_rows || start.get_col() >= num_cols ||
+				start.get_row() < 0 || start.get_col() < 0) return; //invalid start, make no path
+		Coord current(start);
+		std::vector<std::vector<std::pair<int, Coord> > > backtrack( num_rows, std::vector<std::pair<int, Coord> >( num_cols, std::pair<int, Coord>(INT_MAX, Coord(-1,-1))));
+
+		std::queue<Coord> queue;
+
+		queue.push(current);
+
+
+		while (current.get_col() > 0 && !queue.empty()) {
+			current = queue.front();
+			queue.pop();
+			int r = current.get_row();
+			int c = current.get_col();
+
+			auto check_bound = [&num_rows, &num_cols](int row, int col) {
+				return row >= 0 &&
+					col >= 0 &&
+					row < num_rows &&
+					col < num_cols;
+			};
+			auto step = [&](int row, int col, int cost) {
+				if (backtrack[row][col].first > cost && //shorter path
+					!towers[row][col] ) {
+					queue.push(Coord(row, col));
+					backtrack[row][col] = std::pair<int, Coord>(cost, current);
+				}
+			};
+
+			//Up left
+			if (check_bound(r-1, c-1) && !towers[r-1][c] && !towers[r][c-1])
+				step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Down left
+			if (check_bound(r+1, c-1) && !towers[r+1][c] && !towers[r][c-1])
+				step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Up right
+			if (check_bound(r-1, c+1) && !towers[r-1][c] && !towers[r][c+1])
+				step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Down right
+			if (check_bound(r+1, c+1) && !towers[r+1][c] && !towers[r][c+1])
+				step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Left
+			if (check_bound(r, c-1))
+				step(r, c-1, VIRUS_STEPCOST + backtrack[r][c].first);
+			//Right
+			if (check_bound(r, c+1))
+				step(r, c+1, VIRUS_STEPCOST + backtrack[r][c].first);
+			//Up
+			if (check_bound(r-1, c))
+				step(r-1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+			//Down
+			if (check_bound(r+1, c))
+				step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+		}
+
+		std::stack<Coord> reverse;
+		while (current != start) {
+			reverse.push(current);
+			current = backtrack[current.get_row()][current.get_col()].second;
+		}
+		reverse.push(start);
+
+		int cost;
+		Coord last(current);
+		while (!reverse.empty()) {
+			current = reverse.top();
+			reverse.pop();
+			if (current.get_col() != last.get_col() &&
+					current.get_row() != current.get_row()) { //We made a diagonal step
+				cost = VIRUS_STEPCOSTDIAGONAL;
+			} else {
+				cost = VIRUS_STEPCOST;
+			}
+			path.push(Step(current, cost)); //Copy that 's' Coord!
+			last = current;
+		}
+	}
+
 	Path::Path(const Path & src) : path(src.path) {}
 	Path::Path(Path && src) : path(std::move(src.path)) {}
 

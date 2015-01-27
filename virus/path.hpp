@@ -6,6 +6,19 @@
 #include <queue>
 #endif //termd_queue
 
+#ifndef termd_stack
+#define termd_stack
+#include <stack>
+#endif //termd_stack
+
+#ifndef termd_utility
+#define termd_utility
+#include <utility>
+#endif
+
+#include "../gui.hpp"
+
+#include "../definitions"
 #include "../coord.hpp"
 #include "../definitions"
 
@@ -35,8 +48,12 @@ namespace termd {
 	class Path {
 		private:
 			std::queue<Step> path;
+
+			int heuristic_cost(const Coord &, const Coord &);
 		public:
-			Path(Coord); //spawn, goal is everything on final row/col
+			Path(Coord);
+			Path(Coord, int nr, int nc, const std::vector<std::vector<bool> > & towers); //spawn, goal is everything on final row/col
+			//Assumes that a path is available
 			Path(const Path &);
 			Path(Path &&);
 			~Path();

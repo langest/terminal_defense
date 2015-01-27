@@ -6,10 +6,12 @@ namespace termd {
 		size_rows(BOARDROWS),
 	 	size_cols(BOARDCOLS),
 		tman(vman, pman, p),
+		towers(size_rows, std::vector<bool>(size_cols, false)),
 		vman(p),
 		availible_towers({0, 1, 2}), //TODO solve hardcodedness
 		wave_number(0),
 		wave(vman)	{
+
 		//TODO load map of mapid
 	}
 
@@ -114,18 +116,22 @@ namespace termd {
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {
-		if (blocked_with(c)) return false;
-		return tman.build_tower(c, tower_id);
-		/*
-		if(availible_towers.find(tower_id) != availible_towers.end() && player.has_tower(tower_id)) {
-		} else {
-			return false;
+		if (c.get_col() < 0 ||
+				c.get_col() >= size_cols ||
+				c.get_row() < 0 ||
+				c.get_row() >= size_rows ||
+				towers[c.get_row()][c.get_col()]) {
+		 	return false;
 		}
-		*/
+
+		if (blocked_with(c)) return false;
+
+		towers[c.get_row()][c.get_col()] = tman.build_tower(c, tower_id);
+		return towers[c.get_row()][c.get_col()];
 	}
 
 	void GameBoard::spawn_virus(){
-		wave.spawn(wave_number);
+		wave.spawn(wave_number, size_rows, size_cols, towers);
 	}
 
 	bool GameBoard::save_to_file() {
