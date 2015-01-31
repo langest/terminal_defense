@@ -25,7 +25,6 @@ namespace termd {
 
 		queue.push(current);
 
-
 		while (!queue.empty()) {
 			current = queue.front();
 			queue.pop();
@@ -46,18 +45,6 @@ namespace termd {
 				}
 			};
 
-			//Up left
-			if (check_bound(r-1, c-1) && !towers[r-1][c] && !towers[r][c-1])
-				step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
-			//Down left
-			if (check_bound(r+1, c-1) && !towers[r+1][c] && !towers[r][c-1])
-				step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
-			//Up right
-			if (check_bound(r-1, c+1) && !towers[r-1][c] && !towers[r][c+1])
-				step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
-			//Down right
-			if (check_bound(r+1, c+1) && !towers[r+1][c] && !towers[r][c+1])
-				step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 			//Left
 			if (check_bound(r, c-1))
 				step(r, c-1, VIRUS_STEPCOST + backtrack[r][c].first);
@@ -70,6 +57,18 @@ namespace termd {
 			//Down
 			if (check_bound(r+1, c))
 				step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+			//Up left
+			if (check_bound(r-1, c-1) &&( !towers[r-1][c] || !towers[r][c-1]))
+				step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Down left
+			if (check_bound(r+1, c-1) &&( !towers[r+1][c] || !towers[r][c-1]))
+				step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Up right
+			if (check_bound(r-1, c+1) &&( !towers[r-1][c] || !towers[r][c+1]))
+				step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+			//Down right
+			if (check_bound(r+1, c+1) &&( !towers[r+1][c] || !towers[r][c+1]))
+				step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
 		}
 
 		int min_cost = backtrack[0][0].first;
