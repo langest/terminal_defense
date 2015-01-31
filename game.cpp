@@ -50,6 +50,9 @@ Towers costs RAM to build, you gain more RAM by destroying viruses\n\
 \n\
 q - Start the next wave of viruses \n\
 i - Build a BASIC TOWER \n\
+y - Build a DOWN TOWER \n\
+d - Build a RIGHT TOWER \n\
+w - Build a WALL \n\
 MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		addstr(intromsg.c_str());
 		getch();
