@@ -27,6 +27,7 @@ namespace termd {
 		inputcalls['i'] = [&]() { build_tower(HOMING); };
 		inputcalls['d'] = [&]() { build_tower(DIRECTION); };
 		inputcalls['y'] = [&]() { build_tower(3); };
+		inputcalls['w'] = [&]() { build_tower(2); };
 
 	}
 
