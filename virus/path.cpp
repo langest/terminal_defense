@@ -26,7 +26,7 @@ namespace termd {
 		queue.push(current);
 
 
-		while (current.get_col() > 0 && !queue.empty()) {
+		while (!queue.empty()) {
 			current = queue.front();
 			queue.pop();
 			int r = current.get_row();
@@ -70,6 +70,15 @@ namespace termd {
 			//Down
 			if (check_bound(r+1, c))
 				step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+		}
+
+		int min_cost = backtrack[0][0].first;
+		current = backtrack[0][0].second;
+		for (int i = 1; i < num_rows; ++i) {
+			if (backtrack[i][0].first < min_cost) {
+				min_cost = backtrack[i][0].first;
+				current = backtrack[i][0].second;
+			}
 		}
 
 		std::stack<Coord> reverse;
