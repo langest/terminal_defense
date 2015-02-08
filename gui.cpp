@@ -73,6 +73,10 @@ namespace termd {
 		return ret;
 	}
 
+	int GUI::get_input() {
+		return getch();
+	}
+
 	//Puts a char at specified coord in the guis window.
 	//Does not refresh
 	//Returns true iff successful
