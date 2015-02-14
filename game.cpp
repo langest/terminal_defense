@@ -92,15 +92,32 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		board.spawn_virus();
 		char intelmsg[BOARDCOLS];
 
+		//Frame counter setup
+		std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
+		std::chrono::time_point<std::chrono::high_resolution_clock> avglimit;
+		size_t avgseconds = 1;
+		std::chrono::milliseconds avgtime(1000 * avgseconds);
+		size_t avgfps;
+
+		//Framerate limiter setup
 		std::chrono::milliseconds interval(1000/FRAMES);
 		std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
 				std::chrono::system_clock::now() - interval );
 		std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;
 
 		while (board.update()) {
+			//Framerate counter
+			avglimit = std::chrono::system_clock::now() - avgtime;
+			while (!timestamps.empty() && timestamps.front() < avglimit) {
+				timestamps.pop();
+			}
+			timestamps.push(std::chrono::system_clock::now());
+			avgfps = timestamps.size() / avgseconds;
+
+			//Framerate limiter
 			board.draw();
 			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_hp(), avgfps);
 			GUI::print_intel(intelmsg);
 			GUI::refresh();
 
