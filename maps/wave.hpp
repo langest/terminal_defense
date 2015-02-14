@@ -6,6 +6,11 @@
 #include <vector>
 #endif
 
+#ifndef termd_random
+#define termd_random
+#include <random>
+#endif
+
 #include "../coord.hpp"
 #include "../virus/virus.hpp"
 #include "../virus/virusloader.hpp"
