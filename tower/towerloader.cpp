@@ -3,7 +3,7 @@
 namespace termd {
 	Tower_loader::Tower_loader() {
 		std::ifstream loadfile;
-		loadfile.open("tower/tower.info");
+		loadfile.open("info/tower.info");
 		if(loadfile.is_open()) {
 			int id;
 			char fx;

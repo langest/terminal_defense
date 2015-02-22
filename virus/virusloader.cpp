@@ -3,7 +3,7 @@
 namespace termd {
 	VirusLoader::VirusLoader() {
 		std::ifstream loadfile;
-		loadfile.open("virus/virus.info");
+		loadfile.open("info/virus.info");
 		if(loadfile.is_open()) {
 			int id;
 			int hp;
