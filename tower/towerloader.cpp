@@ -5,7 +5,7 @@ namespace termd {
 		std::ifstream loadfile;
 		loadfile.open("info/tower.info");
 		if(loadfile.is_open()) {
-			int id;
+			char id;
 			char fx;
 			int cost;
 			int sell_val;
