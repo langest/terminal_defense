@@ -24,10 +24,10 @@ namespace termd {
 		inputcalls['m'] = f;
 
 		//TODO read from file
-		inputcalls['i'] = [&]() { build_tower(HOMING); };
-		inputcalls['d'] = [&]() { build_tower(DIRECTION); };
-		inputcalls['y'] = [&]() { build_tower(3); };
-		inputcalls['w'] = [&]() { build_tower(2); };
+		inputcalls['i'] = [&]() { build_tower('i'); };
+		inputcalls['d'] = [&]() { build_tower('d'); };
+		inputcalls['y'] = [&]() { build_tower('y'); };
+		inputcalls['w'] = [&]() { build_tower('w'); };
 
 	}
 
