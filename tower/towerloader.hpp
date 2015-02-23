@@ -37,6 +37,7 @@ namespace termd {
 		Tower_loader();
 
 		tower_base* get(int);
+		std::vector<int> id_list();
 	};
 }
 

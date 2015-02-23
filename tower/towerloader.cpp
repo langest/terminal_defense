@@ -47,4 +47,12 @@ namespace termd {
 		}
 		return ptr->second.get();
 	}
+
+	std::vector<int> Tower_loader::id_list() {
+		std::vector<int> v;
+		for (auto i = loadedtow.begin(); i != loadedtow.end(); ++i) {
+			v.push_back(i->first);
+		}
+		return v;
+	}
 }
