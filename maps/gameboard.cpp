@@ -57,10 +57,6 @@ namespace termd {
 			r = current.get_row();
 			c = current.get_col();
 
-			//GUI::draw_gfx(current, '*');
-			//getch();
-			//GUI::clear_game();
-
 			if (c <= 0) {
 				return false;
 			}

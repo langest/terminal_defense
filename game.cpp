@@ -57,7 +57,7 @@ d - Build a RIGHT TOWER \n\
 w - Build a WALL \n\
 MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		addstr(intromsg.c_str());
-		getch();
+		GUI::get_input();
 		clear();
 		move(BOARDR0, BOARDC0);
 	}
@@ -70,7 +70,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		} else {
 			addstr("You lost control over your terminal. There is nothing you can do...");
 		}
-		getch();
+		GUI::get_input();
 	}
 
 	void Game::build_phase() {
@@ -78,7 +78,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		GUI::draw_board_frame();
 		GUI::draw_intel_frame();
 		char intelmsg[BOARDCOLS];
-		while((ch = getch()) != 27 && ch != 'q') {
+		while((ch = GUI::get_input()) != 27 && ch != 'q') {
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();
 			}
@@ -171,7 +171,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		while (!done) {
 			GUI::clear_intel();
 			GUI::print_intel(std::string("1.Save and quit    2.Return to game"));
-			while ((ch = getch()) != '1' && ch != '2');
+			while ((ch = GUI::get_input()) != '1' && ch != '2');
 
 			if (ch == '1') {
 				if (save_game()) {
@@ -179,7 +179,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 					done = true;
 				} else {
 					GUI::print_intel(std::string("Failed to save game, press any key to resume menu."));
-					getch();
+					GUI::get_input();
 				}
 			} else {
 				done = true;
@@ -202,7 +202,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		//TODO - removed hardcodedness
 		GUI::print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
 		player.unlock_tower(id);
-		getch(); //make sure to display the intel!
+		GUI::get_input(); //make sure to display the intel!
 	}
 
 

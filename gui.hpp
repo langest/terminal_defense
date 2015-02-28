@@ -34,6 +34,7 @@ namespace termd {
 			static bool move_cursor_left();
 			static bool move_cursor_right();
 			static Coord get_cursor_pos();
+			static int get_input();
 
 			static bool draw(const Coord &, const char); //Does not refresh
 			static bool draw_gfx(const Coord &, const std::vector<std::vector<char> > &);
