@@ -31,6 +31,11 @@ namespace termd {
 	}
 
 	bool DirectionProjectile::update() {
+		if (pos.get_row() < 0 ||
+				pos.get_col() < 0 ||
+				pos.get_row() > BOARDROWS ||
+				pos.get_col() > BOARDCOLS) return false;
+
 		Virus* target = hit();
 		if(target != nullptr){
 			//hit target!

@@ -61,7 +61,7 @@ namespace termd {
 			//getch();
 			//GUI::clear_game();
 
-			if (c <= 1) {
+			if (c <= 0) {
 				return false;
 			}
 

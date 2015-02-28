@@ -23,12 +23,14 @@ namespace termd {
 		f = [this]() { show_menu(); };
 		inputcalls['m'] = f;
 
-		//TODO read from file
-		inputcalls['i'] = [&]() { build_tower(HOMING); };
-		inputcalls['d'] = [&]() { build_tower(DIRECTION); };
-		inputcalls['y'] = [&]() { build_tower(3); };
-		inputcalls['w'] = [&]() { build_tower(2); };
+		
+		//Reading tower build buttons from file
+		Tower_loader tl;
+		std::vector<int> tids = tl.id_list();
 
+		for (int id : tids) {
+			inputcalls[id] = [&, id]() { build_tower(id); };
+		}
 	}
 
 	bool Game::build_tower(int tower_id) {
@@ -92,15 +94,32 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		board.spawn_virus();
 		char intelmsg[BOARDCOLS];
 
+		//Frame counter setup
+		std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
+		std::chrono::time_point<std::chrono::high_resolution_clock> avglimit;
+		size_t avgseconds = 1;
+		std::chrono::milliseconds avgtime(1000 * avgseconds);
+		size_t avgfps;
+
+		//Framerate limiter setup
 		std::chrono::milliseconds interval(1000/FRAMES);
 		std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
 				std::chrono::system_clock::now() - interval );
 		std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;
 
 		while (board.update()) {
+			//Framerate counter
+			avglimit = std::chrono::system_clock::now() - avgtime;
+			while (!timestamps.empty() && timestamps.front() < avglimit) {
+				timestamps.pop();
+			}
+			timestamps.push(std::chrono::system_clock::now());
+			avgfps = timestamps.size() / avgseconds;
+
+			//Framerate limiter
 			board.draw();
 			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_hp(), avgfps);
 			GUI::print_intel(intelmsg);
 			GUI::refresh();
 

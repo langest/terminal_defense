@@ -11,13 +11,19 @@ namespace termd {
 		// something like this ... for (int id : wavedefinition) ...
 		Virus* vir;
 		virus_ptr vp;
-		for (int i = 0; i < 5; ++i) {
+		for (int i = 0; i < 10; ++i) {
 			try {
 				vir = virus_loader.get(id);
 			} catch (const std::invalid_argument &) {
 				continue;
 			}
-			Path p(Coord(size_r - (i*5%3) -1, size_c - 3 * i -1), size_r, size_c, towers);
+
+			std::random_device rd;
+			std::default_random_engine el(rd());
+			std::uniform_int_distribution<int> uniform_dist(0, size_r-1);
+
+			Coord start(uniform_dist(el), size_c - 1);
+			Path p(start, size_r, size_c, towers);
 			virus_ptr v(new Virus(*vir, p));
 			vman.add_virus(std::move(v));
 			id = (id + 1) % 2;

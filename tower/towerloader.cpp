@@ -3,9 +3,9 @@
 namespace termd {
 	Tower_loader::Tower_loader() {
 		std::ifstream loadfile;
-		loadfile.open("tower/tower.info");
+		loadfile.open("info/tower.info");
 		if(loadfile.is_open()) {
-			int id;
+			char id;
 			char fx;
 			int cost;
 			int sell_val;
@@ -46,5 +46,13 @@ namespace termd {
 			throw std::invalid_argument ("No such tower");
 		}
 		return ptr->second.get();
+	}
+
+	std::vector<int> Tower_loader::id_list() {
+		std::vector<int> v;
+		for (auto i = loadedtow.begin(); i != loadedtow.end(); ++i) {
+			v.push_back(i->first);
+		}
+		return v;
 	}
 }
