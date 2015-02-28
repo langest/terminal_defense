@@ -23,12 +23,14 @@ namespace termd {
 		f = [this]() { show_menu(); };
 		inputcalls['m'] = f;
 
-		//TODO read from file
-		inputcalls['i'] = [&]() { build_tower('i'); };
-		inputcalls['d'] = [&]() { build_tower('d'); };
-		inputcalls['y'] = [&]() { build_tower('y'); };
-		inputcalls['w'] = [&]() { build_tower('w'); };
+		
+		//Reading tower build buttons from file
+		Tower_loader tl;
+		std::vector<int> tids = tl.id_list();
 
+		for (int id : tids) {
+			inputcalls[id] = [&, id]() { build_tower(id); };
+		}
 	}
 
 	bool Game::build_tower(int tower_id) {
