@@ -26,6 +26,11 @@
 #include <map>
 #endif
 
+#ifndef termd_vector
+#define termd_vector
+#include <vector>
+#endif
+
 #include "towerbase.hpp"
 #include "tower.hpp"
 
@@ -37,6 +42,7 @@ namespace termd {
 		Tower_loader();
 
 		tower_base* get(int);
+		std::vector<int> id_list();
 	};
 }
 

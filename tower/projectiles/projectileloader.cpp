@@ -4,7 +4,7 @@ namespace termd {
 
 	Projectile_loader::Projectile_loader() {
 		std::ifstream loadfile;
-		loadfile.open("tower/projectiles/projectile.info");
+		loadfile.open("info/projectile.info");
 		if (loadfile.is_open()) {
 			int id;
 			char gfx;

@@ -6,6 +6,11 @@
 #include <map>
 #endif
 
+#ifndef termd_vector
+#define termd_vector
+#include <vector>
+#endif
+
 #ifndef termd_functional
 #define termd_functional
 #include <functional>
@@ -25,6 +30,7 @@
 #include "gui.hpp"
 #include "player.hpp"
 #include "maps/gameboard.hpp"
+#include "tower/towerloader.hpp"
 
 namespace termd {
 
