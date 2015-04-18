@@ -21,7 +21,7 @@
 #include <cstddef>
 #endif //termd_cstddef
 
-#include "wave.hpp"
+#include "../virus/wave/wave.hpp"
 #include "../definitions"
 #include "../gui.hpp"
 #include "../coord.hpp"

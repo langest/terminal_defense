@@ -1,12 +1,16 @@
 #include "waveinfo.hpp"
 
-Wave_info::Wave_info(int num_spawns) : wave(num_spawns, std::vector<int>()) {
-}
+namespace termd {
 
-int Wave_info::num_spawns() {
-	return wave.size();
-}
+	Wave_info::Wave_info(int num_spawns) : wave(num_spawns, std::vector<int>()) {
+	}
 
-std::vector<int>& operator[](int ix) {
-	return wave[ix];
+	int Wave_info::num_spawns() const {
+		return wave.size();
+	}
+
+	std::vector<int>& Wave_info::operator[](int ix) {
+		return wave[ix];
+	}
+
 }

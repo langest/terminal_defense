@@ -3,16 +3,16 @@
 
 #include <vector>
 
-namespace {
+namespace termd {
 	class Wave_info {
 		private:
-			std::vector<std::vector<int> > wave
+			std::vector<std::vector<int> > wave;
 		public:
 			Wave_info(int);
 
 			int num_spawns() const;
 			std::vector<int>& operator[](int);
-	}
+	};
 }
 
 #endif

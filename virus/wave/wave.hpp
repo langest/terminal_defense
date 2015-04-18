@@ -11,10 +11,10 @@
 #include <random>
 #endif
 
-#include "../coord.hpp"
-#include "../virus/virus.hpp"
-#include "../virus/virusloader.hpp"
-#include "../virus/virusmanager.hpp"
+#include "../../coord.hpp"
+#include "../virus.hpp"
+#include "../virusloader.hpp"
+#include "../virusmanager.hpp"
 
 namespace termd {
 
