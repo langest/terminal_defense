@@ -8,7 +8,7 @@ namespace termd {
 		tman(vman, pman, p),
 		towers(size_rows, std::vector<bool>(size_cols, false)),
 		vman(p),
-		availible_towers({0, 1, 2}), //TODO solve hardcodedness
+		availible_towers({'i', 'd', 'y', 'w'}), //TODO solve hardcodedness
 		wave_number(0),
 		wave(vman)	{
 
@@ -118,6 +118,10 @@ namespace termd {
 				c.get_row() >= size_rows ||
 				towers[c.get_row()][c.get_col()]) {
 		 	return false;
+		}
+
+		if(availible_towers.find(tower_id) == availible_towers.end()) {
+			return false;
 		}
 
 		if (blocked_with(c)) return false;
