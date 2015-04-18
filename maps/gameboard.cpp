@@ -8,10 +8,8 @@ namespace termd {
 		tman(vman, pman, p),
 		towers(size_rows, std::vector<bool>(size_cols, false)),
 		vman(p),
-		availible_towers({'i', 'd', 'y', 'w'}), //TODO solve hardcodedness
-		wave_number(0),
-		wave(vman)	{
-
+		wman(size_rows, size_cols, towers, std::string("info/map1/wave.info"), vman), //TODO remove hardcodeness
+		availible_towers({'i', 'd', 'y', 'w'}) { //TODO solve hardcodedness
 		//TODO load map of mapid
 	}
 
@@ -25,7 +23,7 @@ namespace termd {
 
 	bool GameBoard::update() {
 		//TODO spawn viruses with cool function
-		bool cont = vman.update();
+		bool cont = wman.update() || vman.update();
 		pman.update();
 		tman.update();
 		if (!cont) {
@@ -102,15 +100,6 @@ namespace termd {
 		return size_cols;
 	}
 
-	int GameBoard::get_current_wave_number() const {
-		return wave_number;
-	}
-
-	int GameBoard::get_number_of_waves() const {
-		return 1;
-		//return waves.size();
-	}
-
 	bool GameBoard::build_tower(Coord c, int tower_id) {
 		if (c.get_col() < 0 ||
 				c.get_col() >= size_cols ||
@@ -128,10 +117,6 @@ namespace termd {
 
 		towers[c.get_row()][c.get_col()] = tman.build_tower(c, tower_id);
 		return towers[c.get_row()][c.get_col()];
-	}
-
-	void GameBoard::spawn_virus(){
-		wave.spawn(wave_number, size_rows, size_cols, towers);
 	}
 
 	bool GameBoard::save_to_file() {
@@ -157,10 +142,5 @@ namespace termd {
 			return b && true;
 		}
 		return false;
-	}
-
-	void GameBoard::set_wave_number(int num) {
-		if (num < 0) return;
-		wave_number = num;
 	}
 }

@@ -6,11 +6,11 @@
 #include <vector>
 #endif
 
-#ifndef termd_random
-#define termd_random
-#include <random>
-#endif
+#include <string>
+#include <algorithm>
 
+#include "waveloader.hpp"
+#include "../../definitions"
 #include "../../coord.hpp"
 #include "../virus.hpp"
 #include "../virusloader.hpp"
@@ -18,16 +18,25 @@
 
 namespace termd {
 
-	class Wave {
+	class WaveManager {
 		private:
-		VirusLoader virus_loader;
-		VirusManager& vman;
-		//TODO definition of waves
-		public:
-			Wave(VirusManager&);
-			void spawn(int wave, int size_r, int size_c, const std::vector<std::vector<bool> > & towers);
-	};
+			WaveLoader wave_loader;
+			VirusLoader virus_loader;
+			VirusManager& vman;
 
+			int size_r;
+			int size_c;
+			const std::vector<std::vector<bool> > & towers;
+			unsigned int timer;
+		public:
+			WaveManager(int sizer, int sizec, const std::vector<std::vector<bool> >& towers, std::string wave_info_file, VirusManager&);
+
+			//Starts a new wave if one is available
+			//returns true if a wave is available
+			//else false
+			bool spawn();
+			bool update();
+	};
 }
 
 #endif

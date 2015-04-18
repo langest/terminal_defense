@@ -21,7 +21,7 @@
 #include <cstddef>
 #endif //termd_cstddef
 
-#include "../virus/wave/wave.hpp"
+#include "../virus/wave/wavemanager.hpp"
 #include "../definitions"
 #include "../gui.hpp"
 #include "../coord.hpp"
@@ -48,13 +48,11 @@ namespace termd {
 			std::vector<std::vector<bool> > towers;
 			ProjectileManager pman;
 			VirusManager vman;
+			WaveManager wman;
 			std::vector<std::vector<int>> pathing;
 			std::vector<std::vector<char>> gfx;
 
 			std::set<int> availible_towers;
-
-			int wave_number;
-			Wave wave;
 
 			bool blocked_with(Coord);
 			void load_map();

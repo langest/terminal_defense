@@ -4,14 +4,17 @@
 #include <vector>
 
 namespace termd {
-	class Wave_info {
+	class WaveInfo {
 		private:
 			std::vector<std::vector<int> > wave;
 		public:
-			Wave_info(int);
+			WaveInfo(int);
+			WaveInfo(const WaveInfo&);
+			WaveInfo& operator=(const WaveInfo&);
 
 			int num_spawns() const;
-			std::vector<int>& operator[](int);
+			std::vector<int>& operator[](std::size_t);
+			const std::vector<int>& operator[](std::size_t) const;
 	};
 }
 
