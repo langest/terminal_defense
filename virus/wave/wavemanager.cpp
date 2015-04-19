@@ -17,6 +17,7 @@ namespace termd {
 	}
 
 	bool WaveManager::update() {
+		++timer;
 		if (timer%SPAWNRATE != 0) return true;
 		WaveInfo& wi = wave_loader.get_current_wave();
 
@@ -40,7 +41,6 @@ namespace termd {
 			virus_ptr v(new Virus(*vir, p));
 			vman.add_virus(std::move(v));
 		}
-		++timer;
 		return wi.has_spawns_left();
 	}
 
