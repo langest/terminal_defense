@@ -127,6 +127,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			last_update = cur_update;
 			std::this_thread::sleep_for(sleep_dur);
 		}
+		board.draw();//Redraw the board so all projectiles are removed TODO prettier solution since this just instantly removes all their gfx.
 		return board.next_wave();
 	}
 
