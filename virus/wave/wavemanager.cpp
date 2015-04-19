@@ -18,17 +18,16 @@ namespace termd {
 
 	bool WaveManager::update() {
 		if (timer%SPAWNRATE != 0) return true;
-		const WaveInfo& wi = wave_loader.get_current_wave();
+		WaveInfo& wi = wave_loader.get_current_wave();
 
 		Virus* vir;
 		int vir_id;
 		virus_ptr vp;
 		int n_spawns = std::min(wi.num_spawns(), size_r); //Avoid division by zero, and only spawn as many spawns that fit on screen
-		std::size_t longest_virus_spawn(0); //The longest virus spawn so we know if all viruses have spawned.
 		for (int i = 0; i < n_spawns; ++i) {
-			longest_virus_spawn = std::max(wi[i].size(), longest_virus_spawn);
 			try {
-				vir_id = wi[i][timer/SPAWNRATE];
+				vir_id = wi.get_next_in(i);
+				wi.pop(i);
 				if (vir_id == 0) continue; //Zero means no virus should spawn
 				vir = virus_loader.get(vir_id);
 			} catch (const std::invalid_argument &) {
@@ -42,7 +41,7 @@ namespace termd {
 			vman.add_virus(std::move(v));
 		}
 		++timer;
-		return timer%SPAWNRATE <= longest_virus_spawn;
+		return wi.has_spawns_left();
 	}
 
 }

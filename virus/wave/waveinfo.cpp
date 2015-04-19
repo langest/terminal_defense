@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	WaveInfo::WaveInfo(int num_spawns) : wave(num_spawns, std::vector<int>()) {
+	WaveInfo::WaveInfo(int num_spawns) : wave(num_spawns, std::queue<int>()) {
 	}
 
 	WaveInfo::WaveInfo(const WaveInfo& src) : wave(src.wave) {
@@ -13,16 +13,27 @@ namespace termd {
 		return *this;
 	}
 
+	bool WaveInfo::has_spawns_left() const {
+		for (std::queue<int> q : wave) {
+			if (q.size() > 0) return true;
+		}
+		return false;
+	}
+
 	int WaveInfo::num_spawns() const {
 		return wave.size();
 	}
 
-	std::vector<int>& WaveInfo::operator[](std::size_t ix) {
-		return wave[ix];
+	void WaveInfo::pop(std::size_t ix) {
+		wave[ix].pop();
 	}
 
-	const std::vector<int>& WaveInfo::operator[](std::size_t ix) const {
-		return wave[ix];
+	int WaveInfo::get_next_in(std::size_t ix) const {
+		if (wave.size() <= 0) return 0;
+		return wave[ix].front();
 	}
 
+	void WaveInfo::push_to(std::size_t ix, int id) {
+		wave[ix].push(id);
+	}
 }
