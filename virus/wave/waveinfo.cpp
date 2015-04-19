@@ -25,7 +25,8 @@ namespace termd {
 	}
 
 	void WaveInfo::pop(std::size_t ix) {
-		wave[ix].pop();
+		if (wave[ix].size() > 0)
+			wave[ix].pop();
 	}
 
 	int WaveInfo::get_next_in(std::size_t ix) const {
