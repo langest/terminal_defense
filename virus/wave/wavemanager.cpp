@@ -17,9 +17,10 @@ namespace termd {
 	}
 
 	bool WaveManager::update() {
+		WaveInfo& wi = wave_loader.get_current_wave();
+		if (!wi.has_spawns_left()) return false;
 		++timer;
 		if (timer%SPAWNRATE != 0) return true;
-		WaveInfo& wi = wave_loader.get_current_wave();
 
 		Virus* vir;
 		int vir_id;
