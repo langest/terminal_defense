@@ -120,6 +120,10 @@ namespace termd {
 		return towers[c.get_row()][c.get_col()];
 	}
 
+	bool GameBoard::next_wave() {
+		return wman.spawn();
+	}
+
 	bool GameBoard::save_to_file() {
 		bool b1 = tman.save_to_file(std::string("tman.save"));
 		std::ofstream savefile;

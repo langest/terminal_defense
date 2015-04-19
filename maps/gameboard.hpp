@@ -68,8 +68,7 @@ namespace termd {
 
 			//Game Logic
 			bool build_tower(Coord, int);
-			void spawn_virus();
-			void set_wave_number(int);
+			bool next_wave(); //Prepares next wave and returns true iff sucessful
 
 			//Save/load
 			bool save_to_file();

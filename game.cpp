@@ -127,7 +127,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			last_update = cur_update;
 			std::this_thread::sleep_for(sleep_dur);
 		}
-		return false; //TODO check if there are any waves left and return true iff it is.
+		return board.next_wave();
 	}
 
 	bool Game::run() {
