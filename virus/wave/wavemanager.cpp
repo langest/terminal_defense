@@ -35,7 +35,7 @@ namespace termd {
 				continue;
 			}
 
-			Coord start((size_r/(size_r+1-n_spawns)) * i, size_c - 1);
+			Coord start((size_r/(1+n_spawns)) * (i+1), size_c - 1);
 			Path p(start, size_r, size_c, towers);
 			virus_ptr v(new Virus(*vir, p));
 			vman.add_virus(std::move(v));
