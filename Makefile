@@ -7,7 +7,9 @@ maindeps = game.o \
            virus/virusloader.o \
            virus/path.o \
            virus/virus.o \
-           maps/wave.o \
+					 virus/wave/waveinfo.o \
+					 virus/wave/waveloader.o \
+					 virus/wave/wavemanager.o \
            maps/gameboard.o \
            tower/towermanager.o \
            tower/towerloader.o \

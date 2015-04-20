@@ -9,6 +9,9 @@
 //Framerate, number of frames / 1000ms
 #define FRAMES 30
 
+//Wave spawnrate
+#define SPAWNRATE 45
+
 //Typically needed numbers
 #define PI 3.1415
 #define INT_MAX std::numeric_limits<int>::max()

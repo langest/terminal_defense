@@ -91,15 +91,14 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	}
 
 	bool Game::invasion_phase() {
-		board.spawn_virus();
 		char intelmsg[BOARDCOLS];
 
 		//Frame counter setup
 		std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
 		std::chrono::time_point<std::chrono::high_resolution_clock> avglimit;
-		size_t avgseconds = 1;
+		std::size_t avgseconds = 1;
 		std::chrono::milliseconds avgtime(1000 * avgseconds);
-		size_t avgfps;
+		std::size_t avgfps;
 
 		//Framerate limiter setup
 		std::chrono::milliseconds interval(1000/FRAMES);
@@ -128,13 +127,14 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			last_update = cur_update;
 			std::this_thread::sleep_for(sleep_dur);
 		}
-		return false; //TODO check if there are any waves left and return true iff it is.
+		board.draw();//Redraw the board so all projectiles are removed TODO prettier solution since this just instantly removes all their gfx.
+		return board.next_wave();
 	}
 
 	bool Game::run() {
 		intro();
 		build_phase();
-		while (board.get_current_wave_number() < board.get_number_of_waves() && invasion_phase()) {
+		while (invasion_phase()) {
 			if(false == is_player_alive()) {
 				outro();
 				return false;
@@ -156,13 +156,9 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		return player.get_hp();
 	}
 
-	unsigned int Game::get_number_of_waves() const {
-		return board.get_number_of_waves();
-	}
-
 	//board.set_wave_number(int) has check for negative numbers
 	void Game::set_wave_number(int num) {
-		board.set_wave_number(num);
+		//board.set_wave_number(num); TODO needed for saving game
 	}
 
 	void Game::show_menu() {
@@ -175,7 +171,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 			if (ch == '1') {
 				if (save_game()) {
-					set_wave_number(get_number_of_waves());
+					//TODO save game get wavenumber
 					done = true;
 				} else {
 					GUI::print_intel(std::string("Failed to save game, press any key to resume menu."));

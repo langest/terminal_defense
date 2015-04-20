@@ -29,7 +29,7 @@ namespace termd {
 	}
 
 	bool Menu::run_game() {
-		Game game(player, 1);
+		Game game(player, 1); //TODO remove hardcodedness
 		return game.run();
 	}
 

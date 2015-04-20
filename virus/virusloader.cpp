@@ -27,6 +27,8 @@ namespace termd {
 	}
 
 	Virus* VirusLoader::get(int id) {
+		if (id == 0) return nullptr; //Zero is forbidden virus id.
+
 		auto ptr(loadedvir.find(id));
 		if(ptr == loadedvir.end()) {
 			throw std::invalid_argument ("No such virus");
