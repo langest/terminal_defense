@@ -22,7 +22,6 @@ namespace termd {
 	}
 
 	bool GameBoard::update() {
-		//TODO spawn viruses with cool function
 		bool cont = wman.update();
 		cont = vman.update() || cont;
 		pman.update();
