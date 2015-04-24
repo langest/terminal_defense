@@ -29,12 +29,12 @@ namespace termd {
 	}
 
 	bool Menu::run_game() {
-		Game game(player, 1); //TODO remove hardcodedness
+		Game game(player, "map1"); //TODO remove hardcodedness
 		return game.run();
 	}
 
 	bool Menu::load_quicksave() {
-		Game game(player, 1);
+		Game game(player, "map1"); //TODO remove hardcodedness
 		game.load_game();
 		return game.run();
 	}

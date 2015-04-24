@@ -1,16 +1,15 @@
 #include "gameboard.hpp"
 namespace termd {
-	GameBoard::GameBoard(Player& p, int mapid) :
+	GameBoard::GameBoard(Player& p, std::string map_identification) :
 		player(p),
-		map_id(mapid),
+		map_id(map_identification),
 		size_rows(BOARDROWS),
 	 	size_cols(BOARDCOLS),
 		tman(vman, pman, p),
 		towers(size_rows, std::vector<bool>(size_cols, false)),
 		vman(p),
-		wman(size_rows, size_cols, towers, std::string("info/map1/wave.info"), vman), //TODO remove hardcodeness
-		availible_towers({'i', 'd', 'y', 'w'}) { //TODO solve hardcodedness
-		//TODO load map of mapid
+		wman(size_rows, size_cols, towers, std::string("info/") + std::string(map_id) + std::string("/wave.info"), vman)	{
+				load_map();
 	}
 
 	void GameBoard::draw() const {
@@ -88,22 +87,21 @@ namespace termd {
 		return true;
 	}
 
-	void GameBoard::load_map(std::string map_file) {
+	void GameBoard::load_map() {
 		std::ifstream loadfile;
-		loadfile.open(map_file);
+		loadfile.open(std::string("info/") + map_id + std::string("/gameboard.info"));
 		if (loadfile.is_open()) {
 
-			int control_points;
-			int ram;
-			loadfile >> control_points;
+			loadfile >> max_control_points;
+			control_points = max_control_points;
 			loadfile >> ram;
 
 			int number_of_towers;
 
 			loadfile >> number_of_towers;
-			std::vector<char> available_towers(number_of_towers)
+			std::vector<char> available_towers(number_of_towers);
 			char tmp;
-			for (int i = 0; i < number_of_tower; ++i) {
+			for (int i = 0; i < number_of_towers; ++i) {
 				loadfile >> tmp;
 				available_towers.push_back(tmp);
 			}
@@ -112,14 +110,16 @@ namespace termd {
 			loadfile >> n_rows;
 			loadfile >> n_cols;
 
-			std::vector<std::vector<int> > map(n_rows, vector<int>(n_cols));
 			int tile;
 			for (int r = 0; r < n_rows; r++) {
 				for (int c = 0; c < n_cols; c++) {
 					loadfile >> tile;
-					map[r].push_back(tile);
+					if (tile != 0) {
+						grid_env_state.insert(std::pair<Coord, int>(Coord(r,c), tile));
+					}
 				}
 			}
+		}
 	}
 
 	const int GameBoard::get_size_rows() const {

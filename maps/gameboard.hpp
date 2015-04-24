@@ -39,9 +39,12 @@ namespace termd {
 		private:
 			//player information:
 			Player& player;
+			int ram;
+			int max_control_points;
+			int control_points;
 
 			//Board information:
-			int map_id;
+			std::string map_id; //info file location
 			std::map<Coord, int> grid_env_state;
 			std::map<Coord, int> grid_bld_state;
 			const int size_rows;
@@ -57,10 +60,10 @@ namespace termd {
 			std::set<int> availible_towers;
 
 			bool blocked_with(Coord);
-			void load_map(std::string map_info);
+			void load_map();
 
 		public:
-			GameBoard(Player&, int);
+			GameBoard(Player&, std::string);
 			GameBoard(const GameBoard &) = delete;
 			GameBoard& operator=(const GameBoard &) = delete;
 

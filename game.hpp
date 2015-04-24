@@ -26,6 +26,8 @@
 #include <chrono>
 #endif
 
+#include <string>
+
 #include "definitions"
 #include "gui.hpp"
 #include "player.hpp"
@@ -53,7 +55,7 @@ namespace termd {
 			void show_menu();
 			bool save_game();
 		public:
-			Game(Player&, int);
+			Game(Player&, std::string);
 
 			bool load_game();
 			bool run();

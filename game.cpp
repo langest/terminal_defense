@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	Game::Game(Player & p, int map_id) : player(p), board(player, map_id) {
+	Game::Game(Player & p, std::string map_id) : player(p), board(player, map_id) {
 		//initialize input calls
 		std::function<void()> f = [this]() { GUI::move_cursor_left(); };
 		inputcalls['h'] = f;
