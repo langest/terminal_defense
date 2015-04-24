@@ -15,6 +15,7 @@ namespace termd {
 	void GameBoard::draw() const {
 		GUI::clear_game();
 
+		draw_environment();
 		tman.draw_towers();
 		vman.draw_viruses();
 		pman.draw_projectiles();
@@ -123,6 +124,12 @@ namespace termd {
 					}
 				}
 			}
+		}
+	}
+
+	void GameBoard::draw_environment() const {
+		for (auto i = grid_env_state.begin(); i != grid_env_state.end(); ++i) {
+			GUI::draw_gfx(i->first, 'O');
 		}
 	}
 

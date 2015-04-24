@@ -58,6 +58,7 @@ namespace termd {
 
 			bool blocked_with(Coord);
 			void load_map();
+			void draw_environment() const;
 
 		public:
 			GameBoard(Player&, std::string);
