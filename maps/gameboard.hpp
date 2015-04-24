@@ -21,6 +21,8 @@
 #include <cstddef>
 #endif //termd_cstddef
 
+#include <string>
+
 #include "../virus/wave/wavemanager.hpp"
 #include "../definitions"
 #include "../gui.hpp"
@@ -55,7 +57,7 @@ namespace termd {
 			std::set<int> availible_towers;
 
 			bool blocked_with(Coord);
-			void load_map();
+			void load_map(std::string map_info);
 
 		public:
 			GameBoard(Player&, int);

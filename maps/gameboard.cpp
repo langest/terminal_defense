@@ -88,8 +88,38 @@ namespace termd {
 		return true;
 	}
 
-	void GameBoard::load_map() {
-		//TODO load map from file
+	void GameBoard::load_map(std::string map_file) {
+		std::ifstream loadfile;
+		loadfile.open(map_file);
+		if (loadfile.is_open()) {
+
+			int control_points;
+			int ram;
+			loadfile >> control_points;
+			loadfile >> ram;
+
+			int number_of_towers;
+
+			loadfile >> number_of_towers;
+			std::vector<char> available_towers(number_of_towers)
+			char tmp;
+			for (int i = 0; i < number_of_tower; ++i) {
+				loadfile >> tmp;
+				available_towers.push_back(tmp);
+			}
+
+			int n_rows, n_cols;
+			loadfile >> n_rows;
+			loadfile >> n_cols;
+
+			std::vector<std::vector<int> > map(n_rows, vector<int>(n_cols));
+			int tile;
+			for (int r = 0; r < n_rows; r++) {
+				for (int c = 0; c < n_cols; c++) {
+					loadfile >> tile;
+					map[r].push_back(tile);
+				}
+			}
 	}
 
 	const int GameBoard::get_size_rows() const {
