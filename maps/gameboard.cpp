@@ -104,11 +104,10 @@ namespace termd {
 			int number_of_towers;
 
 			loadfile >> number_of_towers;
-			std::vector<char> available_towers(number_of_towers);
 			char tmp;
 			for (int i = 0; i < number_of_towers; ++i) {
 				loadfile >> tmp;
-				available_towers.push_back(tmp);
+				available_towers.insert(tmp);
 			}
 
 			int n_rows, n_cols;
@@ -144,7 +143,7 @@ namespace termd {
 		 	return false;
 		}
 
-		if(availible_towers.find(tower_id) == availible_towers.end()) {
+		if(available_towers.find(tower_id) == available_towers.end()) {
 			return false;
 		}
 

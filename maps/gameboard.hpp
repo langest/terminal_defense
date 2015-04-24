@@ -54,7 +54,7 @@ namespace termd {
 			std::vector<std::vector<int>> pathing;
 			std::vector<std::vector<char>> gfx;
 
-			std::set<int> availible_towers;
+			std::set<int> available_towers;
 
 			bool blocked_with(Coord);
 			void load_map();
