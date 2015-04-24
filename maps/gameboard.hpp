@@ -39,9 +39,6 @@ namespace termd {
 		private:
 			//player information:
 			Player& player;
-			int ram;
-			int max_control_points;
-			int control_points;
 
 			//Board information:
 			std::string map_id; //info file location

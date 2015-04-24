@@ -50,7 +50,6 @@ namespace termd {
 			void build_phase();
 			bool invasion_phase();
 			bool is_player_alive() const;
-			int get_player_hp() const;
 			void set_wave_number(int);
 			void show_menu();
 			bool save_game();

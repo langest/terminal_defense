@@ -84,7 +84,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			}
 			board.draw();
 			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_cp());
 			GUI::print_intel(intelmsg);
 			GUI::refresh();
 		}
@@ -118,7 +118,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 			//Framerate limiter
 			board.draw();
 			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_hp(), avgfps);
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_cp(), avgfps);
 			GUI::print_intel(intelmsg);
 			GUI::refresh();
 
@@ -139,7 +139,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 				outro();
 				return false;
 			}
-			if(get_player_hp() < PLAYER_DEFAULT_HP) {
+			if(player.get_cp() < player.get_max_cp()) {
 				unlock_tower(1); //TODO remove hardcodedness
 			}
 			build_phase();
@@ -150,10 +150,6 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 	bool Game::is_player_alive() const {
 		return player.is_alive();
-	}
-
-	int Game::get_player_hp() const {
-		return player.get_hp();
 	}
 
 	//board.set_wave_number(int) has check for negative numbers

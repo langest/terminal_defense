@@ -92,9 +92,14 @@ namespace termd {
 		loadfile.open(std::string("info/") + map_id + std::string("/gameboard.info"));
 		if (loadfile.is_open()) {
 
-			loadfile >> max_control_points;
-			control_points = max_control_points;
+			int max_cp;
+			loadfile >> max_cp;
+			player.set_max_cp(max_cp);
+			player.set_cp(max_cp);
+
+			int ram;
 			loadfile >> ram;
+			player.set_ram(ram);
 
 			int number_of_towers;
 
