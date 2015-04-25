@@ -44,8 +44,8 @@ namespace termd {
 			std::string map_id; //info file location
 			std::map<Coord, int> grid_env_state;
 			std::map<Coord, int> grid_bld_state;
-			const int size_rows;
-			const int size_cols;
+			int size_rows;
+			int size_cols;
 			TowerManager tman;
 			std::vector<std::vector<bool> > towers;
 			ProjectileManager pman;

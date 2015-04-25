@@ -36,6 +36,7 @@ namespace termd {
 			//else false
 			bool spawn();
 			bool update();
+			void set_size(int, int);
 	};
 }
 

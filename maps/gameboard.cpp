@@ -3,17 +3,17 @@ namespace termd {
 	GameBoard::GameBoard(Player& p, std::string map_identification) :
 		player(p),
 		map_id(map_identification),
-		size_rows(BOARDROWS),
-	 	size_cols(BOARDCOLS),
+		size_rows(0),
+		size_cols(0),
 		tman(vman, pman, p),
-		towers(size_rows, std::vector<bool>(size_cols, false)),
 		vman(p),
-		wman(size_rows, size_cols, towers, std::string("info/") + std::string(map_id) + std::string("/wave.info"), vman)	{
-				load_map();
+		wman(size_rows, size_cols, towers, std::string("info/") + std::string(map_id) + std::string("/wave.info"), vman) {
+			load_map();
+			wman.set_size(size_rows, size_cols);
 	}
 
 	void GameBoard::draw() const {
-		GUI::clear_game();
+		GUI::clear_game(size_rows, size_cols);
 
 		draw_environment();
 		tman.draw_towers();
@@ -111,19 +111,19 @@ namespace termd {
 				available_towers.insert(tmp);
 			}
 
-			int n_rows, n_cols;
-			loadfile >> n_rows;
-			loadfile >> n_cols;
+			loadfile >> size_rows;
+			loadfile >> size_cols;
 
 			int tile;
-			for (int r = 0; r < n_rows; r++) {
-				for (int c = 0; c < n_cols; c++) {
+			for (int r = 0; r < size_rows; r++) {
+				for (int c = 0; c < size_cols; c++) {
 					loadfile >> tile;
 					if (tile != 0) {
 						grid_env_state.insert(std::pair<Coord, int>(Coord(r,c), tile));
 					}
 				}
 			}
+		towers = std::vector<std::vector<bool> >(size_rows, std::vector<bool>(size_cols, false));
 		}
 	}
 
