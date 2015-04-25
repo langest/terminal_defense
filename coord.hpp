@@ -8,7 +8,7 @@
 
 #ifndef termd_math
 #define termd_math
-#include <math.h>
+#include <cmath>
 #endif
 
 namespace termd {
@@ -28,6 +28,7 @@ namespace termd {
 			bool operator<(const Coord &) const;
 			bool operator>(const Coord &) const;
 
+			double distance(const Coord&) const; //Euclidian distance
 			int get_col() const;
 			void add_col(int);
 			bool set_col(const int);

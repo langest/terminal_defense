@@ -25,6 +25,8 @@ namespace termd {
 		int col_spd;
 		int row_spd;
 
+		int range; //Euclidian distance that the projectile can travel
+
 		Direction_projectile_base(char gf, int d, int t, int cs, int rs) :
 		Projectile_base(gf, d, t),
 		col_spd(cs),

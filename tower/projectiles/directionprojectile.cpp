@@ -6,6 +6,7 @@ namespace termd {
 		Projectile(dp, s),
 		col_spd(dp.col_spd),
 		row_spd(dp.row_spd),
+		range(dp.range),
 		viruses(t) {}
 
 	DirectionProjectile::~DirectionProjectile() {
@@ -31,11 +32,6 @@ namespace termd {
 	}
 
 	bool DirectionProjectile::update() {
-		if (pos.get_row() < 0 ||
-				pos.get_col() < 0 ||
-				pos.get_row() > BOARDROWS ||
-				pos.get_col() > BOARDCOLS) return false;
-
 		Virus* target = hit();
 		if(target != nullptr){
 			//hit target!
@@ -44,6 +40,9 @@ namespace termd {
 			return false; 
 		}
 		move();
+
+		if (start_pos.distance(pos) > range) return false;
+
 		target = hit();
 		if(target != nullptr){
 			//hit target!
