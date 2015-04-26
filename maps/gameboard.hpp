@@ -1,11 +1,6 @@
 #ifndef termd_game_board
 #define termd_game_board
 
-#ifndef termd_map
-#define termd_map
-#include <map>
-#endif //termd_map
-
 #ifndef termd_set
 #define termd_set
 #include <set>
@@ -42,12 +37,11 @@ namespace termd {
 
 			//Board information:
 			std::string map_id; //info file location
-			std::map<Coord, int> grid_env_state;
-			std::map<Coord, int> grid_bld_state;
 			int size_rows;
 			int size_cols;
 			TowerManager tman;
 			std::vector<std::vector<bool> > towers;
+			std::vector<std::vector<int> > environment;
 			ProjectileManager pman;
 			VirusManager vman;
 			WaveManager wman;

@@ -114,13 +114,13 @@ namespace termd {
 			loadfile >> size_rows;
 			loadfile >> size_cols;
 
+			environment = std::vector<std::vector<int> >(size_rows, std::vector<int>(size_cols));
+
 			int tile;
 			for (int r = 0; r < size_rows; r++) {
 				for (int c = 0; c < size_cols; c++) {
 					loadfile >> tile;
-					if (tile != 0) {
-						grid_env_state.insert(std::pair<Coord, int>(Coord(r,c), tile));
-					}
+					environment[r][c] = tile;
 				}
 			}
 		towers = std::vector<std::vector<bool> >(size_rows, std::vector<bool>(size_cols, false));
@@ -128,8 +128,12 @@ namespace termd {
 	}
 
 	void GameBoard::draw_environment() const {
-		for (auto i = grid_env_state.begin(); i != grid_env_state.end(); ++i) {
-			GUI::draw_gfx(i->first, 'O');
+		for (int r = 0; r < size_rows; ++r) {
+			for (int c = 0; c < size_cols; ++c) {
+				if (environment[r][c] != 0) {
+					GUI::draw_gfx(Coord(r, c), 'O');
+				}
+			}
 		}
 	}
 
@@ -142,11 +146,14 @@ namespace termd {
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {
-		if (c.get_col() < 0 ||
-				c.get_col() >= size_cols ||
-				c.get_row() < 0 ||
-				c.get_row() >= size_rows ||
-				towers[c.get_row()][c.get_col()]) {
+		int row(c.get_row());
+		int col(c.get_col());
+		if (col < 0 ||
+			col >= size_cols ||
+			row < 0 ||
+			row >= size_rows ||
+			towers[row][col] ||
+			environment[row][col] != 0) {
 		 	return false;
 		}
 
@@ -156,8 +163,8 @@ namespace termd {
 
 		if (blocked_with(c)) return false;
 
-		towers[c.get_row()][c.get_col()] = tman.build_tower(c, tower_id);
-		return towers[c.get_row()][c.get_col()];
+		towers[row][col] = tman.build_tower(c, tower_id);
+		return towers[row][col];
 	}
 
 	bool GameBoard::next_wave() {
