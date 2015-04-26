@@ -39,9 +39,9 @@ namespace termd {
 			std::string map_id; //info file location
 			int size_rows;
 			int size_cols;
-			TowerManager tman;
 			std::vector<std::vector<bool> > towers;
 			std::vector<std::vector<int> > environment;
+			TowerManager tman;
 			ProjectileManager pman;
 			VirusManager vman;
 			WaveManager wman;
