@@ -1,11 +1,7 @@
 #ifndef termd_wave
 #define termd_wave
 
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif
-
 #include <string>
 #include <algorithm>
 

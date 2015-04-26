@@ -1,10 +1,7 @@
 #ifndef termd_damage
 #define termd_damage
 
-#ifndef termd_cstdlib
-#define termd_cstdlib
 #include <cstdlib>
-#endif //termd_cstdlib - needed for rand()
 
 namespace termd {
 

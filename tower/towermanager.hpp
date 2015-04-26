@@ -1,15 +1,8 @@
 #ifndef termd_tower_manager
 #define termd_tower_manager
 
-#ifndef termd_map
-#define termd_map
 #include <map>
-#endif //termd_map
-
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif //termd_vector
 
 #include "../gui.hpp"
 #include "../coord.hpp"

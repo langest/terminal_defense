@@ -1,30 +1,13 @@
 #ifndef termd_player
 #define termd_player
 
-#ifndef termd_set
-#define termd_set
 #include <set>
-#endif
-
-#ifndef termd_string
-#define termd_string
 #include <string>
-#endif
-
-#ifndef termd_fstream
-#define termd_fstream
 #include <fstream>
-#endif
-
-#ifndef termd_iostream
-#define termd_iostream
 #include <iostream>
-#endif
-
-
-#include "gui.hpp"
 
 #include "definitions"
+#include "gui.hpp"
 
 namespace termd {
 

@@ -1,10 +1,7 @@
 #ifndef termd_projectile
 #define termd_projectile
 
-#ifndef termd_memory
-#define termd_memory
 #include <memory>
-#endif
 
 #include "projectilebase.hpp"
 #include "../../gui.hpp"

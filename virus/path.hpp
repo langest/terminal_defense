@@ -1,23 +1,11 @@
 #ifndef termd_path
 #define termd_path
 
-#ifndef termd_queue
-#define termd_queue
 #include <queue>
-#endif //termd_queue
-
-#ifndef termd_stack
-#define termd_stack
 #include <stack>
-#endif //termd_stack
-
-#ifndef termd_utility
-#define termd_utility
 #include <utility>
-#endif
 
 #include "../gui.hpp"
-
 #include "../definitions"
 #include "../coord.hpp"
 #include "../definitions"
