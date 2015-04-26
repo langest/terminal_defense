@@ -10,6 +10,7 @@ namespace termd {
 		wman(size_rows, size_cols, towers, std::string("info/") + std::string(map_id) + std::string("/wave.info"), vman) {
 			load_map();
 			wman.set_size(size_rows, size_cols);
+			pman.set_size(size_rows, size_cols);
 	}
 
 	void GameBoard::draw() const {

@@ -8,13 +8,17 @@ namespace termd {
 	
 	class ProjectileManager {
 		private:
+			int num_rows;
+			int num_cols;
 			Projectile_loader projload;
 			std::vector<proj_ptr> projectiles;
 
 			void purge_projectiles();
 		public:
+			ProjectileManager();
 			~ProjectileManager();
 
+			void set_size(int n_rows, int n_cols);
 			void update();
 			void draw_projectiles() const;
 			void add_projectile(proj_ptr&&);

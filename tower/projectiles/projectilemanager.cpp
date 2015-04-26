@@ -1,6 +1,10 @@
 #include "projectilemanager.hpp"
 
 namespace termd {
+
+	ProjectileManager::ProjectileManager() :
+		num_rows(0),
+		num_cols(0) {}
 	
 	ProjectileManager::~ProjectileManager() {
 		purge_projectiles();
@@ -10,9 +14,20 @@ namespace termd {
 		projectiles.clear();
 	}
 
+	void ProjectileManager::set_size(int n_rows, int n_cols) {
+		num_rows = n_rows;
+		num_cols = n_cols;
+	}
+			
 	void ProjectileManager::update() {
+		Coord p;
 		for (auto i = projectiles.begin(); i != projectiles.end(); ) {
-			if((*i)->update() == false) {
+			p = (*i)->get_pos();
+			if((*i)->update() == false ||
+				p.get_row() >= num_rows-1 ||
+				p.get_col() >= num_cols-1 ||
+				p.get_row() <= 0 ||
+				p.get_col() <= 0) {
 				//Projectile flags removal (probably a hit)
 				i = projectiles.erase(i);
 			} else {
