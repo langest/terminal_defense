@@ -6,6 +6,7 @@ namespace termd {
 		Projectile(dp, s),
 		col_spd(dp.col_spd),
 		row_spd(dp.row_spd),
+		start_pos(s),
 		range(dp.range),
 		viruses(t) {}
 
