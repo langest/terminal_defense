@@ -98,7 +98,7 @@ namespace termd {
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
 
-		if (   (int) gfx.size() + coord.get_row() >= max_row
+		if ((int) gfx.size() + coord.get_row() >= max_row
 				|| (int) gfx[0].size() + coord.get_col() >= max_col
 				|| coord.get_row() < 0
 				|| coord.get_col() < 0 ) {
