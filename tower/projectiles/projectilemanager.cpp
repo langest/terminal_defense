@@ -26,8 +26,8 @@ namespace termd {
 			if((*i)->update() == false ||
 				p.get_row() >= num_rows-1 ||
 				p.get_col() >= num_cols-1 ||
-				p.get_row() <= 0 ||
-				p.get_col() <= 0) {
+				p.get_row() < 0 ||
+				p.get_col() < 0) {
 				//Projectile flags removal (probably a hit)
 				i = projectiles.erase(i);
 			} else {
