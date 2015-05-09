@@ -23,72 +23,53 @@ namespace termd {
 
 	bool HomingProjectile::step() {
 		if (hit()) return false; //We already reached the target
+		if (speed_curr < PROJ_STEPCOST) return false; // We cannot move and are done
 
 		Coord delta = target.get_pos() - pos;
 
-		double angle = atan2(delta.get_row(), delta.get_col()) * -180 / PI;
-		angle = (angle > 0 ? angle : (360.0 + angle));
+		int row_dist = std::abs(delta.get_row());
+		int col_dist = std::abs(delta.get_col());
+		int diag_dist = std::abs(row_dist - col_dist);
 
-		if (angle < 45.0f/2.0f) { //go right
-			if (speed_curr >= PROJ_STEPCOST) {
+		if (row_dist < col_dist) { // Check if we have most rows or cols left
+			if (diag_dist <= col_dist) {// We should step in col
+				// Remove speed since we are going to step
 				speed_curr -= PROJ_STEPCOST;
+				if (delta.get_col() < 0) { // Check which dir we should step
+					pos.add_col(-1);
+					return true;
+				}
 				pos.add_col(1);
 				return true;
 			}
-		} else if (angle < 45.0f+45.0f/2.0f) { //go up right
-			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
-				speed_curr -= PROJ_STEPCOSTDIAGONAL;
-				pos.add_col(1);
-				pos.add_row(-1);
-				return true;
-			}
-		} else if (angle < 2*45.0f+45.0f/2.0f) { //go up
-			if (speed_curr >= PROJ_STEPCOST) {
+		} else { // col_dist < row_dist
+			if (diag_dist <= row_dist) {
+				// Remove speed since we are going to step
 				speed_curr -= PROJ_STEPCOST;
-				pos.add_row(-1);
-				return true;
-			}
-		} else if (angle < 3*45.0f+45.0f/2.0f) { //go up left
-			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
-				speed_curr -= PROJ_STEPCOSTDIAGONAL;
-				pos.add_col(-1);
-				pos.add_row(-1);
-				return true;
-			}
-		} else if (angle < 4*45.0f+45.0f/2.0f) { //go left
-			if (speed_curr >= PROJ_STEPCOST) {
-				speed_curr -= PROJ_STEPCOST;
-				pos.add_col(-1);
-				return true;
-			}
-		} else if (angle < 5*45.0f+45.0f/2.0f) { //go down left
-			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
-				speed_curr -= PROJ_STEPCOSTDIAGONAL;
-				pos.add_col(-1);
+				if (delta.get_row() < 0) {// Check which dir we should step
+					pos.add_row(-1);
+					return true;
+				}
 				pos.add_row(1);
-				return true;
-			}
-		} else if (angle < 6*45.0f+45.0f/2.0f) { //go down
-			if (speed_curr >= PROJ_STEPCOST) {
-				speed_curr -= PROJ_STEPCOST;
-				pos.add_row(1);
-				return true;
-			}
-		} else if (angle < 7*45.0f+45.0f/2.0f) { //go down right
-			if (speed_curr >= PROJ_STEPCOSTDIAGONAL) {
-				speed_curr -= PROJ_STEPCOSTDIAGONAL;
-				pos.add_col(1);
-				pos.add_row(1);
-				return true;
-			}
-		} else { //go right
-			if (speed_curr >= PROJ_STEPCOST) {
-				speed_curr -= PROJ_STEPCOST;
-				pos.add_col(1);
 				return true;
 			}
 		}
-		return false;
+		if (speed_curr < PROJ_STEPCOSTDIAGONAL) return false; // We cannot diagonally and are done
+		//Remove speed since we are goind to step
+		speed_curr -= PROJ_STEPCOSTDIAGONAL;
+
+		if (delta.get_row() < 0) {
+			pos.add_row(-1);
+		} else { //delta.get_row >= 0
+			pos.add_row(1);
+		}
+		if (delta.get_col() < 0) {
+			pos.add_col(-1);
+		} else {
+			pos.add_col(1);
+		}
+
+		return true;
 	}
 
 	bool HomingProjectile::update() {
