@@ -25,13 +25,15 @@ namespace termd {
 						std::pair<int, std::unique_ptr<Projectile_base> >(id, 
 							std::unique_ptr<Projectile_base>(new Homing_projectile_base(gfx, damage, type, speed))));
 				} else if (type == DIRECTION) {
-					int col_spd;
 					int row_spd;
-					loadfile >> col_spd;
+					int col_spd;
 					loadfile >> row_spd;
+					loadfile >> col_spd;
+					int range;
+					loadfile >> range;
 					loaded_proj.insert(
 						std::pair<int, std::unique_ptr<Projectile_base> >(id, 
-							std::unique_ptr<Projectile_base>(new Direction_projectile_base(gfx, damage, type, col_spd, row_spd))));
+							std::unique_ptr<Projectile_base>(new Direction_projectile_base(gfx, damage, type, row_spd, col_spd, range))));
 				} else {
 					//??
 				}

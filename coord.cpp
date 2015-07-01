@@ -42,6 +42,9 @@ namespace termd {
 		return row > other.row;
 	}
 
+	double Coord::distance(const Coord& other) const {
+		return std::sqrt((other.get_row() - row)*(other.get_row() - row) + (other.get_col() - col)*(other.get_col() - col));
+	}
 
 	int Coord::get_col() const {
 		return col;

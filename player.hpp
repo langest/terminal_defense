@@ -16,7 +16,8 @@ namespace termd {
 			std::set<int> completed_maps;
 			std::set<int> availiable_towers;
 			int ram;
-			int hp;
+			int max_cp;
+			int cp;
 		protected:
 			
 		public:
@@ -25,10 +26,14 @@ namespace termd {
 			~Player();
 			
 			void new_map_refresh();
-			int get_hp() const;
+			int get_max_cp() const;
+			void set_max_cp(int);
+			int get_cp() const;
+			void set_cp(int);
 			bool is_alive() const;
 			void take_damage(int);
-			void modify_ram(int);
+			void set_ram(int); //Sets the current ram to the value
+			void modify_ram(int); //Adds the value to the current ram
 			int get_ram() const;
 
 			void unlock_tower(int);

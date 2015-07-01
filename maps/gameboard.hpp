@@ -1,10 +1,11 @@
 #ifndef termd_game_board
 #define termd_game_board
 
-#include <map>
 #include <set>
 #include <queue>
 #include <cstddef>
+
+#include <string>
 
 #include "../virus/wave/wavemanager.hpp"
 #include "../definitions"
@@ -24,26 +25,26 @@ namespace termd {
 			Player& player;
 
 			//Board information:
-			int map_id;
-			std::map<Coord, int> grid_env_state;
-			std::map<Coord, int> grid_bld_state;
-			const int size_rows;
-			const int size_cols;
-			TowerManager tman;
+			std::string map_id; //info file location
+			int size_rows;
+			int size_cols;
 			std::vector<std::vector<bool> > towers;
+			std::vector<std::vector<int> > environment;
+			TowerManager tman;
 			ProjectileManager pman;
 			VirusManager vman;
 			WaveManager wman;
 			std::vector<std::vector<int>> pathing;
 			std::vector<std::vector<char>> gfx;
 
-			std::set<int> availible_towers;
+			std::set<int> available_towers;
 
 			bool blocked_with(Coord);
 			void load_map();
+			void draw_environment() const;
 
 		public:
-			GameBoard(Player&, int);
+			GameBoard(Player&, std::string);
 			GameBoard(const GameBoard &) = delete;
 			GameBoard& operator=(const GameBoard &) = delete;
 

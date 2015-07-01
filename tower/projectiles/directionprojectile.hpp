@@ -14,6 +14,8 @@ namespace termd {
 		private:
 			const int col_spd;
 			const int row_spd;
+			const Coord start_pos;
+			const int range; //Euclidian distance that the projectile can travel
 
 			const std::vector<virus_ptr>& viruses;
 

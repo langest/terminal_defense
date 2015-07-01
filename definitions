@@ -30,10 +30,9 @@
 #define PLAYER_DEFAULT_RAM 10000
 
 //Map information
-#define BOARDROWS 20
-#define BOARDCOLS 60
 #define BOARDR0 1
 #define BOARDC0 1
+#define INTELCOLS 50
 #define INTELROWS 2
 #define WINDOWSPACE 1
 #define FRAMELS ACS_VLINE

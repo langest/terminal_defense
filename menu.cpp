@@ -20,21 +20,21 @@ namespace termd {
 	}
 
 	void Menu::print_menu() {
-		GUI::print_intel(std::string("1. New game   2. Load quicksave\n")+
-										std::string("3. Exit game"));
+		GUI::print_intel(0, std::string("1. New game   2. Load quicksave\n")+
+										std::string(" 3. Exit game"));
 	}
 
 	void Menu::clear_menu() {
-		GUI::clear_intel();
+		GUI::clear_intel(0);
 	}
 
 	bool Menu::run_game() {
-		Game game(player, 1); //TODO remove hardcodedness
+		Game game(player, "map1"); //TODO remove hardcodedness
 		return game.run();
 	}
 
 	bool Menu::load_quicksave() {
-		Game game(player, 1);
+		Game game(player, "map1"); //TODO remove hardcodedness
 		game.load_game();
 		return game.run();
 	}

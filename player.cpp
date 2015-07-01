@@ -3,28 +3,39 @@
 namespace termd {
 
 	//TODO carefull about hardcodedness
-	Player::Player() : availiable_towers({0}), ram(PLAYER_DEFAULT_RAM), hp(PLAYER_DEFAULT_HP) {
+	Player::Player() : availiable_towers({0}) {
 		
 	}
 
 	Player::~Player() {
 	}
 
-	void Player::new_map_refresh() {
-		hp = PLAYER_DEFAULT_HP;
-		ram = PLAYER_DEFAULT_RAM;
+	int Player::get_max_cp() const {
+		return max_cp;
 	}
 
-	int Player::get_hp() const {
-		return hp;
+	void Player::set_max_cp(int i) {
+		max_cp = i;
+	}
+
+	int Player::get_cp() const {
+		return cp;
+	}
+
+	void Player::set_cp(int i) {
+		cp = i;
 	}
 
 	bool Player::is_alive() const {
-		return hp > 0;
+		return cp > 0;
 	}
 
 	void Player::take_damage(int amount) {
-		hp -= amount;
+		cp -= amount;
+	}
+
+	void Player::set_ram(int amount) {
+		ram = amount;
 	}
 
 	void Player::modify_ram(int amount) {

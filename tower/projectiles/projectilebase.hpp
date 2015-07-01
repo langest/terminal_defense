@@ -22,13 +22,16 @@ namespace termd {
 	};
 
 	struct Direction_projectile_base : public Projectile_base {
-		int col_spd;
 		int row_spd;
+		int col_spd;
 
-		Direction_projectile_base(char gf, int d, int t, int cs, int rs) :
+		int range; //Euclidian distance that the projectile can travel
+
+		Direction_projectile_base(char gf, int d, int t, int rs, int cs, int rng) :
 		Projectile_base(gf, d, t),
+		row_spd(rs),
 		col_spd(cs),
-		row_spd(rs) {}
+		range(rng) {}
 	};
 }
 

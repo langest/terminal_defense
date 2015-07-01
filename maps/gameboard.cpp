@@ -1,21 +1,22 @@
 #include "gameboard.hpp"
 namespace termd {
-	GameBoard::GameBoard(Player& p, int mapid) :
+	GameBoard::GameBoard(Player& p, std::string map_identification) :
 		player(p),
-		map_id(mapid),
-		size_rows(BOARDROWS),
-	 	size_cols(BOARDCOLS),
+		map_id(map_identification),
+		size_rows(0),
+		size_cols(0),
 		tman(vman, pman, p),
-		towers(size_rows, std::vector<bool>(size_cols, false)),
 		vman(p),
-		wman(size_rows, size_cols, towers, std::string("info/map1/wave.info"), vman), //TODO remove hardcodeness
-		availible_towers({'i', 'd', 'y', 'w'}) { //TODO solve hardcodedness
-		//TODO load map of mapid
+		wman(size_rows, size_cols, towers, std::string("info/") + std::string(map_id) + std::string("/wave.info"), vman) {
+			load_map();
+			wman.set_size(size_rows, size_cols);
+			pman.set_size(size_rows, size_cols);
 	}
 
 	void GameBoard::draw() const {
-		GUI::clear_game();
+		GUI::clear_game(size_rows, size_cols);
 
+		draw_environment();
 		tman.draw_towers();
 		vman.draw_viruses();
 		pman.draw_projectiles();
@@ -89,7 +90,52 @@ namespace termd {
 	}
 
 	void GameBoard::load_map() {
-		//TODO load map from file
+		std::ifstream loadfile;
+		loadfile.open(std::string("info/") + map_id + std::string("/gameboard.info"));
+		if (loadfile.is_open()) {
+
+			int max_cp;
+			loadfile >> max_cp;
+			player.set_max_cp(max_cp);
+			player.set_cp(max_cp);
+
+			int ram;
+			loadfile >> ram;
+			player.set_ram(ram);
+
+			int number_of_towers;
+
+			loadfile >> number_of_towers;
+			char tmp;
+			for (int i = 0; i < number_of_towers; ++i) {
+				loadfile >> tmp;
+				available_towers.insert(tmp);
+			}
+
+			loadfile >> size_rows;
+			loadfile >> size_cols;
+
+			environment = std::vector<std::vector<int> >(size_rows, std::vector<int>(size_cols));
+
+			int tile;
+			for (int r = 0; r < size_rows; r++) {
+				for (int c = 0; c < size_cols; c++) {
+					loadfile >> tile;
+					environment[r][c] = tile;
+				}
+			}
+		towers = std::vector<std::vector<bool> >(size_rows, std::vector<bool>(size_cols, false));
+		}
+	}
+
+	void GameBoard::draw_environment() const {
+		for (int r = 0; r < size_rows; ++r) {
+			for (int c = 0; c < size_cols; ++c) {
+				if (environment[r][c] != 0) {
+					GUI::draw_gfx(Coord(r, c), 'O');
+				}
+			}
+		}
 	}
 
 	const int GameBoard::get_size_rows() const {
@@ -101,22 +147,25 @@ namespace termd {
 	}
 
 	bool GameBoard::build_tower(Coord c, int tower_id) {
-		if (c.get_col() < 0 ||
-				c.get_col() >= size_cols ||
-				c.get_row() < 0 ||
-				c.get_row() >= size_rows ||
-				towers[c.get_row()][c.get_col()]) {
+		int row(c.get_row());
+		int col(c.get_col());
+		if (col < 0 ||
+			col >= size_cols ||
+			row < 0 ||
+			row >= size_rows ||
+			towers[row][col] ||
+			environment[row][col] != 0) {
 		 	return false;
 		}
 
-		if(availible_towers.find(tower_id) == availible_towers.end()) {
+		if(available_towers.find(tower_id) == available_towers.end()) {
 			return false;
 		}
 
 		if (blocked_with(c)) return false;
 
-		towers[c.get_row()][c.get_col()] = tman.build_tower(c, tower_id);
-		return towers[c.get_row()][c.get_col()];
+		towers[row][col] = tman.build_tower(c, tower_id);
+		return towers[row][col];
 	}
 
 	bool GameBoard::next_wave() {

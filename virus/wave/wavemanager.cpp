@@ -45,4 +45,9 @@ namespace termd {
 		return wi.has_spawns_left();
 	}
 
+	void WaveManager::set_size(int r, int c) {
+		size_r = r;
+		size_c = c;
+	}
+
 }

@@ -21,6 +21,7 @@ namespace termd {
 			Projectile(const Projectile_base &, Coord);
 			virtual ~Projectile();
 
+			const Coord& get_pos() const;
 			virtual bool update() = 0;
 			bool draw() const;
 

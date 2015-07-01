@@ -2,7 +2,7 @@
 
 namespace termd {
 
-	Game::Game(Player & p, int map_id) : player(p), board(player, map_id) {
+	Game::Game(Player & p, std::string map_id) : player(p), board(player, map_id) {
 		//initialize input calls
 		std::function<void()> f = [this]() { GUI::move_cursor_left(); };
 		inputcalls['h'] = f;
@@ -12,11 +12,11 @@ namespace termd {
 		inputcalls['k'] = f;
 		inputcalls[KEY_UP] = f;
 
-		f = [this]() { GUI::move_cursor_right(); };
+		f = [this]() { GUI::move_cursor_right(board.get_size_cols()); };
 		inputcalls['l'] = f;
 		inputcalls[KEY_RIGHT] = f;
 
-		f = [this]() { GUI::move_cursor_down(); };
+		f = [this]() { GUI::move_cursor_down(board.get_size_rows()); };
 		inputcalls['j'] = f;
 		inputcalls[KEY_DOWN] = f;
 
@@ -75,23 +75,23 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 	void Game::build_phase() {
 		int ch;
-		GUI::draw_board_frame();
-		GUI::draw_intel_frame();
-		char intelmsg[BOARDCOLS];
+		GUI::draw_board_frame(board.get_size_rows(), board.get_size_cols());
+		GUI::draw_intel_frame(board.get_size_rows());
+		char intelmsg[INTELCOLS];
 		while((ch = GUI::get_input()) != 27 && ch != 'q') {
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();
 			}
 			board.draw();
-			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_hp());
-			GUI::print_intel(intelmsg);
+			GUI::clear_intel(board.get_size_cols());
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d", player.get_ram(), player.get_cp());
+			GUI::print_intel(board.get_size_rows(), intelmsg);
 			GUI::refresh();
 		}
 	}
 
 	bool Game::invasion_phase() {
-		char intelmsg[BOARDCOLS];
+		char intelmsg[INTELCOLS];
 
 		//Frame counter setup
 		std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
@@ -117,9 +117,9 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 			//Framerate limiter
 			board.draw();
-			GUI::clear_intel();
-			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_hp(), avgfps);
-			GUI::print_intel(intelmsg);
+			GUI::clear_intel(board.get_size_rows());
+			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_cp(), avgfps);
+			GUI::print_intel(board.get_size_rows(), intelmsg);
 			GUI::refresh();
 
 			cur_update = std::chrono::system_clock::now();
@@ -139,7 +139,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 				outro();
 				return false;
 			}
-			if(get_player_hp() < PLAYER_DEFAULT_HP) {
+			if(player.get_cp() < player.get_max_cp()) {
 				unlock_tower(1); //TODO remove hardcodedness
 			}
 			build_phase();
@@ -152,10 +152,6 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		return player.is_alive();
 	}
 
-	int Game::get_player_hp() const {
-		return player.get_hp();
-	}
-
 	//board.set_wave_number(int) has check for negative numbers
 	void Game::set_wave_number(int num) {
 		//board.set_wave_number(num); TODO needed for saving game
@@ -165,8 +161,8 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		char ch;
 		bool done = false;
 		while (!done) {
-			GUI::clear_intel();
-			GUI::print_intel(std::string("1.Save and quit    2.Return to game"));
+			GUI::clear_intel(board.get_size_rows());
+			GUI::print_intel(board.get_size_rows(), std::string("1.Save and quit    2.Return to game"));
 			while ((ch = GUI::get_input()) != '1' && ch != '2');
 
 			if (ch == '1') {
@@ -174,14 +170,14 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 					//TODO save game get wavenumber
 					done = true;
 				} else {
-					GUI::print_intel(std::string("Failed to save game, press any key to resume menu."));
+					GUI::print_intel(board.get_size_rows(), std::string("Failed to save game, press any key to resume menu."));
 					GUI::get_input();
 				}
 			} else {
 				done = true;
 			}
 		}
-		GUI::clear_intel();
+		GUI::clear_intel(board.get_size_rows());
 	}
 
 	bool Game::save_game() {
@@ -196,7 +192,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 	void Game::unlock_tower(int id) {
 		//TODO - removed hardcodedness
-		GUI::print_intel("TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
+		GUI::print_intel(board.get_size_rows(), "TOWER UNLOCKED! - Button 'd' - RIGHT SHOTING TOWER");
 		player.unlock_tower(id);
 		GUI::get_input(); //make sure to display the intel!
 	}
