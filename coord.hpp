@@ -1,15 +1,8 @@
 #ifndef termd_coord
 #define termd_coord
 
-#ifndef termd_iostream
-#define termd_iostream
 #include <iostream>
-#endif
-
-#ifndef termd_math
-#define termd_math
 #include <math.h>
-#endif
 
 namespace termd {
 

@@ -1,10 +1,7 @@
 #ifndef termd_menu
 #define termd_menu
 
-#ifndef termd_string
-#define termd_string
 #include <string>
-#endif
 
 #include "player.hpp"
 #include "gui.hpp"
