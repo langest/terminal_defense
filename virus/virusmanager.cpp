@@ -34,11 +34,7 @@ namespace termd {
 	void VirusManager::draw_viruses() const {
 		for (auto i = viruses.begin(); i != viruses.end(); ++i) {
 			if((*i)->draw() == false) {
-				//If tower failed to draw:
-				#ifdef DEBUGGING
-				#include <iostream>
-				std::cout << "Failed to draw Virus! " << std::endl;
-				#endif //DEBUGGING
+				//TODO debugging
 			}
 		}
 	}

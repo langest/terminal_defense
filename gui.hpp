@@ -1,20 +1,9 @@
 #ifndef termd_gui
 #define termd_gui
 
-#ifndef termd_ncurses
-#define termd_ncurses
 #include <ncurses.h>
-#endif //termd_ncurses
-
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif //termd_vector
-
-#ifndef termd_string
-#define termd_string
 #include <string>
-#endif
 
 #include <algorithm>
 

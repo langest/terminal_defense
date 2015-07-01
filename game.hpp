@@ -1,30 +1,11 @@
 #ifndef termd_game
 #define termd_game
 
-#ifndef termd_map
-#define termd_map
 #include <map>
-#endif
-
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif
-
-#ifndef termd_functional
-#define termd_functional
 #include <functional>
-#endif
-
-#ifndef termd_thread
-#define termd_thread
 #include <thread>
-#endif
-
-#ifndef termd_chrono
-#define termd_chrono
 #include <chrono>
-#endif
 
 #include <string>
 

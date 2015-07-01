@@ -1,25 +1,10 @@
 #ifndef termd_projectile_loader
 #define termd_projectile_loader
 
-#ifndef termd_exception
-#define termd_exception
 #include <exception>
-#endif
-
-#ifndef termd_fstream
-#define termd_fstream
 #include <fstream>
-#endif
-
-#ifndef termd_memory
-#define termd_memory
 #include <memory>
-#endif
-
-#ifndef termd_map
-#define termd_map
 #include <map>
-#endif
 
 #include "../../definitions"
 #include "projectilebase.hpp"

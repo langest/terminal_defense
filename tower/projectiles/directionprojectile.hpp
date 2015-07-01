@@ -1,10 +1,7 @@
 #ifndef termd_right_projectile
 #define termd_right_projectile
 
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif
 
 #include "../../definitions"
 #include "../../virus/virus.hpp"

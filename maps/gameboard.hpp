@@ -1,20 +1,9 @@
 #ifndef termd_game_board
 #define termd_game_board
 
-#ifndef termd_set
-#define termd_set
 #include <set>
-#endif //termd_set
-
-#ifndef termd_queue
-#define termd_queue
 #include <queue>
-#endif //termd_queue
-
-#ifndef termd_cstddef
-#define termd_cstddef
 #include <cstddef>
-#endif //termd_cstddef
 
 #include <string>
 

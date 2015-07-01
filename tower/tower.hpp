@@ -1,20 +1,9 @@
 #ifndef termd_tower
 #define termd_tower
 
-#ifndef termd_cstddef
-#define termd_cstddef
 #include <cstddef>
-#endif //term_cstddef
-
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif //termd_vector
-
-#ifndef termd_memory
-#define termd_memory
 #include <memory>
-#endif
 
 #include "../gui.hpp"
 #include "../coord.hpp"

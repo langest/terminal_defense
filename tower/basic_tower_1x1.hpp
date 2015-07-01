@@ -1,10 +1,7 @@
 #ifndef termd_basictower_1x1
 #define termd_basictower_1x1
 
-#ifndef termd_limits
-#define termd_limits
 #include <limits>
-#endif
 
 #include "towerbase.hpp"
 #include "tower.hpp"

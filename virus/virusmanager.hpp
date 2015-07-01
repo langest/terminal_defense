@@ -1,8 +1,8 @@
 #ifndef termd_virus_manager
 #define termd_virus_manager
 
-#include "../player.hpp"
 #include "virus.hpp"
+#include "../player.hpp"
 
 namespace termd {
 

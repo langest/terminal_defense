@@ -1,19 +1,12 @@
 #ifndef termd_virus
 #define termd_virus
 
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif //termd_vector
-
-#ifndef termd_memory
-#define termd_memory
 #include <memory>
-#endif //memory
 
+#include "path.hpp"
 #include "../gui.hpp"
 #include "../coord.hpp"
-#include "path.hpp"
 
 namespace termd {
 	//typedef virus_ptr below!

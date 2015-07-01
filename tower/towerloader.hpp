@@ -1,35 +1,12 @@
 #ifndef termd_tower_loader
 #define termd_tower_loader
 
-#ifndef termd_string
-#define termd_string
 #include <string>
-#endif
-
-#ifndef termd_exception
-#define termd_exception
 #include <stdexcept>
-#endif
-
-#ifndef termd_fstream
-#define termd_fstream
 #include <fstream>
-#endif
-
-#ifndef termd_memory
-#define termd_memory
 #include <memory>
-#endif
-
-#ifndef termd_map
-#define termd_map
 #include <map>
-#endif
-
-#ifndef termd_vector
-#define termd_vector
 #include <vector>
-#endif
 
 #include "towerbase.hpp"
 #include "tower.hpp"
