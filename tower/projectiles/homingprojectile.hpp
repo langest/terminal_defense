@@ -1,6 +1,7 @@
 #ifndef termd_homing_projectile
 #define termd_homing_projectile
 
+#include <cstdlib>
 #include "projectilebase.hpp"
 #include "projectile.hpp"
 
@@ -13,7 +14,7 @@ namespace termd {
 			int speed_curr;
 
 			bool hit() const;
-			bool step();
+			bool step(); // returns true iff projectile steped
 			void move();
 
 		protected:
