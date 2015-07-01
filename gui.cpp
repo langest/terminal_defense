@@ -134,6 +134,12 @@ namespace termd {
 		return ret;
 	}
 
+	void GUI::print_menu(const std::vector<
+		std::pair<std::string, std::function<void()>
+		> & menu_items) {
+		// For each item draw it in fitting place TODO
+	}
+
 	void GUI::print_intel(int board_rows, std::string message){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
