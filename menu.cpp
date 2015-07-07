@@ -20,8 +20,14 @@ namespace termd {
 	}
 
 	void Menu::print_menu() {
-		GUI::print_intel(0, std::string("1. New game   2. Load quicksave\n")+
-										std::string(" 3. Exit game"));
+		std::vector<std::string> items;
+		items.push_back(std::string("Campain"));
+		items.push_back(std::string("Random Level"));
+		items.push_back(std::string("Level Select"));
+		items.push_back(std::string("Load Quicksave"));
+		items.push_back(std::string("Exit"));
+
+		GUI::print_menu_items(items);
 	}
 
 	void Menu::clear_menu() {

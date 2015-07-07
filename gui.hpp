@@ -31,9 +31,7 @@ namespace termd {
 			static bool draw(const Coord &, const char); //Does not refresh
 			static bool draw_gfx(const Coord &, const std::vector<std::vector<char> > &);
 			static bool draw_gfx(const Coord &, const char);
-			static void print_menu(const std::vector<        // A vector of the menu items
-					std::pair<std::string, std::function<void()> // to print and the function
-				> &);                                           // to run if selected.
+			static void print_menu_items(const std::vector<std::string> &); //Does not refresh
 			static void print_intel(int board_rows, const std::string);
 			static void draw_board_frame(int board_rows, int board_cols);
 			static void draw_intel_frame(int board_cols);

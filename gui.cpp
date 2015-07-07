@@ -134,10 +134,24 @@ namespace termd {
 		return ret;
 	}
 
-	void GUI::print_menu(const std::vector<
-		std::pair<std::string, std::function<void()>
-		> & menu_items) {
-		// For each item draw it in fitting place TODO
+	void GUI::print_menu_items(const std::vector<std::string> & menu_items) {
+		if (menu_items.size() < 1) return; // Nothing to draw
+
+		int max_row, max_col;
+		getmaxyx(stdscr, max_row, max_col);
+
+		size_t item_len = 0;
+		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
+			item_len = std::max(item_len, it->length());
+		}
+
+		int step = max_row / menu_items.size();
+
+		int item_pos = 0;
+		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
+			mvwaddstr(stdscr, item_pos, 0, it->c_str());
+			item_pos += step;
+		}
 	}
 
 	void GUI::print_intel(int board_rows, std::string message){
