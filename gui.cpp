@@ -140,24 +140,26 @@ namespace termd {
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
 
-		size_t item_len = 0;
+		size_t item_len = 0; // Find the longest string
 		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
 			item_len = std::max(item_len, it->length());
 		}
 
+		int col_pos = max_col/2 - item_len/2;
+
 		int window_piece = max_row / 4;
-		mvwaddstr(stdscr, window_piece/2, 0, "* Menu *"); // Draw logo in first piece
+		mvwaddstr(stdscr, window_piece/2, max_col/2 - 4, "* Menu *"); // Draw logo in first piece
 
 
 		int step = window_piece*2 / menu_items.size(); // step in the two middle pieces
 
 		int item_pos = window_piece+step;
 		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
-			mvwaddstr(stdscr, item_pos, 0, it->c_str()); // Draw the items in the middle pieces
+			mvwaddstr(stdscr, item_pos, col_pos, it->c_str()); // Draw the items in the middle pieces
 			item_pos += step;
 		}
 
-		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, 0, "Version"); // Draw version in the end piece
+		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, "Version <1.0"); // Draw version in the end piece
 	}
 
 	void GUI::print_intel(int board_rows, std::string message){
