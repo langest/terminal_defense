@@ -142,7 +142,7 @@ namespace termd {
 
 		size_t item_len = 0; // Find the longest string
 		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
-			item_len = std::max(item_len, it->length());
+			item_len = std::max(item_len +2, it->length()); // +2 because of menu markers
 		}
 
 		int col_pos = max_col/2 - item_len/2;
@@ -155,7 +155,8 @@ namespace termd {
 
 		int item_pos = window_piece+step;
 		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
-			mvwaddstr(stdscr, item_pos, col_pos, it->c_str()); // Draw the items in the middle pieces
+			std::string marker("> ");
+			mvwaddstr(stdscr, item_pos, col_pos, marker.append(*it).c_str()); // Draw the items in the middle pieces
 			item_pos += step;
 		}
 
