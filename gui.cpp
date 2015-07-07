@@ -145,13 +145,19 @@ namespace termd {
 			item_len = std::max(item_len, it->length());
 		}
 
-		int step = max_row / menu_items.size();
+		int window_piece = max_row / 4;
+		mvwaddstr(stdscr, window_piece/2, 0, "* Menu *"); // Draw logo in first piece
 
-		int item_pos = 0;
+
+		int step = window_piece*2 / menu_items.size(); // step in the two middle pieces
+
+		int item_pos = window_piece+step;
 		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
-			mvwaddstr(stdscr, item_pos, 0, it->c_str());
+			mvwaddstr(stdscr, item_pos, 0, it->c_str()); // Draw the items in the middle pieces
 			item_pos += step;
 		}
+
+		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, 0, "Version"); // Draw version in the end piece
 	}
 
 	void GUI::print_intel(int board_rows, std::string message){
