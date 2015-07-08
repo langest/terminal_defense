@@ -9,6 +9,7 @@ namespace termd {
 		menu_items.push_back(std::string("Load Quicksave")); // item 3
 		menu_items.push_back(std::string("Exit")); // item 4
 
+		//TODO call member functions instead?
 		std::function<bool()> f = [this]() { return run_game(); };
 		inputcalls[0] = f;
 		inputcalls[1] = f;
