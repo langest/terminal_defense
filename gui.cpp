@@ -173,7 +173,9 @@ namespace termd {
 			item_pos += step;
 		}
 
-		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, "Version <1.0"); // Draw version in the end piece
+		char version [20];
+		sprintf(version, "Version: %s", VERSION);
+		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, version); // Draw version in the end piece
 
 		return item_coords;
 	}

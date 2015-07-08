@@ -6,6 +6,8 @@
 #include <limits>
 #endif //termd_limits
 
+#define VERSION "0.X"
+
 //Framerate, number of frames / 1000ms
 #define FRAMES 30
 
