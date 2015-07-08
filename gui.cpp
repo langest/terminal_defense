@@ -134,8 +134,9 @@ namespace termd {
 		return ret;
 	}
 
-	void GUI::print_menu_items(const std::vector<std::string> & menu_items) {
-		if (menu_items.size() < 1) return; // Nothing to draw
+	std::vector<Coord> GUI::print_menu_items(const std::vector<std::string> & menu_items) {
+		std::vector<Coord> item_coords; // Return values, the position of the menu items
+		if (menu_items.size() < 1) return item_coords; // Nothing to draw
 
 		int max_row, max_col;
 		getmaxyx(stdscr, max_row, max_col);
@@ -157,10 +158,13 @@ namespace termd {
 		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
 			std::string marker("> ");
 			mvwaddstr(stdscr, item_pos, col_pos, marker.append(*it).c_str()); // Draw the items in the middle pieces
+			item_coords.push_back(Coord(item_pos, col_pos));
 			item_pos += step;
 		}
 
 		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, "Version <1.0"); // Draw version in the end piece
+
+		return item_coords;
 	}
 
 	void GUI::print_intel(int board_rows, std::string message){
