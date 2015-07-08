@@ -35,7 +35,8 @@ namespace termd {
 			// Print all menu items in vector and return an other vector with the
 			// coordinates where the items were drawn
 			static std::vector<Coord> print_menu_items(const std::vector<std::string> &); //Does not refresh
-			static void print_intel(int board_rows, const std::string);
+			static void print_string(const std::string &);
+			static void print_intel(int board_rows, const std::string &);
 			static void draw_board_frame(int board_rows, int board_cols);
 			static void draw_intel_frame(int board_cols);
 			static void clear_game(int board_rows, int board_cols);

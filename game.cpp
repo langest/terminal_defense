@@ -56,7 +56,7 @@ y - Build a DOWN TOWER \n\
 d - Build a RIGHT TOWER \n\
 w - Build a WALL \n\
 MOVE CURSOR as you normally would (arrows or vim-like)\n");
-		addstr(intromsg.c_str());
+		GUI::print_string(intromsg);
 		GUI::get_input();
 		clear();
 		move(BOARDR0, BOARDC0);
@@ -66,9 +66,9 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		clear();
 		move(0,0);
 		if (player.is_alive()) {
-			addstr("gz, you won");
+			GUI::print_string(std::string("gz, you won"));
 		} else {
-			addstr("You lost control over your terminal. There is nothing you can do...");
+			GUI::print_string(std::string("You lost control over your terminal. There is nothing you can do..."));
 		}
 		GUI::get_input();
 	}

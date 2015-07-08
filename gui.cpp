@@ -180,7 +180,16 @@ namespace termd {
 		return item_coords;
 	}
 
-	void GUI::print_intel(int board_rows, std::string message){
+	void GUI::print_string(const std::string & message) {
+		int cur_row, cur_col;
+		getyx(stdscr, cur_row, cur_col);
+
+		mvwaddstr(stdscr, 0, 0, message.c_str());
+
+		move(cur_row, cur_col);
+	}
+
+	void GUI::print_intel(int board_rows, const std::string & message){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
