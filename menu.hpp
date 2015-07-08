@@ -12,10 +12,11 @@ namespace termd {
 	class Menu {
 		private:
 			Player& player;
+			std::vector<std::string> menu_items;
 			std::map<int, std::function<bool()>> inputcalls;
 			void intro();
 			void outro();
-			void print_menu();
+			std::vector<Coord> print_menu();
 			void clear_menu();
 			bool run_game();
 			bool load_quicksave();
