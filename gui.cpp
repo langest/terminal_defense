@@ -14,11 +14,9 @@ namespace termd {
 		int col, row;
 		getmaxyx(stdscr, row, col);
 
-		/*
 		if (pos.get_row() > row || pos.get_col() > col) {
 			return false;
 		}
-		*/
 		move(pos.get_row(), pos.get_col());
 		return true;
 	}
