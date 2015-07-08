@@ -21,6 +21,7 @@ namespace termd {
 
 			//GUI& operator=(const GUI &);
 
+			static bool move_cursor(const Coord &);
 			static bool move_cursor_up();
 			static bool move_cursor_down(int board_rows); //board_rows is the number of rows on the board, moves the cursor one row.
 			static bool move_cursor_left();

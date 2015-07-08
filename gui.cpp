@@ -10,6 +10,19 @@ namespace termd {
 //		//Currently nothing to do here
 //	}
 
+	bool GUI::move_cursor(const Coord & pos) {
+		int col, row;
+		getmaxyx(stdscr, row, col);
+
+		/*
+		if (pos.get_row() > row || pos.get_col() > col) {
+			return false;
+		}
+		*/
+		move(pos.get_row(), pos.get_col());
+		return true;
+	}
+
 	bool GUI::move_cursor_up(){
 		int col, row;
 		getyx(stdscr, row, col);
