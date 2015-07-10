@@ -20,6 +20,7 @@ namespace termd {
 		tman.draw_towers();
 		vman.draw_viruses();
 		pman.draw_projectiles();
+		GUI::draw_board_frame(board.get_size_rows(), board.get_size_cols());
 	}
 
 	bool GameBoard::update() {
