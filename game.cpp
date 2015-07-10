@@ -117,6 +117,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 
 			//Framerate limiter
 			board.draw();
+			GUI::draw_board_frame(board.get_size_rows(), board.get_size_cols());
 			GUI::clear_intel(board.get_size_rows());
 			sprintf(intelmsg, "RAM: %d\t Terminal Control Points: %d\t FPS: %zd", player.get_ram(), player.get_cp(), avgfps);
 			GUI::print_intel(board.get_size_rows(), intelmsg);
