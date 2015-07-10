@@ -23,12 +23,12 @@ namespace termd {
 		Coord p;
 		for (auto i = projectiles.begin(); i != projectiles.end(); ) {
 			p = (*i)->get_pos();
-			if((*i)->update() == false ||
-				p.get_row() >= num_rows-1 ||
-				p.get_col() >= num_cols-1 ||
+			if((*i)->update() == false || //Projectile flags removal
+				// Also check out of bounds
+				p.get_row() >= num_rows ||
+				p.get_col() >= num_cols ||
 				p.get_row() < 0 ||
 				p.get_col() < 0) {
-				//Projectile flags removal (probably a hit)
 				i = projectiles.erase(i);
 			} else {
 				++i;
