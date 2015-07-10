@@ -5,6 +5,13 @@ Terminal Defense
 Work in progress, soon playable
 :snail:
 
+## Build Requirements ##
+ncurses library
+
+To install it in arch linux:
+
+	$ pacman -S ncurses
+
 ## Overview of this project ##
 Tower Defense game written in a modern C++ style and is run in the terminal using ASCII art. Currently this project only supports ncurses and is only tested on the Linux platform.
 The GUI is handling all rendering of the game and also gets all the keyboard input.
