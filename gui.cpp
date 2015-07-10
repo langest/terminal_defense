@@ -10,6 +10,17 @@ namespace termd {
 //		//Currently nothing to do here
 //	}
 
+	bool GUI::move_cursor(const Coord & pos) {
+		int col, row;
+		getmaxyx(stdscr, row, col);
+
+		if (pos.get_row() > row || pos.get_col() > col) {
+			return false;
+		}
+		move(pos.get_row(), pos.get_col());
+		return true;
+	}
+
 	bool GUI::move_cursor_up(){
 		int col, row;
 		getyx(stdscr, row, col);
@@ -134,7 +145,51 @@ namespace termd {
 		return ret;
 	}
 
-	void GUI::print_intel(int board_rows, std::string message){
+	std::vector<Coord> GUI::print_menu_items(const std::vector<std::string> & menu_items) {
+		std::vector<Coord> item_coords; // Return values, the position of the menu items
+		if (menu_items.size() < 1) return item_coords; // Nothing to draw
+
+		int max_row, max_col;
+		getmaxyx(stdscr, max_row, max_col);
+
+		size_t item_len = 0; // Find the longest string
+		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
+			item_len = std::max(item_len +2, it->length()); // +2 because of menu markers
+		}
+
+		int col_pos = max_col/2 - item_len/2;
+
+		int window_piece = max_row / 4;
+		mvwaddstr(stdscr, window_piece/2, max_col/2 - 4, "* Menu *"); // Draw logo in first piece
+
+
+		int step = window_piece*2 / menu_items.size(); // step in the two middle pieces
+
+		int item_pos = window_piece+step;
+		for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
+			std::string marker("> ");
+			mvwaddstr(stdscr, item_pos, col_pos, marker.append(*it).c_str()); // Draw the items in the middle pieces
+			item_coords.push_back(Coord(item_pos, col_pos));
+			item_pos += step;
+		}
+
+		char version [20];
+		sprintf(version, "Version: %s", VERSION);
+		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, version); // Draw version in the end piece
+
+		return item_coords;
+	}
+
+	void GUI::print_string(const std::string & message) {
+		int cur_row, cur_col;
+		getyx(stdscr, cur_row, cur_col);
+
+		mvwaddstr(stdscr, 0, 0, message.c_str());
+
+		move(cur_row, cur_col);
+	}
+
+	void GUI::print_intel(int board_rows, const std::string & message){
 		int cur_row, cur_col;
 		getyx(stdscr, cur_row, cur_col);
 
