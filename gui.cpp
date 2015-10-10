@@ -182,7 +182,7 @@ namespace termd {
 		}
 
 		char version [20];
-		sprintf(version, "Version: %s", VERSION);
+		sprintf(version, "Version: %s", Version);
 		mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, version); // Draw version in the end piece
 
 		return item_coords;
