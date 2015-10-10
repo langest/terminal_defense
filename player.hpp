@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "definitions"
+#include "constants.h"
 #include "gui.hpp"
 
 namespace termd {

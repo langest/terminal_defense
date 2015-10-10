@@ -6,7 +6,7 @@
 #include <memory>
 #include <map>
 
-#include "../../definitions"
+#include "../../constants.h"
 #include "projectilebase.hpp"
 
 namespace termd {

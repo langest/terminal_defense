@@ -1,5 +1,5 @@
 #include "menu.hpp"
-#include "definitions"
+#include "constants.h"
 
 int main();
 void init_ncurses();

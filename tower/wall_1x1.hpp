@@ -4,7 +4,7 @@
 #include "../gui.hpp"
 #include "tower.hpp"
 #include "../coord.hpp"
-#include "../definitions"
+#include "../constants.h"
 
 namespace termd {
 	
