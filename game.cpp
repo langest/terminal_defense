@@ -35,7 +35,7 @@ namespace termd {
 
 	bool Game::build_tower(int tower_id) {
 		Coord c = GUI::get_cursor_pos();
-		c -= Coord(BOARDR0, BOARDC0);
+		c -= Coord(BoardR0, BoardC0);
 		board.build_tower(c, tower_id);
 		return true;
 	}
@@ -59,7 +59,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		GUI::print_string(intromsg);
 		GUI::get_input();
 		clear();
-		move(BOARDR0, BOARDC0);
+		move(BoardR0, BoardC0);
 	}
 
 	void Game::outro() {
@@ -77,7 +77,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		int ch;
 		GUI::draw_board_frame(board.get_size_rows(), board.get_size_cols());
 		GUI::draw_intel_frame(board.get_size_rows());
-		char intelmsg[INTELCOLS];
+		char intelmsg[IntelCols];
 		while((ch = GUI::get_input()) != 27 && ch != 'q') {
 			if (inputcalls.find(ch) != inputcalls.end()) {
 				inputcalls[ch]();
@@ -91,7 +91,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	}
 
 	bool Game::invasion_phase() {
-		char intelmsg[INTELCOLS];
+		char intelmsg[IntelCols];
 
 		//Frame counter setup
 		std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
@@ -101,7 +101,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 		std::size_t avgfps;
 
 		//Framerate limiter setup
-		std::chrono::milliseconds interval(1000/FRAMES);
+		std::chrono::milliseconds interval(1000/Frames);
 		std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
 				std::chrono::system_clock::now() - interval );
 		std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;

@@ -6,9 +6,8 @@
 #include <utility>
 
 #include "../gui.hpp"
-#include "../definitions"
 #include "../coord.hpp"
-#include "../definitions"
+#include "../constants.h"
 
 namespace termd {
 

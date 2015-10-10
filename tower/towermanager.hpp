@@ -7,7 +7,7 @@
 #include "../gui.hpp"
 #include "../coord.hpp"
 #include "../player.hpp"
-#include "../definitions"
+#include "../constants.h"
 #include "../virus/virus.hpp"
 #include "../virus/virusmanager.hpp"
 #include "tower.hpp"

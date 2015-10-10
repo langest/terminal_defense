@@ -20,7 +20,7 @@ namespace termd {
 		WaveInfo& wi = wave_loader.get_current_wave();
 		if (!wi.has_spawns_left()) return false;
 		++timer;
-		if (timer%SPAWNRATE != 0) return true;
+		if (timer%SpawnRate != 0) return true;
 
 		Virus* vir;
 		int vir_id;

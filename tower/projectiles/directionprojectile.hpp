@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "../../definitions"
+#include "../../constants.h"
 #include "../../virus/virus.hpp"
 #include "projectilebase.hpp"
 #include "projectile.hpp"

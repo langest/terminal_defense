@@ -9,7 +9,7 @@
 
 #include <string>
 
-#include "definitions"
+#include "constants.h"
 #include "gui.hpp"
 #include "player.hpp"
 #include "maps/gameboard.hpp"

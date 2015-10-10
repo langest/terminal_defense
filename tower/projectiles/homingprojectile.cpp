@@ -23,7 +23,7 @@ namespace termd {
 
 	bool HomingProjectile::step() {
 		if (hit()) return false; //We already reached the target
-		if (speed_curr < PROJ_STEPCOST) return false; // We cannot move and are done
+		if (speed_curr < ProjStepCost) return false; // We cannot move and are done
 
 		Coord delta = target.get_pos() - pos;
 
@@ -35,7 +35,7 @@ namespace termd {
 			if (row_dist < col_dist) { // Check if we have most rows or cols left
 				if (diag_dist <= col_dist) {// We should step in col
 					// Remove speed since we are going to step
-					speed_curr -= PROJ_STEPCOST;
+					speed_curr -= ProjStepCost;
 					if (delta.get_col() < 0) { // Check which dir we should step
 						pos.add_col(-1);
 						return true;
@@ -46,7 +46,7 @@ namespace termd {
 			} else { // col_dist < row_dist
 				if (diag_dist <= row_dist) {
 					// Remove speed since we are going to step
-					speed_curr -= PROJ_STEPCOST;
+					speed_curr -= ProjStepCost;
 					if (delta.get_row() < 0) {// Check which dir we should step
 						pos.add_row(-1);
 						return true;
@@ -56,9 +56,9 @@ namespace termd {
 				}
 			}
 		}
-		if (speed_curr < PROJ_STEPCOSTDIAGONAL) return false; // We cannot diagonally and are done
+		if (speed_curr < ProjStepCostDiagonal) return false; // We cannot diagonally and are done
 		//Remove speed since we are goind to step
-		speed_curr -= PROJ_STEPCOSTDIAGONAL;
+		speed_curr -= ProjStepCostDiagonal;
 
 		if (delta.get_row() < 0) {
 			pos.add_row(-1);

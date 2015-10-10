@@ -18,13 +18,13 @@ namespace termd {
 				loadfile >> gfx;
 				loadfile >> damage;
 				loadfile >> type;
-				if(type == HOMING) {
+				if(type == Homing) {
 					int speed;
 					loadfile >> speed;
 					loaded_proj.insert(
 						std::pair<int, std::unique_ptr<Projectile_base> >(id, 
 							std::unique_ptr<Projectile_base>(new Homing_projectile_base(gfx, damage, type, speed))));
-				} else if (type == DIRECTION) {
+				} else if (type == Direction) {
 					int row_spd;
 					int col_spd;
 					loadfile >> row_spd;

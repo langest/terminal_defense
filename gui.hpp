@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #include "coord.hpp"
-#include "definitions"
+#include "constants.h"
 
 namespace termd {
 

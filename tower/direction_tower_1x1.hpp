@@ -5,7 +5,7 @@
 
 #include "towerbase.hpp"
 #include "tower.hpp"
-#include "../definitions"
+#include "../constants.h"
 #include "../virus/virusmanager.hpp"
 #include "projectiles/projectile.hpp"
 #include "projectiles/directionprojectile.hpp"
