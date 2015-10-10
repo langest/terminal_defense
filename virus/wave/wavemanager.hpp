@@ -6,7 +6,7 @@
 #include <algorithm>
 
 #include "waveloader.hpp"
-#include "../../definitions"
+#include "../../constants.h"
 #include "../../coord.hpp"
 #include "../virus.hpp"
 #include "../virusloader.hpp"

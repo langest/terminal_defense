@@ -7,7 +7,7 @@ namespace termd {
 		for (int i = col; i > 0; --i)
 		{
 			s.set_col(i);
-			path.push(Step(s, VIRUS_STEPCOST)); //Copy that 's' Coord!
+			path.push(Step(s,VirusStepCost )); //Copy that 's' Coord!
 		}
 	}
 
@@ -19,7 +19,7 @@ namespace termd {
 		if (start.get_row() >= num_rows || start.get_col() >= num_cols ||
 				start.get_row() < 0 || start.get_col() < 0) return; //invalid start, make no path
 		Coord current(start);
-		std::vector<std::vector<std::pair<int, Coord> > > backtrack( num_rows, std::vector<std::pair<int, Coord> >( num_cols, std::pair<int, Coord>(INT_MAX, Coord(-1,-1))));
+		std::vector<std::vector<std::pair<int, Coord> > > backtrack( num_rows, std::vector<std::pair<int, Coord> >( num_cols, std::pair<int, Coord>(IntMax, Coord(-1,-1))));
 
 		std::queue<Coord> queue;
 
@@ -47,28 +47,28 @@ namespace termd {
 
 			//Left
 			if (check_bound(r, c-1))
-				step(r, c-1, VIRUS_STEPCOST + backtrack[r][c].first);
+				step(r, c-1, VirusStepCost + backtrack[r][c].first);
 			//Right
 			if (check_bound(r, c+1))
-				step(r, c+1, VIRUS_STEPCOST + backtrack[r][c].first);
+				step(r, c+1, VirusStepCost + backtrack[r][c].first);
 			//Up
 			if (check_bound(r-1, c))
-				step(r-1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+				step(r-1,c, VirusStepCost + backtrack[r][c].first);
 			//Down
 			if (check_bound(r+1, c))
-				step(r+1,c, VIRUS_STEPCOST + backtrack[r][c].first);
+				step(r+1,c, VirusStepCost + backtrack[r][c].first);
 			//Up left
 			if (check_bound(r-1, c-1) &&( !towers[r-1][c] || !towers[r][c-1]))
-				step(r-1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+				step(r-1, c-1, VirusStepCostDiagonal + backtrack[r][c].first);
 			//Down left
 			if (check_bound(r+1, c-1) &&( !towers[r+1][c] || !towers[r][c-1]))
-				step(r+1, c-1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+				step(r+1, c-1, VirusStepCostDiagonal + backtrack[r][c].first);
 			//Up right
 			if (check_bound(r-1, c+1) &&( !towers[r-1][c] || !towers[r][c+1]))
-				step(r-1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+				step(r-1,c+1, VirusStepCostDiagonal + backtrack[r][c].first);
 			//Down right
 			if (check_bound(r+1, c+1) &&( !towers[r+1][c] || !towers[r][c+1]))
-				step(r+1,c+1, VIRUS_STEPCOSTDIAGONAL + backtrack[r][c].first);
+				step(r+1,c+1, VirusStepCostDiagonal + backtrack[r][c].first);
 		}
 
 		int min_cost = backtrack[0][0].first;
@@ -94,9 +94,9 @@ namespace termd {
 			reverse.pop();
 			if (current.get_col() != last.get_col() &&
 					current.get_row() != current.get_row()) { //We made a diagonal step
-				cost = VIRUS_STEPCOSTDIAGONAL;
+				cost =VirusStepCostDiagonal ;
 			} else {
-				cost = VIRUS_STEPCOST;
+				cost =VirusStepCost ;
 			}
 			path.push(Step(current, cost)); //Copy that 's' Coord!
 			last = current;

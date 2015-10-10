@@ -8,7 +8,7 @@
 #include <string>
 
 #include "../virus/wave/wavemanager.hpp"
-#include "../definitions"
+#include "../constants.h"
 #include "../gui.hpp"
 #include "../coord.hpp"
 #include "../player.hpp"
