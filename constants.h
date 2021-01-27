@@ -5,6 +5,8 @@
 
 namespace termd {
 
+const char* const Version = "0.X";
+
 //Framerate, number of frames / 1000ms
 const int Frames = 30;
 
