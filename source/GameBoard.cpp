@@ -71,17 +71,13 @@ const int CGameBoard::getSizeCols() const {
 }
 
 bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
-	bool visited [mSizeRows][mSizeCols];
-	for (int r = 0; r < mSizeRows; ++r) {
-		for (int c = 0; c < mSizeCols; ++c) {
-			visited[r][c] = false;
-		}
-	}
-	visited[coordinate.getRow()][coordinate.getCol()] = true;
+	std::vector<std::vector<int>> visited(mSizeRows, std::vector(mSizeCols, 0));
+
+	visited[coordinate.getRow()][coordinate.getCol()] = 1;
 	std::queue<CCoordinate> queue;
 
 	queue.push(CCoordinate(0, mSizeCols-1));
-	visited[0][mSizeCols-1] = true;
+	visited[0][mSizeCols-1] = 1;
 
 	while (!queue.empty()) {
 		const CCoordinate current = queue.front();
@@ -96,25 +92,25 @@ bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
 		if (r+1 < mSizeRows &&
 			!visited[r + 1][c] &&
 			!mTowerManager.isTowerAt(CCoordinate(r+1,c))) {
-			visited[r + 1][c] = true;
+			visited[r + 1][c] = 1;
 			queue.push(CCoordinate(r + 1, c));
 		}
 		if (r > 0 &&
 			!visited[r - 1][c] &&
 			!mTowerManager.isTowerAt(CCoordinate(r-1,c))) {
-			visited[r - 1][c] = true;
+			visited[r - 1][c] = 1;
 			queue.push(CCoordinate(r - 1, c));
 		}
 		if (c+1 < mSizeCols &&
 			!visited[r][c + 1] &&
 			!mTowerManager.isTowerAt(CCoordinate(r,c+1))) {
-			visited[r][c + 1] = true;
+			visited[r][c + 1] = 1;
 			queue.push(CCoordinate(r, c + 1));
 		}
 		if (c > 0 &&
 			!visited[r][c - 1] &&
 			!mTowerManager.isTowerAt(CCoordinate(r,c-1))) {
-			visited[r][c - 1] = true;
+			visited[r][c - 1] = 1;
 			queue.push(CCoordinate(r, c - 1));
 		}
 	}

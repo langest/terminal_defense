@@ -2,7 +2,7 @@
 
 namespace termd {
 
-CTowerManager::CTowerManager(TDrawCall drawCall) : mDrawCall(drawCall) {};
+CTowerManager::CTowerManager(TDrawCall drawCall) : mDrawCall(drawCall) {}
 
 void CTowerManager::updateAllTowers() {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ) {

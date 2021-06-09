@@ -8,6 +8,8 @@ project(TerminalDefense)
 
 add_compile_options(-Wall)
 add_compile_options(-g)
+add_compile_options(-Werror)
+add_compile_options(-Wpedantic)
 
 add_subdirectory(source)
 add_subdirectory(application)
