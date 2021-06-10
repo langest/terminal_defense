@@ -21,8 +21,6 @@ CMenu::CMenu() :
 	}
 
 void CMenu::run() {
-	intro();
-
 	std::vector<CCoordinate> itemPositions = printMenu();
 	int ch;
 	int currentItem = 0;
@@ -45,16 +43,6 @@ void CMenu::run() {
 		GUI::move_cursor(itemPositions[currentItem]);
 	}
 	clearMenu();
-
-	outro();
-}
-
-void CMenu::intro() {
-
-}
-
-void CMenu::outro() {
-
 }
 
 std::vector<CCoordinate> CMenu::printMenu() {
