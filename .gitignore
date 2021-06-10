@@ -1,6 +1,3 @@
-# Terminal Defence Defined
-*.save
-
 # Compiled Object files
 *.slo
 *.lo
@@ -32,3 +29,8 @@
 
 # for vim swp files
 *.swp
+
+build/*
+
+# ctags
+tags
