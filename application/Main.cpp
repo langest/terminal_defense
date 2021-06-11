@@ -16,7 +16,7 @@ void end_ncurses() {
 }
 
 int main() {
-	termd::CLogger logger("Main");
+	termd::CLogger logger(__FILE__);
 	logger.log("Init ncurses");
 
 	init_ncurses();

@@ -1,5 +1,6 @@
 #include <logging/logger.h>
 
+#include <filesystem>
 #include <fstream>
 
 namespace {
@@ -50,7 +51,7 @@ void CFileLogger::logError(const std::string& message) {
 
 namespace termd {
 
-CLogger::CLogger(const std::string& name) : mName(name) {}
+CLogger::CLogger(const std::string& file) : mName(std::filesystem::path(file).filename()) {}
 
 void CLogger::log(const std::string& message) {
 	// TODO prettier code and log timestamp
@@ -63,6 +64,7 @@ void CLogger::log(const std::string& message) {
 	fileLogger.log(mName);
 	fileLogger.log("] [I]: ");
 	fileLogger.log(message);
+	fileLogger.log("\n");
 }
 
 void CLogger::logError(const std::string& message) {
@@ -76,6 +78,7 @@ void CLogger::logError(const std::string& message) {
 	fileLogger.logError(mName);
 	fileLogger.logError("] [I]: ");
 	fileLogger.logError(message);
+	fileLogger.logError("\n");
 }
 
 }
