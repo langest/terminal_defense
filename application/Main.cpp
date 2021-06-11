@@ -1,6 +1,7 @@
 #include <curses.h>
 
 #include <Menu.h>
+#include <logging/logger.h>
 
 void init_ncurses() {
 	// TODO set up locale
@@ -15,12 +16,18 @@ void end_ncurses() {
 }
 
 int main() {
+	termd::CLogger logger("Main");
+	logger.log("Init ncurses");
+
 	init_ncurses();
 
+	logger.log("Run menu");
 	termd::CMenu().run();
 
+	logger.log("End ncurses");
 	end_ncurses();
 
+	logger.log("Exiting");
 	return 0;
 }
 
