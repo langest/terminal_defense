@@ -121,8 +121,9 @@ bool CGame::runInvasionPhase() {
 		//Framerate limiter
 		mGameBoard.draw();
 		GUI::clear_intel(mGameBoard.getSizeRows());
-		sprintf(
+		snprintf(
 			intelmsg,
+			IntelCols,
 			"RAM: %d\t Terminal Control Points: %d\t FPS: %zd",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints(),

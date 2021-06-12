@@ -182,8 +182,9 @@ std::vector<CCoordinate> GUI::print_menu_items(const std::vector<std::string> & 
 		item_pos += step;
 	}
 
-	char version [20];
-	sprintf(version, "Version: %s", Version);
+	const int bufferSize = 20;
+	char version[bufferSize];
+	snprintf(version, bufferSize, "Version: %s", Version);
 	mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, version); // Draw version in the end piece
 
 	return item_coords;
