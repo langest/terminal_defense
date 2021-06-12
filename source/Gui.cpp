@@ -1,273 +1,243 @@
 #include <Gui.h>
 
-const char FrameLS = ACS_VLINE;
+#include <algorithm>
+#include <ncurses.h>
 
-#define FRAMERS ACS_VLINE
-#define FRAMEBS ACS_HLINE
-#define FRAMETS ACS_HLINE
-#define FRAMETL ACS_ULCORNER
-#define FRAMETR ACS_URCORNER
-#define FRAMEBL ACS_LLCORNER
-#define FRAMEBR ACS_LRCORNER
+#include <Constants.h>
 
 namespace termd {
 
-//	GUI::GUI() {
-//		move(BoardR0, BoardC0); //initialize cursor position
-//	}
-//
-//	GUI::~GUI() {
-//		//Currently nothing to do here
-//	}
+void GUI::moveCursor(const CCoordinate& pos) {
+	int maxCol;
+	int maxRow;
+	getmaxyx(stdscr, maxRow, maxCol);
 
-bool GUI::move_cursor(const CCoordinate& pos) {
-	int col, row;
-	getmaxyx(stdscr, row, col);
+	const int toRow = pos.getRow();
+	const int toCol = pos.getCol();
 
-	if (pos.getRow() > row || pos.getCol() > col) {
-		return false;
+	if (toRow >= maxRow || toRow < 0) {
+		return;
+	}
+	if (toCol >= maxCol || toCol < 0) {
+		return;
 	}
 	move(pos.getRow(), pos.getCol());
-	return true;
 }
 
-bool GUI::move_cursor_up(){
-	int col, row;
+void GUI::moveCursorUp(int rMin) {
+	int row;
+	int col;
 	getyx(stdscr, row, col);
 
-	if (row <= BoardR0) {
-		move(BoardR0, col);
-		return false;
+	if (row <= rMin) {
+		move(rMin, col);
+		return;
 	}
 
-	int ret;
-	ret = move(row-1, col); //Move cursor
-	return ret;
+	move(row-1, col);
 }
 
-//board_rows is the number of rows on the board, moves the cursor one row.
-bool GUI::move_cursor_down(int board_rows){
-	int col, row;
+void GUI::moveCursorDown(int rMax) {
+	int row;
+	int col;
 	getyx(stdscr, row, col);
 
-	if (row >= BoardR0 + board_rows - 1) {
-		move(BoardR0 + board_rows - 1, col);
-		return false;
+	if (row >= rMax) {
+		move(rMax - 1, col);
+		return;
 	}
 
-	int ret;
-	ret = move(row+1, col); //Move cursor
-	return ret;
+	move(row+1, col);
 }
 
-bool GUI::move_cursor_left(){
-	int col, row;
+void GUI::moveCursorLeft(int cMin) {
+	int row;
+	int col;
 	getyx(stdscr, row, col);
 
-	if (col <= BoardC0) {
-		move(row, BoardC0);
-		return false;
+	if (col <= cMin) {
+		move(row, cMin);
+		return;
 	}
 
-	int ret;
-	ret = move(row, col-1); //Move cursor
-	return ret;
+	move(row, col-1);
 }
 
-bool GUI::move_cursor_right(int board_cols){
-	int row, col;
+void GUI::moveCursorRight(int cMax){
+	int row;
+	int col;
 	getyx(stdscr, row, col);
 
-	if (col >= BoardC0 + board_cols - 1) {
-		move(row, BoardC0 + board_cols - 1);
-		return false;
+	if (col >= cMax) {
+		move(row, cMax);
+		return;
 	}
 
-	int ret;
-	ret = move(row, col+1); //Move cursor
-	return ret;
+	move(row, col+1);
 }
 
-CCoordinate GUI::get_cursor_pos(){
-	int row, col;
+CCoordinate GUI::getCursorPosition(){
+	int row;
+	int col;
 	getyx(stdscr, row, col);
 	return CCoordinate(row, col);
 }
 
-int GUI::get_input() {
+int GUI::getInput() {
 	return getch();
 }
 
-//Puts a char at specified CCoordinate in the guis window.
-//Does not refresh
-//Returns true iff successful
-bool GUI::draw(const CCoordinate & coord, const char ch){
-	int row, col;
-	getyx(stdscr, row, col);
+void GUI::draw(const CCoordinate& position, const char ch){
+	int maxRow;
+	int maxCol;
+	getmaxyx(stdscr, maxRow, maxCol);
 
-	int ret;
-	ret = mvwaddch(stdscr, coord.getRow(), coord.getCol(), ch);
-	move(row, col);
-
-	return ret;
-}
-
-//Draws a gfx in board window
-//Does not refresh
-bool GUI::draw_gfx(const CCoordinate & coord, const std::vector<std::vector<char> > & gfx){
-	int max_row, max_col;
-	getmaxyx(stdscr, max_row, max_col);
-
-	if ((int) gfx.size() + coord.getRow() >= max_row
-			|| (int) gfx[0].size() + coord.getCol() >= max_col
-			|| coord.getRow() < 0
-			|| coord.getCol() < 0 ) {
-		return false;
+	const int drawRow = position.getRow();
+	if (drawRow >= maxRow || drawRow < 0) {
+		return;
 	}
 
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
+	const int drawCol = position.getCol();
+	if (drawCol >= maxCol || drawCol < 0) {
+		return;
+	}
 
-	for (unsigned int r = 0; r < gfx.size(); ++r) {
-		for (unsigned int c = 0; c < gfx[0].size(); ++c) {
-			mvwaddch(stdscr, BoardR0 + coord.getRow() + r, BoardC0 + coord.getCol() + c, gfx[r][c]);
+	int row;
+	int col;
+	getyx(stdscr, row, col);
+
+	mvwaddch(stdscr, drawRow, drawCol, ch);
+	move(row, col);
+}
+
+void GUI::drawCharacters(const CCoordinate& position, const std::vector<std::vector<char>>& characters){
+	int maxRow;
+	int maxCol;
+	getmaxyx(stdscr, maxRow, maxCol);
+
+	const int row = position.getRow();
+	const int col = position.getCol();
+
+	if ((int) characters.size() + row >= maxRow || row < 0) {
+		return;
+	}
+	if ((int) characters[0].size() + col >= maxCol || col < 0 ) {
+		return;
+	}
+
+	int curRow;
+	int curCol;
+	getyx(stdscr, curRow, curCol);
+
+	for (unsigned int r = 0; r < characters.size(); ++r) {
+		for (unsigned int c = 0; c < characters[0].size(); ++c) {
+			mvaddch(position.getRow() + r, position.getCol() + c, characters[r][c]);
 		}
 	}
 
-	move(cur_row, cur_col);
-	return true;
+	move(curRow, curCol);
+	return;
 }
 
-bool GUI::draw_gfx(const CCoordinate & coord, const char gfx){
-	int max_row, max_col;
-	getmaxyx(stdscr, max_row, max_col);
-	if (coord.getRow() >= max_row ||
-			coord.getCol() >= max_col ||
-			coord.getRow() < 0 ||
-			coord.getCol() < 0) return false;
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
-
-	bool ret =  mvwaddch(stdscr, BoardR0 + coord.getRow(), BoardC0 + coord.getCol(), gfx);
-
-	move(cur_row, cur_col);
-	return ret;
-}
-
-std::vector<CCoordinate> GUI::print_menu_items(const std::vector<std::string> & menu_items) {
-	std::vector<CCoordinate> item_coords; // Return values, the position of the menu items
-	if (menu_items.size() < 1) return item_coords; // Nothing to draw
-
-	int max_row, max_col;
-	getmaxyx(stdscr, max_row, max_col);
-
-	size_t item_len = 0; // Find the longest string
-	for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
-		item_len = std::max(item_len +2, it->length()); // +2 because of menu markers
+std::vector<CCoordinate> GUI::printMenuItems(const std::vector<std::string>& menuItems) {
+	std::vector<CCoordinate> itemCoordinates; // Return values, the position of the menu items
+	if (menuItems.size() < 1) {
+		return itemCoordinates;
 	}
 
-	int col_pos = max_col/2 - item_len/2;
+	int maxRow;
+	int maxCol;
+	getmaxyx(stdscr, maxRow, maxCol);
 
-	int window_piece = max_row / 4;
-	mvwaddstr(stdscr, window_piece/2, max_col/2 - 4, "* Menu *"); // Draw logo in first piece
+	size_t longestItem = 0; // Find the longest string
+	for (auto it = menuItems.begin(); it != menuItems.end(); ++it) {
+		longestItem = std::max(longestItem + 2, it->length()); // +2 because of menu markers
+	}
 
+	const int colPosition = maxCol / 2 - longestItem / 2;
+	const int windowPiece = maxRow / 4;
 
-	int step = window_piece*2 / menu_items.size(); // step in the two middle pieces
+	mvaddstr(windowPiece / 2, maxCol / 2 - 4, "* Menu *"); // Draw logo in first piece
 
-	int item_pos = window_piece+step;
-	for (auto it = menu_items.begin(); it != menu_items.end(); ++it) {
+	const int step = windowPiece * 2 / menuItems.size(); // step in the two middle pieces
+
+	int itemPosition = windowPiece + step;
+	for (auto it = menuItems.begin(); it != menuItems.end(); ++it) {
 		std::string marker("> ");
-		mvwaddstr(stdscr, item_pos, col_pos, marker.append(*it).c_str()); // Draw the items in the middle pieces
-		item_coords.push_back(CCoordinate(item_pos, col_pos));
-		item_pos += step;
+		mvaddstr(itemPosition, colPosition, marker.append(*it).c_str()); // Draw the items in the middle pieces
+		itemCoordinates.push_back(CCoordinate(itemPosition, colPosition));
+		itemPosition += step;
 	}
 
 	const int bufferSize = 20;
 	char version[bufferSize];
 	snprintf(version, bufferSize, "Version: %s", Version);
-	mvwaddstr(stdscr, window_piece*3+window_piece/7*6, max_col/2, version); // Draw version in the end piece
+	mvwaddstr(stdscr, windowPiece * 3 + windowPiece / 7 * 6, maxCol / 2, version); // Draw version in the end piece
 
-	return item_coords;
+	return itemCoordinates;
 }
 
-void GUI::print_string(const std::string & message) {
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
+void GUI::printText(const CCoordinate& start, const char* message, int n) {
+	int curRow, curCol;
+	getyx(stdscr, curRow, curCol);
 
-	mvwaddstr(stdscr, 0, 0, message.c_str());
+	mvaddnstr(start.getRow(), start.getCol(), message, n);
 
-	move(cur_row, cur_col);
+	move(curRow, curCol);
 }
 
-void GUI::print_intel(int board_rows, const std::string & message){
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
+void GUI::drawFrame(const CCoordinate& topLeft, const CCoordinate& bottomRight){
+	int curRow;
+	int curCol;
+	getyx(stdscr, curRow, curCol);
 
-	mvwaddstr(stdscr, BoardR0 + board_rows + WindowSpace + 2, BoardC0, message.c_str());
+	const int rMin = topLeft.getRow();
+	const int cMin = topLeft.getCol();
+	const int rMax = bottomRight.getRow();
+	const int cMax = bottomRight.getCol();
 
-	move(cur_row, cur_col);
+	mvaddch(rMin, cMin, ACS_ULCORNER);
+	mvaddch(rMax, cMin, ACS_LLCORNER);
+	mvaddch(rMin, cMax, ACS_URCORNER);
+	mvaddch(rMax, cMax, ACS_LRCORNER);
+
+	mvhline(rMin, cMin + 1, ACS_HLINE, cMax - cMin - 1);
+	mvvline(rMin + 1, cMin, ACS_VLINE, rMax - rMin - 1);
+	mvhline(rMax, cMin + 1, ACS_HLINE, cMax - cMin - 1);
+	mvvline(rMin + 1, cMax, ACS_VLINE, rMax - rMin - 1);
+
+	move(curRow, curCol);
 }
 
-void GUI::draw_board_frame(int board_rows, int board_cols){
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
+void GUI::clearScreen() {
+	int maxCol;
+	int maxRow;
+	getmaxyx(stdscr, maxRow, maxCol);
 
-	mvaddch(BoardR0 - 1, BoardC0 - 1, FRAMETL);
-	mvaddch(BoardR0 + board_rows, BoardC0 - 1, FRAMEBL);
-	mvaddch(BoardR0 - 1, BoardC0 + board_cols, FRAMETR);
-	mvaddch(BoardR0 + board_rows, BoardC0 + board_cols, FRAMEBR);
-
-	mvhline(BoardR0 - 1, BoardC0, FRAMETS, board_cols);
-	mvvline(BoardR0, BoardC0 - 1, FrameLS, board_rows);
-	mvhline(BoardR0 + board_rows, BoardC0, FRAMEBS, board_cols);
-	mvvline(BoardR0, BoardC0 + board_cols, FRAMERS, board_rows);
-
-	move(cur_row, cur_col);
+	GUI::clearRectangle(CCoordinate(0, 0), CCoordinate(maxCol, maxRow));
 }
 
-void GUI::draw_intel_frame(int board_rows){
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
+void GUI::clearRectangle(const CCoordinate& topLeft, const CCoordinate& bottomRight) {
+	int currentRow;
+	int currentCol;
+	getyx(stdscr, currentRow, currentCol);
 
-	mvaddch(BoardR0 + 1 + WindowSpace + board_rows, BoardC0 - 1, FRAMETL);
-	mvaddch(BoardR0 + 1 + WindowSpace + board_rows + IntelRows + 1, BoardC0 - 1, FRAMEBL);
-	mvaddch(BoardR0 + 1 + WindowSpace + board_rows, BoardC0 + IntelCols, FRAMETR);
-	mvaddch(BoardR0 + 1 + WindowSpace + board_rows + IntelRows + 1, BoardC0 + IntelCols, FRAMEBR);
-
-	mvhline(BoardR0 + 1 + WindowSpace + board_rows, BoardC0, FRAMETS, IntelCols);
-	mvvline(BoardR0 + 2 + WindowSpace + board_rows, BoardC0 - 1, FrameLS, IntelRows);
-	mvhline(BoardR0 + 2 + WindowSpace + board_rows + IntelRows, BoardC0, FRAMEBS, IntelCols);
-	mvvline(BoardR0 + 2 + WindowSpace + board_rows, BoardC0 + IntelCols, FRAMERS, IntelRows);
-
-	move(cur_row, cur_col);
-}
-
-void GUI::clear_game(int board_rows, int board_cols) {
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
-	for (int i = BoardR0; i < board_rows + BoardR0; ++i) {
-		move(i, BoardC0);
-		for (int j = 0; j < board_cols; ++j) {
+	const int minRow = topLeft.getRow();
+	const int minCol = topLeft.getCol();
+	const int maxRow = bottomRight.getRow();
+	const int maxCol = bottomRight.getRow();
+	for (int r = minRow; r < maxRow; ++r) {
+		move(r, 0);
+		for (int c = minCol; c < maxCol; ++c) {
 			addch(' ');
 		}
 	}
-	move(cur_row, cur_col);
-}
 
-void GUI::clear_intel(int board_rows){
-	int cur_row, cur_col;
-	getyx(stdscr, cur_row, cur_col);
-	for (int i = BoardR0 + board_rows + WindowSpace + 2; i < BoardR0 + board_rows + WindowSpace + 2 + IntelRows; ++i) {
-		move(i, BoardC0);
-		for (int j = 0; j < IntelCols; ++j) {
-			addch(' ');
-		}
-	}
-	move(cur_row, cur_col);
+	move(currentRow, currentCol);
 }
 
 void GUI::refresh(){
-	wrefresh(stdscr); //Refresh curses
+	wrefresh(stdscr);
 }
 
 }
