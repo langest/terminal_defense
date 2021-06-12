@@ -33,8 +33,8 @@ CFileLogger::~CFileLogger() {
 }
 
 CFileLogger& CFileLogger::getInstance() {
-	static CFileLogger log;
-	return log;
+	static CFileLogger fileLogger;
+	return fileLogger;
 }
 
 void CFileLogger::log(const std::string& message) {
@@ -54,31 +54,33 @@ namespace termd {
 CLogger::CLogger(const std::string& file) : mName(std::filesystem::path(file).filename()) {}
 
 void CLogger::log(const std::string& message) {
-	// TODO prettier code and log timestamp
-	::CFileLogger& fileLogger = ::CFileLogger::getInstance();
-	fileLogger.log("[");
-	fileLogger.log(__DATE__);
-	fileLogger.log(__TIME__);
-	fileLogger.log("] ");
-	fileLogger.log("[");
-	fileLogger.log(mName);
-	fileLogger.log("] [I]: ");
-	fileLogger.log(message);
-	fileLogger.log("\n");
+	const std::string m = this->buildLogMessage('I', message);
+
+	CFileLogger& fileLogger = CFileLogger::getInstance();
+	fileLogger.log(m);
 }
 
 void CLogger::logError(const std::string& message) {
-	// TODO prettier code and log timestamp
-	::CFileLogger& fileLogger = ::CFileLogger::getInstance();
-	fileLogger.logError("[");
-	fileLogger.logError(__DATE__);
-	fileLogger.logError(__TIME__);
-	fileLogger.logError("] ");
-	fileLogger.logError("[");
-	fileLogger.logError(mName);
-	fileLogger.logError("] [I]: ");
-	fileLogger.logError(message);
-	fileLogger.logError("\n");
+	const std::string m = this->buildLogMessage('E', message);
+
+	CFileLogger& fileLogger = CFileLogger::getInstance();
+	fileLogger.logError(m);
+}
+
+std::string CLogger::buildLogMessage(const char logLevel, const std::string& message) {
+	const int bufferSize = 256;
+	char m[bufferSize];
+	snprintf(
+		m,
+		bufferSize,
+		"[%s %s][%s][%c]: %s\n",
+		__DATE__,
+		__TIME__,
+		mName.c_str(),
+		logLevel,
+		message.c_str()
+	);
+	return std::string(m);
 }
 
 }
