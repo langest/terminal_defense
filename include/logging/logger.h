@@ -9,10 +9,12 @@ class CLogger {
 	public:
 		CLogger(const std::string& name);
 
-		void log(const std::string& message);
-		void logError(const std::string& message);
+		void log(const char* format, ...);
+		void logError(const char* format, ...);
 	private:
-		std::string mName;
+		std::string buildLogMessage(const char logLevel, const char* message);
+
+		const std::string mName;
 };
 
 }

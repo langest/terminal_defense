@@ -1,9 +1,12 @@
 #include <logging/logger.h>
 
+#include <cstdarg>
 #include <filesystem>
 #include <fstream>
 
 namespace {
+
+const size_t bufferSize = 256;
 
 class CFileLogger {
 	private:
@@ -22,9 +25,9 @@ class CFileLogger {
 		std::ofstream mErrorLogStream;
 };
 
-CFileLogger::CFileLogger() {
-	mInfoLogStream.open("/tmp/termd_info.log");
-	mErrorLogStream.open("/tmp/termd_error.log");
+CFileLogger::CFileLogger() :
+	mInfoLogStream("/tmp/termd_info.log"),
+	mErrorLogStream("/tmp/termd_error.log") {
 }
 
 CFileLogger::~CFileLogger() {
@@ -53,22 +56,33 @@ namespace termd {
 
 CLogger::CLogger(const std::string& file) : mName(std::filesystem::path(file).filename()) {}
 
-void CLogger::log(const std::string& message) {
+void CLogger::log(const char* format, ...) {
+	char message[bufferSize];
+	va_list args;
+	va_start(args, format);
+	vsnprintf(message, bufferSize, format, args);
+	va_end(args);
+
 	const std::string m = this->buildLogMessage('I', message);
 
 	CFileLogger& fileLogger = CFileLogger::getInstance();
 	fileLogger.log(m);
 }
 
-void CLogger::logError(const std::string& message) {
+void CLogger::logError(const char* format, ...) {
+	char message[bufferSize];
+	va_list args;
+	va_start(args, format);
+	vsnprintf(message, bufferSize, format, args);
+	va_end(args);
+
 	const std::string m = this->buildLogMessage('E', message);
 
 	CFileLogger& fileLogger = CFileLogger::getInstance();
 	fileLogger.logError(m);
 }
 
-std::string CLogger::buildLogMessage(const char logLevel, const std::string& message) {
-	const int bufferSize = 256;
+std::string CLogger::buildLogMessage(const char logLevel, const char* message) {
 	char m[bufferSize];
 	snprintf(
 		m,
@@ -78,7 +92,7 @@ std::string CLogger::buildLogMessage(const char logLevel, const std::string& mes
 		__TIME__,
 		mName.c_str(),
 		logLevel,
-		message.c_str()
+		message
 	);
 	return std::string(m);
 }
