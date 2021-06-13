@@ -7,41 +7,13 @@
 #include <vector>
 #include <queue>
 
+#include <Constants.h>
 #include <Coordinate.h>
 #include <Player.h>
 
 namespace termd {
 
-CGame::CGame(CPlayer& player) : mPlayer(player), mGameBoard(player) {
-	////initialize input calls
-	//std::function<void()> f = [this]() { GUI::move_cursor_left(); };
-	//inputcalls['h'] = f;
-	//inputcalls[KEY_LEFT] = f;
-
-	//f = [this]() { GUI::move_cursor_up(); };
-	//inputcalls['k'] = f;
-	//inputcalls[KEY_UP] = f;
-
-	//f = [this]() { GUI::move_cursor_right(mGameBoard.getSizeCols()); };
-	//inputcalls['l'] = f;
-	//inputcalls[KEY_RIGHT] = f;
-
-	//f = [this]() { GUI::move_cursor_down(mGameBoard.getSizeRows()); };
-	//inputcalls['j'] = f;
-	//inputcalls[KEY_DOWN] = f;
-
-	//f = [this]() { show_menu(); };
-	//inputcalls['m'] = f;
-
-
-	////Reading tower build buttons from file
-	//Tower_loader tl;
-	//std::vector<int> tids = tl.id_list();
-
-	//for (int id : tids) {
-	//	inputcalls[id] = [&, id]() { build_tower(id); };
-	//}
-}
+CGame::CGame(CPlayer& player) : mPlayer(player), mGameBoard(player) {}
 
 void CGame::intro() {
 	const char* introMessage("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
@@ -62,6 +34,38 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
 	GUI::printText(CCoordinate(0, 0), introMessage, -1);
 	GUI::getInput();
 	GUI::clearScreen();
+}
+
+void CGame::handleInput(const char input) {
+	switch (input) {
+		case 'h': {
+			mGameBoard.moveCursorLeft();
+			break;
+		}
+		case 'j': {
+			mGameBoard.moveCursorDown();
+			break;
+		}
+		case 'k': {
+			mGameBoard.moveCursorUp();
+			break;
+		}
+		case 'l': {
+			mGameBoard.moveCursorRight();
+			break;
+		}
+		case 'm': {
+			this->runMenu();
+			break;
+		}
+		case 'w': {
+			mGameBoard.buildTower(GUI::getCursorPosition());
+			break;
+		}
+		default: {
+			break;
+		}
+	}
 }
 
 void CGame::outro() {
