@@ -1,7 +1,7 @@
 #include <curses.h>
 
 #include <Menu.h>
-#include <logging/logger.h>
+#include <logging/Logger.h>
 
 void init_ncurses() {
 	// TODO set up locale

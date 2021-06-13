@@ -2,7 +2,7 @@
 
 #include <set>
 
-#include <logging/logger.h>
+#include <logging/Logger.h>
 #include <tower/TowerManager.h>
 #include <virus/VirusManager.h>
 
