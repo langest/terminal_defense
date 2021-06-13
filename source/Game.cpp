@@ -112,9 +112,9 @@ bool CGame::runInvasionPhase() {
 
 	//Framerate limiter setup
 	std::chrono::milliseconds interval(1000/Frames);
-	std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
+	std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate(
 			std::chrono::system_clock::now() - interval );
-	std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;
+	std::chrono::time_point<std::chrono::high_resolution_clock> curUpdate;
 
 	while (mGameBoard.update()) {
 		//Framerate counter
@@ -141,10 +141,10 @@ bool CGame::runInvasionPhase() {
 		GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
 		GUI::refresh();
 
-		cur_update = std::chrono::system_clock::now();
-		auto sleep_dur = 2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(cur_update - last_update);
-		last_update = cur_update;
-		std::this_thread::sleep_for(sleep_dur);
+		curUpdate = std::chrono::system_clock::now();
+		auto sleepMilliseconds = 2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(curUpdate - lastUpdate);
+		lastUpdate = curUpdate;
+		std::this_thread::sleep_for(sleepMilliseconds);
 	}
 	mGameBoard.draw();//Redraw the mGameBoard so all projectiles are removed TODO prettier solution since this just instantly removes all their gfx.
 	return mGameBoard.hasNextWave();
