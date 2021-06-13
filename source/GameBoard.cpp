@@ -9,11 +9,14 @@ namespace termd {
 
 CGameBoard::CGameBoard(CPlayer& player) :
 	player(player),
-	mSizeRows(0),
-	mSizeCols(0),
+	mStartRow(1),
+	mStartCol(1),
+	mSizeRows(10),
+	mSizeCols(100),
 	//wman(mSizeRows, mSizeCols, towers, std::string(""), mVirusManager),
-	mTowerManager(GUI::draw),
-	mVirusManager(player) {
+	mTowerManager(),
+	mVirusManager(player),
+	mLogger(__FILE__) {
 		loadMap();
 		//wman.set_size(mSizeRows, mSizeCols);
 		//pman.set_size(mSizeRows, mSizeCols);
@@ -61,6 +64,7 @@ bool CGameBoard::update() {
 bool CGameBoard::buildTower(const CCoordinate& coordinate) {
 	const int row(coordinate.getRow());
 	const int col(coordinate.getCol());
+	mLogger.log("Trying to build tower at (%d, %d)", row, col);
 	if (col < 0 ||
 		col >= mSizeCols ||
 		row < 0 ||

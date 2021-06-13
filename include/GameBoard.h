@@ -2,8 +2,9 @@
 
 #include <set>
 
-#include <virus/VirusManager.h>
+#include <logging/logger.h>
 #include <tower/TowerManager.h>
+#include <virus/VirusManager.h>
 
 namespace termd {
 
@@ -34,10 +35,14 @@ class CGameBoard {
 		void loadMap();
 
 		CPlayer& player;
+		const int mStartRow;
+		const int mStartCol;
 		const int mSizeRows;
 		const int mSizeCols;
 		CTowerManager mTowerManager;
 		CVirusManager mVirusManager;
+
+		CLogger mLogger;
 };
 
 }

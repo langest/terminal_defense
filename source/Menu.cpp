@@ -16,7 +16,7 @@ CMenu::CMenu() :
 			std::string("Exit")
 			}),
 	mInputCallbacks() {
-		std::function<void()> f = [this]() { runGame(); };
+		std::function<void()> f = [this]() { this->runGame(); };
 		mInputCallbacks[0] = f;
 		mInputCallbacks[1] = f;
 		mInputCallbacks[2] = f;
