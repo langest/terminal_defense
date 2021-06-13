@@ -39,6 +39,7 @@ void CMenu::run() {
 			}
 		} else if ((ch == KEY_ENTER || ch == KEY_RIGHT || ch == 'l') && mInputCallbacks.find(currentItem) != mInputCallbacks.end()) {
 			mInputCallbacks[currentItem]();
+			break;
 		} else if ((ch == KEY_ENTER || ch == KEY_RIGHT || ch == 'l') && mInputCallbacks.find(currentItem) == mInputCallbacks.end()) {
 			break;
 		}
@@ -57,6 +58,7 @@ void CMenu::clearMenu() {
 
 void CMenu::runGame() {
 	CGame game(mPlayer);
+	this->clearMenu();
 	game.run();
 }
 

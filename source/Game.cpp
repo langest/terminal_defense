@@ -13,7 +13,10 @@
 
 namespace termd {
 
-CGame::CGame(CPlayer& player) : mPlayer(player), mGameBoard(player) {}
+CGame::CGame(CPlayer& player) :
+	mPlayer(player),
+	mGameBoard(player),
+	mLogger(__FILE__) {}
 
 void CGame::intro() {
 	const char* introMessage("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
@@ -59,7 +62,7 @@ void CGame::handleInput(const char input) {
 			break;
 		}
 		case 'w': {
-			mGameBoard.buildTower(GUI::getCursorPosition());
+			mGameBoard.buildTower();
 			break;
 		}
 		default: {
@@ -71,21 +74,24 @@ void CGame::handleInput(const char input) {
 void CGame::outro() {
 	GUI::moveCursor(CCoordinate(0,0));
 	GUI::getInput();
+	GUI::clearScreen();
 }
 
 void CGame::runBuildPhase() {
+	mLogger.log("runBuildPhase");
 	// Draw game board frame
 	GUI::drawFrame(
 		CCoordinate(0, 0),
-		CCoordinate(mGameBoard.getSizeRows() + 2, mGameBoard.getSizeCols() + 2));
+		CCoordinate(mGameBoard.getSizeRows() + 1, mGameBoard.getSizeCols() + 1));
 	// Draw intel frame
 	GUI::drawFrame(
-		CCoordinate(mGameBoard.getSizeRows() + 3, 0),
-		CCoordinate(mGameBoard.getSizeRows() + 3 + IntelRows, mGameBoard.getSizeCols() + 2));
+		CCoordinate(mGameBoard.getSizeRows() + 2, 0),
+		CCoordinate(mGameBoard.getSizeRows() + 2 + IntelRows, mGameBoard.getSizeCols() + 1));
 	char intelMessage[IntelCols];
 
-	int input;
+	char input;
 	while((input = GUI::getInput()) != 27 && input != 'q') {
+		mLogger.log("got input %c", input);
 		this->handleInput(input);
 		GUI::clearRectangle(
 			CCoordinate(1, 1),
@@ -157,6 +163,7 @@ bool CGame::runInvasionPhase() {
 
 bool CGame::run() {
 	this->intro();
+	mGameBoard.resetCursor();
 	this->runBuildPhase();
 	while (runInvasionPhase()) {
 		if(!mPlayer.isAlive()) {
@@ -165,7 +172,7 @@ bool CGame::run() {
 		}
 		this->runBuildPhase();
 	}
-	//this->outro();
+	this->outro();
 	return true;
 }
 

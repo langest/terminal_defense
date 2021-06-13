@@ -26,6 +26,7 @@ class CGame {
 
 		CPlayer& mPlayer;
 		CGameBoard mGameBoard;
+		CLogger mLogger;
 };
 
 }

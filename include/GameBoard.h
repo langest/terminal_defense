@@ -17,6 +17,7 @@ class CGameBoard {
 		CGameBoard(const CGameBoard &) = delete;
 		CGameBoard& operator=(const CGameBoard &) = delete;
 
+		void resetCursor();
 		void moveCursorLeft();
 		void moveCursorDown();
 		void moveCursorUp();
@@ -24,13 +25,15 @@ class CGameBoard {
 
 		void draw() const;
 		bool update();
-		bool buildTower(const CCoordinate& coordinate);
+		bool buildTower();
 		bool hasNextWave() const;
 
 		const int getSizeRows() const;
 		const int getSizeCols() const;
 
 	private:
+		void drawCall(const CCoordinate& position, char graphic);
+
 		bool isBlockedWith(const CCoordinate& coordinate);
 		void loadMap();
 
