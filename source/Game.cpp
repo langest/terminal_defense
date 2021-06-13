@@ -44,7 +44,7 @@ CGame::CGame(CPlayer& player) : mPlayer(player), mGameBoard(player) {
 }
 
 void CGame::intro() {
-	std::string intromsg("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
+	const char* introMessage("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
 Viruses (as you all know) begins on the right side and flies to the left. \n\
 You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
 You lose when you lose control over your terminal (reach 0 terminal control points). \n\
@@ -59,42 +59,49 @@ y - Build a DOWN TOWER \n\
 d - Build a RIGHT TOWER \n\
 w - Build a WALL \n\
 MOVE CURSOR as you normally would (arrows or vim-like)\n");
-	GUI::print_string(intromsg);
-	GUI::get_input();
-	//clear();
-	GUI::move_cursor(CCoordinate(BoardR0, BoardC0));
+	GUI::printText(CCoordinate(0, 0), introMessage, -1);
+	GUI::getInput();
+	GUI::clearScreen();
 }
 
 void CGame::outro() {
-	//clear();
-	GUI::move_cursor(CCoordinate(0,0));
-	GUI::get_input();
+	GUI::moveCursor(CCoordinate(0,0));
+	GUI::getInput();
 }
 
 void CGame::runBuildPhase() {
-	int ch;
-	GUI::draw_board_frame(mGameBoard.getSizeRows(), mGameBoard.getSizeCols());
-	GUI::draw_intel_frame(mGameBoard.getSizeRows());
-	char intelmsg[IntelCols];
-	while((ch = GUI::get_input()) != 27 && ch != 'q') {
-		//if (inputcalls.find(ch) != inputcalls.end()) {
-		//	inputcalls[ch]();
-		//}
-		mGameBoard.draw();
-		GUI::clear_intel(mGameBoard.getSizeCols());
-		sprintf(
-			intelmsg,
+	// Draw game board frame
+	GUI::drawFrame(
+		CCoordinate(0, 0),
+		CCoordinate(mGameBoard.getSizeRows() + 2, mGameBoard.getSizeCols() + 2));
+	// Draw intel frame
+	GUI::drawFrame(
+		CCoordinate(mGameBoard.getSizeRows() + 3, 0),
+		CCoordinate(mGameBoard.getSizeRows() + 3 + IntelRows, mGameBoard.getSizeCols() + 2));
+	char intelMessage[IntelCols];
+
+	int input;
+	while((input = GUI::getInput()) != 27 && input != 'q') {
+		this->handleInput(input);
+		GUI::clearRectangle(
+			CCoordinate(1, 1),
+			CCoordinate(mGameBoard.getSizeRows(), mGameBoard.getSizeCols()));
+		snprintf(
+			intelMessage,
+			IntelCols,
 			"RAM: %d\t Terminal Control Points: %d",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints()
 		);
-		GUI::print_intel(mGameBoard.getSizeRows(), intelmsg);
+		//TODO move all gui prints to gameboard
+		GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
+		mGameBoard.draw();
 		GUI::refresh();
 	}
 }
 
 bool CGame::runInvasionPhase() {
-	char intelmsg[IntelCols];
+	char intelMessage[IntelCols];
 
 	//Frame counter setup
 	std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
@@ -120,16 +127,18 @@ bool CGame::runInvasionPhase() {
 
 		//Framerate limiter
 		mGameBoard.draw();
-		GUI::clear_intel(mGameBoard.getSizeRows());
+		GUI::clearRectangle(
+			CCoordinate(mGameBoard.getSizeRows() + 3, 1),
+			CCoordinate(mGameBoard.getSizeRows() + IntelRows, IntelCols - 2));
 		snprintf(
-			intelmsg,
+			intelMessage,
 			IntelCols,
 			"RAM: %d\t Terminal Control Points: %d\t FPS: %zd",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints(),
 			avgfps
 		);
-		GUI::print_intel(mGameBoard.getSizeRows(), intelmsg);
+		GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
 		GUI::refresh();
 
 		cur_update = std::chrono::system_clock::now();
@@ -143,27 +152,28 @@ bool CGame::runInvasionPhase() {
 }
 
 bool CGame::run() {
-	intro();
-	runBuildPhase();
+	this->intro();
+	this->runBuildPhase();
 	while (runInvasionPhase()) {
 		if(!mPlayer.isAlive()) {
-			outro();
+			this->outro();
 			return false;
 		}
-		runBuildPhase();
+		this->runBuildPhase();
 	}
-	outro();
+	//this->outro();
 	return true;
 }
 
 void CGame::runMenu() {
-	GUI::clear_intel(mGameBoard.getSizeRows());
-	GUI::print_intel(mGameBoard.getSizeRows(), std::string("1.Quit Game    2.Return to game"));
+	GUI::clearScreen();
+	const char* intelMessage = "1.Quit Game    2.Return to game";
+	GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
 
-	char ch;
-	while ((ch = GUI::get_input()) != '1' && ch != '2');
+	char input;
+	while ((input = GUI::getInput()) != '1' && input != '2');
 
-	GUI::clear_intel(mGameBoard.getSizeRows());
+	GUI::clearScreen();
 }
 
 }

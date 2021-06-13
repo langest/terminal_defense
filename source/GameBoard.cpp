@@ -19,12 +19,30 @@ CGameBoard::CGameBoard(CPlayer& player) :
 		//pman.set_size(mSizeRows, mSizeCols);
 }
 
+void CGameBoard::moveCursorLeft() {
+	GUI::moveCursorLeft(mStartCol);
+}
+
+void CGameBoard::moveCursorDown() {
+	GUI::moveCursorDown(mStartRow + mSizeRows);
+}
+
+void CGameBoard::moveCursorUp() {
+	GUI::moveCursorUp(mStartRow);
+}
+
+void CGameBoard::moveCursorRight() {
+	GUI::moveCursorRight(mStartCol + mSizeCols);
+}
+
 void CGameBoard::draw() const {
-	GUI::clear_game(mSizeRows, mSizeCols);
+	GUI::clearScreen();
 
 	mTowerManager.drawAllTowers();
 	mVirusManager.drawAllViruses();
-	GUI::draw_board_frame(mSizeRows, mSizeCols);
+	GUI::drawFrame(
+		CCoordinate(0, 0),
+		CCoordinate(mSizeRows + 2, mSizeCols + 2));
 }
 
 bool CGameBoard::update() {

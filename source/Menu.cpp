@@ -1,5 +1,7 @@
 #include <Menu.h>
 
+#include <ncurses.h>
+
 #include <Game.h>
 #include <Gui.h>
 
@@ -21,12 +23,12 @@ CMenu::CMenu() :
 	}
 
 void CMenu::run() {
-	std::vector<CCoordinate> itemPositions = printMenu();
+	std::vector<CCoordinate> itemPositions = this->printMenu();
 	int ch;
 	int currentItem = 0;
-	GUI::move_cursor(itemPositions[currentItem]);
+	GUI::moveCursor(itemPositions[currentItem]);
 	GUI::refresh();
-	while((ch = GUI::get_input()) != 'q') {
+	while((ch = GUI::getInput()) != 'q') {
 		if (ch == 'j' || ch == KEY_DOWN) {
 			currentItem = (currentItem + 1) % itemPositions.size();
 		}
@@ -40,17 +42,17 @@ void CMenu::run() {
 		} else if ((ch == KEY_ENTER || ch == KEY_RIGHT || ch == 'l') && mInputCallbacks.find(currentItem) == mInputCallbacks.end()) {
 			break;
 		}
-		GUI::move_cursor(itemPositions[currentItem]);
+		GUI::moveCursor(itemPositions[currentItem]);
 	}
-	clearMenu();
+	this->clearMenu();
 }
 
 std::vector<CCoordinate> CMenu::printMenu() {
-	return GUI::print_menu_items(mItems);
+	return GUI::printMenuItems(mItems);
 }
 
 void CMenu::clearMenu() {
-	GUI::clear_intel(0);
+	GUI::clearScreen();
 }
 
 void CMenu::runGame() {

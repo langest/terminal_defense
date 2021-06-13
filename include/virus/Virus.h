@@ -21,7 +21,7 @@ class CVirus {
 		);
 
 		void update();
-		bool draw() const;
+		void draw() const;
 
 		int getReward() const;
 		int getDamage() const;

@@ -16,6 +16,11 @@ class CGameBoard {
 		CGameBoard(const CGameBoard &) = delete;
 		CGameBoard& operator=(const CGameBoard &) = delete;
 
+		void moveCursorLeft();
+		void moveCursorDown();
+		void moveCursorUp();
+		void moveCursorRight();
+
 		void draw() const;
 		bool update();
 		bool buildTower(const CCoordinate& coordinate);

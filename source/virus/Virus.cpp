@@ -29,8 +29,8 @@ void CVirus::update(){
 	mStamina = mPath.step(mStamina + mStaminaIncrement);
 }
 
-bool CVirus::draw() const {
-	return GUI::draw_gfx(getPosition(), mGraphic);
+void CVirus::draw() const {
+	GUI::draw(getPosition(), mGraphic);
 }
 
 int CVirus::getReward() const {

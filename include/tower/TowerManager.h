@@ -13,7 +13,7 @@ class CTowerManager {
 	public:
 		typedef std::function<void(const CCoordinate& position, char graphic)> TDrawCall;
 
-		CTowerManager(TDrawCall drawCall);
+		CTowerManager();
 
 		void updateAllTowers();
 		void updateAllTowersEndOfWave();

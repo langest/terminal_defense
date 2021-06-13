@@ -43,7 +43,7 @@ void GUI::moveCursorDown(int rMax) {
 	getyx(stdscr, row, col);
 
 	if (row >= rMax) {
-		move(rMax - 1, col);
+		move(rMax, col);
 		return;
 	}
 

@@ -47,10 +47,7 @@ void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
 
 void CVirusManager::drawAllViruses() const {
 	for (auto i = mViruses.begin(); i != mViruses.end(); ++i) {
-		const bool success = (*i)->draw();
-		if(!success) {
-			//TODO debugging
-		}
+		(*i)->draw();
 	}
 }
 
