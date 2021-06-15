@@ -44,7 +44,7 @@ class CPath {
 			}
 		};
 
-		std::queue<SStep> path;
+		std::queue<SStep> mPath;
 
 		int heuristic_cost(const CCoordinate &, const CCoordinate &);
 };

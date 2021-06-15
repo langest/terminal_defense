@@ -3,6 +3,7 @@
 #include <map>
 
 #include <Coordinate.h>
+#include <logging/Logger.h>
 #include <virus/Path.h>
 
 namespace termd {
@@ -38,11 +39,15 @@ class CVirus {
 		int mDamage;
 		char mGraphic;
 		CPath mPath;
+		CLogger mLogger;
 };
 
+
+// TODO is CVirusFactory really needed?
 class CVirusFactory {
 	public:
+		CVirusFactory() = delete;
+
 		CVirus static createVirus(int hp, int stamina, int reward, const CCoordinate& startPosition, const std::map<CCoordinate, std::unique_ptr<ITower>> towers);
 };
-
 }

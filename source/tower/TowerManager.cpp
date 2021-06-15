@@ -2,12 +2,12 @@
 
 namespace termd {
 
-CTowerManager::CTowerManager(TDrawCall drawCall) :
+CTowerManager::CTowerManager(const TDrawCall& drawCall) :
 	mTowers(),
 	mDrawCall(drawCall),
 	mLogger(__FILE__) {}
 
-void CTowerManager::updateAllTowers() {
+void CTowerManager::updateTowers() {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ) {
 		bool keep = it->second->update();
 
@@ -19,7 +19,7 @@ void CTowerManager::updateAllTowers() {
 	}
 }
 
-void CTowerManager::updateAllTowersEndOfWave() {
+void CTowerManager::updateTowersEndOfWave() {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
 		it->second->updateEndOfWave();
 	}
@@ -29,7 +29,7 @@ bool CTowerManager::isTowerAt(const CCoordinate& coordinate) const {
 	return mTowers.find(coordinate) != mTowers.end();
 }
 
-const std::map<CCoordinate, std::unique_ptr<ITower>>& CTowerManager::getAllTowers() const {
+const std::map<CCoordinate, std::unique_ptr<ITower>>& CTowerManager::getTowers() const {
 	return mTowers;
 }
 
@@ -41,7 +41,7 @@ bool CTowerManager::placeTower(const CCoordinate& position, std::unique_ptr<ITow
 	return true;
 }
 
-void CTowerManager::drawAllTowers() const {
+void CTowerManager::drawTowers() const {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
 		const char graphic = it->second->getGraphic();
 		mDrawCall(it->first, graphic);

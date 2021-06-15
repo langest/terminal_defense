@@ -9,18 +9,16 @@
 namespace termd {
 
 CGameBoard::CGameBoard(CPlayer& player) :
-	player(player),
+	mPlayer(player),
 	mStartRow(1),
 	mStartCol(1),
 	mSizeRows(10),
 	mSizeCols(10),
-	//wman(mSizeRows, mSizeCols, towers, std::string(""), mVirusManager),
 	mTowerManager(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2)),
-	mVirusManager(player),
+	mVirusManager(mPlayer),
+	mHasMoreToDo(false),
 	mLogger(__FILE__) {
 		loadMap();
-		//wman.set_size(mSizeRows, mSizeCols);
-		//pman.set_size(mSizeRows, mSizeCols);
 }
 
 void CGameBoard::resetCursor() {
@@ -48,24 +46,32 @@ void CGameBoard::moveCursorRight() {
 void CGameBoard::draw() const {
 	GUI::clearScreen();
 
-	mTowerManager.drawAllTowers();
-	mVirusManager.drawAllViruses();
+	mTowerManager.drawTowers();
+	mVirusManager.drawViruses();
 	GUI::drawFrame(
 		CCoordinate(0, 0),
 		CCoordinate(mSizeRows + 1, mSizeCols + 1));
 }
 
-bool CGameBoard::update() {
-	//bool cont = wman.update();
-	bool hasMoreToDo = mVirusManager.updateAllViruses();
-	//pman.update();
-	mTowerManager.updateAllTowers();
-	if (!hasMoreToDo) {
-		mVirusManager.updateAllVirusesEndOfWave();
-		//pman.end_of_wave();
-		mTowerManager.updateAllTowersEndOfWave();
+void CGameBoard::initInvasion() {
+	if (mHasMoreToDo) {
+		mLogger.logError("Tried to init invasion while already having one started");
+		return; // Do not start multiple invasions
 	}
-	return hasMoreToDo;
+	mVirusManager.initInvasion(mTowerManager.getTowers());
+	// TODO mTowerManager.initInvasion();
+}
+
+bool CGameBoard::update() {
+	mLogger.log("Update");
+	mHasMoreToDo = mVirusManager.update();
+	mTowerManager.updateTowers();
+	if (!mHasMoreToDo) {
+		mLogger.log("Nothing more to do, finishing invasion");
+		mVirusManager.finishInvasion();
+		// TODO mTowerManager.finishInvasion();
+	}
+	return mHasMoreToDo;
 }
 
 bool CGameBoard::buildTower() {
@@ -93,11 +99,11 @@ bool CGameBoard::hasNextWave() const {
 	return mVirusManager.hasNextWave();
 }
 
-const int CGameBoard::getSizeRows() const {
+int CGameBoard::getSizeRows() const {
 	return mSizeRows;
 }
 
-const int CGameBoard::getSizeCols() const {
+int CGameBoard::getSizeCols() const {
 	return mSizeCols;
 }
 
@@ -172,12 +178,12 @@ void CGameBoard::loadMap() {
 
 	//	int max_cp;
 	//	loadfile >> max_cp;
-	//	player.set_max_cp(max_cp);
-	//	player.set_cp(max_cp);
+	//	mPlayer.set_max_cp(max_cp);
+	//	mPlayer.set_cp(max_cp);
 
 	//	int ram;
 	//	loadfile >> ram;
-	//	player.set_ram(ram);
+	//	mPlayer.set_ram(ram);
 
 	//	int number_of_towers;
 

@@ -24,12 +24,13 @@ class CGameBoard {
 		void moveCursorRight();
 
 		void draw() const;
+		void initInvasion();
 		bool update();
 		bool buildTower();
 		bool hasNextWave() const;
 
-		const int getSizeRows() const;
-		const int getSizeCols() const;
+		int getSizeRows() const;
+		int getSizeCols() const;
 
 	private:
 		void drawCall(const CCoordinate& position, char graphic);
@@ -37,13 +38,14 @@ class CGameBoard {
 		bool isBlockedWith(const CCoordinate& coordinate);
 		void loadMap();
 
-		CPlayer& player;
+		CPlayer& mPlayer;
 		const int mStartRow;
 		const int mStartCol;
 		const int mSizeRows;
 		const int mSizeCols;
 		CTowerManager mTowerManager;
 		CVirusManager mVirusManager;
+		bool mHasMoreToDo;
 
 		CLogger mLogger;
 };

@@ -14,16 +14,16 @@ class CTowerManager {
 	public:
 		typedef std::function<void(const CCoordinate& position, char graphic)> TDrawCall;
 
-		CTowerManager(TDrawCall drawCall);
+		CTowerManager(const TDrawCall& drawCall);
 
-		void updateAllTowers();
-		void updateAllTowersEndOfWave();
+		void updateTowers();
+		void updateTowersEndOfWave();
 
 		bool isTowerAt(const CCoordinate& coordinate) const;
-		const std::map<CCoordinate, std::unique_ptr<ITower>>& getAllTowers() const;
+		const std::map<CCoordinate, std::unique_ptr<ITower>>& getTowers() const;
 
 		bool placeTower(const CCoordinate& position, std::unique_ptr<ITower>&& tower);
-		void drawAllTowers() const;
+		void drawTowers() const;
 
 	private:
 		std::map<CCoordinate, std::unique_ptr<ITower>> mTowers;

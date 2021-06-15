@@ -127,23 +127,23 @@ CPath::CPath(
 		} else {
 			cost = stepCost;
 		}
-		path.push(SStep(current, cost)); //Copy that 's' CCoordinate!
+		mPath.push(SStep(current, cost)); //Copy that 's' CCoordinate!
 		last = current;
 	}
 }
 
 const CCoordinate& CPath::getCurrentPosition() const {
-	return path.front().coord; // TODO clean up, will break if path is empty
+	return mPath.front().coord; // TODO clean up, will break if path is empty
 }
 
 bool CPath::isDestinationReached() const {
-	return path.empty();
+	return mPath.empty();
 }
 
 int CPath::step(int stamina) {
-	while(!path.empty() && stamina >= path.front().cost){
-		stamina -= path.front().cost;
-		path.pop(); //removes the head of the queue, will be drawn on the "next" place
+	while(!mPath.empty() && stamina >= mPath.front().cost){
+		stamina -= mPath.front().cost;
+		mPath.pop(); //removes the head of the queue, will be drawn on the "next" place
 	}
 	return stamina;
 }

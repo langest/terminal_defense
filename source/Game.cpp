@@ -111,7 +111,10 @@ void CGame::runBuildPhase() {
 }
 
 bool CGame::runInvasionPhase() {
+	mLogger.log("Run invasion phase");
 	char intelMessage[IntelCols];
+
+	mGameBoard.initInvasion();
 
 	//Frame counter setup
 	std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
@@ -167,6 +170,7 @@ bool CGame::run() {
 	this->runBuildPhase();
 	while (runInvasionPhase()) {
 		if(!mPlayer.isAlive()) {
+			mLogger.log("Player not alive anymore");
 			this->outro();
 			return false;
 		}

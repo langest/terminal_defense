@@ -20,10 +20,12 @@ CVirus::CVirus(
 	mReward(reward),
 	mDamage(1),
 	mGraphic(graphic),
-	mPath(startPosition, numRows, numCols, towers) {}
+	mPath(startPosition, numRows, numCols, towers),
+	mLogger(__FILE__) {}
 
 void CVirus::update(){
 	if(mHp <= 0) {
+		mLogger.log("Virus out of hp");
 		return;
 	}
 	mStamina = mPath.step(mStamina + mStaminaIncrement);
