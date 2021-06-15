@@ -87,9 +87,7 @@ std::string CLogger::buildLogMessage(const char logLevel, const char* message) {
 	snprintf(
 		m,
 		bufferSize,
-		"[%s %s][%s][%c]: %s\n",
-		__DATE__,
-		__TIME__,
+		"[%s][%c]: %s\n",
 		mName.c_str(),
 		logLevel,
 		message
