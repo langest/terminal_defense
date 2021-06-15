@@ -6,10 +6,10 @@
 
 namespace termd {
 
-CVirusManager::CVirusManager(CPlayer& p) :
-	mPlayer(p),
-	mInts(),
+CVirusManager::CVirusManager(CPlayer& player, TDrawCall drawCall) :
+	mPlayer(player),
 	mViruses(),
+	mDrawCall(drawCall),
 	mLogger(__FILE__) {}
 
 bool CVirusManager::update() {
@@ -38,17 +38,21 @@ bool CVirusManager::update() {
 	return !mViruses.empty();
 }
 
-void CVirusManager::initInvasion(const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
-	mViruses.emplace_back(std::make_unique<CVirus>(10, 40, 1, 'v', CCoordinate(5, 5), 10,10, towers));
+void CVirusManager::initInvasion(const std::set<CCoordinate>& startPositions, const std::set<CCoordinate>& endPositions, const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
+	const int r = std::rand();
+	const int n = r % startPositions.size();
+	auto it = std::begin(startPositions);
+	std::advance(it,n);
+	const CCoordinate& startPosition = *it;
+	mViruses.emplace_back(std::make_unique<CVirus>(10, 40, 1, 'v', startPosition, endPositions, 10,10, towers));
 }
 
 void CVirusManager::finishInvasion() {
 	mViruses.clear();
 }
 
-const std::vector<std::unique_ptr<int>>& CVirusManager::getViruses() const {
-	return mInts;
-	//return mViruses;
+const std::vector<std::unique_ptr<CVirus>>& CVirusManager::getViruses() const {
+	return mViruses;
 }
 
 void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
@@ -57,7 +61,9 @@ void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
 
 void CVirusManager::drawViruses() const {
 	for (auto i = mViruses.begin(); i != mViruses.end(); ++i) {
-		(*i)->draw();
+		const char graphic = (*i)->getGraphic();
+		const CCoordinate position = (*i)->getPosition();
+		mDrawCall(position, graphic);
 	}
 }
 

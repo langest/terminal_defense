@@ -43,6 +43,8 @@ class CGameBoard {
 		const int mStartCol;
 		const int mSizeRows;
 		const int mSizeCols;
+		std::set<CCoordinate> mStartPositions;
+		std::set<CCoordinate> mEndPositions;
 		CTowerManager mTowerManager;
 		CVirusManager mVirusManager;
 		bool mHasMoreToDo;

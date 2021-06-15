@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <set>
 
 #include <Coordinate.h>
 #include <logging/Logger.h>
@@ -16,17 +17,18 @@ class CVirus {
 			int reward,
 			char graphic,
 			const CCoordinate& startPosition,
+			const std::set<CCoordinate>& endPositions,
 			int numRows,
 			int numCols,
 			const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
 		);
 
 		void update();
-		void draw() const;
 
 		int getReward() const;
 		int getDamage() const;
 		const CCoordinate& getPosition() const;
+		char getGraphic() const;
 		bool isAlive() const;
 		bool isDestinationReached() const;
 		void takeDamage(int damage);

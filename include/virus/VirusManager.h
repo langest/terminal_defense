@@ -1,6 +1,8 @@
 #pragma once
 
+#include <functional>
 #include <memory>
+#include <set>
 #include <vector>
 
 #include <logging/Logger.h>
@@ -12,13 +14,15 @@ class CPlayer;
 
 class CVirusManager {
 	public:
-		CVirusManager(CPlayer& player);
+		typedef std::function<void(const CCoordinate& position, char graphic)> TDrawCall;
+
+		CVirusManager(CPlayer& player, TDrawCall drawCall);
 
 		bool update();
-		void initInvasion(const std::map<CCoordinate, std::unique_ptr<ITower>>& towers);
+		void initInvasion(const std::set<CCoordinate>& startPositions, const std::set<CCoordinate>& endPositions, const std::map<CCoordinate, std::unique_ptr<ITower>>& towers);
 		void finishInvasion();
 
-		const std::vector<std::unique_ptr<int>>& getViruses() const;
+		const std::vector<std::unique_ptr<CVirus>>& getViruses() const;
 
 		void addVirus(std::unique_ptr<CVirus>&& virus);
 		void drawViruses() const;
@@ -27,8 +31,8 @@ class CVirusManager {
 
 	private:
 		CPlayer& mPlayer;
-		std::vector<std::unique_ptr<int>> mInts;
 		std::vector<std::unique_ptr<CVirus>> mViruses;
+		TDrawCall mDrawCall;
 		CLogger mLogger;
 };
 

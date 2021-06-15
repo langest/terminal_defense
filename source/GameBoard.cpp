@@ -15,11 +15,15 @@ CGameBoard::CGameBoard(CPlayer& player) :
 	mSizeRows(10),
 	mSizeCols(10),
 	mTowerManager(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2)),
-	mVirusManager(mPlayer),
+	mVirusManager(mPlayer, std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2)),
 	mHasMoreToDo(false),
 	mLogger(__FILE__) {
 		loadMap();
-}
+		for (int i = 0; i < mSizeRows; ++i) {
+			mStartPositions.emplace(CCoordinate(i, mSizeCols - 1));
+			mEndPositions.emplace(CCoordinate(i, 0));
+		}
+	}
 
 void CGameBoard::resetCursor() {
 	GUI::moveCursor(CCoordinate(
@@ -58,7 +62,7 @@ void CGameBoard::initInvasion() {
 		mLogger.logError("Tried to init invasion while already having one started");
 		return; // Do not start multiple invasions
 	}
-	mVirusManager.initInvasion(mTowerManager.getTowers());
+	mVirusManager.initInvasion(mStartPositions, mEndPositions, mTowerManager.getTowers());
 	// TODO mTowerManager.initInvasion();
 }
 
@@ -117,25 +121,23 @@ bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
 	visited[coordinate.getRow()][coordinate.getCol()] = 1;
 	std::queue<CCoordinate> queue;
 
-	for (int i = 0; i < mSizeRows; ++i) {
-		const CCoordinate startPosition(i, mSizeCols-1);
+	for (const CCoordinate& startPosition: mStartPositions) {
 		if (mTowerManager.isTowerAt(startPosition) ||
 			visited[startPosition.getRow()][startPosition.getCol()]) {
 			continue;
 		}
 		queue.push(startPosition);
-		visited[i][mSizeCols-1] = 1;
+		visited[startPosition.getRow()][startPosition.getCol()] = 1;
 	}
 
 	while (!queue.empty()) {
 		const CCoordinate& current = queue.front();
+		if (mStartPositions.contains(current)) {
+			return false;
+		}
 		const int r = current.getRow();
 		const int c = current.getCol();
 		queue.pop();
-
-		if (c <= 0) {
-			return false;
-		}
 
 		const int under = r + 1;
 		if (under < mSizeRows &&
