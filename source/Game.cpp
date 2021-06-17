@@ -15,7 +15,7 @@ namespace termd {
 
 CGame::CGame(CPlayer& player) :
 	mPlayer(player),
-	mGameBoard(player),
+	mGameBoard(player, 10, 16),
 	mLogger(__FILE__) {}
 
 void CGame::intro() {

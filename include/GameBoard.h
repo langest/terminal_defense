@@ -13,7 +13,7 @@ class CPlayer;
 
 class CGameBoard {
 	public:
-		CGameBoard(CPlayer& player);
+		CGameBoard(CPlayer& player, int sizeRows, int sizeCols);
 		CGameBoard(const CGameBoard &) = delete;
 		CGameBoard& operator=(const CGameBoard &) = delete;
 

@@ -8,14 +8,14 @@
 
 namespace termd {
 
-CGameBoard::CGameBoard(CPlayer& player) :
+CGameBoard::CGameBoard(CPlayer& player, int sizeRows, int sizeCols) :
 	mPlayer(player),
 	mStartRow(1),
 	mStartCol(1),
-	mSizeRows(10),
-	mSizeCols(10),
+	mSizeRows(sizeRows),
+	mSizeCols(sizeCols),
 	mTowerManager(),
-	mVirusManager(mPlayer),
+	mVirusManager(mPlayer, sizeRows, sizeCols),
 	mHasMoreToDo(false),
 	mLogger(__FILE__) {
 		loadMap();
@@ -68,7 +68,7 @@ void CGameBoard::initInvasion() {
 
 bool CGameBoard::update() {
 	mLogger.log("Update");
-	mHasMoreToDo = mVirusManager.update();
+	mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
 	mTowerManager.updateTowers();
 	if (!mHasMoreToDo) {
 		mLogger.log("Nothing more to do, finishing invasion");
