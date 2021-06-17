@@ -23,7 +23,7 @@ class CGameBoard {
 		void moveCursorUp();
 		void moveCursorRight();
 
-		void draw() const;
+		void draw();
 		void initInvasion();
 		bool update();
 		bool buildTower();

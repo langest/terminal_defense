@@ -21,6 +21,10 @@ CPath::CPath(
 	const int stepCostDiagonal = 1414;
 	const int startRow = startPosition.getRow();
 	const int startCol = startPosition.getCol();
+	if (towers.contains(startPosition)) {
+		mLogger.log("Blocked start position: (%d, %d)", startRow, startCol);
+		return;
+	}
 	if (
 		startRow >= numRows ||
 		startCol >= numCols ||
@@ -44,23 +48,23 @@ CPath::CPath(
 
 	std::queue<CCoordinate> queue;
 	for (const CCoordinate& endPosition: endPositions) {
-		const int startRow = endPosition.getRow();
-		const int startCol = endPosition.getCol();
+		const int endRow = endPosition.getRow();
+		const int endCol = endPosition.getCol();
 		if (towers.contains(endPosition)) {
-			mLogger.log("Blocked end position: (%d, %d)", startRow, startCol);
+			mLogger.log("Blocked end position: (%d, %d)", endRow, endCol);
 			continue;
 		}
 		if (
-			startRow >= numRows ||
-			startCol >= numCols ||
-			startRow < 0 ||
-			startCol < 0
+			endRow >= numRows ||
+			endCol >= numCols ||
+			endRow < 0 ||
+			endCol < 0
 		) {
-			mLogger.logError("Invalid end position: (%d, %d)", startRow, startCol);
+			mLogger.logError("Invalid end position: (%d, %d)", endRow, endCol);
 			return;
 		}
 		queue.push(endPosition);
-		backtrack[startRow][startCol] = std::pair<int, CCoordinate>(0, endPosition);
+		backtrack[endRow][endCol] = std::pair<int, CCoordinate>(0, endPosition);
 	}
 
 	while (!queue.empty()) {
@@ -126,9 +130,8 @@ CPath::CPath(
 	CCoordinate current = startPosition;
 	CCoordinate previous = current;
 	while (!endPositions.contains(current)) {
-		mLogger.log("Pushing coordinate to path: (%d, %d)", current.getRow(), current.getCol());
 		if (current.getCol() != previous.getCol() &&
-				current.getRow() != current.getRow()) {
+				current.getRow() != previous.getRow()) {
 			//We made a diagonal step
 			mPath.push(SStep(current, stepCostDiagonal));
 		} else {
@@ -150,8 +153,9 @@ bool CPath::isDestinationReached() const {
 
 int CPath::step(int stamina) {
 	while(!mPath.empty() && stamina >= mPath.front().cost){
+
 		stamina -= mPath.front().cost;
-		mPath.pop(); //removes the head of the queue, will be drawn on the "next" place
+		mPath.pop();
 	}
 	return stamina;
 }

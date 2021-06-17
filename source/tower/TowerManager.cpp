@@ -2,9 +2,8 @@
 
 namespace termd {
 
-CTowerManager::CTowerManager(const TDrawCall& drawCall) :
+CTowerManager::CTowerManager() :
 	mTowers(),
-	mDrawCall(drawCall),
 	mLogger(__FILE__) {}
 
 void CTowerManager::updateTowers() {
@@ -39,13 +38,6 @@ bool CTowerManager::placeTower(const CCoordinate& position, std::unique_ptr<ITow
 	}
 	mTowers.insert(std::make_pair<CCoordinate, std::unique_ptr<ITower>>(CCoordinate(position), std::move(tower)));
 	return true;
-}
-
-void CTowerManager::drawTowers() const {
-	for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
-		const char graphic = it->second->getGraphic();
-		mDrawCall(it->first, graphic);
-	}
 }
 
 }

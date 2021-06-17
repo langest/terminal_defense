@@ -14,8 +14,8 @@ CGameBoard::CGameBoard(CPlayer& player) :
 	mStartCol(1),
 	mSizeRows(10),
 	mSizeCols(10),
-	mTowerManager(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2)),
-	mVirusManager(mPlayer, std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2)),
+	mTowerManager(),
+	mVirusManager(mPlayer),
 	mHasMoreToDo(false),
 	mLogger(__FILE__) {
 		loadMap();
@@ -47,11 +47,11 @@ void CGameBoard::moveCursorRight() {
 	GUI::moveCursorRight(mStartCol + mSizeCols - 1);
 }
 
-void CGameBoard::draw() const {
+void CGameBoard::draw() {
 	GUI::clearScreen();
 
-	mTowerManager.drawTowers();
-	mVirusManager.drawViruses();
+	mTowerManager.drawTowers(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	mVirusManager.drawViruses(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
 	GUI::drawFrame(
 		CCoordinate(0, 0),
 		CCoordinate(mSizeRows + 1, mSizeCols + 1));
@@ -116,6 +116,9 @@ void CGameBoard::drawCall(const CCoordinate& position, char graphic) {
 }
 
 bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
+	if (mStartPositions.contains(coordinate)) {
+		return true;
+	}
 	std::vector<std::vector<int>> visited(mSizeRows, std::vector<int>(mSizeCols, 0));
 
 	visited[coordinate.getRow()][coordinate.getCol()] = 1;
@@ -132,11 +135,11 @@ bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
 
 	while (!queue.empty()) {
 		const CCoordinate& current = queue.front();
-		if (mStartPositions.contains(current)) {
-			return false;
-		}
 		const int r = current.getRow();
 		const int c = current.getCol();
+		if (mEndPositions.contains(current)) {
+			return false;
+		}
 		queue.pop();
 
 		const int under = r + 1;

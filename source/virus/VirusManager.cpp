@@ -6,10 +6,9 @@
 
 namespace termd {
 
-CVirusManager::CVirusManager(CPlayer& player, TDrawCall drawCall) :
+CVirusManager::CVirusManager(CPlayer& player) :
 	mPlayer(player),
 	mViruses(),
-	mDrawCall(drawCall),
 	mLogger(__FILE__) {}
 
 bool CVirusManager::update() {
@@ -57,14 +56,6 @@ const std::vector<std::unique_ptr<CVirus>>& CVirusManager::getViruses() const {
 
 void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
 	mViruses.emplace_back(std::move(virus));
-}
-
-void CVirusManager::drawViruses() const {
-	for (auto i = mViruses.begin(); i != mViruses.end(); ++i) {
-		const char graphic = (*i)->getGraphic();
-		const CCoordinate position = (*i)->getPosition();
-		mDrawCall(position, graphic);
-	}
 }
 
 bool CVirusManager::hasNextWave() const {

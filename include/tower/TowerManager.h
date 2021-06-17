@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <functional>
 #include <memory>
 
 #include <Coordinate.h>
@@ -12,9 +11,7 @@ namespace termd {
 
 class CTowerManager {
 	public:
-		typedef std::function<void(const CCoordinate& position, char graphic)> TDrawCall;
-
-		CTowerManager(const TDrawCall& drawCall);
+		CTowerManager();
 
 		void updateTowers();
 		void updateTowersEndOfWave();
@@ -23,12 +20,21 @@ class CTowerManager {
 		const std::map<CCoordinate, std::unique_ptr<ITower>>& getTowers() const;
 
 		bool placeTower(const CCoordinate& position, std::unique_ptr<ITower>&& tower);
-		void drawTowers() const;
+		template <typename TDrawCall>
+		void drawTowers(TDrawCall&& drawCall);
 
 	private:
 		std::map<CCoordinate, std::unique_ptr<ITower>> mTowers;
-		TDrawCall mDrawCall;
 		CLogger mLogger;
 };
+
+template <typename TDrawCall>
+void CTowerManager::drawTowers(TDrawCall&& drawCall) {
+	for (const auto& pair: mTowers) {
+		const CCoordinate& position = pair.first;
+		const char graphic = pair.second->getGraphic();
+		drawCall(position, graphic);
+	}
+}
 
 }
