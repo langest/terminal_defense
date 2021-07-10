@@ -20,7 +20,7 @@ CGame::CGame(CPlayer& player) :
 
 void CGame::intro() {
 	const char* introMessage("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
-Viruses (as you all know) begins on the right side and flies to the left. \n\
+Viruses , as you all know, begins on the right side and runs over to the left side. \n\
 You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
 You lose when you lose control over your terminal (reach 0 terminal control points). \n\
 You win by defeating ALL the viruses! \n\
