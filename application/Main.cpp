@@ -1,8 +1,13 @@
+#include <cstdlib>
+#include <ctime>
 #include <curses.h>
 
 #include <Menu.h>
+#include <logging/Logger.h>
 
-void init_ncurses() {
+namespace {
+
+void initNcurses() {
 	// TODO set up locale
 	initscr(); //Starts curses mode
 	cbreak(); //Since we only want to read characters
@@ -10,17 +15,32 @@ void init_ncurses() {
 	keypad(stdscr, TRUE);
 }
 
-void end_ncurses() {
-	endwin(); //End curses mode
+void endNcurses() {
+	endwin();
+}
+
+void seedRandomGenerator() {
+	std::srand(std::time(nullptr));
+}
+
 }
 
 int main() {
-	init_ncurses();
+	termd::CLogger logger(__FILE__);
 
+	logger.log("Seeding random generator");
+	seedRandomGenerator();
+
+	logger.log("Init ncurses");
+	initNcurses();
+
+	logger.log("Run menu");
 	termd::CMenu().run();
 
-	end_ncurses();
+	logger.log("End ncurses");
+	endNcurses();
 
+	logger.log("Exiting");
 	return 0;
 }
 

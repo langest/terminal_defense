@@ -1,5 +1,6 @@
 #include <GameBoard.h>
 
+#include <functional>
 #include <queue>
 
 #include <Gui.h>
@@ -7,111 +8,167 @@
 
 namespace termd {
 
-CGameBoard::CGameBoard(CPlayer& player) :
-	player(player),
-	mSizeRows(0),
-	mSizeCols(0),
-	//wman(mSizeRows, mSizeCols, towers, std::string(""), mVirusManager),
-	mTowerManager(GUI::draw),
-	mVirusManager(player) {
+CGameBoard::CGameBoard(CPlayer& player, int sizeRows, int sizeCols) :
+	mPlayer(player),
+	mStartRow(1),
+	mStartCol(1),
+	mSizeRows(sizeRows),
+	mSizeCols(sizeCols),
+	mTowerManager(),
+	mVirusManager(mPlayer, sizeRows, sizeCols),
+	mHasMoreToDo(false),
+	mLogger(__FILE__) {
 		loadMap();
-		//wman.set_size(mSizeRows, mSizeCols);
-		//pman.set_size(mSizeRows, mSizeCols);
+		for (int i = 0; i < mSizeRows; ++i) {
+			mStartPositions.emplace(CCoordinate(i, mSizeCols - 1));
+			mEndPositions.emplace(CCoordinate(i, 0));
+		}
+	}
+
+void CGameBoard::resetCursor() {
+	GUI::moveCursor(CCoordinate(
+		(mStartRow + mSizeRows) / 2,
+		(mStartCol + mSizeCols) / 2));
 }
 
-void CGameBoard::draw() const {
-	GUI::clear_game(mSizeRows, mSizeCols);
+void CGameBoard::moveCursorLeft() {
+	GUI::moveCursorLeft(mStartCol);
+}
 
-	mTowerManager.drawAllTowers();
-	mVirusManager.drawAllViruses();
-	GUI::draw_board_frame(mSizeRows, mSizeCols);
+void CGameBoard::moveCursorDown() {
+	GUI::moveCursorDown(mStartRow + mSizeRows - 1);
+}
+
+void CGameBoard::moveCursorUp() {
+	GUI::moveCursorUp(mStartRow);
+}
+
+void CGameBoard::moveCursorRight() {
+	GUI::moveCursorRight(mStartCol + mSizeCols - 1);
+}
+
+void CGameBoard::draw() {
+	GUI::clearScreen();
+
+	mTowerManager.drawTowers(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	mVirusManager.drawViruses(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	GUI::drawFrame(
+		CCoordinate(0, 0),
+		CCoordinate(mSizeRows + 1, mSizeCols + 1));
+}
+
+void CGameBoard::initInvasion() {
+	if (mHasMoreToDo) {
+		mLogger.logError("Tried to init invasion while already having one started");
+		return; // Do not start multiple invasions
+	}
+	mVirusManager.initInvasion(mStartPositions, mEndPositions, mTowerManager.getTowers());
+	// TODO mTowerManager.initInvasion();
 }
 
 bool CGameBoard::update() {
-	//bool cont = wman.update();
-	bool hasMoreToDo = mVirusManager.updateAllViruses();
-	//pman.update();
-	mTowerManager.updateAllTowers();
-	if (!hasMoreToDo) {
-		mVirusManager.updateAllVirusesEndOfWave();
-		//pman.end_of_wave();
-		mTowerManager.updateAllTowersEndOfWave();
+	mLogger.log("Update");
+	mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
+	mTowerManager.updateTowers();
+	if (!mHasMoreToDo) {
+		mLogger.log("Nothing more to do, finishing invasion");
+		mVirusManager.finishInvasion();
+		// TODO mTowerManager.finishInvasion();
 	}
-	return hasMoreToDo;
+	return mHasMoreToDo;
 }
 
-bool CGameBoard::buildTower(const CCoordinate& coordinate) {
-	const int row(coordinate.getRow());
-	const int col(coordinate.getCol());
+bool CGameBoard::buildTower() {
+	const CCoordinate cursorPosition = GUI::getCursorPosition();
+	const int row = cursorPosition.getRow() - mStartRow;
+	const int col = cursorPosition.getCol() - mStartCol;
+	const CCoordinate buildPosition(row, col);
+	mLogger.log("Trying to build tower at (%d, %d)", row, col);
 	if (col < 0 ||
 		col >= mSizeCols ||
 		row < 0 ||
 		row >= mSizeRows ||
-		mTowerManager.isTowerAt(coordinate)) {
+		mTowerManager.isTowerAt(buildPosition)) {
 		return false;
 	}
 
-	if (this->isBlockedWith(coordinate)) {
+	if (this->isBlockedWith(buildPosition)) {
 		return false;
 	}
 
-	return mTowerManager.placeTower(coordinate, std::make_unique<CWall>());
+	return mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
 }
 
 bool CGameBoard::hasNextWave() const {
 	return mVirusManager.hasNextWave();
 }
 
-const int CGameBoard::getSizeRows() const {
+int CGameBoard::getSizeRows() const {
 	return mSizeRows;
 }
 
-const int CGameBoard::getSizeCols() const {
+int CGameBoard::getSizeCols() const {
 	return mSizeCols;
 }
 
+void CGameBoard::drawCall(const CCoordinate& position, char graphic) {
+	GUI::draw(position + CCoordinate(mStartRow, mStartCol), graphic);
+}
+
 bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
-	std::vector<std::vector<int>> visited(mSizeRows, std::vector(mSizeCols, 0));
+	if (mStartPositions.contains(coordinate)) {
+		return true;
+	}
+	std::vector<std::vector<int>> visited(mSizeRows, std::vector<int>(mSizeCols, 0));
 
 	visited[coordinate.getRow()][coordinate.getCol()] = 1;
 	std::queue<CCoordinate> queue;
 
-	queue.push(CCoordinate(0, mSizeCols-1));
-	visited[0][mSizeCols-1] = 1;
+	for (const CCoordinate& startPosition: mStartPositions) {
+		if (mTowerManager.isTowerAt(startPosition) ||
+			visited[startPosition.getRow()][startPosition.getCol()]) {
+			continue;
+		}
+		queue.push(startPosition);
+		visited[startPosition.getRow()][startPosition.getCol()] = 1;
+	}
 
 	while (!queue.empty()) {
-		const CCoordinate current = queue.front();
-		queue.pop();
+		const CCoordinate& current = queue.front();
 		const int r = current.getRow();
 		const int c = current.getCol();
-
-		if (c <= 0) {
+		if (mEndPositions.contains(current)) {
 			return false;
 		}
+		queue.pop();
 
-		if (r+1 < mSizeRows &&
-			!visited[r + 1][c] &&
-			!mTowerManager.isTowerAt(CCoordinate(r+1,c))) {
-			visited[r + 1][c] = 1;
-			queue.push(CCoordinate(r + 1, c));
+		const int under = r + 1;
+		if (under < mSizeRows &&
+			!visited[under][c] &&
+			!mTowerManager.isTowerAt(CCoordinate(under,c))) {
+			visited[under][c] = 1;
+			queue.push(CCoordinate(under, c));
 		}
-		if (r > 0 &&
-			!visited[r - 1][c] &&
-			!mTowerManager.isTowerAt(CCoordinate(r-1,c))) {
-			visited[r - 1][c] = 1;
-			queue.push(CCoordinate(r - 1, c));
+		const int above = r - 1;
+		if (above >= 0 &&
+			!visited[above][c] &&
+			!mTowerManager.isTowerAt(CCoordinate(above,c))) {
+			visited[above][c] = 1;
+			queue.push(CCoordinate(above, c));
 		}
-		if (c+1 < mSizeCols &&
-			!visited[r][c + 1] &&
-			!mTowerManager.isTowerAt(CCoordinate(r,c+1))) {
-			visited[r][c + 1] = 1;
-			queue.push(CCoordinate(r, c + 1));
+		const int right = c + 1;
+		if (right < mSizeCols &&
+			!visited[r][right] &&
+			!mTowerManager.isTowerAt(CCoordinate(r,right))) {
+			visited[r][right] = 1;
+			queue.push(CCoordinate(r, right));
 		}
-		if (c > 0 &&
-			!visited[r][c - 1] &&
-			!mTowerManager.isTowerAt(CCoordinate(r,c-1))) {
-			visited[r][c - 1] = 1;
-			queue.push(CCoordinate(r, c - 1));
+		const int left = c - 1;
+		if (left >= 0 &&
+			!visited[r][left] &&
+			!mTowerManager.isTowerAt(CCoordinate(r,left))) {
+			visited[r][left] = 1;
+			queue.push(CCoordinate(r, left));
 		}
 	}
 
@@ -126,12 +183,12 @@ void CGameBoard::loadMap() {
 
 	//	int max_cp;
 	//	loadfile >> max_cp;
-	//	player.set_max_cp(max_cp);
-	//	player.set_cp(max_cp);
+	//	mPlayer.set_max_cp(max_cp);
+	//	mPlayer.set_cp(max_cp);
 
 	//	int ram;
 	//	loadfile >> ram;
-	//	player.set_ram(ram);
+	//	mPlayer.set_ram(ram);
 
 	//	int number_of_towers;
 

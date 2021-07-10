@@ -3,8 +3,10 @@
 #include <map>
 #include <memory>
 #include <queue>
+#include <set>
 
 #include <Coordinate.h>
+#include <logging/Logger.h>
 #include <tower/Tower.h>
 
 namespace termd {
@@ -13,6 +15,7 @@ class CPath {
 	public:
 		CPath(
 				const CCoordinate& startPosition,
+				const std::set<CCoordinate>& endPositions,
 				int numRows,
 				int numCols,
 				const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
@@ -44,9 +47,8 @@ class CPath {
 			}
 		};
 
-		std::queue<SStep> path;
-
-		int heuristic_cost(const CCoordinate &, const CCoordinate &);
+		std::queue<SStep> mPath;
+		CLogger mLogger;
 };
 
 }

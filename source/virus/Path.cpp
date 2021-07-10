@@ -1,5 +1,6 @@
 #include <virus/Path.h>
 
+#include <algorithm>
 #include <limits>
 #include <stack>
 
@@ -10,26 +11,29 @@ namespace termd {
 //game and it is only performed a limited number of times
 //on a very restricted amount of nodes.
 CPath::CPath(
-	const CCoordinate& startPosition,
-	int numRows,
-	int numCols,
-	const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
-) {
+		const CCoordinate& startPosition,
+		const std::set<CCoordinate>& endPositions,
+		int numRows,
+		int numCols,
+		const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
+	) : mLogger(__FILE__) {
 	const int stepCost = 1000;
 	const int stepCostDiagonal = 1414;
 	const int startRow = startPosition.getRow();
 	const int startCol = startPosition.getCol();
+	if (towers.contains(startPosition)) {
+		mLogger.log("Blocked start position: (%d, %d)", startRow, startCol);
+		return;
+	}
 	if (
 		startRow >= numRows ||
 		startCol >= numCols ||
 		startRow < 0 ||
 		startCol < 0
 	) {
-		//invalid start, make no path
+		mLogger.logError("Invalid start position");
 		return;
 	}
-
-	CCoordinate current(startPosition);
 
 	std::vector<std::vector<std::pair<int, CCoordinate>>> backtrack(
 		numRows,
@@ -43,107 +47,115 @@ CPath::CPath(
 	);
 
 	std::queue<CCoordinate> queue;
-
-	queue.push(current);
+	for (const CCoordinate& endPosition: endPositions) {
+		const int endRow = endPosition.getRow();
+		const int endCol = endPosition.getCol();
+		if (towers.contains(endPosition)) {
+			mLogger.log("Blocked end position: (%d, %d)", endRow, endCol);
+			continue;
+		}
+		if (
+			endRow >= numRows ||
+			endCol >= numCols ||
+			endRow < 0 ||
+			endCol < 0
+		) {
+			mLogger.logError("Invalid end position: (%d, %d)", endRow, endCol);
+			return;
+		}
+		queue.push(endPosition);
+		backtrack[endRow][endCol] = std::pair<int, CCoordinate>(0, endPosition);
+	}
 
 	while (!queue.empty()) {
-		current = queue.front();
-		queue.pop();
-		int r = current.getRow();
-		int c = current.getCol();
+		const CCoordinate& current = queue.front();
+		const int r = current.getRow();
+		const int c = current.getCol();
 
-		auto check_bound = [&numRows, &numCols](int row, int col) {
+		auto checkBound = [&numRows, &numCols](int row, int col) {
 			return row >= 0 &&
 				col >= 0 &&
 				row < numRows &&
 				col < numCols;
 		};
 		auto step = [&](int row, int col, int cost) {
-			if (backtrack[row][col].first > cost && //shorter path
-				!towers.contains(CCoordinate(row, col))) {
+			mLogger.log("Stepping, (%d, %d) %d", row, col, cost);
+			const int oldEstimate = backtrack[row][col].first;
+			const bool isShorter = (cost < oldEstimate ||
+					(cost == oldEstimate && std::rand() % 2 == 0) // if paths are equal, randomize wich one to use
+				);
+			if (isShorter && !towers.contains(CCoordinate(row, col))) {
+				mLogger.log("Found better path");
 				queue.push(CCoordinate(row, col));
 				backtrack[row][col] = std::pair<int, CCoordinate>(cost, current);
 			}
 		};
 
+		const int currentCost = backtrack[r][c].first;
 		//Left
-		if (check_bound(r, c-1)) {
-			step(r, c-1, stepCost + backtrack[r][c].first);
+		if (checkBound(r, c-1)) {
+			step(r, c-1, stepCost + currentCost);
 		}
 		//Right
-		if (check_bound(r, c+1)) {
-			step(r, c+1, stepCost + backtrack[r][c].first);
+		if (checkBound(r, c+1)) {
+			step(r, c+1, stepCost + currentCost);
 		}
 		//Up
-		if (check_bound(r-1, c)) {
-			step(r-1,c, stepCost + backtrack[r][c].first);
+		if (checkBound(r-1, c)) {
+			step(r-1,c, stepCost + currentCost);
 		}
 		//Down
-		if (check_bound(r+1, c)) {
-			step(r+1,c, stepCost + backtrack[r][c].first);
+		if (checkBound(r+1, c)) {
+			step(r+1,c, stepCost + currentCost);
 		}
 		//Up left
-		if (check_bound(r-1, c-1) && (!towers.contains(CCoordinate(r-1, c)) || !towers.contains(CCoordinate(r, c-1)))) {
-			step(r-1, c-1, stepCostDiagonal + backtrack[r][c].first);
+		if (checkBound(r-1, c-1) && (!towers.contains(CCoordinate(r-1, c)) || !towers.contains(CCoordinate(r, c-1)))) {
+			step(r-1, c-1, stepCostDiagonal + currentCost);
 		}
 		//Down left
-		if (check_bound(r+1, c-1) && (!towers.contains(CCoordinate(r+1, c)) || !towers.contains(CCoordinate(r, c-1)))) {
-			step(r+1, c-1, stepCostDiagonal + backtrack[r][c].first);
+		if (checkBound(r+1, c-1) && (!towers.contains(CCoordinate(r+1, c)) || !towers.contains(CCoordinate(r, c-1)))) {
+			step(r+1, c-1, stepCostDiagonal + currentCost);
 		}
 		//Up right
-		if (check_bound(r-1, c+1) && (!towers.contains(CCoordinate(r-1, c)) || !towers.contains(CCoordinate(r, c+1)))) {
-			step(r-1,c+1, stepCostDiagonal + backtrack[r][c].first);
+		if (checkBound(r-1, c+1) && (!towers.contains(CCoordinate(r-1, c)) || !towers.contains(CCoordinate(r, c+1)))) {
+			step(r-1,c+1, stepCostDiagonal + currentCost);
 		}
 		//Down right
-		if (check_bound(r+1, c+1) && (!towers.contains(CCoordinate(r+1, c)) || !towers.contains(CCoordinate(r, c+1)))) {
-			step(r+1,c+1, stepCostDiagonal + backtrack[r][c].first);
+		if (checkBound(r+1, c+1) && (!towers.contains(CCoordinate(r+1, c)) || !towers.contains(CCoordinate(r, c+1)))) {
+			step(r+1,c+1, stepCostDiagonal + currentCost);
 		}
+		queue.pop();
 	}
 
-	int min_cost = backtrack[0][0].first;
-	current = backtrack[0][0].second;
-	for (int i = 1; i < numRows; ++i) {
-		if (backtrack[i][0].first < min_cost) {
-			min_cost = backtrack[i][0].first;
-			current = backtrack[i][0].second;
+	CCoordinate current = startPosition;
+	CCoordinate previous = current;
+	while (!endPositions.contains(current)) {
+		if (current.getCol() != previous.getCol() &&
+				current.getRow() != previous.getRow()) {
+			//We made a diagonal step
+			mPath.push(SStep(current, stepCostDiagonal));
+		} else {
+			mPath.push(SStep(current, stepCost));
 		}
-	}
-
-	std::stack<CCoordinate> reverse;
-	while (current != startPosition) {
-		reverse.push(current);
+		previous = current;
 		current = backtrack[current.getRow()][current.getCol()].second;
 	}
-	reverse.push(startPosition);
-
-	int cost;
-	CCoordinate last(current);
-	while (!reverse.empty()) {
-		current = reverse.top();
-		reverse.pop();
-		if (current.getCol() != last.getCol() &&
-				current.getRow() != current.getRow()) { //We made a diagonal step
-			cost = stepCostDiagonal;
-		} else {
-			cost = stepCost;
-		}
-		path.push(SStep(current, cost)); //Copy that 's' CCoordinate!
-		last = current;
-	}
+	mPath.push(SStep(current, stepCost));
 }
 
 const CCoordinate& CPath::getCurrentPosition() const {
-	return path.front().coord; // TODO clean up, will break if path is empty
+	return mPath.front().coord; // TODO clean up, will break if path is empty
 }
 
 bool CPath::isDestinationReached() const {
-	return path.empty();
+	return mPath.empty();
 }
 
 int CPath::step(int stamina) {
-	while(!path.empty() && stamina >= path.front().cost){
-		stamina -= path.front().cost;
-		path.pop(); //removes the head of the queue, will be drawn on the "next" place
+	while(!mPath.empty() && stamina >= mPath.front().cost){
+
+		stamina -= mPath.front().cost;
+		mPath.pop();
 	}
 	return stamina;
 }

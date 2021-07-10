@@ -19,8 +19,6 @@ class CMenu {
 		void run();
 
 	private:
-		void intro();
-		void outro();
 		std::vector<CCoordinate> printMenu();
 		void clearMenu();
 		void runGame();

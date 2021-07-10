@@ -1,6 +1,7 @@
 #pragma once
 
 namespace termd {
+//TODO remove constants file
 
 const char* const Version = "0.X";
 
@@ -23,14 +24,7 @@ const int PlayerDefaultHP = 3;
 const int PlayerDefaultRAM = 10000;
 
 //Map information
-const int BoardR0 = 1;
-const int BoardC0 = 1;
 const int IntelCols = 50;
 const int IntelRows = 2;
 const int WindowSpace = 1;
-
-//Buildings TODO make into enum class
-const int Homing = 0;
-const int Direction = 1;
-const int TowerWall = 2;
 }

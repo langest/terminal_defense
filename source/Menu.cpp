@@ -1,5 +1,7 @@
 #include <Menu.h>
 
+#include <ncurses.h>
+
 #include <Game.h>
 #include <Gui.h>
 
@@ -14,21 +16,19 @@ CMenu::CMenu() :
 			std::string("Exit")
 			}),
 	mInputCallbacks() {
-		std::function<void()> f = [this]() { runGame(); };
+		std::function<void()> f = [this]() { this->runGame(); };
 		mInputCallbacks[0] = f;
 		mInputCallbacks[1] = f;
 		mInputCallbacks[2] = f;
 	}
 
 void CMenu::run() {
-	intro();
-
-	std::vector<CCoordinate> itemPositions = printMenu();
+	std::vector<CCoordinate> itemPositions = this->printMenu();
 	int ch;
 	int currentItem = 0;
-	GUI::move_cursor(itemPositions[currentItem]);
+	GUI::moveCursor(itemPositions[currentItem]);
 	GUI::refresh();
-	while((ch = GUI::get_input()) != 'q') {
+	while((ch = GUI::getInput()) != 'q') {
 		if (ch == 'j' || ch == KEY_DOWN) {
 			currentItem = (currentItem + 1) % itemPositions.size();
 		}
@@ -39,34 +39,26 @@ void CMenu::run() {
 			}
 		} else if ((ch == KEY_ENTER || ch == KEY_RIGHT || ch == 'l') && mInputCallbacks.find(currentItem) != mInputCallbacks.end()) {
 			mInputCallbacks[currentItem]();
+			break;
 		} else if ((ch == KEY_ENTER || ch == KEY_RIGHT || ch == 'l') && mInputCallbacks.find(currentItem) == mInputCallbacks.end()) {
 			break;
 		}
-		GUI::move_cursor(itemPositions[currentItem]);
+		GUI::moveCursor(itemPositions[currentItem]);
 	}
-	clearMenu();
-
-	outro();
-}
-
-void CMenu::intro() {
-
-}
-
-void CMenu::outro() {
-
+	this->clearMenu();
 }
 
 std::vector<CCoordinate> CMenu::printMenu() {
-	return GUI::print_menu_items(mItems);
+	return GUI::printMenuItems(mItems);
 }
 
 void CMenu::clearMenu() {
-	GUI::clear_intel(0);
+	GUI::clearScreen();
 }
 
 void CMenu::runGame() {
 	CGame game(mPlayer);
+	this->clearMenu();
 	game.run();
 }
 

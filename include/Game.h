@@ -19,12 +19,14 @@ class CGame {
 	private:
 		void intro();
 		void outro();
+		void handleInput(const char input);
 		void runBuildPhase();
 		bool runInvasionPhase();
 		void runMenu();
 
 		CPlayer& mPlayer;
 		CGameBoard mGameBoard;
+		CLogger mLogger;
 };
 
 }

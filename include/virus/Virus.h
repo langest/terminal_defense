@@ -1,8 +1,10 @@
 #pragma once
 
 #include <map>
+#include <set>
 
 #include <Coordinate.h>
+#include <logging/Logger.h>
 #include <virus/Path.h>
 
 namespace termd {
@@ -15,17 +17,18 @@ class CVirus {
 			int reward,
 			char graphic,
 			const CCoordinate& startPosition,
+			const std::set<CCoordinate>& endPositions,
 			int numRows,
 			int numCols,
 			const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
 		);
 
 		void update();
-		bool draw() const;
 
 		int getReward() const;
 		int getDamage() const;
 		const CCoordinate& getPosition() const;
+		char getGraphic() const;
 		bool isAlive() const;
 		bool isDestinationReached() const;
 		void takeDamage(int damage);
@@ -38,11 +41,15 @@ class CVirus {
 		int mDamage;
 		char mGraphic;
 		CPath mPath;
+		CLogger mLogger;
 };
 
+
+// TODO is CVirusFactory really needed?
 class CVirusFactory {
 	public:
+		CVirusFactory() = delete;
+
 		CVirus static createVirus(int hp, int stamina, int reward, const CCoordinate& startPosition, const std::map<CCoordinate, std::unique_ptr<ITower>> towers);
 };
-
 }

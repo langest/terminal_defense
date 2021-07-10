@@ -10,6 +10,7 @@ CVirus::CVirus(
 		int reward,
 		char graphic,
 		const CCoordinate& startPosition,
+		const std::set<CCoordinate>& endPositions,
 		int numRows,
 		int numCols,
 		const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
@@ -20,17 +21,17 @@ CVirus::CVirus(
 	mReward(reward),
 	mDamage(1),
 	mGraphic(graphic),
-	mPath(startPosition, numRows, numCols, towers) {}
+	mPath(startPosition, endPositions, numRows, numCols, towers),
+	mLogger(__FILE__) {
+		mLogger.log("Creating virus at position (%d, %d)", startPosition.getRow(), startPosition.getCol());
+	}
 
 void CVirus::update(){
 	if(mHp <= 0) {
+		mLogger.log("Virus out of hp");
 		return;
 	}
 	mStamina = mPath.step(mStamina + mStaminaIncrement);
-}
-
-bool CVirus::draw() const {
-	return GUI::draw_gfx(getPosition(), mGraphic);
 }
 
 int CVirus::getReward() const {
@@ -41,8 +42,12 @@ int CVirus::getDamage() const {
 	return mDamage;
 }
 
-const CCoordinate& CVirus::getPosition() const{
+const CCoordinate& CVirus::getPosition() const {
 	return mPath.getCurrentPosition();
+}
+
+char CVirus::getGraphic() const {
+	return mGraphic;
 }
 
 bool CVirus::isAlive() const {

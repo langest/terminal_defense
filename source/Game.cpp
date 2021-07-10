@@ -7,45 +7,20 @@
 #include <vector>
 #include <queue>
 
+#include <Constants.h>
 #include <Coordinate.h>
 #include <Player.h>
 
 namespace termd {
 
-CGame::CGame(CPlayer& player) : mPlayer(player), mGameBoard(player) {
-	////initialize input calls
-	//std::function<void()> f = [this]() { GUI::move_cursor_left(); };
-	//inputcalls['h'] = f;
-	//inputcalls[KEY_LEFT] = f;
-
-	//f = [this]() { GUI::move_cursor_up(); };
-	//inputcalls['k'] = f;
-	//inputcalls[KEY_UP] = f;
-
-	//f = [this]() { GUI::move_cursor_right(mGameBoard.getSizeCols()); };
-	//inputcalls['l'] = f;
-	//inputcalls[KEY_RIGHT] = f;
-
-	//f = [this]() { GUI::move_cursor_down(mGameBoard.getSizeRows()); };
-	//inputcalls['j'] = f;
-	//inputcalls[KEY_DOWN] = f;
-
-	//f = [this]() { show_menu(); };
-	//inputcalls['m'] = f;
-
-
-	////Reading tower build buttons from file
-	//Tower_loader tl;
-	//std::vector<int> tids = tl.id_list();
-
-	//for (int id : tids) {
-	//	inputcalls[id] = [&, id]() { build_tower(id); };
-	//}
-}
+CGame::CGame(CPlayer& player) :
+	mPlayer(player),
+	mGameBoard(player, 10, 16),
+	mLogger(__FILE__) {}
 
 void CGame::intro() {
-	std::string intromsg("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
-Viruses (as you all know) begins on the right side and flies to the left. \n\
+	const char* introMessage("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
+Viruses , as you all know, begins on the right side and runs over to the left side. \n\
 You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
 You lose when you lose control over your terminal (reach 0 terminal control points). \n\
 You win by defeating ALL the viruses! \n\
@@ -59,42 +34,87 @@ y - Build a DOWN TOWER \n\
 d - Build a RIGHT TOWER \n\
 w - Build a WALL \n\
 MOVE CURSOR as you normally would (arrows or vim-like)\n");
-	GUI::print_string(intromsg);
-	GUI::get_input();
-	//clear();
-	GUI::move_cursor(CCoordinate(BoardR0, BoardC0));
+	GUI::printText(CCoordinate(0, 0), introMessage, -1);
+	GUI::getInput();
+	GUI::clearScreen();
+}
+
+void CGame::handleInput(const char input) {
+	switch (input) {
+		case 'h': {
+			mGameBoard.moveCursorLeft();
+			break;
+		}
+		case 'j': {
+			mGameBoard.moveCursorDown();
+			break;
+		}
+		case 'k': {
+			mGameBoard.moveCursorUp();
+			break;
+		}
+		case 'l': {
+			mGameBoard.moveCursorRight();
+			break;
+		}
+		case 'm': {
+			this->runMenu();
+			break;
+		}
+		case 'w': {
+			mGameBoard.buildTower();
+			break;
+		}
+		default: {
+			break;
+		}
+	}
 }
 
 void CGame::outro() {
-	//clear();
-	GUI::move_cursor(CCoordinate(0,0));
-	GUI::get_input();
+	GUI::moveCursor(CCoordinate(0,0));
+	GUI::getInput();
+	GUI::clearScreen();
 }
 
 void CGame::runBuildPhase() {
-	int ch;
-	GUI::draw_board_frame(mGameBoard.getSizeRows(), mGameBoard.getSizeCols());
-	GUI::draw_intel_frame(mGameBoard.getSizeRows());
-	char intelmsg[IntelCols];
-	while((ch = GUI::get_input()) != 27 && ch != 'q') {
-		//if (inputcalls.find(ch) != inputcalls.end()) {
-		//	inputcalls[ch]();
-		//}
-		mGameBoard.draw();
-		GUI::clear_intel(mGameBoard.getSizeCols());
-		sprintf(
-			intelmsg,
+	mLogger.log("runBuildPhase");
+	// Draw game board frame
+	GUI::drawFrame(
+		CCoordinate(0, 0),
+		CCoordinate(mGameBoard.getSizeRows() + 1, mGameBoard.getSizeCols() + 1));
+	// Draw intel frame
+	GUI::drawFrame(
+		CCoordinate(mGameBoard.getSizeRows() + 2, 0),
+		CCoordinate(mGameBoard.getSizeRows() + 2 + IntelRows, mGameBoard.getSizeCols() + 1));
+	char intelMessage[IntelCols];
+
+	char input;
+	while((input = GUI::getInput()) != 27 && input != 'q') {
+		mLogger.log("got input %c", input);
+		this->handleInput(input);
+		GUI::clearRectangle(
+			CCoordinate(1, 1),
+			CCoordinate(mGameBoard.getSizeRows(), mGameBoard.getSizeCols()));
+		snprintf(
+			intelMessage,
+			IntelCols,
 			"RAM: %d\t Terminal Control Points: %d",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints()
 		);
-		GUI::print_intel(mGameBoard.getSizeRows(), intelmsg);
+		//TODO move all gui prints to gameboard
+		GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
+		mGameBoard.draw();
 		GUI::refresh();
 	}
 }
 
 bool CGame::runInvasionPhase() {
-	char intelmsg[IntelCols];
+	mLogger.log("Run invasion phase");
+	char intelMessage[IntelCols];
+
+	mGameBoard.initInvasion();
 
 	//Frame counter setup
 	std::queue<std::chrono::time_point<std::chrono::high_resolution_clock> > timestamps;
@@ -105,9 +125,9 @@ bool CGame::runInvasionPhase() {
 
 	//Framerate limiter setup
 	std::chrono::milliseconds interval(1000/Frames);
-	std::chrono::time_point<std::chrono::high_resolution_clock> last_update(
+	std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate(
 			std::chrono::system_clock::now() - interval );
-	std::chrono::time_point<std::chrono::high_resolution_clock> cur_update;
+	std::chrono::time_point<std::chrono::high_resolution_clock> curUpdate;
 
 	while (mGameBoard.update()) {
 		//Framerate counter
@@ -120,21 +140,24 @@ bool CGame::runInvasionPhase() {
 
 		//Framerate limiter
 		mGameBoard.draw();
-		GUI::clear_intel(mGameBoard.getSizeRows());
-		sprintf(
-			intelmsg,
+		GUI::clearRectangle(
+			CCoordinate(mGameBoard.getSizeRows() + 3, 1),
+			CCoordinate(mGameBoard.getSizeRows() + IntelRows, IntelCols - 2));
+		snprintf(
+			intelMessage,
+			IntelCols,
 			"RAM: %d\t Terminal Control Points: %d\t FPS: %zd",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints(),
 			avgfps
 		);
-		GUI::print_intel(mGameBoard.getSizeRows(), intelmsg);
+		GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
 		GUI::refresh();
 
-		cur_update = std::chrono::system_clock::now();
-		auto sleep_dur = 2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(cur_update - last_update);
-		last_update = cur_update;
-		std::this_thread::sleep_for(sleep_dur);
+		curUpdate = std::chrono::system_clock::now();
+		auto sleepMilliseconds = 2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(curUpdate - lastUpdate);
+		lastUpdate = curUpdate;
+		std::this_thread::sleep_for(sleepMilliseconds);
 	}
 	mGameBoard.draw();//Redraw the mGameBoard so all projectiles are removed TODO prettier solution since this just instantly removes all their gfx.
 	return mGameBoard.hasNextWave();
@@ -142,27 +165,30 @@ bool CGame::runInvasionPhase() {
 }
 
 bool CGame::run() {
-	intro();
-	runBuildPhase();
+	this->intro();
+	mGameBoard.resetCursor();
+	this->runBuildPhase();
 	while (runInvasionPhase()) {
 		if(!mPlayer.isAlive()) {
-			outro();
+			mLogger.log("Player not alive anymore");
+			this->outro();
 			return false;
 		}
-		runBuildPhase();
+		this->runBuildPhase();
 	}
-	outro();
+	this->outro();
 	return true;
 }
 
 void CGame::runMenu() {
-	GUI::clear_intel(mGameBoard.getSizeRows());
-	GUI::print_intel(mGameBoard.getSizeRows(), std::string("1.Quit Game    2.Return to game"));
+	GUI::clearScreen();
+	const char* intelMessage = "1.Quit Game    2.Return to game";
+	GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
 
-	char ch;
-	while ((ch = GUI::get_input()) != '1' && ch != '2');
+	char input;
+	while ((input = GUI::getInput()) != '1' && input != '2');
 
-	GUI::clear_intel(mGameBoard.getSizeRows());
+	GUI::clearScreen();
 }
 
 }

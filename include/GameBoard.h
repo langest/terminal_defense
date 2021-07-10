@@ -2,8 +2,9 @@
 
 #include <set>
 
-#include <virus/VirusManager.h>
+#include <logging/Logger.h>
 #include <tower/TowerManager.h>
+#include <virus/VirusManager.h>
 
 namespace termd {
 
@@ -12,27 +13,43 @@ class CPlayer;
 
 class CGameBoard {
 	public:
-		CGameBoard(CPlayer& player);
+		CGameBoard(CPlayer& player, int sizeRows, int sizeCols);
 		CGameBoard(const CGameBoard &) = delete;
 		CGameBoard& operator=(const CGameBoard &) = delete;
 
-		void draw() const;
+		void resetCursor();
+		void moveCursorLeft();
+		void moveCursorDown();
+		void moveCursorUp();
+		void moveCursorRight();
+
+		void draw();
+		void initInvasion();
 		bool update();
-		bool buildTower(const CCoordinate& coordinate);
+		bool buildTower();
 		bool hasNextWave() const;
 
-		const int getSizeRows() const;
-		const int getSizeCols() const;
+		int getSizeRows() const;
+		int getSizeCols() const;
 
 	private:
+		void drawCall(const CCoordinate& position, char graphic);
+
 		bool isBlockedWith(const CCoordinate& coordinate);
 		void loadMap();
 
-		CPlayer& player;
+		CPlayer& mPlayer;
+		const int mStartRow;
+		const int mStartCol;
 		const int mSizeRows;
 		const int mSizeCols;
+		std::set<CCoordinate> mStartPositions;
+		std::set<CCoordinate> mEndPositions;
 		CTowerManager mTowerManager;
 		CVirusManager mVirusManager;
+		bool mHasMoreToDo;
+
+		CLogger mLogger;
 };
 
 }
