@@ -26,7 +26,7 @@ class CGameBoard {
 		void draw();
 		void initInvasion();
 		bool update();
-		bool buildTower();
+		void buildTower(char tower);
 		bool hasNextWave() const;
 
 		int getSizeRows() const;

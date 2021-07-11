@@ -5,7 +5,7 @@
 
 namespace termd {
 
-CWall::CWall() : mCost(10), mGraphic('#') {}
+CWall::CWall() : mCost(3), mGraphic('#') {}
 
 int CWall::getCost() const {
 	return mCost;

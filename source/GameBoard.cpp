@@ -4,6 +4,7 @@
 #include <queue>
 
 #include <Gui.h>
+#include <tower/DirectionTower.h>
 #include <tower/Wall.h>
 
 namespace termd {
@@ -78,7 +79,7 @@ bool CGameBoard::update() {
 	return mHasMoreToDo;
 }
 
-bool CGameBoard::buildTower() {
+void CGameBoard::buildTower(char tower) {
 	const CCoordinate cursorPosition = GUI::getCursorPosition();
 	const int row = cursorPosition.getRow() - mStartRow;
 	const int col = cursorPosition.getCol() - mStartCol;
@@ -96,7 +97,17 @@ bool CGameBoard::buildTower() {
 		return false;
 	}
 
-	return mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
+	// TODO make prettier tower selection
+	switch (tower) {
+		case 'w': {
+			mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
+			break;
+		}
+		case 'd': {
+			mTowerManager.placeTower(buildPosition, std::make_unique<CDirectionTower<EDirection::Right>>());
+			break;
+		}
+	}
 }
 
 bool CGameBoard::hasNextWave() const {
