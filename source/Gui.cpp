@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <ncurses.h>
 
+#include <Version.h>
+
 namespace termd {
 
 void GUI::moveCursor(const CCoordinate& pos) {
@@ -167,9 +169,9 @@ std::vector<CCoordinate> GUI::printMenuItems(const std::vector<std::string>& men
 		itemPosition += step;
 	}
 
-	const int bufferSize = 128;
+	const int bufferSize = 32;
 	char version[bufferSize];
-	snprintf(version, bufferSize, "Version: %s", "TODO, get version from git");
+	snprintf(version, bufferSize, "Version: %s", GlobalVersionString.c_str());
 	mvwaddstr(stdscr, windowPiece * 3 + windowPiece / 7 * 6, maxCol / 2, version); // Draw version in the end piece
 
 	return itemCoordinates;
