@@ -7,15 +7,22 @@
 #include <vector>
 #include <queue>
 
-#include <Constants.h>
 #include <Coordinate.h>
 #include <Player.h>
+
+namespace {
+	const int numBoardRows = 10;
+	const int numBoardCols = 16;
+	const int intelMessageBufferSize = 4 * numBoardCols;
+	const int numIntelRows = 2;
+	const int frameRate = 30;
+}
 
 namespace termd {
 
 CGame::CGame(CPlayer& player) :
 	mPlayer(player),
-	mGameBoard(player, 10, 16),
+	mGameBoard(player, numBoardRows, numBoardCols),
 	mLogger(__FILE__) {}
 
 void CGame::intro() {
@@ -86,8 +93,8 @@ void CGame::runBuildPhase() {
 	// Draw intel frame
 	GUI::drawFrame(
 		CCoordinate(mGameBoard.getSizeRows() + 2, 0),
-		CCoordinate(mGameBoard.getSizeRows() + 2 + IntelRows, mGameBoard.getSizeCols() + 1));
-	char intelMessage[IntelCols];
+		CCoordinate(mGameBoard.getSizeRows() + 2 + numIntelRows, mGameBoard.getSizeCols() + 1));
+	char intelMessage[intelMessageBufferSize];
 
 	char input;
 	while((input = GUI::getInput()) != 27 && input != 'q') {
@@ -98,7 +105,7 @@ void CGame::runBuildPhase() {
 			CCoordinate(mGameBoard.getSizeRows(), mGameBoard.getSizeCols()));
 		snprintf(
 			intelMessage,
-			IntelCols,
+			intelMessageBufferSize,
 			"RAM: %d\t Terminal Control Points: %d",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints()
@@ -112,7 +119,7 @@ void CGame::runBuildPhase() {
 
 bool CGame::runInvasionPhase() {
 	mLogger.log("Run invasion phase");
-	char intelMessage[IntelCols];
+	char intelMessage[intelMessageBufferSize];
 
 	mGameBoard.initInvasion();
 
@@ -124,7 +131,7 @@ bool CGame::runInvasionPhase() {
 	std::size_t avgfps;
 
 	//Framerate limiter setup
-	std::chrono::milliseconds interval(1000/Frames);
+	std::chrono::milliseconds interval(1000/frameRate);
 	std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate(
 			std::chrono::system_clock::now() - interval );
 	std::chrono::time_point<std::chrono::high_resolution_clock> curUpdate;
@@ -142,10 +149,10 @@ bool CGame::runInvasionPhase() {
 		mGameBoard.draw();
 		GUI::clearRectangle(
 			CCoordinate(mGameBoard.getSizeRows() + 3, 1),
-			CCoordinate(mGameBoard.getSizeRows() + IntelRows, IntelCols - 2));
+			CCoordinate(mGameBoard.getSizeRows() + numIntelRows, mGameBoard.getSizeCols() - 2));
 		snprintf(
 			intelMessage,
-			IntelCols,
+			intelMessageBufferSize,
 			"RAM: %d\t Terminal Control Points: %d\t FPS: %zd",
 			mPlayer.getRam(),
 			mPlayer.getControlPoints(),
