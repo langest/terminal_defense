@@ -90,11 +90,13 @@ void CGameBoard::buildTower(char tower) {
 		row < 0 ||
 		row >= mSizeRows ||
 		mTowerManager.isTowerAt(buildPosition)) {
-		return false;
+		mLogger.log("Can NOT build tower at (%d, %d)", row, col);
+		return;
 	}
 
 	if (this->isBlockedWith(buildPosition)) {
-		return false;
+		mLogger.log("Can NOT build tower at (%d, %d), it would block the path", row, col);
+		return ;
 	}
 
 	// TODO make prettier tower selection
