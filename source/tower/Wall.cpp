@@ -19,12 +19,10 @@ char CWall::getGraphic() const {
 	return mGraphic;
 }
 
-bool CWall::update() {
+bool CWall::update(std::function<void(std::unique_ptr<IProjectile>&& projectile)> /* spawnProjectile */, const std::vector<std::unique_ptr<CVirus>>& /* viruses */) {
 	return true;
 }
 
-void CWall::updateEndOfWave() {
-	return;
-}
+void CWall::updateEndOfWave() {}
 
 }

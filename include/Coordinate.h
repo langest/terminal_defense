@@ -7,6 +7,7 @@ namespace termd {
 
 class CCoordinate {
 	public:
+		CCoordinate();
 		CCoordinate(int row, int col);
 		CCoordinate(const CCoordinate& src);
 

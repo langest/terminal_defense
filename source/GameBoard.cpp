@@ -4,7 +4,7 @@
 #include <queue>
 
 #include <Gui.h>
-#include <tower/DirectionTower.h>
+#include <tower/RightTower.h>
 #include <tower/Wall.h>
 
 namespace termd {
@@ -63,18 +63,24 @@ void CGameBoard::initInvasion() {
 		mLogger.logError("Tried to init invasion while already having one started");
 		return; // Do not start multiple invasions
 	}
-	mVirusManager.initInvasion(mStartPositions, mEndPositions, mTowerManager.getTowers());
-	// TODO mTowerManager.initInvasion();
+	mVirusManager.initInvasion();
+	mTowerManager.initInvasion();
 }
 
 bool CGameBoard::update() {
 	mLogger.log("Update");
+
 	mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
-	mTowerManager.updateTowers();
+
+	std::function<void(std::unique_ptr<IProjectile>&& projectile)> f([](std::unique_ptr<IProjectile>&&) {});
+	mTowerManager.update(f, mVirusManager.getViruses());
+
+	// mProjectileManager.update() TODO
+
 	if (!mHasMoreToDo) {
 		mLogger.log("Nothing more to do, finishing invasion");
 		mVirusManager.finishInvasion();
-		// TODO mTowerManager.finishInvasion();
+		mTowerManager.finishInvasion();
 	}
 	return mHasMoreToDo;
 }
@@ -105,8 +111,8 @@ void CGameBoard::buildTower(char tower) {
 			mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
 			break;
 		}
-		case 'd': {
-			mTowerManager.placeTower(buildPosition, std::make_unique<CDirectionTower<EDirection::Right>>());
+		case 'r': {
+			mTowerManager.placeTower(buildPosition, std::make_unique<CRightTower>(buildPosition));
 			break;
 		}
 	}

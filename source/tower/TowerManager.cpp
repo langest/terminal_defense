@@ -6,9 +6,9 @@ CTowerManager::CTowerManager() :
 	mTowers(),
 	mLogger(__FILE__) {}
 
-void CTowerManager::updateTowers() {
+void CTowerManager::update(std::function<void(std::unique_ptr<IProjectile>&& projectile)> spawnProjectile, const std::vector<std::unique_ptr<CVirus>>& viruses) {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ) {
-		bool keep = it->second->update();
+		bool keep = it->second->update(spawnProjectile, viruses);
 
 		if (!keep) { // If tower is flagging removal, remove it
 			it = mTowers.erase(it);
@@ -18,7 +18,9 @@ void CTowerManager::updateTowers() {
 	}
 }
 
-void CTowerManager::updateTowersEndOfWave() {
+void CTowerManager::initInvasion() {}
+
+void CTowerManager::finishInvasion() {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
 		it->second->updateEndOfWave();
 	}

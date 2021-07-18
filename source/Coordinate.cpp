@@ -2,32 +2,34 @@
 
 namespace termd {
 
+CCoordinate::CCoordinate() : mRow(), mCol() {}
+
 CCoordinate::CCoordinate(int row, int col) : mRow(row), mCol(col) {}
 
 CCoordinate::CCoordinate(const CCoordinate& src) : mRow(src.mRow), mCol(src.mCol) {}
 
-CCoordinate& CCoordinate::operator=(const CCoordinate & src) {
+CCoordinate& CCoordinate::operator=(const CCoordinate& src) {
 	mCol = src.mCol;
 	mRow = src.mRow;
 	return *this;
 }
 
-bool CCoordinate::operator==(const CCoordinate & other) const {
+bool CCoordinate::operator==(const CCoordinate& other) const {
 	return other.mRow == mRow && other.mCol == mCol;
 }
 
-bool CCoordinate::operator!=(const CCoordinate & other) const {
+bool CCoordinate::operator!=(const CCoordinate& other) const {
 	return other.mRow != mRow || other.mCol != mCol;
 }
 
-bool CCoordinate::operator<(const CCoordinate & other) const {
+bool CCoordinate::operator<(const CCoordinate& other) const {
 	if (mRow == other.mRow) {
 		return mCol < other.mCol;
 	}
 	return mRow < other.mRow;
 }
 
-bool CCoordinate::operator>(const CCoordinate & other) const {
+bool CCoordinate::operator>(const CCoordinate& other) const {
 	if (mRow == other.mRow) {
 		return mCol > other.mCol;
 	}
@@ -62,7 +64,7 @@ void CCoordinate::setRow(int row) {
 	mRow = row;
 }
 
-std::ostream & operator<<(std::ostream & os, const CCoordinate & coord) {
+std::ostream & operator<<(std::ostream& os, const CCoordinate& coord) {
 	os << coord.getRow()<< " " << coord.getCol();
 	return os;
 }
@@ -77,20 +79,20 @@ std::istream & operator>>(std::istream & is, CCoordinate & coord) {
 }
 
 
-CCoordinate CCoordinate::operator-(const CCoordinate & other) const {
+CCoordinate CCoordinate::operator-(const CCoordinate& other) const {
 	return CCoordinate(this->mRow - other.mRow, this->mCol - other.mCol);
 }
 
-CCoordinate CCoordinate::operator+(const CCoordinate & other) const {
+CCoordinate CCoordinate::operator+(const CCoordinate& other) const {
 	return CCoordinate(this->mRow + other.mRow, this->mCol + other.mCol);
 }
 
-void CCoordinate::operator-=(const CCoordinate & other) {
+void CCoordinate::operator-=(const CCoordinate& other) {
 	mRow = mRow - other.mRow;
 	mCol = mCol - other.mCol;
 }
 
-void CCoordinate::operator+=(const CCoordinate & other) {
+void CCoordinate::operator+=(const CCoordinate& other) {
 	mRow = mRow + other.mRow;
 	mCol = mCol + other.mCol;
 }

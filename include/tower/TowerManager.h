@@ -2,6 +2,7 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 
 #include <Coordinate.h>
 #include <logging/Logger.h>
@@ -9,12 +10,15 @@
 
 namespace termd {
 
+class CVirus;
+
 class CTowerManager {
 	public:
 		CTowerManager();
 
-		void updateTowers();
-		void updateTowersEndOfWave();
+		void update(std::function<void(std::unique_ptr<IProjectile>&& projectile)> spawnProjectile, const std::vector<std::unique_ptr<CVirus>>& viruses);
+		void initInvasion();
+		void finishInvasion();
 
 		bool isTowerAt(const CCoordinate& coordinate) const;
 		const std::map<CCoordinate, std::unique_ptr<ITower>>& getTowers() const;

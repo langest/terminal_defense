@@ -1,24 +1,21 @@
 #pragma once
 
+#include <map>
 #include <memory>
-
-#include <Coordinate>
+#include <vector>
 
 namespace termd {
 
-class CProjectile {
+class CCoordinate;
+class CVirus;
+
+class IProjectile {
 	public:
-		Projectile(const Coordinate& coordinate);
-		virtual ~Projectile();
+		virtual ~IProjectile() {};
 
-		const CCoordinate& getPosition() const;
-		bool update();
-		bool draw() const;
-
-	private:
-		char graphic;
-		int damage;
-		CCoordinate pos;
+		virtual const CCoordinate& getPosition() const = 0;
+		virtual bool update(const std::map<CCoordinate, std::vector<std::unique_ptr<CVirus>>>& virusMap) = 0;
+		virtual char getGraphic() const = 0;
 };
 
 }

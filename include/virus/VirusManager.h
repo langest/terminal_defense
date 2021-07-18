@@ -10,6 +10,7 @@
 
 namespace termd {
 
+class ITower;
 class CPlayer;
 
 class CVirusManager {
@@ -21,7 +22,7 @@ class CVirusManager {
 			const std::set<CCoordinate>& endPositions,
 			const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
 			);
-		void initInvasion(const std::set<CCoordinate>& startPositions, const std::set<CCoordinate>& endPositions, const std::map<CCoordinate, std::unique_ptr<ITower>>& towers);
+		void initInvasion();
 		void finishInvasion();
 
 		const std::vector<std::unique_ptr<CVirus>>& getViruses() const;

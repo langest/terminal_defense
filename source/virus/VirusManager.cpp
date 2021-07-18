@@ -49,15 +49,7 @@ bool CVirusManager::update(
 	return !mViruses.empty() || moreVirusesIncoming;
 }
 
-void CVirusManager::initInvasion(const std::set<CCoordinate>& startPositions, const std::set<CCoordinate>& endPositions, const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
-	for (int i = 0; i < 3; ++i) {
-		const int r = std::rand();
-		const int n = r % startPositions.size();
-		auto it = std::begin(startPositions);
-		std::advance(it,n);
-		const CCoordinate& startPosition = *it;
-		this->addVirus(std::make_unique<CVirus>(10, 40, 1, 'v', startPosition, endPositions, 10,10, towers));
-	}
+void CVirusManager::initInvasion() {
 	mWaveManager.initWave();
 }
 

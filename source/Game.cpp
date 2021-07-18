@@ -68,7 +68,7 @@ void CGame::handleInput(const char input) {
 			this->runMenu();
 			break;
 		}
-		case 'd': {
+		case 'r': {
 			mGameBoard.buildTower(input);
 			break;
 		}
