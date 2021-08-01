@@ -15,7 +15,9 @@ CGameBoard::CGameBoard(CPlayer& player, int sizeRows, int sizeCols) :
 	mStartCol(1),
 	mSizeRows(sizeRows),
 	mSizeCols(sizeCols),
-	mTowerManager(),
+	mTowerManager([this](const CCoordinate& position) {
+			return this->isInsideGameBoard(position);
+		}),
 	mVirusManager(mPlayer, sizeRows, sizeCols),
 	mHasMoreToDo(false),
 	mLogger(__FILE__) {
@@ -51,8 +53,8 @@ void CGameBoard::moveCursorRight() {
 void CGameBoard::draw() {
 	GUI::clearScreen();
 
-	mTowerManager.drawTowers(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
-	mVirusManager.drawViruses(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	mTowerManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	mVirusManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
 	GUI::drawFrame(
 		CCoordinate(0, 0),
 		CCoordinate(mSizeRows + 1, mSizeCols + 1));
@@ -72,10 +74,11 @@ bool CGameBoard::update() {
 
 	mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
 
-	std::function<void(std::unique_ptr<IProjectile>&& projectile)> f([](std::unique_ptr<IProjectile>&&) {});
-	mTowerManager.update(f, mVirusManager.getViruses());
-
-	// mProjectileManager.update() TODO
+std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> virusMap = mVirusManager.getCoordinateVirusMap();
+	mTowerManager.update(
+			mVirusManager.getViruses(),
+			virusMap
+		);
 
 	if (!mHasMoreToDo) {
 		mLogger.log("Nothing more to do, finishing invasion");
@@ -91,10 +94,7 @@ void CGameBoard::buildTower(char tower) {
 	const int col = cursorPosition.getCol() - mStartCol;
 	const CCoordinate buildPosition(row, col);
 	mLogger.log("Trying to build tower at (%d, %d)", row, col);
-	if (col < 0 ||
-		col >= mSizeCols ||
-		row < 0 ||
-		row >= mSizeRows ||
+	if (!this->isInsideGameBoard(buildPosition) ||
 		mTowerManager.isTowerAt(buildPosition)) {
 		mLogger.log("Can NOT build tower at (%d, %d)", row, col);
 		return;
@@ -134,7 +134,16 @@ void CGameBoard::drawCall(const CCoordinate& position, char graphic) {
 	GUI::draw(position + CCoordinate(mStartRow, mStartCol), graphic);
 }
 
-bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
+bool CGameBoard::isInsideGameBoard(const CCoordinate& coordinate) const {
+	const int row = coordinate.getRow();
+	const int col = coordinate.getCol();
+	return (0 <= col &&
+		col < mSizeCols &&
+		0 <= row &&
+		row < mSizeRows);
+}
+
+bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) const {
 	if (mStartPositions.contains(coordinate)) {
 		return true;
 	}

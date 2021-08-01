@@ -26,9 +26,10 @@ class CVirusManager {
 		void finishInvasion();
 
 		const std::vector<std::unique_ptr<CVirus>>& getViruses() const;
+		std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> getCoordinateVirusMap();
 
 		template <typename TDrawCall>
-		void drawViruses(TDrawCall&& drawCall);
+		void draw(TDrawCall&& drawCall);
 
 		bool hasNextWave() const;
 
@@ -42,7 +43,7 @@ class CVirusManager {
 };
 
 template <typename TDrawCall>
-void CVirusManager::drawViruses(TDrawCall&& drawCall) {
+void CVirusManager::draw(TDrawCall&& drawCall) {
 	for (const std::unique_ptr<CVirus>& virus: mViruses) {
 		const char graphic = virus->getGraphic();
 		const CCoordinate& position = virus->getPosition();

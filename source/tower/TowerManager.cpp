@@ -2,13 +2,19 @@
 
 namespace termd {
 
-CTowerManager::CTowerManager() :
+CTowerManager::CTowerManager(std::function<bool(const CCoordinate& position)> isPositionValid) :
 	mTowers(),
+	mProjectileManager(isPositionValid),
 	mLogger(__FILE__) {}
 
-void CTowerManager::update(std::function<void(std::unique_ptr<IProjectile>&& projectile)> spawnProjectile, const std::vector<std::unique_ptr<CVirus>>& viruses) {
+void CTowerManager::update(
+		const std::vector<std::unique_ptr<CVirus>>& viruses,
+		std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap) {
 	for (auto it = mTowers.begin(); it != mTowers.end(); ) {
-		bool keep = it->second->update(spawnProjectile, viruses);
+		auto spawnProjectile = [this](std::unique_ptr<IProjectile>&& projectile) {
+			this->mProjectileManager.addProjectile(std::move(projectile));
+		};
+		bool keep = it->second->update(spawnProjectile, viruses, virusMap);
 
 		if (!keep) { // If tower is flagging removal, remove it
 			it = mTowers.erase(it);
@@ -16,6 +22,7 @@ void CTowerManager::update(std::function<void(std::unique_ptr<IProjectile>&& pro
 			++it;
 		}
 	}
+	mProjectileManager.update(virusMap);
 }
 
 void CTowerManager::initInvasion() {}

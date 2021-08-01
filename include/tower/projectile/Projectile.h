@@ -14,7 +14,7 @@ class IProjectile {
 		virtual ~IProjectile() {};
 
 		virtual const CCoordinate& getPosition() const = 0;
-		virtual bool update(const std::map<CCoordinate, std::vector<std::unique_ptr<CVirus>>>& virusMap) = 0;
+		virtual bool update(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap) = 0;
 		virtual char getGraphic() const = 0;
 };
 

@@ -35,7 +35,8 @@ class CGameBoard {
 	private:
 		void drawCall(const CCoordinate& position, char graphic);
 
-		bool isBlockedWith(const CCoordinate& coordinate);
+		bool isInsideGameBoard(const CCoordinate& coordinate) const;
+		bool isBlockedWith(const CCoordinate& coordinate) const;
 		void loadMap();
 
 		CPlayer& mPlayer;
