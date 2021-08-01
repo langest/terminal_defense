@@ -44,12 +44,4 @@ class CVirus {
 		CLogger mLogger;
 };
 
-
-// TODO is CVirusFactory really needed?
-class CVirusFactory {
-	public:
-		CVirusFactory() = delete;
-
-		CVirus static createVirus(int hp, int stamina, int reward, const CCoordinate& startPosition, const std::map<CCoordinate, std::unique_ptr<ITower>> towers);
-};
 }

@@ -26,7 +26,7 @@ class CGameBoard {
 		void draw();
 		void initInvasion();
 		bool update();
-		bool buildTower();
+		void buildTower(char tower);
 		bool hasNextWave() const;
 
 		int getSizeRows() const;
@@ -35,7 +35,8 @@ class CGameBoard {
 	private:
 		void drawCall(const CCoordinate& position, char graphic);
 
-		bool isBlockedWith(const CCoordinate& coordinate);
+		bool isInsideGameBoard(const CCoordinate& coordinate) const;
+		bool isBlockedWith(const CCoordinate& coordinate) const;
 		void loadMap();
 
 		CPlayer& mPlayer;

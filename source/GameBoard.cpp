@@ -4,6 +4,7 @@
 #include <queue>
 
 #include <Gui.h>
+#include <tower/RightTower.h>
 #include <tower/Wall.h>
 
 namespace termd {
@@ -14,7 +15,9 @@ CGameBoard::CGameBoard(CPlayer& player, int sizeRows, int sizeCols) :
 	mStartCol(1),
 	mSizeRows(sizeRows),
 	mSizeCols(sizeCols),
-	mTowerManager(),
+	mTowerManager([this](const CCoordinate& position) {
+			return this->isInsideGameBoard(position);
+		}),
 	mVirusManager(mPlayer, sizeRows, sizeCols),
 	mHasMoreToDo(false),
 	mLogger(__FILE__) {
@@ -50,8 +53,8 @@ void CGameBoard::moveCursorRight() {
 void CGameBoard::draw() {
 	GUI::clearScreen();
 
-	mTowerManager.drawTowers(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
-	mVirusManager.drawViruses(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	mTowerManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
+	mVirusManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
 	GUI::drawFrame(
 		CCoordinate(0, 0),
 		CCoordinate(mSizeRows + 1, mSizeCols + 1));
@@ -62,41 +65,57 @@ void CGameBoard::initInvasion() {
 		mLogger.logError("Tried to init invasion while already having one started");
 		return; // Do not start multiple invasions
 	}
-	mVirusManager.initInvasion(mStartPositions, mEndPositions, mTowerManager.getTowers());
-	// TODO mTowerManager.initInvasion();
+	mVirusManager.initInvasion();
+	mTowerManager.initInvasion();
 }
 
 bool CGameBoard::update() {
 	mLogger.log("Update");
+
 	mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
-	mTowerManager.updateTowers();
+
+std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> virusMap = mVirusManager.getCoordinateVirusMap();
+	mTowerManager.update(
+			mVirusManager.getViruses(),
+			virusMap
+		);
+
 	if (!mHasMoreToDo) {
 		mLogger.log("Nothing more to do, finishing invasion");
 		mVirusManager.finishInvasion();
-		// TODO mTowerManager.finishInvasion();
+		mTowerManager.finishInvasion();
 	}
 	return mHasMoreToDo;
 }
 
-bool CGameBoard::buildTower() {
+void CGameBoard::buildTower(char tower) {
 	const CCoordinate cursorPosition = GUI::getCursorPosition();
 	const int row = cursorPosition.getRow() - mStartRow;
 	const int col = cursorPosition.getCol() - mStartCol;
 	const CCoordinate buildPosition(row, col);
 	mLogger.log("Trying to build tower at (%d, %d)", row, col);
-	if (col < 0 ||
-		col >= mSizeCols ||
-		row < 0 ||
-		row >= mSizeRows ||
+	if (!this->isInsideGameBoard(buildPosition) ||
 		mTowerManager.isTowerAt(buildPosition)) {
-		return false;
+		mLogger.log("Can NOT build tower at (%d, %d)", row, col);
+		return;
 	}
 
 	if (this->isBlockedWith(buildPosition)) {
-		return false;
+		mLogger.log("Can NOT build tower at (%d, %d), it would block the path", row, col);
+		return ;
 	}
 
-	return mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
+	// TODO make prettier tower selection
+	switch (tower) {
+		case 'w': {
+			mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
+			break;
+		}
+		case 'r': {
+			mTowerManager.placeTower(buildPosition, std::make_unique<CRightTower>(buildPosition));
+			break;
+		}
+	}
 }
 
 bool CGameBoard::hasNextWave() const {
@@ -115,7 +134,16 @@ void CGameBoard::drawCall(const CCoordinate& position, char graphic) {
 	GUI::draw(position + CCoordinate(mStartRow, mStartCol), graphic);
 }
 
-bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) {
+bool CGameBoard::isInsideGameBoard(const CCoordinate& coordinate) const {
+	const int row = coordinate.getRow();
+	const int col = coordinate.getCol();
+	return (0 <= col &&
+		col < mSizeCols &&
+		0 <= row &&
+		row < mSizeRows);
+}
+
+bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) const {
 	if (mStartPositions.contains(coordinate)) {
 		return true;
 	}

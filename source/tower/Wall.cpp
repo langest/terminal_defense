@@ -5,7 +5,7 @@
 
 namespace termd {
 
-CWall::CWall() : mCost(10), mGraphic('#') {}
+CWall::CWall() : mCost(3), mGraphic('#') {}
 
 int CWall::getCost() const {
 	return mCost;
@@ -19,12 +19,14 @@ char CWall::getGraphic() const {
 	return mGraphic;
 }
 
-bool CWall::update() {
+bool CWall::update(
+		std::function<void(std::unique_ptr<IProjectile>&& projectile)> /* spawnProjectile */,
+		const std::vector<std::unique_ptr<CVirus>>& /* viruses */,
+		const std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& /* virusMap */
+	) {
 	return true;
 }
 
-void CWall::updateEndOfWave() {
-	return;
-}
+void CWall::updateEndOfWave() {}
 
 }
