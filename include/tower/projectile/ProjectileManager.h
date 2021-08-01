@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <vector>
 
 #include <Coordinate.h>
 #include <tower/projectile/Projectile.h>
@@ -17,7 +18,7 @@ class CProjectileManager {
 	public:
 		CProjectileManager(std::function<bool(const CCoordinate& position)> isPositionValid);
 
-		bool update(std::map<CCoordinate, std::set<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
+		bool update(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
 		void addProjectile(std::unique_ptr<IProjectile>&& projectile);
 		template <typename TDrawCall>
 		void draw(TDrawCall&& drawCall);

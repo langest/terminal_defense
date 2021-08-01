@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <set>
 #include <vector>
+#include <set>
 
 #include <logging/Logger.h>
 #include <virus/Virus.h>
@@ -25,7 +25,7 @@ class CVirusManager {
 		void initInvasion();
 		void finishInvasion();
 
-		const std::vector<std::unique_ptr<CVirus>>& getViruses() const;
+		const std::vector<std::unique_ptr<CVirus>>& getActiveViruses() const;
 		std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> getCoordinateVirusMap();
 
 		template <typename TDrawCall>
@@ -37,14 +37,15 @@ class CVirusManager {
 		void addVirus(std::unique_ptr<CVirus>&& virus);
 
 		CPlayer& mPlayer;
-		std::vector<std::unique_ptr<CVirus>> mViruses;
+		std::vector<std::unique_ptr<CVirus>> mActiveViruses;
+		std::vector<std::unique_ptr<CVirus>> mDisabledViruses;
 		CWaveManager mWaveManager;
 		CLogger mLogger;
 };
 
 template <typename TDrawCall>
 void CVirusManager::draw(TDrawCall&& drawCall) {
-	for (const std::unique_ptr<CVirus>& virus: mViruses) {
+	for (const std::unique_ptr<CVirus>& virus: mActiveViruses) {
 		const char graphic = virus->getGraphic();
 		const CCoordinate& position = virus->getPosition();
 		drawCall(position, graphic);
