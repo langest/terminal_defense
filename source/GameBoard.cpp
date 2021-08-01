@@ -76,7 +76,7 @@ bool CGameBoard::update() {
 
 std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> virusMap = mVirusManager.getCoordinateVirusMap();
 	mTowerManager.update(
-			mVirusManager.getViruses(),
+			mVirusManager.getActiveViruses(),
 			virusMap
 		);
 

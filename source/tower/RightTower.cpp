@@ -27,8 +27,8 @@ char CRightTower::getGraphic() const {
 
 bool CRightTower::update(
 				std::function<void(std::unique_ptr<IProjectile>&& projectile)> spawnProjectile,
-				const std::set<std::unique_ptr<CVirus>>& /* viruses */,
-				const std::map<CCoordinate, std::set<std::reference_wrapper<std::unique_ptr<CVirus>>>>& /* virusMap */
+				const std::vector<std::unique_ptr<CVirus>>& /* viruses */,
+				const std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& /* virusMap */
 ) {
 	if (0 == mUpdateCounter % 40) {
 		mLogger.log("Spawning direction projectile");

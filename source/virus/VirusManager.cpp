@@ -8,7 +8,8 @@ namespace termd {
 
 CVirusManager::CVirusManager(CPlayer& player, int numRows, int numCols) :
 	mPlayer(player),
-	mViruses(),
+	mActiveViruses(),
+	mDisabledViruses(),
 	mWaveManager(numRows, numCols),
 	mLogger(__FILE__) {}
 
@@ -18,7 +19,7 @@ bool CVirusManager::update(
 		const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
 	mLogger.log("Update");
 
-	for (std::unique_ptr<CVirus>& virus : mViruses) {
+	for (std::unique_ptr<CVirus>& virus : mActiveViruses) {
 		virus->update();
 
 		if (virus->isDestinationReached()) {
@@ -31,13 +32,14 @@ bool CVirusManager::update(
 		}
 	}
 
-	const auto isShouldBeRemoved = [](const std::unique_ptr<CVirus>& virus) {
-		return !virus->isAlive() || virus->isDestinationReached();
-	};
-
-	mViruses.erase(
-			std::remove_if(mViruses.begin(), mViruses.end(), isShouldBeRemoved),
-			mViruses.end());
+	for (auto it = mActiveViruses.begin(); it != mActiveViruses.end(); ) {
+		if (!(*it)->isAlive() || (*it)->isDestinationReached()) {
+			mDisabledViruses.emplace_back(std::move(*it));
+			it = mActiveViruses.erase(it);
+		} else {
+			++it;
+		}
+	}
 
 	const bool moreVirusesIncoming = mWaveManager.update(
 			std::bind(&CVirusManager::addVirus, this, std::placeholders::_1),
@@ -46,7 +48,7 @@ bool CVirusManager::update(
 			towers
 		);
 
-	return !mViruses.empty() || moreVirusesIncoming;
+	return !mActiveViruses.empty() || moreVirusesIncoming;
 }
 
 void CVirusManager::initInvasion() {
@@ -54,17 +56,18 @@ void CVirusManager::initInvasion() {
 }
 
 void CVirusManager::finishInvasion() {
-	mViruses.clear();
+	mActiveViruses.clear();
+	mDisabledViruses.clear();
 }
 
-const std::vector<std::unique_ptr<CVirus>>& CVirusManager::getViruses() const {
-	return mViruses;
+const std::vector<std::unique_ptr<CVirus>>& CVirusManager::getActiveViruses() const {
+	return mActiveViruses;
 }
 
 std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> CVirusManager::getCoordinateVirusMap() {
 	std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> map;
 
-	for (std::unique_ptr<CVirus>& v : mViruses) {
+	for (std::unique_ptr<CVirus>& v : mActiveViruses) {
 		map[v->getPosition()].emplace_back(std::reference_wrapper(v));
 	}
 
@@ -76,7 +79,7 @@ bool CVirusManager::hasNextWave() const {
 }
 
 void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
-	mViruses.emplace_back(std::move(virus));
+	mActiveViruses.emplace_back(std::move(virus));
 }
 
 
