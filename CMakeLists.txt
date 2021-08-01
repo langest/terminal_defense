@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18.5)
 
-#set(CMAKE_CXX_COMPILER "/usr/lib/llvm/11/bin/clang")
+#set(CMAKE_CXX_COMPILER "/usr/lib/llvm/12/bin/clang")
 
 execute_process (
 	COMMAND bash -c "git describe --abbrev=6 --dirty --always --tags"
