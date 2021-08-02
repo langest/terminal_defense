@@ -4,31 +4,38 @@
 
 namespace termd {
 
-CPlayer::CPlayer(int maxRam, int maxControlPoints):
-	mRam(maxRam),
-	mRamMax(maxRam),
-	mControlPoints(maxControlPoints),
-	mControlPointsMax(maxControlPoints) {}
-
-bool CPlayer::isAlive() const {
-	return 0 < mControlPoints;
+CPlayer::CPlayer(int maxRam, int maxControlPoints)
+    : mRam(maxRam)
+    , mRamMax(maxRam)
+    , mControlPoints(maxControlPoints)
+    , mControlPointsMax(maxControlPoints)
+{
 }
 
-int CPlayer::getRam() const {
-	return mRam;
-}
-int CPlayer::getControlPoints() const {
-	return mControlPoints;
+bool CPlayer::isAlive() const
+{
+    return 0 < mControlPoints;
 }
 
-void CPlayer::modifyControlPoints(int delta) {
-	mControlPoints += delta;
-	mControlPoints = std::max(mControlPoints, mControlPointsMax);
+int CPlayer::getRam() const
+{
+    return mRam;
+}
+int CPlayer::getControlPoints() const
+{
+    return mControlPoints;
 }
 
-void CPlayer::modifyRam(int delta) {
-	mRam += delta;
-	mRam = std::max(mRam, mRamMax);
+void CPlayer::modifyControlPoints(int delta)
+{
+    mControlPoints += delta;
+    mControlPoints = std::max(mControlPoints, mControlPointsMax);
+}
+
+void CPlayer::modifyRam(int delta)
+{
+    mRam += delta;
+    mRam = std::max(mRam, mRamMax);
 }
 
 }

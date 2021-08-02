@@ -12,43 +12,55 @@
 namespace termd {
 
 class CPath {
-	public:
-		CPath(
-				const CCoordinate& startPosition,
-				const std::set<CCoordinate>& endPositions,
-				int numRows,
-				int numCols,
-				const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
-			);
+public:
+    CPath(
+        const CCoordinate& startPosition,
+        const std::set<CCoordinate>& endPositions,
+        int numRows,
+        int numCols,
+        const std::map<CCoordinate, std::unique_ptr<ITower>>& towers);
 
-		int step(int stamina);
-		const CCoordinate& getCurrentPosition() const;
-		bool isDestinationReached() const;
+    int step(int stamina);
+    const CCoordinate& getCurrentPosition() const;
+    bool isDestinationReached() const;
 
-	private:
-		struct SStep
-		{
-			CCoordinate coord;
-			int cost;
-			SStep(CCoordinate a, int b) : coord(a), cost(b) {}
-			SStep(const SStep & src) : coord(src.coord), cost(src.cost) {}
-			SStep(SStep && src) : coord(std::move(src.coord)), cost(std::move(src.cost)) {}
+private:
+    struct SStep {
+        CCoordinate coord;
+        int cost;
+        SStep(CCoordinate a, int b)
+            : coord(a)
+            , cost(b)
+        {
+        }
+        SStep(const SStep& src)
+            : coord(src.coord)
+            , cost(src.cost)
+        {
+        }
+        SStep(SStep&& src)
+            : coord(std::move(src.coord))
+            , cost(std::move(src.cost))
+        {
+        }
 
-			SStep& operator=(const SStep & src) {
-				coord = src.coord;
-				cost = src.cost;
-				return (*this);
-			}
+        SStep& operator=(const SStep& src)
+        {
+            coord = src.coord;
+            cost = src.cost;
+            return (*this);
+        }
 
-			SStep& operator=(SStep && src) {
-				coord = std::move(src.coord);
-				cost = std::move(src.cost);
-				return (*this);
-			}
-		};
+        SStep& operator=(SStep&& src)
+        {
+            coord = std::move(src.coord);
+            cost = std::move(src.cost);
+            return (*this);
+        }
+    };
 
-		std::queue<SStep> mPath;
-		CLogger mLogger;
+    std::queue<SStep> mPath;
+    CLogger mLogger;
 };
 
 }

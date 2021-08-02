@@ -4,33 +4,32 @@
 #include <vector>
 
 #include <Coordinate.h>
-#include <tower/Tower.h>
 #include <logging/Logger.h>
+#include <tower/Tower.h>
 
 namespace termd {
 
 class CRightTower : public ITower {
-	public:
-		CRightTower(const CCoordinate& position);
+public:
+    CRightTower(const CCoordinate& position);
 
-		int getCost() const;
-		int getSellValue() const;
-		char getGraphic() const;
+    int getCost() const;
+    int getSellValue() const;
+    char getGraphic() const;
 
-		bool update(
-				std::function<void(std::unique_ptr<IProjectile>&& projectile)> spawnProjectile,
-				const std::vector<std::unique_ptr<CVirus>>& viruses,
-				const std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap
-);
-		void updateEndOfWave();
+    bool update(
+        std::function<void(std::unique_ptr<IProjectile>&& projectile)> spawnProjectile,
+        const std::vector<std::unique_ptr<CVirus>>& viruses,
+        const std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
+    void updateEndOfWave();
 
-	private:
-		CCoordinate mPosition;
-		const int mCost;
-		const int mGraphic;
-		int mUpdateCounter;
+private:
+    CCoordinate mPosition;
+    const int mCost;
+    const int mGraphic;
+    int mUpdateCounter;
 
-		CLogger mLogger;
+    CLogger mLogger;
 };
 
 }

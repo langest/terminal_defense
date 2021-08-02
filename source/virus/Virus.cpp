@@ -5,62 +5,69 @@
 namespace termd {
 
 CVirus::CVirus(
-		int hp,
-		int staminaIncrement,
-		int reward,
-		char graphic,
-		const CCoordinate& startPosition,
-		const std::set<CCoordinate>& endPositions,
-		int numRows,
-		int numCols,
-		const std::map<CCoordinate, std::unique_ptr<ITower>>& towers
-		) :
-	mHp(hp),
-	mStamina(0),
-	mStaminaIncrement(staminaIncrement),
-	mReward(reward),
-	mDamage(1),
-	mGraphic(graphic),
-	mPath(startPosition, endPositions, numRows, numCols, towers),
-	mLogger(__FILE__) {
-		mLogger.log("Creating virus at position (%d, %d)", startPosition.getRow(), startPosition.getCol());
-	}
-
-void CVirus::update(){
-	if(mHp <= 0) {
-		mLogger.log("Virus out of hp");
-		return;
-	}
-	mStamina = mPath.step(mStamina + mStaminaIncrement);
+    int hp,
+    int staminaIncrement,
+    int reward,
+    char graphic,
+    const CCoordinate& startPosition,
+    const std::set<CCoordinate>& endPositions,
+    int numRows,
+    int numCols,
+    const std::map<CCoordinate, std::unique_ptr<ITower>>& towers)
+    : mHp(hp)
+    , mStamina(0)
+    , mStaminaIncrement(staminaIncrement)
+    , mReward(reward)
+    , mDamage(1)
+    , mGraphic(graphic)
+    , mPath(startPosition, endPositions, numRows, numCols, towers)
+    , mLogger(__FILE__)
+{
+    mLogger.log("Creating virus at position (%d, %d)", startPosition.getRow(), startPosition.getCol());
 }
 
-int CVirus::getReward() const {
-	return mReward;
+void CVirus::update()
+{
+    if (mHp <= 0) {
+        mLogger.log("Virus out of hp");
+        return;
+    }
+    mStamina = mPath.step(mStamina + mStaminaIncrement);
 }
 
-int CVirus::getDamage() const {
-	return mDamage;
+int CVirus::getReward() const
+{
+    return mReward;
 }
 
-const CCoordinate& CVirus::getPosition() const {
-	return mPath.getCurrentPosition();
+int CVirus::getDamage() const
+{
+    return mDamage;
 }
 
-char CVirus::getGraphic() const {
-	return mGraphic;
+const CCoordinate& CVirus::getPosition() const
+{
+    return mPath.getCurrentPosition();
 }
 
-bool CVirus::isAlive() const {
-	return 0 <= mHp;
+char CVirus::getGraphic() const
+{
+    return mGraphic;
 }
 
-bool CVirus::isDestinationReached() const {
-	return mPath.isDestinationReached();
+bool CVirus::isAlive() const
+{
+    return 0 <= mHp;
 }
 
-void CVirus::takeDamage(int damage) {
-	mHp -= damage;
+bool CVirus::isDestinationReached() const
+{
+    return mPath.isDestinationReached();
 }
 
+void CVirus::takeDamage(int damage)
+{
+    mHp -= damage;
+}
 
 }

@@ -14,37 +14,37 @@ namespace termd {
 class CVirus;
 
 class CTowerManager {
-	public:
-		CTowerManager(std::function<bool(const CCoordinate& position)> isPositionValid);
+public:
+    CTowerManager(std::function<bool(const CCoordinate& position)> isPositionValid);
 
-		void update(
-			const std::vector<std::unique_ptr<CVirus>>& viruses,
-			std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap
-		);
-		void initInvasion();
-		void finishInvasion();
+    void update(
+        const std::vector<std::unique_ptr<CVirus>>& viruses,
+        std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
+    void initInvasion();
+    void finishInvasion();
 
-		bool isTowerAt(const CCoordinate& coordinate) const;
-		const std::map<CCoordinate, std::unique_ptr<ITower>>& getTowers() const;
+    bool isTowerAt(const CCoordinate& coordinate) const;
+    const std::map<CCoordinate, std::unique_ptr<ITower>>& getTowers() const;
 
-		bool placeTower(const CCoordinate& position, std::unique_ptr<ITower>&& tower);
-		template <typename TDrawCall>
-		void draw(TDrawCall&& drawCall);
+    bool placeTower(const CCoordinate& position, std::unique_ptr<ITower>&& tower);
+    template <typename TDrawCall>
+    void draw(TDrawCall&& drawCall);
 
-	private:
-		std::map<CCoordinate, std::unique_ptr<ITower>> mTowers;
-		CProjectileManager mProjectileManager;
-		CLogger mLogger;
+private:
+    std::map<CCoordinate, std::unique_ptr<ITower>> mTowers;
+    CProjectileManager mProjectileManager;
+    CLogger mLogger;
 };
 
 template <typename TDrawCall>
-void CTowerManager::draw(TDrawCall&& drawCall) {
-	for (const auto& pair: mTowers) {
-		const CCoordinate& position = pair.first;
-		const char graphic = pair.second->getGraphic();
-		drawCall(position, graphic);
-	}
-	mProjectileManager.draw(drawCall);
+void CTowerManager::draw(TDrawCall&& drawCall)
+{
+    for (const auto& pair : mTowers) {
+        const CCoordinate& position = pair.first;
+        const char graphic = pair.second->getGraphic();
+        drawCall(position, graphic);
+    }
+    mProjectileManager.draw(drawCall);
 }
 
 }
