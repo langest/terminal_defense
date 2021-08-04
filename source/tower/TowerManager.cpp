@@ -28,7 +28,11 @@ void CTowerManager::update(
     mProjectileManager.update(virusMap);
 }
 
-void CTowerManager::initInvasion() { }
+void CTowerManager::initInvasion() {
+    for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
+        it->second->updateStartOfWave();
+    }
+}
 
 void CTowerManager::finishInvasion()
 {

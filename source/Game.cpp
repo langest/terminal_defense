@@ -80,6 +80,10 @@ void CGame::handleInput(const char input)
         mGameBoard.buildTower(input);
         break;
     }
+    case 't': {
+        mGameBoard.buildTower(input);
+        break;
+    }
     default: {
         break;
     }

@@ -4,6 +4,7 @@
 #include <queue>
 
 #include <Gui.h>
+#include <tower/HomingTower.h>
 #include <tower/RightTower.h>
 #include <tower/Wall.h>
 
@@ -117,13 +118,18 @@ void CGameBoard::buildTower(char tower)
     switch (tower) {
     case 'w': {
         mTowerManager.placeTower(buildPosition, std::make_unique<CWall>());
-        break;
+        return;
     }
     case 'r': {
         mTowerManager.placeTower(buildPosition, std::make_unique<CRightTower>(buildPosition));
-        break;
+        return;
+    }
+    case 't': {
+        mTowerManager.placeTower(buildPosition, std::make_unique<CHomingTower>(buildPosition));
+        return;
     }
     }
+	return;
 }
 
 bool CGameBoard::hasNextWave() const

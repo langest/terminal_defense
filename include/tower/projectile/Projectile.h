@@ -18,4 +18,12 @@ public:
     virtual char getGraphic() const = 0;
 };
 
+template <typename T>
+struct SProjectileTraits {
+	/*
+	static const int mDamage;
+	static const int mGraphic;
+	*/
+};
+
 }

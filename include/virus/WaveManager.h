@@ -29,11 +29,16 @@ bool CWaveManager::update(
     const std::set<CCoordinate>& endPositions,
     const std::map<CCoordinate, std::unique_ptr<ITower>>& towers)
 {
-    if (160 < mUpdateCounter) {
+    ++mUpdateCounter;
+
+	const int spawnInterval = 100;
+	const int numberOfViruses = 7;
+
+    if ((numberOfViruses * spawnInterval) < mUpdateCounter) {
         return false;
     }
 
-    if (0 == mUpdateCounter % 20) {
+    if (0 == mUpdateCounter % spawnInterval) {
         const int hp = 10;
         const int staminaIncrement = 40;
         const int reward = 10;
@@ -56,8 +61,6 @@ bool CWaveManager::update(
             mNumCols,
             towers));
     }
-
-    ++mUpdateCounter;
 
     return true;
 }

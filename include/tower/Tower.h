@@ -18,12 +18,20 @@ public:
 
     virtual ~ITower() {};
 
-    virtual int getCost() const = 0;
     virtual int getSellValue() const = 0;
     virtual char getGraphic() const = 0;
 
     virtual bool update(TSpawnCallback spawnProjectile, const TVirusList& viruses, const TVirusMap& virusMap) = 0;
+    virtual void updateStartOfWave() = 0;
     virtual void updateEndOfWave() = 0;
+};
+
+template <typename T>
+struct STowerTraits {
+	/*
+	static const int mCost;
+	static const char mGraphic;
+	*/
 };
 
 }

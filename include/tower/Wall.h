@@ -12,18 +12,20 @@ class Coordinate;
 
 class CWall : public ITower {
 public:
-    CWall();
+    CWall() {};
 
     // ITower
-    int getCost() const;
     int getSellValue() const;
     char getGraphic() const;
     bool update(ITower::TSpawnCallback spawnProjectile, const ITower::TVirusList& viruses, const ITower::TVirusMap& virusMap);
-    void updateEndOfWave();
+    void updateStartOfWave() {};
+    void updateEndOfWave() {};
+};
 
-private:
-    const int mCost;
-    const char mGraphic;
+template <>
+struct STowerTraits<CWall> {
+	static const int mCost = 1;
+	static const char mGraphic = '#';
 };
 
 }

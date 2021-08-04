@@ -13,20 +13,24 @@ class CRightTower : public ITower {
 public:
     CRightTower(const CCoordinate& position);
 
-    int getCost() const;
     int getSellValue() const;
     char getGraphic() const;
 
     bool update(ITower::TSpawnCallback spawnProjectile, const ITower::TVirusList& viruses, const ITower::TVirusMap& virusMap);
+    void updateStartOfWave();
     void updateEndOfWave();
 
 private:
     CCoordinate mPosition;
-    const int mCost;
-    const int mGraphic;
     int mUpdateCounter;
 
     CLogger mLogger;
+};
+
+template <>
+struct STowerTraits<CRightTower> {
+	static const int mCost = 10;
+	static const char mGraphic = 'E';
 };
 
 }
