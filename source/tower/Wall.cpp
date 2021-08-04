@@ -26,11 +26,7 @@ char CWall::getGraphic() const
     return mGraphic;
 }
 
-bool CWall::update(
-    std::function<void(std::unique_ptr<IProjectile>&& projectile)> /* spawnProjectile */,
-    const std::vector<std::unique_ptr<CVirus>>& /* viruses */,
-    const std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& /* virusMap */
-)
+bool CWall::update(TSpawnCallback /* spawnProjectile */, const TVirusList& /* viruses */, const TVirusMap& /* virusMap */)
 {
     return true;
 }
