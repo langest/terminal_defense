@@ -10,16 +10,15 @@
 namespace termd {
 
 enum class EDirection {
-	Left,
-	Right,
-	Up,
-	Down
+    Left,
+    Right,
+    Up,
+    Down
 };
 
 template <EDirection TDirection>
 class CDirectionProjectile : public IProjectile {
 public:
-
     CDirectionProjectile(const CCoordinate& startPosition);
 
     const CCoordinate& getPosition() const;
@@ -28,7 +27,7 @@ public:
 
 private:
     bool collideWithVirus(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
-	CCoordinate getDirection() const;
+    CCoordinate getDirection() const;
 
     CCoordinate mPosition;
     unsigned int mUpdateCounter;
@@ -37,8 +36,8 @@ private:
 
 template <>
 struct SProjectileTraits<CDirectionProjectile<EDirection::Right>> {
-	static const int mDamage = 3;
-	static const int mGraphic = '>';
+    static const int mDamage = 3;
+    static const int mGraphic = '>';
 };
 
 template <EDirection TDirection>
@@ -102,8 +101,9 @@ bool CDirectionProjectile<TDirection>::collideWithVirus(std::map<CCoordinate, st
 }
 
 template <>
-CCoordinate CDirectionProjectile<EDirection::Right>::getDirection() const {
-	return CCoordinate(0, 1);
+CCoordinate CDirectionProjectile<EDirection::Right>::getDirection() const
+{
+    return CCoordinate(0, 1);
 }
 
 }

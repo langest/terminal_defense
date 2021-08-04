@@ -34,7 +34,7 @@ bool CRightTower::update(TSpawnCallback spawnProjectile, const TVirusList& /* vi
 
 void CRightTower::updateStartOfWave()
 {
-	mUpdateCounter = 0;
+    mUpdateCounter = 0;
 }
 
 void CRightTower::updateEndOfWave() { }

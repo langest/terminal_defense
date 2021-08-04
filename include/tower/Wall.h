@@ -24,8 +24,8 @@ public:
 
 template <>
 struct STowerTraits<CWall> {
-	static const int mCost = 1;
-	static const char mGraphic = '#';
+    static const int mCost = 1;
+    static const char mGraphic = '#';
 };
 
 }
