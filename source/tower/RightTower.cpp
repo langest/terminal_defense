@@ -22,7 +22,7 @@ char CRightTower::getGraphic() const
     return STowerTraits<CRightTower>::mGraphic;
 }
 
-bool CRightTower::update(TSpawnCallback spawnProjectile, const TVirusList& /* viruses */, const TVirusMap& /* virusMap */)
+bool CRightTower::update(ITower::TSpawnCallback spawnProjectile, const ITower::TVirusMap& /* virusMap */)
 {
     if (0 == mUpdateCounter % 63) {
         mLogger.log("Spawning direction projectile");

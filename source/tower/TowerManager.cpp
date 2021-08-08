@@ -9,15 +9,14 @@ CTowerManager::CTowerManager(std::function<bool(const CCoordinate& position)> is
 {
 }
 
-void CTowerManager::update(
-    const std::vector<std::unique_ptr<CVirus>>& viruses,
-    std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap)
+void CTowerManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
 {
+    mLogger.log("Update");
     for (auto it = mTowers.begin(); it != mTowers.end();) {
         auto spawnProjectile = [this](std::unique_ptr<IProjectile>&& projectile) {
             this->mProjectileManager.addProjectile(std::move(projectile));
         };
-        bool keep = it->second->update(spawnProjectile, viruses, virusMap);
+        bool keep = it->second->update(spawnProjectile, virusMap);
 
         if (!keep) { // If tower is flagging removal, remove it
             it = mTowers.erase(it);
@@ -28,7 +27,8 @@ void CTowerManager::update(
     mProjectileManager.update(virusMap);
 }
 
-void CTowerManager::initInvasion() {
+void CTowerManager::initInvasion()
+{
     for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
         it->second->updateStartOfWave();
     }

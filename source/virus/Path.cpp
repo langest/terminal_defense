@@ -141,10 +141,11 @@ bool CPath::isDestinationReached() const
 int CPath::step(int stamina)
 {
     while (!mPath.empty() && stamina >= mPath.front().cost) {
-
+        mLogger.log("Stepping loop, stamina: %d", stamina);
         stamina -= mPath.front().cost;
         mPath.pop();
     }
+    mLogger.log("Done stepping, stamina: %d", stamina);
     return stamina;
 }
 

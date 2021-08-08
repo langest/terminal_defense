@@ -84,10 +84,8 @@ bool CGameBoard::update()
 
     mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
 
-    std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> virusMap = mVirusManager.getCoordinateVirusMap();
-    mTowerManager.update(
-        mVirusManager.getActiveViruses(),
-        virusMap);
+    std::map<CCoordinate, std::vector<CVirusHandle>> virusMap = mVirusManager.getCoordinateVirusMap();
+    mTowerManager.update(virusMap);
 
     if (!mHasMoreToDo) {
         mLogger.log("Nothing more to do, finishing invasion");
@@ -129,7 +127,7 @@ void CGameBoard::buildTower(char tower)
         return;
     }
     }
-	return;
+    return;
 }
 
 bool CGameBoard::hasNextWave() const

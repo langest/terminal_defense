@@ -11,15 +11,13 @@
 
 namespace termd {
 
-class CVirus;
+class CVirusHandle;
 
 class CTowerManager {
 public:
     CTowerManager(std::function<bool(const CCoordinate& position)> isPositionValid);
 
-    void update(
-        const std::vector<std::unique_ptr<CVirus>>& viruses,
-        std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
+    void update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap);
     void initInvasion();
     void finishInvasion();
 

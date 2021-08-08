@@ -14,7 +14,7 @@ int CHomingTower::getSellValue() const { return STowerTraits<CHomingTower>::mCos
 
 char CHomingTower::getGraphic() const { return STowerTraits<CHomingTower>::mGraphic; }
 
-bool CHomingTower::update(TSpawnCallback /* spawnProjectile */, const TVirusList& /* viruses */, const TVirusMap& /* virusMap */)
+bool CHomingTower::update(ITower::TSpawnCallback /*spawnProjectile*/, const ITower::TVirusMap& /*virusMap*/)
 {
     return true;
 }

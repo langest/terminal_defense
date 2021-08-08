@@ -15,7 +15,7 @@ char CWall::getGraphic() const
     return STowerTraits<CWall>::mGraphic;
 }
 
-bool CWall::update(TSpawnCallback /* spawnProjectile */, const TVirusList& /* viruses */, const TVirusMap& /* virusMap */)
+bool CWall::update(ITower::TSpawnCallback /* spawnProjectile */, const ITower::TVirusMap& /* virusMap */)
 {
     return true;
 }

@@ -2,6 +2,8 @@
 
 #include <Gui.h>
 
+#include <virus/VirusManager.h>
+
 namespace termd {
 
 CVirus::CVirus(
@@ -14,7 +16,8 @@ CVirus::CVirus(
     int numRows,
     int numCols,
     const std::map<CCoordinate, std::unique_ptr<ITower>>& towers)
-    : mHp(hp)
+    : mIsActive(true)
+    , mHp(hp)
     , mStamina(0)
     , mStaminaIncrement(staminaIncrement)
     , mReward(reward)
@@ -24,25 +27,6 @@ CVirus::CVirus(
     , mLogger(__FILE__)
 {
     mLogger.log("Creating virus at position (%d, %d)", startPosition.getRow(), startPosition.getCol());
-}
-
-void CVirus::update()
-{
-    if (mHp <= 0) {
-        mLogger.log("Virus out of hp");
-        return;
-    }
-    mStamina = mPath.step(mStamina + mStaminaIncrement);
-}
-
-int CVirus::getReward() const
-{
-    return mReward;
-}
-
-int CVirus::getDamage() const
-{
-    return mDamage;
 }
 
 const CCoordinate& CVirus::getPosition() const
@@ -55,9 +39,9 @@ char CVirus::getGraphic() const
     return mGraphic;
 }
 
-bool CVirus::isAlive() const
+bool CVirus::isActive() const
 {
-    return 0 <= mHp;
+    return 0 < mHp && mIsActive;
 }
 
 bool CVirus::isDestinationReached() const
@@ -65,9 +49,36 @@ bool CVirus::isDestinationReached() const
     return mPath.isDestinationReached();
 }
 
-void CVirus::takeDamage(int damage)
+CVirusHandle::CVirusHandle(CVirus::TVirusId virusId, CVirusManager& virusManager)
+    : mVirusId(virusId)
+    , mVirusManager(virusManager)
 {
-    mHp -= damage;
+    mVirusManager.createHandle(virusId);
+}
+
+CVirusHandle::~CVirusHandle()
+{
+    mVirusManager.releaseHandle(mVirusId);
+}
+
+CVirus& CVirusHandle::operator*()
+{
+    return mVirusManager.get(mVirusId);
+}
+
+const CVirus& CVirusHandle::operator*() const
+{
+    return mVirusManager.get(mVirusId);
+}
+
+CVirus* CVirusHandle::operator->()
+{
+    return &mVirusManager.get(mVirusId);
+}
+
+const CVirus* CVirusHandle::operator->() const
+{
+    return &mVirusManager.get(mVirusId);
 }
 
 }

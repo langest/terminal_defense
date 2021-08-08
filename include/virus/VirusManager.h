@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <memory>
 #include <set>
 #include <vector>
@@ -10,8 +11,8 @@
 
 namespace termd {
 
-class ITower;
 class CPlayer;
+class ITower;
 
 class CVirusManager {
 public:
@@ -24,30 +25,40 @@ public:
     void initInvasion();
     void finishInvasion();
 
-    const std::vector<std::unique_ptr<CVirus>>& getActiveViruses() const;
-    std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> getCoordinateVirusMap();
+    std::map<CCoordinate, std::vector<CVirusHandle>> getCoordinateVirusMap();
 
     template <typename TDrawCall>
     void draw(TDrawCall&& drawCall);
 
     bool hasNextWave() const;
 
+    // Used by CVirusHandle
+    void createHandle(CVirus::TVirusId id);
+    void releaseHandle(CVirus::TVirusId id);
+    const CVirus& get(CVirus::TVirusId virusId) const;
+    CVirus& get(CVirus::TVirusId virusId);
+
 private:
     void addVirus(std::unique_ptr<CVirus>&& virus);
+    bool hasOpenHandle();
 
     CPlayer& mPlayer;
-    std::vector<std::unique_ptr<CVirus>> mActiveViruses;
-    std::vector<std::unique_ptr<CVirus>> mDisabledViruses;
+    std::map<CVirus::TVirusId, std::unique_ptr<CVirus>> mViruses;
+    std::map<CVirus::TVirusId, int> mVirusHandleCounters;
     CWaveManager mWaveManager;
+    int mNextId;
     CLogger mLogger;
 };
 
 template <typename TDrawCall>
 void CVirusManager::draw(TDrawCall&& drawCall)
 {
-    for (const std::unique_ptr<CVirus>& virus : mActiveViruses) {
-        const char graphic = virus->getGraphic();
-        const CCoordinate& position = virus->getPosition();
+    for (auto it = mViruses.begin(); it != mViruses.end(); ++it) {
+        if (!it->second->isActive()) {
+            continue;
+        }
+        const char graphic = it->second->getGraphic();
+        const CCoordinate& position = it->second->getPosition();
         drawCall(position, graphic);
     }
 }

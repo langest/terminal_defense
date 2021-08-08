@@ -8,9 +8,9 @@ namespace termd {
 
 CVirusManager::CVirusManager(CPlayer& player, int numRows, int numCols)
     : mPlayer(player)
-    , mActiveViruses()
-    , mDisabledViruses()
+    , mViruses()
     , mWaveManager(numRows, numCols)
+    , mNextId(0)
     , mLogger(__FILE__)
 {
 }
@@ -22,35 +22,22 @@ bool CVirusManager::update(
 {
     mLogger.log("Update");
 
-    for (std::unique_ptr<CVirus>& virus : mActiveViruses) {
-        virus->update();
-
-        if (virus->isDestinationReached()) {
-            mPlayer.modifyControlPoints(-virus->getDamage());
-            continue;
-        }
-
-        if (!virus->isAlive()) {
-            mPlayer.modifyRam(virus->getReward());
-        }
+    for (auto& it : mViruses) {
+        std::unique_ptr<CVirus>& virus = it.second;
+        virus->update([this](int damage) {
+            mPlayer.modifyControlPoints(-damage);
+        });
     }
 
-    for (auto it = mActiveViruses.begin(); it != mActiveViruses.end();) {
-        if (!(*it)->isAlive() || (*it)->isDestinationReached()) {
-            mDisabledViruses.emplace_back(std::move(*it));
-            it = mActiveViruses.erase(it);
-        } else {
-            ++it;
-        }
-    }
-
+    mLogger.log("Update wave manager");
     const bool moreVirusesIncoming = mWaveManager.update(
         std::bind(&CVirusManager::addVirus, this, std::placeholders::_1),
         startPositions,
         endPositions,
         towers);
 
-    return !mActiveViruses.empty() || moreVirusesIncoming;
+    mLogger.log("Update done");
+    return !mViruses.empty() || moreVirusesIncoming || this->hasOpenHandle();
 }
 
 void CVirusManager::initInvasion()
@@ -60,21 +47,20 @@ void CVirusManager::initInvasion()
 
 void CVirusManager::finishInvasion()
 {
-    mActiveViruses.clear();
-    mDisabledViruses.clear();
+    if (this->hasOpenHandle()) {
+        mLogger.logError("Finishing invasion even though handles are open!");
+    }
+    mViruses.clear();
 }
 
-const std::vector<std::unique_ptr<CVirus>>& CVirusManager::getActiveViruses() const
+std::map<CCoordinate, std::vector<CVirusHandle>> CVirusManager::getCoordinateVirusMap()
 {
-    return mActiveViruses;
-}
+    std::map<CCoordinate, std::vector<CVirusHandle>> map;
 
-std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> CVirusManager::getCoordinateVirusMap()
-{
-    std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> map;
-
-    for (std::unique_ptr<CVirus>& v : mActiveViruses) {
-        map[v->getPosition()].emplace_back(std::reference_wrapper(v));
+    for (const auto& it : mViruses) {
+        const CVirus::TVirusId virusId = it.first;
+        const CCoordinate position = it.second->getPosition();
+        map[position].emplace_back(CVirusHandle(virusId, *this));
     }
 
     return map;
@@ -85,9 +71,40 @@ bool CVirusManager::hasNextWave() const
     return false;
 }
 
+void CVirusManager::createHandle(CVirus::TVirusId id)
+{
+    ++mVirusHandleCounters[id];
+}
+
+void CVirusManager::releaseHandle(CVirus::TVirusId id)
+{
+    --mVirusHandleCounters[id];
+}
+
+const CVirus& CVirusManager::get(CVirus::TVirusId virusId) const
+{
+    return this->get(virusId);
+}
+
+CVirus& CVirusManager::get(CVirus::TVirusId virusId)
+{
+    return *mViruses[virusId];
+}
+
 void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus)
 {
-    mActiveViruses.emplace_back(std::move(virus));
+    mViruses.emplace(mNextId++, std::move(virus));
+}
+
+bool CVirusManager::hasOpenHandle()
+{
+    for (auto& it : mVirusHandleCounters) {
+        const int counter = it.second;
+        if (0 < counter) {
+            return true;
+        }
+    }
+    return false;
 }
 
 }

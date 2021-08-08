@@ -17,7 +17,7 @@ public:
     int getSellValue() const;
     char getGraphic() const;
 
-    bool update(ITower::TSpawnCallback spawnProjectile, const ITower::TVirusList& viruses, const ITower::TVirusMap& virusMap);
+    bool update(TSpawnCallback spawnProjectile, const TVirusMap& virusMap);
     void updateStartOfWave();
     void updateEndOfWave();
 

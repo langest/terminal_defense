@@ -31,8 +31,8 @@ bool CWaveManager::update(
 {
     ++mUpdateCounter;
 
-	const int spawnInterval = 100;
-	const int numberOfViruses = 7;
+    const int spawnInterval = 100;
+    const int numberOfViruses = 7;
 
     if ((numberOfViruses * spawnInterval) < mUpdateCounter) {
         return false;

@@ -9,8 +9,9 @@ CProjectileManager::CProjectileManager(std::function<bool(const CCoordinate& pos
 {
 }
 
-bool CProjectileManager::update(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap)
+bool CProjectileManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
 {
+    mLogger.log("Update");
     for (auto it = mProjectiles.begin(); it != mProjectiles.end();) {
         const bool keep = (*it)->update(virusMap);
         const bool hasValidPosition = mIsPositionValid((*it)->getPosition());

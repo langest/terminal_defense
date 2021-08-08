@@ -22,11 +22,11 @@ public:
     CDirectionProjectile(const CCoordinate& startPosition);
 
     const CCoordinate& getPosition() const;
-    bool update(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
+    bool update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap);
     char getGraphic() const;
 
 private:
-    bool collideWithVirus(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap);
+    bool collideWithVirus(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap);
     CCoordinate getDirection() const;
 
     CCoordinate mPosition;
@@ -55,7 +55,7 @@ const CCoordinate& CDirectionProjectile<TDirection>::getPosition() const
 }
 
 template <EDirection TDirection>
-bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap)
+bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
 {
     if (mHasCollided) {
         return false;
@@ -84,16 +84,24 @@ char CDirectionProjectile<TDirection>::getGraphic() const
 }
 
 template <EDirection TDirection>
-bool CDirectionProjectile<TDirection>::collideWithVirus(std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>>& virusMap)
+bool CDirectionProjectile<TDirection>::collideWithVirus(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
 {
     auto it = virusMap.find(mPosition);
     if (it == virusMap.end()) {
         return false;
     }
-    const std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>& viruses = it->second;
-    if (!viruses.empty()) {
-        const std::unique_ptr<CVirus>& virus = viruses.front();
-        virus->takeDamage(SProjectileTraits<CDirectionProjectile<TDirection>>::mDamage);
+
+    const std::vector<CVirusHandle>& viruses = it->second;
+    if (viruses.empty()) {
+        return false;
+    }
+
+    std::function<void(int reward)> rewardPlayer = [](int) {};
+    for (CVirusHandle virus : viruses) {
+        if (!virus->isActive()) {
+            continue;
+        }
+        virus->takeDamage(SProjectileTraits<CDirectionProjectile<TDirection>>::mDamage, rewardPlayer);
         mHasCollided = true;
         return true;
     }
