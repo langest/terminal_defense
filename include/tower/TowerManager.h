@@ -35,8 +35,7 @@ private:
 };
 
 template <typename TDrawCall>
-void CTowerManager::draw(TDrawCall&& drawCall)
-{
+void CTowerManager::draw(TDrawCall&& drawCall) {
     for (const auto& pair : mTowers) {
         const CCoordinate& position = pair.first;
         const char graphic = pair.second->getGraphic();

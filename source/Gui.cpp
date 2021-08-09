@@ -7,8 +7,7 @@
 
 namespace termd {
 
-void GUI::moveCursor(const CCoordinate& pos)
-{
+void GUI::moveCursor(const CCoordinate& pos) {
     int maxCol;
     int maxRow;
     getmaxyx(stdscr, maxRow, maxCol);
@@ -25,8 +24,7 @@ void GUI::moveCursor(const CCoordinate& pos)
     move(pos.getRow(), pos.getCol());
 }
 
-void GUI::moveCursorUp(int rMin)
-{
+void GUI::moveCursorUp(int rMin) {
     int row;
     int col;
     getyx(stdscr, row, col);
@@ -39,8 +37,7 @@ void GUI::moveCursorUp(int rMin)
     move(row - 1, col);
 }
 
-void GUI::moveCursorDown(int rMax)
-{
+void GUI::moveCursorDown(int rMax) {
     int row;
     int col;
     getyx(stdscr, row, col);
@@ -53,8 +50,7 @@ void GUI::moveCursorDown(int rMax)
     move(row + 1, col);
 }
 
-void GUI::moveCursorLeft(int cMin)
-{
+void GUI::moveCursorLeft(int cMin) {
     int row;
     int col;
     getyx(stdscr, row, col);
@@ -67,8 +63,7 @@ void GUI::moveCursorLeft(int cMin)
     move(row, col - 1);
 }
 
-void GUI::moveCursorRight(int cMax)
-{
+void GUI::moveCursorRight(int cMax) {
     int row;
     int col;
     getyx(stdscr, row, col);
@@ -81,21 +76,18 @@ void GUI::moveCursorRight(int cMax)
     move(row, col + 1);
 }
 
-CCoordinate GUI::getCursorPosition()
-{
+CCoordinate GUI::getCursorPosition() {
     int row;
     int col;
     getyx(stdscr, row, col);
     return CCoordinate(row, col);
 }
 
-int GUI::getInput()
-{
+int GUI::getInput() {
     return getch();
 }
 
-void GUI::draw(const CCoordinate& position, const char ch)
-{
+void GUI::draw(const CCoordinate& position, const char ch) {
     int maxRow;
     int maxCol;
     getmaxyx(stdscr, maxRow, maxCol);
@@ -118,8 +110,7 @@ void GUI::draw(const CCoordinate& position, const char ch)
     move(row, col);
 }
 
-void GUI::drawCharacters(const CCoordinate& position, const std::vector<std::vector<char>>& characters)
-{
+void GUI::drawCharacters(const CCoordinate& position, const std::vector<std::vector<char>>& characters) {
     int maxRow;
     int maxCol;
     getmaxyx(stdscr, maxRow, maxCol);
@@ -148,8 +139,7 @@ void GUI::drawCharacters(const CCoordinate& position, const std::vector<std::vec
     return;
 }
 
-std::vector<CCoordinate> GUI::printMenuItems(const std::vector<std::string>& menuItems)
-{
+std::vector<CCoordinate> GUI::printMenuItems(const std::vector<std::string>& menuItems) {
     std::vector<CCoordinate> itemCoordinates; // Return values, the position of the menu items
     if (menuItems.size() < 1) {
         return itemCoordinates;
@@ -187,8 +177,7 @@ std::vector<CCoordinate> GUI::printMenuItems(const std::vector<std::string>& men
     return itemCoordinates;
 }
 
-void GUI::printText(const CCoordinate& start, const char* message, int n)
-{
+void GUI::printText(const CCoordinate& start, const char* message, int n) {
     int curRow, curCol;
     getyx(stdscr, curRow, curCol);
 
@@ -197,8 +186,7 @@ void GUI::printText(const CCoordinate& start, const char* message, int n)
     move(curRow, curCol);
 }
 
-void GUI::drawFrame(const CCoordinate& topLeft, const CCoordinate& bottomRight)
-{
+void GUI::drawFrame(const CCoordinate& topLeft, const CCoordinate& bottomRight) {
     int curRow;
     int curCol;
     getyx(stdscr, curRow, curCol);
@@ -221,8 +209,7 @@ void GUI::drawFrame(const CCoordinate& topLeft, const CCoordinate& bottomRight)
     move(curRow, curCol);
 }
 
-void GUI::clearScreen()
-{
+void GUI::clearScreen() {
     int maxCol;
     int maxRow;
     getmaxyx(stdscr, maxRow, maxCol);
@@ -230,8 +217,7 @@ void GUI::clearScreen()
     GUI::clearRectangle(CCoordinate(0, 0), CCoordinate(maxCol, maxRow));
 }
 
-void GUI::clearRectangle(const CCoordinate& topLeft, const CCoordinate& bottomRight)
-{
+void GUI::clearRectangle(const CCoordinate& topLeft, const CCoordinate& bottomRight) {
     int currentRow;
     int currentCol;
     getyx(stdscr, currentRow, currentCol);
@@ -250,8 +236,7 @@ void GUI::clearRectangle(const CCoordinate& topLeft, const CCoordinate& bottomRi
     move(currentRow, currentCol);
 }
 
-void GUI::refresh()
-{
+void GUI::refresh() {
     wrefresh(stdscr);
 }
 

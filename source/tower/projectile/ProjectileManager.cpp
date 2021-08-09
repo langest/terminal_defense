@@ -5,12 +5,9 @@ namespace termd {
 CProjectileManager::CProjectileManager(std::function<bool(const CCoordinate& position)> isPositionValid)
     : mProjectiles()
     , mIsPositionValid(isPositionValid)
-    , mLogger(__FILE__)
-{
-}
+    , mLogger(__FILE__) {}
 
-bool CProjectileManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
-{
+bool CProjectileManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap) {
     mLogger.log("Update");
     for (auto it = mProjectiles.begin(); it != mProjectiles.end();) {
         const bool keep = (*it)->update(virusMap);
@@ -24,8 +21,7 @@ bool CProjectileManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>
     return mProjectiles.empty();
 }
 
-void CProjectileManager::addProjectile(std::unique_ptr<IProjectile>&& projectile)
-{
+void CProjectileManager::addProjectile(std::unique_ptr<IProjectile>&& projectile) {
     mProjectiles.emplace(std::move(projectile));
 }
 

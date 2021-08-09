@@ -29,30 +29,24 @@ private:
 
 CFileLogger::CFileLogger()
     : mInfoLogStream("/tmp/termd_info.log")
-    , mErrorLogStream("/tmp/termd_error.log")
-{
-}
+    , mErrorLogStream("/tmp/termd_error.log") {}
 
-CFileLogger::~CFileLogger()
-{
+CFileLogger::~CFileLogger() {
     mInfoLogStream.close();
     mErrorLogStream.close();
 }
 
-CFileLogger& CFileLogger::getInstance()
-{
+CFileLogger& CFileLogger::getInstance() {
     static CFileLogger fileLogger;
     return fileLogger;
 }
 
-void CFileLogger::log(const std::string& message)
-{
+void CFileLogger::log(const std::string& message) {
     mInfoLogStream << message;
     mInfoLogStream.flush();
 }
 
-void CFileLogger::logError(const std::string& message)
-{
+void CFileLogger::logError(const std::string& message) {
     mErrorLogStream << message;
     mErrorLogStream.flush();
 }
@@ -62,12 +56,9 @@ void CFileLogger::logError(const std::string& message)
 namespace termd {
 
 CLogger::CLogger(const std::string& file)
-    : mName(std::filesystem::path(file).filename())
-{
-}
+    : mName(std::filesystem::path(file).filename()) {}
 
-void CLogger::log(const char* format, ...)
-{
+void CLogger::log(const char* format, ...) {
     char message[bufferSize];
     va_list args;
     va_start(args, format);
@@ -80,8 +71,7 @@ void CLogger::log(const char* format, ...)
     fileLogger.log(m);
 }
 
-void CLogger::logError(const char* format, ...)
-{
+void CLogger::logError(const char* format, ...) {
     char message[bufferSize];
     va_list args;
     va_start(args, format);
@@ -94,16 +84,9 @@ void CLogger::logError(const char* format, ...)
     fileLogger.logError(m);
 }
 
-std::string CLogger::buildLogMessage(const char logLevel, const char* message)
-{
+std::string CLogger::buildLogMessage(const char logLevel, const char* message) {
     char m[bufferSize];
-    snprintf(
-        m,
-        bufferSize,
-        "[%s][%c]: %s\n",
-        mName.c_str(),
-        logLevel,
-        message);
+    snprintf(m, bufferSize, "[%s][%c]: %s\n", mName.c_str(), logLevel, message);
     return std::string(m);
 }
 

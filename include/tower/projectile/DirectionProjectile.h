@@ -44,19 +44,15 @@ template <EDirection TDirection>
 CDirectionProjectile<TDirection>::CDirectionProjectile(const CCoordinate& startPosition)
     : mPosition(startPosition)
     , mUpdateCounter(0)
-    , mHasCollided(false)
-{
-}
+    , mHasCollided(false) {}
 
 template <EDirection TDirection>
-const CCoordinate& CDirectionProjectile<TDirection>::getPosition() const
-{
+const CCoordinate& CDirectionProjectile<TDirection>::getPosition() const {
     return mPosition;
 }
 
 template <EDirection TDirection>
-bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
-{
+bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap) {
     if (mHasCollided) {
         return false;
     }
@@ -78,14 +74,12 @@ bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<
 }
 
 template <EDirection TDirection>
-char CDirectionProjectile<TDirection>::getGraphic() const
-{
+char CDirectionProjectile<TDirection>::getGraphic() const {
     return SProjectileTraits<CDirectionProjectile<TDirection>>::mGraphic;
 }
 
 template <EDirection TDirection>
-bool CDirectionProjectile<TDirection>::collideWithVirus(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
-{
+bool CDirectionProjectile<TDirection>::collideWithVirus(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap) {
     auto it = virusMap.find(mPosition);
     if (it == virusMap.end()) {
         return false;
@@ -109,8 +103,7 @@ bool CDirectionProjectile<TDirection>::collideWithVirus(std::map<CCoordinate, st
 }
 
 template <>
-CCoordinate CDirectionProjectile<EDirection::Right>::getDirection() const
-{
+CCoordinate CDirectionProjectile<EDirection::Right>::getDirection() const {
     return CCoordinate(0, 1);
 }
 

@@ -16,13 +16,10 @@ CGameBoard::CGameBoard(CPlayer& player, int sizeRows, int sizeCols)
     , mStartCol(1)
     , mSizeRows(sizeRows)
     , mSizeCols(sizeCols)
-    , mTowerManager([this](const CCoordinate& position) {
-        return this->isInsideGameBoard(position);
-    })
+    , mTowerManager([this](const CCoordinate& position) { return this->isInsideGameBoard(position); })
     , mVirusManager(mPlayer, sizeRows, sizeCols)
     , mHasMoreToDo(false)
-    , mLogger(__FILE__)
-{
+    , mLogger(__FILE__) {
     loadMap();
     for (int i = 0; i < mSizeRows; ++i) {
         mStartPositions.emplace(CCoordinate(i, mSizeCols - 1));
@@ -30,46 +27,35 @@ CGameBoard::CGameBoard(CPlayer& player, int sizeRows, int sizeCols)
     }
 }
 
-void CGameBoard::resetCursor()
-{
-    GUI::moveCursor(CCoordinate(
-        (mStartRow + mSizeRows) / 2,
-        (mStartCol + mSizeCols) / 2));
+void CGameBoard::resetCursor() {
+    GUI::moveCursor(CCoordinate((mStartRow + mSizeRows) / 2, (mStartCol + mSizeCols) / 2));
 }
 
-void CGameBoard::moveCursorLeft()
-{
+void CGameBoard::moveCursorLeft() {
     GUI::moveCursorLeft(mStartCol);
 }
 
-void CGameBoard::moveCursorDown()
-{
+void CGameBoard::moveCursorDown() {
     GUI::moveCursorDown(mStartRow + mSizeRows - 1);
 }
 
-void CGameBoard::moveCursorUp()
-{
+void CGameBoard::moveCursorUp() {
     GUI::moveCursorUp(mStartRow);
 }
 
-void CGameBoard::moveCursorRight()
-{
+void CGameBoard::moveCursorRight() {
     GUI::moveCursorRight(mStartCol + mSizeCols - 1);
 }
 
-void CGameBoard::draw()
-{
+void CGameBoard::draw() {
     GUI::clearScreen();
 
     mTowerManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
     mVirusManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));
-    GUI::drawFrame(
-        CCoordinate(0, 0),
-        CCoordinate(mSizeRows + 1, mSizeCols + 1));
+    GUI::drawFrame(CCoordinate(0, 0), CCoordinate(mSizeRows + 1, mSizeCols + 1));
 }
 
-void CGameBoard::initInvasion()
-{
+void CGameBoard::initInvasion() {
     if (mHasMoreToDo) {
         mLogger.logError("Tried to init invasion while already having one started");
         return; // Do not start multiple invasions
@@ -78,8 +64,7 @@ void CGameBoard::initInvasion()
     mTowerManager.initInvasion();
 }
 
-bool CGameBoard::update()
-{
+bool CGameBoard::update() {
     mLogger.log("Update");
 
     mHasMoreToDo = mVirusManager.update(mStartPositions, mEndPositions, mTowerManager.getTowers());
@@ -95,8 +80,7 @@ bool CGameBoard::update()
     return mHasMoreToDo;
 }
 
-void CGameBoard::buildTower(char tower)
-{
+void CGameBoard::buildTower(char tower) {
     const CCoordinate cursorPosition = GUI::getCursorPosition();
     const int row = cursorPosition.getRow() - mStartRow;
     const int col = cursorPosition.getCol() - mStartCol;
@@ -130,35 +114,29 @@ void CGameBoard::buildTower(char tower)
     return;
 }
 
-bool CGameBoard::hasNextWave() const
-{
+bool CGameBoard::hasNextWave() const {
     return mVirusManager.hasNextWave();
 }
 
-int CGameBoard::getSizeRows() const
-{
+int CGameBoard::getSizeRows() const {
     return mSizeRows;
 }
 
-int CGameBoard::getSizeCols() const
-{
+int CGameBoard::getSizeCols() const {
     return mSizeCols;
 }
 
-void CGameBoard::drawCall(const CCoordinate& position, char graphic)
-{
+void CGameBoard::drawCall(const CCoordinate& position, char graphic) {
     GUI::draw(position + CCoordinate(mStartRow, mStartCol), graphic);
 }
 
-bool CGameBoard::isInsideGameBoard(const CCoordinate& coordinate) const
-{
+bool CGameBoard::isInsideGameBoard(const CCoordinate& coordinate) const {
     const int row = coordinate.getRow();
     const int col = coordinate.getCol();
     return (0 <= col && col < mSizeCols && 0 <= row && row < mSizeRows);
 }
 
-bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) const
-{
+bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) const {
     if (mStartPositions.contains(coordinate)) {
         return true;
     }
@@ -209,12 +187,11 @@ bool CGameBoard::isBlockedWith(const CCoordinate& coordinate) const
     return true;
 }
 
-void CGameBoard::loadMap()
-{
+void CGameBoard::loadMap() {
     // TODO load from map object instead
-    //std::ifstream loadfile;
-    //loadfile.open(std::string("info/") + map_id + std::string("/gameboard.info"));
-    //if (loadfile.is_open()) {
+    // std::ifstream loadfile;
+    // loadfile.open(std::string("info/") + map_id + std::string("/gameboard.info"));
+    // if (loadfile.is_open()) {
 
     //	int max_cp;
     //	loadfile >> max_cp;
@@ -246,7 +223,7 @@ void CGameBoard::loadMap()
     //			environment[r][c] = tile;
     //		}
     //	}
-    //towers = std::vector<std::vector<bool> >(mSizeRows, std::vector<bool>(mSizeCols, false));
+    // towers = std::vector<std::vector<bool> >(mSizeRows, std::vector<bool>(mSizeCols, false));
     //}
 }
 

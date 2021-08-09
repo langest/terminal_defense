@@ -5,12 +5,9 @@ namespace termd {
 CTowerManager::CTowerManager(std::function<bool(const CCoordinate& position)> isPositionValid)
     : mTowers()
     , mProjectileManager(isPositionValid)
-    , mLogger(__FILE__)
-{
-}
+    , mLogger(__FILE__) {}
 
-void CTowerManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap)
-{
+void CTowerManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& virusMap) {
     mLogger.log("Update");
     for (auto it = mTowers.begin(); it != mTowers.end();) {
         auto spawnProjectile = [this](std::unique_ptr<IProjectile>&& projectile) {
@@ -27,32 +24,27 @@ void CTowerManager::update(std::map<CCoordinate, std::vector<CVirusHandle>>& vir
     mProjectileManager.update(virusMap);
 }
 
-void CTowerManager::initInvasion()
-{
+void CTowerManager::initInvasion() {
     for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
         it->second->updateStartOfWave();
     }
 }
 
-void CTowerManager::finishInvasion()
-{
+void CTowerManager::finishInvasion() {
     for (auto it = mTowers.begin(); it != mTowers.end(); ++it) {
         it->second->updateEndOfWave();
     }
 }
 
-bool CTowerManager::isTowerAt(const CCoordinate& coordinate) const
-{
+bool CTowerManager::isTowerAt(const CCoordinate& coordinate) const {
     return mTowers.find(coordinate) != mTowers.end();
 }
 
-const std::map<CCoordinate, std::unique_ptr<ITower>>& CTowerManager::getTowers() const
-{
+const std::map<CCoordinate, std::unique_ptr<ITower>>& CTowerManager::getTowers() const {
     return mTowers;
 }
 
-bool CTowerManager::placeTower(const CCoordinate& position, std::unique_ptr<ITower>&& tower)
-{
+bool CTowerManager::placeTower(const CCoordinate& position, std::unique_ptr<ITower>&& tower) {
     if (this->isTowerAt(position)) {
         return false;
     }

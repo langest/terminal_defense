@@ -51,8 +51,7 @@ private:
 };
 
 template <typename TDrawCall>
-void CVirusManager::draw(TDrawCall&& drawCall)
-{
+void CVirusManager::draw(TDrawCall&& drawCall) {
     for (auto it = mViruses.begin(); it != mViruses.end(); ++it) {
         if (!it->second->isActive()) {
             continue;

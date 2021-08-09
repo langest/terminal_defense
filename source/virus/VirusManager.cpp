@@ -11,22 +11,17 @@ CVirusManager::CVirusManager(CPlayer& player, int numRows, int numCols)
     , mViruses()
     , mWaveManager(numRows, numCols)
     , mNextId(0)
-    , mLogger(__FILE__)
-{
-}
+    , mLogger(__FILE__) {}
 
 bool CVirusManager::update(
     const std::set<CCoordinate>& startPositions,
     const std::set<CCoordinate>& endPositions,
-    const std::map<CCoordinate, std::unique_ptr<ITower>>& towers)
-{
+    const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
     mLogger.log("Update");
 
     for (auto& it : mViruses) {
         std::unique_ptr<CVirus>& virus = it.second;
-        virus->update([this](int damage) {
-            mPlayer.modifyControlPoints(-damage);
-        });
+        virus->update([this](int damage) { mPlayer.modifyControlPoints(-damage); });
     }
 
     mLogger.log("Update wave manager");
@@ -40,21 +35,18 @@ bool CVirusManager::update(
     return !mViruses.empty() || moreVirusesIncoming || this->hasOpenHandle();
 }
 
-void CVirusManager::initInvasion()
-{
+void CVirusManager::initInvasion() {
     mWaveManager.initWave();
 }
 
-void CVirusManager::finishInvasion()
-{
+void CVirusManager::finishInvasion() {
     if (this->hasOpenHandle()) {
         mLogger.logError("Finishing invasion even though handles are open!");
     }
     mViruses.clear();
 }
 
-std::map<CCoordinate, std::vector<CVirusHandle>> CVirusManager::getCoordinateVirusMap()
-{
+std::map<CCoordinate, std::vector<CVirusHandle>> CVirusManager::getCoordinateVirusMap() {
     std::map<CCoordinate, std::vector<CVirusHandle>> map;
 
     for (const auto& it : mViruses) {
@@ -66,38 +58,31 @@ std::map<CCoordinate, std::vector<CVirusHandle>> CVirusManager::getCoordinateVir
     return map;
 }
 
-bool CVirusManager::hasNextWave() const
-{
+bool CVirusManager::hasNextWave() const {
     return false;
 }
 
-void CVirusManager::createHandle(CVirus::TVirusId id)
-{
+void CVirusManager::createHandle(CVirus::TVirusId id) {
     ++mVirusHandleCounters[id];
 }
 
-void CVirusManager::releaseHandle(CVirus::TVirusId id)
-{
+void CVirusManager::releaseHandle(CVirus::TVirusId id) {
     --mVirusHandleCounters[id];
 }
 
-const CVirus& CVirusManager::get(CVirus::TVirusId virusId) const
-{
+const CVirus& CVirusManager::get(CVirus::TVirusId virusId) const {
     return this->get(virusId);
 }
 
-CVirus& CVirusManager::get(CVirus::TVirusId virusId)
-{
+CVirus& CVirusManager::get(CVirus::TVirusId virusId) {
     return *mViruses[virusId];
 }
 
-void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus)
-{
+void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
     mViruses.emplace(mNextId++, std::move(virus));
 }
 
-bool CVirusManager::hasOpenHandle()
-{
+bool CVirusManager::hasOpenHandle() {
     for (auto& it : mVirusHandleCounters) {
         const int counter = it.second;
         if (0 < counter) {

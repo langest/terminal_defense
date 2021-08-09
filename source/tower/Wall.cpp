@@ -5,18 +5,15 @@
 
 namespace termd {
 
-int CWall::getSellValue() const
-{
+int CWall::getSellValue() const {
     return STowerTraits<CWall>::mCost / 2;
 }
 
-char CWall::getGraphic() const
-{
+char CWall::getGraphic() const {
     return STowerTraits<CWall>::mGraphic;
 }
 
-bool CWall::update(ITower::TSpawnCallback /* spawnProjectile */, const ITower::TVirusMap& /* virusMap */)
-{
+bool CWall::update(ITower::TSpawnCallback /* spawnProjectile */, const ITower::TVirusMap& /* virusMap */) {
     return true;
 }
 

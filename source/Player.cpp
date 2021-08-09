@@ -8,32 +8,25 @@ CPlayer::CPlayer(int maxRam, int maxControlPoints)
     : mRam(maxRam)
     , mRamMax(maxRam)
     , mControlPoints(maxControlPoints)
-    , mControlPointsMax(maxControlPoints)
-{
-}
+    , mControlPointsMax(maxControlPoints) {}
 
-bool CPlayer::isAlive() const
-{
+bool CPlayer::isAlive() const {
     return 0 < mControlPoints;
 }
 
-int CPlayer::getRam() const
-{
+int CPlayer::getRam() const {
     return mRam;
 }
-int CPlayer::getControlPoints() const
-{
+int CPlayer::getControlPoints() const {
     return mControlPoints;
 }
 
-void CPlayer::modifyControlPoints(int delta)
-{
+void CPlayer::modifyControlPoints(int delta) {
     mControlPoints += delta;
     mControlPoints = std::max(mControlPoints, mControlPointsMax);
 }
 
-void CPlayer::modifyRam(int delta)
-{
+void CPlayer::modifyRam(int delta) {
     mRam += delta;
     mRam = std::max(mRam, mRamMax);
 }

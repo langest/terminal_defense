@@ -6,18 +6,17 @@
 
 namespace termd {
 
-//Algorithm used is not optimal for performance. Though it
-//should not matter since this is a pretty light-weight
-//game and it is only performed a limited number of times
-//on a very restricted amount of nodes.
+// Algorithm used is not optimal for performance. Though it
+// should not matter since this is a pretty light-weight
+// game and it is only performed a limited number of times
+// on a very restricted amount of nodes.
 CPath::CPath(
     const CCoordinate& startPosition,
     const std::set<CCoordinate>& endPositions,
     int numRows,
     int numCols,
     const std::map<CCoordinate, std::unique_ptr<ITower>>& towers)
-    : mLogger(__FILE__)
-{
+    : mLogger(__FILE__) {
     const int stepCost = 1000;
     const int stepCostDiagonal = 1414;
     const int startRow = startPosition.getRow();
@@ -26,8 +25,7 @@ CPath::CPath(
         mLogger.log("Blocked start position: (%d, %d)", startRow, startCol);
         return;
     }
-    if (
-        startRow >= numRows || startCol >= numCols || startRow < 0 || startCol < 0) {
+    if (startRow >= numRows || startCol >= numCols || startRow < 0 || startCol < 0) {
         mLogger.logError("Invalid start position");
         return;
     }
@@ -36,9 +34,7 @@ CPath::CPath(
         numRows,
         std::vector<std::pair<int, CCoordinate>>(
             numCols,
-            std::pair<int, CCoordinate>(
-                std::numeric_limits<int>::max(),
-                CCoordinate(-1, -1))));
+            std::pair<int, CCoordinate>(std::numeric_limits<int>::max(), CCoordinate(-1, -1))));
 
     std::queue<CCoordinate> queue;
     for (const CCoordinate& endPosition : endPositions) {
@@ -48,8 +44,7 @@ CPath::CPath(
             mLogger.log("Blocked end position: (%d, %d)", endRow, endCol);
             continue;
         }
-        if (
-            endRow >= numRows || endCol >= numCols || endRow < 0 || endCol < 0) {
+        if (endRow >= numRows || endCol >= numCols || endRow < 0 || endCol < 0) {
             mLogger.logError("Invalid end position: (%d, %d)", endRow, endCol);
             return;
         }
@@ -68,8 +63,10 @@ CPath::CPath(
         auto step = [&](int row, int col, int cost) {
             mLogger.log("Stepping, (%d, %d) %d", row, col, cost);
             const int oldEstimate = backtrack[row][col].first;
-            const bool isShorter = (cost < oldEstimate || (cost == oldEstimate && std::rand() % 2 == 0) // if paths are equal, randomize wich one to use
-            );
+
+            // if paths are equal, randomize wich one to use
+            const bool isShorter = (cost < oldEstimate || (cost == oldEstimate && std::rand() % 2 == 0));
+
             if (isShorter && !towers.contains(CCoordinate(row, col))) {
                 mLogger.log("Found better path");
                 queue.push(CCoordinate(row, col));
@@ -78,36 +75,40 @@ CPath::CPath(
         };
 
         const int currentCost = backtrack[r][c].first;
-        //Left
+        // Left
         if (checkBound(r, c - 1)) {
             step(r, c - 1, stepCost + currentCost);
         }
-        //Right
+        // Right
         if (checkBound(r, c + 1)) {
             step(r, c + 1, stepCost + currentCost);
         }
-        //Up
+        // Up
         if (checkBound(r - 1, c)) {
             step(r - 1, c, stepCost + currentCost);
         }
-        //Down
+        // Down
         if (checkBound(r + 1, c)) {
             step(r + 1, c, stepCost + currentCost);
         }
-        //Up left
-        if (checkBound(r - 1, c - 1) && (!towers.contains(CCoordinate(r - 1, c)) || !towers.contains(CCoordinate(r, c - 1)))) {
+        // Up left
+        if (checkBound(r - 1, c - 1)
+            && (!towers.contains(CCoordinate(r - 1, c)) || !towers.contains(CCoordinate(r, c - 1)))) {
             step(r - 1, c - 1, stepCostDiagonal + currentCost);
         }
-        //Down left
-        if (checkBound(r + 1, c - 1) && (!towers.contains(CCoordinate(r + 1, c)) || !towers.contains(CCoordinate(r, c - 1)))) {
+        // Down left
+        if (checkBound(r + 1, c - 1)
+            && (!towers.contains(CCoordinate(r + 1, c)) || !towers.contains(CCoordinate(r, c - 1)))) {
             step(r + 1, c - 1, stepCostDiagonal + currentCost);
         }
-        //Up right
-        if (checkBound(r - 1, c + 1) && (!towers.contains(CCoordinate(r - 1, c)) || !towers.contains(CCoordinate(r, c + 1)))) {
+        // Up right
+        if (checkBound(r - 1, c + 1)
+            && (!towers.contains(CCoordinate(r - 1, c)) || !towers.contains(CCoordinate(r, c + 1)))) {
             step(r - 1, c + 1, stepCostDiagonal + currentCost);
         }
-        //Down right
-        if (checkBound(r + 1, c + 1) && (!towers.contains(CCoordinate(r + 1, c)) || !towers.contains(CCoordinate(r, c + 1)))) {
+        // Down right
+        if (checkBound(r + 1, c + 1)
+            && (!towers.contains(CCoordinate(r + 1, c)) || !towers.contains(CCoordinate(r, c + 1)))) {
             step(r + 1, c + 1, stepCostDiagonal + currentCost);
         }
         queue.pop();
@@ -117,7 +118,7 @@ CPath::CPath(
     CCoordinate previous = current;
     while (!endPositions.contains(current)) {
         if (current.getCol() != previous.getCol() && current.getRow() != previous.getRow()) {
-            //We made a diagonal step
+            // We made a diagonal step
             mPath.push(SStep(current, stepCostDiagonal));
         } else {
             mPath.push(SStep(current, stepCost));
@@ -128,18 +129,15 @@ CPath::CPath(
     mPath.push(SStep(current, stepCost));
 }
 
-const CCoordinate& CPath::getCurrentPosition() const
-{
+const CCoordinate& CPath::getCurrentPosition() const {
     return mPath.front().coord; // TODO clean up, will break if path is empty
 }
 
-bool CPath::isDestinationReached() const
-{
+bool CPath::isDestinationReached() const {
     return mPath.empty();
 }
 
-int CPath::step(int stamina)
-{
+int CPath::step(int stamina) {
     while (!mPath.empty() && stamina >= mPath.front().cost) {
         mLogger.log("Stepping loop, stamina: %d", stamina);
         stamina -= mPath.front().cost;

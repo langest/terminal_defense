@@ -30,29 +30,21 @@ private:
         int cost;
         SStep(CCoordinate a, int b)
             : coord(a)
-            , cost(b)
-        {
-        }
+            , cost(b) {}
         SStep(const SStep& src)
             : coord(src.coord)
-            , cost(src.cost)
-        {
-        }
+            , cost(src.cost) {}
         SStep(SStep&& src)
             : coord(std::move(src.coord))
-            , cost(std::move(src.cost))
-        {
-        }
+            , cost(std::move(src.cost)) {}
 
-        SStep& operator=(const SStep& src)
-        {
+        SStep& operator=(const SStep& src) {
             coord = src.coord;
             cost = src.cost;
             return (*this);
         }
 
-        SStep& operator=(SStep&& src)
-        {
+        SStep& operator=(SStep&& src) {
             coord = std::move(src.coord);
             cost = std::move(src.cost);
             return (*this);

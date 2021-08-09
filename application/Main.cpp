@@ -7,29 +7,25 @@
 
 namespace {
 
-void initNcurses()
-{
+void initNcurses() {
     // TODO set up locale
-    initscr(); //Starts curses mode
-    cbreak(); //Since we only want to read characters
-    noecho(); //Turns off echo of input
+    initscr(); // Starts curses mode
+    cbreak(); // Since we only want to read characters
+    noecho(); // Turns off echo of input
     keypad(stdscr, TRUE);
 }
 
-void endNcurses()
-{
+void endNcurses() {
     endwin();
 }
 
-void seedRandomGenerator()
-{
+void seedRandomGenerator() {
     std::srand(std::time(nullptr));
 }
 
 }
 
-int main()
-{
+int main() {
     termd::CLogger logger(__FILE__);
 
     logger.log("Seeding random generator");

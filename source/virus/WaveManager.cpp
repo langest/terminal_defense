@@ -4,12 +4,9 @@ namespace termd {
 
 CWaveManager::CWaveManager(int numRows, int numCols)
     : mNumRows(numRows)
-    , mNumCols(numCols)
-{
-}
+    , mNumCols(numCols) {}
 
-void CWaveManager::initWave()
-{
+void CWaveManager::initWave() {
     mUpdateCounter = 0;
 }
 

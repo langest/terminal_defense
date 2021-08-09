@@ -28,9 +28,9 @@ public:
 template <typename T>
 struct STowerTraits {
     /*
-	static const int mCost;
-	static const char mGraphic;
-	*/
+        static const int mCost;
+        static const char mGraphic;
+        */
 };
 
 }

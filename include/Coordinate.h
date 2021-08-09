@@ -17,7 +17,7 @@ public:
     bool operator<(const CCoordinate&) const;
     bool operator>(const CCoordinate&) const;
 
-    double distance(const CCoordinate&) const; //Euclidian distance
+    double distance(const CCoordinate&) const; // Euclidian distance
     int getCol() const;
     void addCol(int delta);
     void setCol(int col);

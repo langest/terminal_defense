@@ -9,12 +9,12 @@ private:
     int base;
     int random_amount;
     /**
-	* Damage Types:
-	* 0: hacking
-	* 1: bruteforce
-	* 2: spam
-	*/
-    //int type;
+     * Damage Types:
+     * 0: hacking
+     * 1: bruteforce
+     * 2: spam
+     */
+    // int type;
 public:
     Damage(int, int);
     ~Damage();
@@ -22,7 +22,7 @@ public:
     const Damage& operator=(const Damage&);
 
     int get_value() const;
-    //int get_type() const;
+    // int get_type() const;
 };
 
 }

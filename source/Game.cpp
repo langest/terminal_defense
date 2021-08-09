@@ -23,13 +23,11 @@ namespace termd {
 CGame::CGame(CPlayer& player)
     : mPlayer(player)
     , mGameBoard(player, numBoardRows, numBoardCols)
-    , mLogger(__FILE__)
-{
-}
+    , mLogger(__FILE__) {}
 
-void CGame::intro()
-{
-    const char* introMessage("You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
+void CGame::intro() {
+    const char* introMessage(
+        "You are a hacker minding your own business when suddenly viruses are invading your terminal! \n\
 Viruses , as you all know, begins on the right side and runs over to the left side. \n\
 You lose 1 terminal control point if you let a virus get to the left making you lose some control. \n\
 You lose when you lose control over your terminal (reach 0 terminal control points). \n\
@@ -49,8 +47,7 @@ MOVE CURSOR as you normally would (arrows or vim-like)\n");
     GUI::clearScreen();
 }
 
-void CGame::handleInput(const char input)
-{
+void CGame::handleInput(const char input) {
     switch (input) {
     case 'h': {
         mGameBoard.moveCursorLeft();
@@ -90,20 +87,16 @@ void CGame::handleInput(const char input)
     }
 }
 
-void CGame::outro()
-{
+void CGame::outro() {
     GUI::moveCursor(CCoordinate(0, 0));
     GUI::getInput();
     GUI::clearScreen();
 }
 
-void CGame::runBuildPhase()
-{
+void CGame::runBuildPhase() {
     mLogger.log("runBuildPhase");
     // Draw game board frame
-    GUI::drawFrame(
-        CCoordinate(0, 0),
-        CCoordinate(mGameBoard.getSizeRows() + 1, mGameBoard.getSizeCols() + 1));
+    GUI::drawFrame(CCoordinate(0, 0), CCoordinate(mGameBoard.getSizeRows() + 1, mGameBoard.getSizeCols() + 1));
     // Draw intel frame
     GUI::drawFrame(
         CCoordinate(mGameBoard.getSizeRows() + 2, 0),
@@ -114,44 +107,42 @@ void CGame::runBuildPhase()
     while ((input = GUI::getInput()) != 27 && input != 'q') {
         mLogger.log("got input %c", input);
         this->handleInput(input);
-        GUI::clearRectangle(
-            CCoordinate(1, 1),
-            CCoordinate(mGameBoard.getSizeRows(), mGameBoard.getSizeCols()));
+        GUI::clearRectangle(CCoordinate(1, 1), CCoordinate(mGameBoard.getSizeRows(), mGameBoard.getSizeCols()));
         snprintf(
             intelMessage,
             intelMessageBufferSize,
             "RAM: %d\t Terminal Control Points: %d",
             mPlayer.getRam(),
             mPlayer.getControlPoints());
-        //TODO move all gui prints to gameboard
-        GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
+        // TODO move all gui prints to gameboard
+
+        // Add/subtract borders when printing
+        GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1);
         mGameBoard.draw();
         GUI::refresh();
     }
 }
 
-bool CGame::runInvasionPhase()
-{
+bool CGame::runInvasionPhase() {
     mLogger.log("Run invasion phase");
     char intelMessage[intelMessageBufferSize];
 
     mGameBoard.initInvasion();
 
-    //Frame counter setup
+    // Frame counter setup
     std::queue<std::chrono::time_point<std::chrono::high_resolution_clock>> timestamps;
     std::chrono::time_point<std::chrono::high_resolution_clock> avglimit;
     std::size_t avgseconds = 1;
     std::chrono::milliseconds avgtime(1000 * avgseconds);
     std::size_t avgfps;
 
-    //Framerate limiter setup
+    // Framerate limiter setup
     std::chrono::milliseconds interval(1000 / frameRate);
-    std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate(
-        std::chrono::system_clock::now() - interval);
+    std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdate(std::chrono::system_clock::now() - interval);
     std::chrono::time_point<std::chrono::high_resolution_clock> curUpdate;
 
     while (mGameBoard.update()) {
-        //Framerate counter
+        // Framerate counter
         avglimit = std::chrono::system_clock::now() - avgtime;
         while (!timestamps.empty() && timestamps.front() < avglimit) {
             timestamps.pop();
@@ -159,7 +150,7 @@ bool CGame::runInvasionPhase()
         timestamps.push(std::chrono::system_clock::now());
         avgfps = timestamps.size() / avgseconds;
 
-        //Framerate limiter
+        // Framerate limiter
         mGameBoard.draw();
         GUI::clearRectangle(
             CCoordinate(mGameBoard.getSizeRows() + 3, 1),
@@ -171,20 +162,23 @@ bool CGame::runInvasionPhase()
             mPlayer.getRam(),
             mPlayer.getControlPoints(),
             avgfps);
-        GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
+
+        // Add/subtract borders when printing
+        GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1);
         GUI::refresh();
 
         curUpdate = std::chrono::system_clock::now();
-        auto sleepMilliseconds = 2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(curUpdate - lastUpdate);
+        auto sleepMilliseconds =
+            2 * interval - std::chrono::duration_cast<std::chrono::milliseconds>(curUpdate - lastUpdate);
         lastUpdate = curUpdate;
         std::this_thread::sleep_for(sleepMilliseconds);
     }
-    mGameBoard.draw(); //Redraw the mGameBoard so all projectiles are removed TODO prettier solution since this just instantly removes all their gfx.
+    mGameBoard.draw(); // Redraw the mGameBoard so all projectiles are removed TODO prettier
+                       // solution since this just instantly removes all their gfx.
     return mGameBoard.hasNextWave();
 }
 
-bool CGame::run()
-{
+bool CGame::run() {
     this->intro();
     mGameBoard.resetCursor();
     this->runBuildPhase();
@@ -200,11 +194,12 @@ bool CGame::run()
     return true;
 }
 
-void CGame::runMenu()
-{
+void CGame::runMenu() {
     GUI::clearScreen();
     const char* intelMessage = "1.Quit Game    2.Return to game";
-    GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1); // Add/subtract borders
+
+    // Add/subtract borders when printing
+    GUI::printText(CCoordinate(mGameBoard.getSizeRows() + 3, 1), intelMessage, mGameBoard.getSizeCols() - 1);
 
     char input;
     while ((input = GUI::getInput()) != '1' && input != '2')

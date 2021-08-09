@@ -51,8 +51,7 @@ private:
 };
 
 template <typename TDamagePlayerCall>
-bool CVirus::update(TDamagePlayerCall&& damagePlayerCall)
-{
+bool CVirus::update(TDamagePlayerCall&& damagePlayerCall) {
     mLogger.log("Updating virus");
     if (!this->isActive()) {
         return false;
@@ -67,8 +66,7 @@ bool CVirus::update(TDamagePlayerCall&& damagePlayerCall)
 }
 
 template <typename TRewardPlayerCall>
-void CVirus::takeDamage(int damage, TRewardPlayerCall&& rewardPlayerCall)
-{
+void CVirus::takeDamage(int damage, TRewardPlayerCall&& rewardPlayerCall) {
     mLogger.log("Take damage start, mHp: %d", mHp);
     if (mHp <= 0) {
         return;

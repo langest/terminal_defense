@@ -31,8 +31,7 @@ private:
 };
 
 template <typename TDrawCall>
-void CProjectileManager::draw(TDrawCall&& drawCall)
-{
+void CProjectileManager::draw(TDrawCall&& drawCall) {
     mLogger.log("Drawing");
     for (const std::unique_ptr<IProjectile>& projectile : mProjectiles) {
         const char graphic = projectile->getGraphic();

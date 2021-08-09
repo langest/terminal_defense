@@ -24,60 +24,49 @@ CVirus::CVirus(
     , mDamage(1)
     , mGraphic(graphic)
     , mPath(startPosition, endPositions, numRows, numCols, towers)
-    , mLogger(__FILE__)
-{
+    , mLogger(__FILE__) {
     mLogger.log("Creating virus at position (%d, %d)", startPosition.getRow(), startPosition.getCol());
 }
 
-const CCoordinate& CVirus::getPosition() const
-{
+const CCoordinate& CVirus::getPosition() const {
     return mPath.getCurrentPosition();
 }
 
-char CVirus::getGraphic() const
-{
+char CVirus::getGraphic() const {
     return mGraphic;
 }
 
-bool CVirus::isActive() const
-{
+bool CVirus::isActive() const {
     return 0 < mHp && mIsActive;
 }
 
-bool CVirus::isDestinationReached() const
-{
+bool CVirus::isDestinationReached() const {
     return mPath.isDestinationReached();
 }
 
 CVirusHandle::CVirusHandle(CVirus::TVirusId virusId, CVirusManager& virusManager)
     : mVirusId(virusId)
-    , mVirusManager(virusManager)
-{
+    , mVirusManager(virusManager) {
     mVirusManager.createHandle(virusId);
 }
 
-CVirusHandle::~CVirusHandle()
-{
+CVirusHandle::~CVirusHandle() {
     mVirusManager.releaseHandle(mVirusId);
 }
 
-CVirus& CVirusHandle::operator*()
-{
+CVirus& CVirusHandle::operator*() {
     return mVirusManager.get(mVirusId);
 }
 
-const CVirus& CVirusHandle::operator*() const
-{
+const CVirus& CVirusHandle::operator*() const {
     return mVirusManager.get(mVirusId);
 }
 
-CVirus* CVirusHandle::operator->()
-{
+CVirus* CVirusHandle::operator->() {
     return &mVirusManager.get(mVirusId);
 }
 
-const CVirus* CVirusHandle::operator->() const
-{
+const CVirus* CVirusHandle::operator->() const {
     return &mVirusManager.get(mVirusId);
 }
 

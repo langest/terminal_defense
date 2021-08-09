@@ -27,8 +27,7 @@ bool CWaveManager::update(
     TSpawnCall spawnCall,
     const std::set<CCoordinate>& startPositions,
     const std::set<CCoordinate>& endPositions,
-    const std::map<CCoordinate, std::unique_ptr<ITower>>& towers)
-{
+    const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
     ++mUpdateCounter;
 
     const int spawnInterval = 100;

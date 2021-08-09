@@ -20,9 +20,9 @@ public:
 template <typename T>
 struct SProjectileTraits {
     /*
-	static const int mDamage;
-	static const int mGraphic;
-	*/
+        static const int mDamage;
+        static const int mGraphic;
+        */
 };
 
 }
