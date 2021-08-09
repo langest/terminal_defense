@@ -13,19 +13,19 @@ namespace termd {
 class CPlayer;
 
 class CMenu {
-	public:
-		CMenu();
+public:
+    CMenu();
 
-		void run();
+    void run();
 
-	private:
-		std::vector<CCoordinate> printMenu();
-		void clearMenu();
-		void runGame();
+private:
+    std::vector<CCoordinate> printMenu();
+    void clearMenu();
+    void runGame();
 
-		CPlayer mPlayer;
-		const std::vector<std::string> mItems;
-		std::map<int, std::function<void()>> mInputCallbacks;
+    CPlayer mPlayer;
+    const std::vector<std::string> mItems;
+    std::map<int, std::function<void()>> mInputCallbacks;
 };
 
 }

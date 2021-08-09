@@ -6,81 +6,90 @@
 
 namespace termd {
 
-CVirusManager::CVirusManager(CPlayer& player, int numRows, int numCols) :
-	mPlayer(player),
-	mActiveViruses(),
-	mDisabledViruses(),
-	mWaveManager(numRows, numCols),
-	mLogger(__FILE__) {}
+CVirusManager::CVirusManager(CPlayer& player, int numRows, int numCols)
+    : mPlayer(player)
+    , mViruses()
+    , mWaveManager(numRows, numCols)
+    , mNextId(0)
+    , mLogger(__FILE__) {}
 
 bool CVirusManager::update(
-		const std::set<CCoordinate>& startPositions,
-		const std::set<CCoordinate>& endPositions,
-		const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
-	mLogger.log("Update");
+    const std::set<CCoordinate>& startPositions,
+    const std::set<CCoordinate>& endPositions,
+    const std::map<CCoordinate, std::unique_ptr<ITower>>& towers) {
+    mLogger.log("Update");
 
-	for (std::unique_ptr<CVirus>& virus : mActiveViruses) {
-		virus->update();
+    for (auto& it : mViruses) {
+        std::unique_ptr<CVirus>& virus = it.second;
+        virus->update([this](int damage) { mPlayer.modifyControlPoints(-damage); });
+    }
 
-		if (virus->isDestinationReached()) {
-			mPlayer.modifyControlPoints(-virus->getDamage());
-			continue;
-		}
+    mLogger.log("Update wave manager");
+    const bool moreVirusesIncoming = mWaveManager.update(
+        std::bind(&CVirusManager::addVirus, this, std::placeholders::_1),
+        startPositions,
+        endPositions,
+        towers);
 
-		if (!virus->isAlive()) {
-			mPlayer.modifyRam(virus->getReward());
-		}
-	}
-
-	for (auto it = mActiveViruses.begin(); it != mActiveViruses.end(); ) {
-		if (!(*it)->isAlive() || (*it)->isDestinationReached()) {
-			mDisabledViruses.emplace_back(std::move(*it));
-			it = mActiveViruses.erase(it);
-		} else {
-			++it;
-		}
-	}
-
-	const bool moreVirusesIncoming = mWaveManager.update(
-			std::bind(&CVirusManager::addVirus, this, std::placeholders::_1),
-			startPositions,
-			endPositions,
-			towers
-		);
-
-	return !mActiveViruses.empty() || moreVirusesIncoming;
+    mLogger.log("Update done");
+    return !mViruses.empty() || moreVirusesIncoming || this->hasOpenHandle();
 }
 
 void CVirusManager::initInvasion() {
-	mWaveManager.initWave();
+    mWaveManager.initWave();
 }
 
 void CVirusManager::finishInvasion() {
-	mActiveViruses.clear();
-	mDisabledViruses.clear();
+    if (this->hasOpenHandle()) {
+        mLogger.logError("Finishing invasion even though handles are open!");
+    }
+    mViruses.clear();
 }
 
-const std::vector<std::unique_ptr<CVirus>>& CVirusManager::getActiveViruses() const {
-	return mActiveViruses;
-}
+std::map<CCoordinate, std::vector<CVirusHandle>> CVirusManager::getCoordinateVirusMap() {
+    std::map<CCoordinate, std::vector<CVirusHandle>> map;
 
-std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> CVirusManager::getCoordinateVirusMap() {
-	std::map<CCoordinate, std::vector<std::reference_wrapper<std::unique_ptr<CVirus>>>> map;
+    for (const auto& it : mViruses) {
+        const CVirus::TVirusId virusId = it.first;
+        const CCoordinate position = it.second->getPosition();
+        map[position].emplace_back(CVirusHandle(virusId, *this));
+    }
 
-	for (std::unique_ptr<CVirus>& v : mActiveViruses) {
-		map[v->getPosition()].emplace_back(std::reference_wrapper(v));
-	}
-
-	return map;
+    return map;
 }
 
 bool CVirusManager::hasNextWave() const {
-	return false;
+    return false;
+}
+
+void CVirusManager::createHandle(CVirus::TVirusId id) {
+    ++mVirusHandleCounters[id];
+}
+
+void CVirusManager::releaseHandle(CVirus::TVirusId id) {
+    --mVirusHandleCounters[id];
+}
+
+const CVirus& CVirusManager::get(CVirus::TVirusId virusId) const {
+    return this->get(virusId);
+}
+
+CVirus& CVirusManager::get(CVirus::TVirusId virusId) {
+    return *mViruses[virusId];
 }
 
 void CVirusManager::addVirus(std::unique_ptr<CVirus>&& virus) {
-	mActiveViruses.emplace_back(std::move(virus));
+    mViruses.emplace(mNextId++, std::move(virus));
 }
 
+bool CVirusManager::hasOpenHandle() {
+    for (auto& it : mVirusHandleCounters) {
+        const int counter = it.second;
+        if (0 < counter) {
+            return true;
+        }
+    }
+    return false;
+}
 
 }

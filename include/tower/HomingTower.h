@@ -1,18 +1,19 @@
 #pragma once
 
-#include <memory>
-#include <vector>
-
 #include <Coordinate.h>
 #include <logging/Logger.h>
 #include <tower/Tower.h>
 
+#include <memory>
+#include <vector>
+
 namespace termd {
 
-class CRightTower : public ITower {
+class CHomingTower : public ITower {
 public:
-    CRightTower(const CCoordinate& position);
+    CHomingTower(const CCoordinate& position);
 
+    int getCost() const;
     int getSellValue() const;
     char getGraphic() const;
 
@@ -28,9 +29,9 @@ private:
 };
 
 template <>
-struct STowerTraits<CRightTower> {
-    static const int mCost = 10;
-    static const char mGraphic = 'E';
+struct STowerTraits<CHomingTower> {
+    static const int mCost = 60;
+    static const char mGraphic = ';';
 };
 
 }
