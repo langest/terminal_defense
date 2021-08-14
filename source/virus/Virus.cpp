@@ -44,30 +44,42 @@ bool CVirus::isDestinationReached() const {
     return mPath.isDestinationReached();
 }
 
-CVirusHandle::CVirusHandle(CVirus::TVirusId virusId, CVirusManager& virusManager)
+CVirusHandle::CVirusHandle(CVirus::TVirusId virusId, CVirusManager* virusManager)
     : mVirusId(virusId)
     , mVirusManager(virusManager) {
-    mVirusManager.createHandle(virusId);
+    mVirusManager->createHandle(virusId);
 }
 
 CVirusHandle::~CVirusHandle() {
-    mVirusManager.releaseHandle(mVirusId);
+    mVirusManager->releaseHandle(mVirusId);
+}
+
+CVirusHandle::CVirusHandle(const CVirusHandle& src)
+    : mVirusId(src.mVirusId)
+    , mVirusManager(src.mVirusManager) {
+    mVirusManager->createHandle(mVirusId);
+}
+
+CVirusHandle& CVirusHandle::operator=(const CVirusHandle& other) {
+    mVirusId = other.mVirusId;
+    mVirusManager = other.mVirusManager;
+    return *this;
 }
 
 CVirus& CVirusHandle::operator*() {
-    return mVirusManager.get(mVirusId);
+    return mVirusManager->get(mVirusId);
 }
 
 const CVirus& CVirusHandle::operator*() const {
-    return mVirusManager.get(mVirusId);
+    return mVirusManager->get(mVirusId);
 }
 
 CVirus* CVirusHandle::operator->() {
-    return &mVirusManager.get(mVirusId);
+    return &mVirusManager->get(mVirusId);
 }
 
 const CVirus* CVirusHandle::operator->() const {
-    return &mVirusManager.get(mVirusId);
+    return &mVirusManager->get(mVirusId);
 }
 
 }

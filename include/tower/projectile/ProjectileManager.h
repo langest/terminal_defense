@@ -36,6 +36,7 @@ void CProjectileManager::draw(TDrawCall&& drawCall) {
     for (const std::unique_ptr<IProjectile>& projectile : mProjectiles) {
         const char graphic = projectile->getGraphic();
         const CCoordinate& position = projectile->getPosition();
+        mLogger.log("graphic %c", graphic);
         drawCall(position, graphic);
     }
 }

@@ -20,17 +20,16 @@ public:
     virtual int getSellValue() const = 0;
     virtual char getGraphic() const = 0;
 
-    virtual bool update(TSpawnCallback spawnProjectile, const TVirusMap& virusMap) = 0;
+    virtual bool update(TSpawnCallback spawnProjectile, TVirusMap& virusMap) = 0;
     virtual void updateStartOfWave() = 0;
     virtual void updateEndOfWave() = 0;
 };
 
 template <typename T>
 struct STowerTraits {
-    /*
-        static const int mCost;
-        static const char mGraphic;
-        */
+    // static const int mCost;
+    // static const char mGraphic;
+    // static const int mrange; // Optional
 };
 
 }

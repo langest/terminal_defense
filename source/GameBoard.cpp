@@ -48,6 +48,7 @@ void CGameBoard::moveCursorRight() {
 }
 
 void CGameBoard::draw() {
+    mLogger.log("Draw");
     GUI::clearScreen();
 
     mTowerManager.draw(std::bind(&CGameBoard::drawCall, this, std::placeholders::_1, std::placeholders::_2));

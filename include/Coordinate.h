@@ -11,24 +11,27 @@ public:
     CCoordinate(int row, int col);
     CCoordinate(const CCoordinate& src);
 
-    CCoordinate& operator=(const CCoordinate&);
-    bool operator==(const CCoordinate&) const;
-    bool operator!=(const CCoordinate&) const;
-    bool operator<(const CCoordinate&) const;
-    bool operator>(const CCoordinate&) const;
+    CCoordinate& operator=(const CCoordinate& src);
+    bool operator==(const CCoordinate& other) const;
+    bool operator!=(const CCoordinate& other) const;
+    bool operator<(const CCoordinate& other) const;
+    bool operator>(const CCoordinate& other) const;
 
-    double distance(const CCoordinate&) const; // Euclidian distance
+    double distance(const CCoordinate& other) const;
+    double squaredDistance(const CCoordinate& other) const;
     int getCol() const;
     void addCol(int delta);
     void setCol(int col);
     int getRow() const;
     void addRow(int delta);
     void setRow(int row);
-    CCoordinate operator-(const CCoordinate&) const;
-    CCoordinate operator+(const CCoordinate&) const;
-    void operator-=(const CCoordinate&);
-    void operator+=(const CCoordinate&);
+    CCoordinate operator-(const CCoordinate& other) const;
+    CCoordinate operator+(const CCoordinate& other) const;
+    void operator-=(const CCoordinate& other);
+    void operator+=(const CCoordinate& other);
     double length() const;
+    double squaredLength() const;
+    double getAngle(const CCoordinate& other) const; // Radians
 
 private:
     int mRow;

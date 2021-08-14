@@ -52,7 +52,7 @@ std::map<CCoordinate, std::vector<CVirusHandle>> CVirusManager::getCoordinateVir
     for (const auto& it : mViruses) {
         const CVirus::TVirusId virusId = it.first;
         const CCoordinate position = it.second->getPosition();
-        map[position].emplace_back(CVirusHandle(virusId, *this));
+        map[position].emplace_back(CVirusHandle(virusId, this));
     }
 
     return map;

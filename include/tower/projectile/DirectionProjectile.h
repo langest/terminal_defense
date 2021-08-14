@@ -37,7 +37,7 @@ private:
 template <>
 struct SProjectileTraits<CDirectionProjectile<EDirection::Right>> {
     static const int mDamage = 3;
-    static const int mGraphic = '>';
+    static const char mGraphic = '>';
 };
 
 template <EDirection TDirection>

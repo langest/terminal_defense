@@ -47,6 +47,10 @@ double CCoordinate::distance(const CCoordinate& other) const {
         (other.getRow() - mRow) * (other.getRow() - mRow) + (other.getCol() - mCol) * (other.getCol() - mCol));
 }
 
+double CCoordinate::squaredDistance(const CCoordinate& other) const {
+    return (other.getRow() - mRow) * (other.getRow() - mRow) + (other.getCol() - mCol) * (other.getCol() - mCol);
+}
+
 int CCoordinate::getCol() const {
     return mCol;
 }
@@ -71,20 +75,6 @@ void CCoordinate::setRow(int row) {
     mRow = row;
 }
 
-std::ostream& operator<<(std::ostream& os, const CCoordinate& coord) {
-    os << coord.getRow() << " " << coord.getCol();
-    return os;
-}
-
-std::istream& operator>>(std::istream& is, CCoordinate& coord) {
-    int r, c;
-    is >> r;
-    is >> c;
-    coord.setRow(r);
-    coord.setCol(c);
-    return is;
-}
-
 CCoordinate CCoordinate::operator-(const CCoordinate& other) const {
     return CCoordinate(this->mRow - other.mRow, this->mCol - other.mCol);
 }
@@ -105,6 +95,28 @@ void CCoordinate::operator+=(const CCoordinate& other) {
 
 double CCoordinate::length() const {
     return sqrt(mRow * mRow + mCol * mCol);
+}
+
+double CCoordinate::squaredLength() const {
+    return mRow * mRow + mCol * mCol;
+}
+
+double CCoordinate::getAngle(const CCoordinate& other) const {
+    return atan2(mRow - other.mRow, other.mCol - mCol);
+}
+
+std::ostream& operator<<(std::ostream& os, const CCoordinate& coord) {
+    os << coord.getRow() << " " << coord.getCol();
+    return os;
+}
+
+std::istream& operator>>(std::istream& is, CCoordinate& coord) {
+    int r, c;
+    is >> r;
+    is >> c;
+    coord.setRow(r);
+    coord.setCol(c);
+    return is;
 }
 
 }
