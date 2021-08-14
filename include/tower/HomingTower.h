@@ -5,6 +5,7 @@
 #include <tower/Tower.h>
 
 #include <memory>
+#include <optional>
 #include <vector>
 
 namespace termd {
@@ -17,13 +18,16 @@ public:
     int getSellValue() const;
     char getGraphic() const;
 
-    bool update(TSpawnCallback spawnProjectile, const TVirusMap& virusMap);
+    bool update(TSpawnCallback spawnProjectile, ITower::TVirusMap& virusMap);
     void updateStartOfWave();
-    void updateEndOfWave();
+    void updateEndOfWave() {};
 
 private:
-    CCoordinate mPosition;
+    std::optional<CVirusHandle> findTarget(ITower::TVirusMap& virusMap) ;
+
+    const CCoordinate mPosition;
     int mUpdateCounter;
+    const int mSquaredRange;
 
     CLogger mLogger;
 };
@@ -32,6 +36,7 @@ template <>
 struct STowerTraits<CHomingTower> {
     static const int mCost = 60;
     static const char mGraphic = ';';
+    static const int mRange = 6;
 };
 
 }

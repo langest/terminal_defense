@@ -81,8 +81,11 @@ void CVirus::takeDamage(int damage, TRewardPlayerCall&& rewardPlayerCall) {
 
 class CVirusHandle {
 public:
-    CVirusHandle(CVirus::TVirusId virusId, CVirusManager& virusManager);
+    CVirusHandle(CVirus::TVirusId virusId, CVirusManager* virusManager);
     ~CVirusHandle();
+    CVirusHandle(const CVirusHandle& src);
+
+    CVirusHandle& operator=(const CVirusHandle& src);
 
     CVirus& operator*();
     const CVirus& operator*() const;
@@ -90,8 +93,8 @@ public:
     const CVirus* operator->() const;
 
 private:
-    const CVirus::TVirusId mVirusId;
-    CVirusManager& mVirusManager;
+    CVirus::TVirusId mVirusId;
+    CVirusManager* mVirusManager;
 };
 
 }

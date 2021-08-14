@@ -16,12 +16,12 @@ public:
     int getSellValue() const;
     char getGraphic() const;
 
-    bool update(TSpawnCallback spawnProjectile, const TVirusMap& virusMap);
+    bool update(TSpawnCallback spawnProjectile, TVirusMap& virusMap);
     void updateStartOfWave();
     void updateEndOfWave();
 
 private:
-    CCoordinate mPosition;
+    const CCoordinate mPosition;
     int mUpdateCounter;
 
     CLogger mLogger;
