@@ -64,8 +64,15 @@ CPath::CPath(
             mLogger.log("Stepping, (%d, %d) %d", row, col, cost);
             const int oldEstimate = backtrack[row][col].first;
 
-            // if paths are equal, randomize wich one to use
-            const bool isShorter = (cost < oldEstimate || (cost == oldEstimate && std::rand() % 2 == 0));
+            // If paths are equal, randomize wich one to use.
+            // It is not going to be fair random.
+            // Try to make it seem a bit more random by doing `%3` instead of `%2`.
+            // Perhaps that is a TODO for later...
+            //  ########
+            //  #    /-v
+            // -----/
+            //  ########
+            const bool isShorter = (cost < oldEstimate || (cost == oldEstimate && std::rand() % 3 != 0));
 
             if (isShorter && !towers.contains(CCoordinate(row, col))) {
                 mLogger.log("Found better path");
