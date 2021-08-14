@@ -36,8 +36,9 @@ private:
 
 template <>
 struct SProjectileTraits<CDirectionProjectile<EDirection::Right>> {
-    static const int mDamage = 3;
-    static const char mGraphic = '>';
+    static const int mDamage = 5;
+    static constexpr char mAnimation[] = ">>-";
+    static constexpr char mAnimationLength = 3;
 };
 
 template <EDirection TDirection>
@@ -57,7 +58,7 @@ bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<
         return false;
     }
 
-    if (4 < mUpdateCounter) {
+    if (0 == mUpdateCounter % 4) {
         if (this->collideWithVirus(virusMap)) {
             return false;
         }
@@ -67,7 +68,6 @@ bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<
         if (this->collideWithVirus(virusMap)) {
             return false;
         }
-        mUpdateCounter = 0;
     }
     ++mUpdateCounter;
     return true;
@@ -75,7 +75,9 @@ bool CDirectionProjectile<TDirection>::update(std::map<CCoordinate, std::vector<
 
 template <EDirection TDirection>
 char CDirectionProjectile<TDirection>::getGraphic() const {
-    return SProjectileTraits<CDirectionProjectile<TDirection>>::mGraphic;
+    const int animationLength = SProjectileTraits<CDirectionProjectile<TDirection>>::mAnimationLength;
+    const int animationIndex = (mUpdateCounter / 7) % animationLength;
+    return SProjectileTraits<CDirectionProjectile<TDirection>>::mAnimation[animationIndex];
 }
 
 template <EDirection TDirection>
